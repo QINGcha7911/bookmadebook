@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""book-to-audio 流式流水线 v2 — 分段生成+截断检测+友好错误
+"""listen-book 流式流水线 v2 — 分段生成+截断检测+友好错误
 
 修复内容：
 1. 分段生成：单段不超过3000字（防 edge-tts 静默截断）
@@ -9,7 +9,7 @@
 import asyncio, subprocess, json, os, sys, time, hashlib, re
 from pathlib import Path
 
-CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/book-to-audio"))
+CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/listen-book"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # edge-tts 单段安全上限（字符）
@@ -154,7 +154,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "zh-CN-Xiaoxiao
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="book-to-audio 流水线")
+    parser = argparse.ArgumentParser(description="listen-book 流水线")
     parser.add_argument("-f", "--file", required=True, help="文本文件路径")
     parser.add_argument("-o", "--output", help="输出文件路径")
     parser.add_argument("--voice", default="zh-CN-XiaoxiaoNeural")

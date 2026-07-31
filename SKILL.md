@@ -1,5 +1,5 @@
 ---
-name: book-to-audio
+name: listen-book
 version: 2.1.0
 description: |-
   AI 书籍精读音频生成 — 覆盖全年龄段（3岁+），支持多场景、多声音、多深度。
@@ -20,7 +20,7 @@ settings:
   output_format: audio          # audio | script | both
 ---
 
-# book-to-audio — AI 书籍精读音频生成
+# listen-book — AI 书籍精读音频生成
 
 ## 能力概述
 
@@ -192,7 +192,7 @@ settings:
 ## 文件结构
 
 ```
-book-to-audio/
+listen-book/
 ├── SKILL.md              ← 本文件
 ├── config.yaml           ← 全局配置（年龄段/声音/场景/获取/TTS）
 ├── prompts/              ← 各年龄段提示词模板

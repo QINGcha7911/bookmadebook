@@ -1,5 +1,5 @@
-# Book-to-Audio 全局配置
-# 路径：~/.hermes/skills/productivity/book-to-audio/config.yaml
+# Listen-Book 全局配置
+# 路径：~/.hermes/skills/productivity/listen-book/config.yaml
 
 # === 年龄段配置（v2.0 新增） ===
 # 详见 references/age-group-design.md
@@ -308,7 +308,7 @@ post_processing:
     true_peak: -1.5
   background_music:
     enabled: false
-    default_music: "~/.hermes/skills/productivity/book-to-audio/assets/bgm_soft.mp3"
+    default_music: "~/.hermes/skills/productivity/listen-book/assets/bgm_soft.mp3"
     volume_db: -25
     fade_in_ms: 3000
     fade_out_ms: 5000
@@ -401,7 +401,7 @@ notes:
 # === 输出 ===
 delivery:
   default_channel: "local"         # local | obsidian | feishu
-  output_dir: "~/book-to-audio"
+  output_dir: "~/listen-book"
   keep_intermediates: false
   obsidian:
     vault_path_env: "OBSIDIAN_VAULT_PATH"

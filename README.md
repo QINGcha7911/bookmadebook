@@ -1,4 +1,4 @@
-# 📚 Book-to-Audio — 把你的书变成耳朵的盛宴
+# 📚 Listen-Book — 把你的书变成耳朵的盛宴
 
 > AI 书籍精读音频生成 Skill | 全年龄段 · 多场景 · 多声音 · 多深度
 > 说一句话 → AI 推荐书 → 生成精读 → 转语音 → 开听！
@@ -39,7 +39,7 @@ AI：推荐 → 选书 → 生成精读 → 语音输出（30秒出首段）
 
 ```bash
 # Hermes Agent 用户
-git clone https://github.com/你的用户名/book-to-audio.git ~/.hermes/skills/book-to-audio
+git clone https://github.com/你的用户名/listen-book.git ~/.hermes/skills/listen-book
 
 # 依赖
 pip install edge-tts
@@ -95,7 +95,7 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 ## 🏗️ 项目结构
 
 ```
-book-to-audio/
+listen-book/
 ├── SKILL.md              # 主技能文件（含全部配置）
 ├── config.yaml           # 默认配置
 ├── prompts/              # 各年龄段提示词模板
@@ -115,8 +115,8 @@ book-to-audio/
 
 欢迎提交 Issue 和 PR！
 
-- 🐛 遇到问题？[提 Issue](https://github.com/你的用户名/book-to-audio/issues/new?template=bug_report.yml)
-- 💡 有新想法？[提建议](https://github.com/你的用户名/book-to-audio/issues/new?template=feature_request.yml)
+- 🐛 遇到问题？[提 Issue](https://github.com/你的用户名/listen-book/issues/new?template=bug_report.yml)
+- 💡 有新想法？[提建议](https://github.com/你的用户名/listen-book/issues/new?template=feature_request.yml)
 - 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md) 找适合的议题
 
 **维护说明**：本项目由 [@你的用户名](https://github.com/你的用户名) 一个人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏
