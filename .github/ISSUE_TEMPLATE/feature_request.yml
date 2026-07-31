@@ -1,0 +1,51 @@
+name: Feature request
+description: 提出一个新功能建议
+title: "[Feature] 简要描述你的想法"
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你的建议！我们会评估每个需求，合理的会加入 Roadmap。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到了什么问题？
+      description: 你希望解决什么痛点
+      placeholder: "我想要在听完后自动生成知识点测验..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 你期望的解决方案
+      description: 你希望这个功能怎么工作
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative
+    attributes:
+      label: 其他替代方案
+      description: 有没有其他方式能达到类似效果
+      placeholder: "也可以做成一个独立的测验技能..."
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 对你来说有多重要？
+      options:
+        - 非常需要，没有它我用不了
+        - 比较需要，有它会更好
+        - 锦上添花，有没有都行
+    validations:
+      required: true
+
+  - type: input
+    id: usecase
+    attributes:
+      label: 使用场景
+      description: 你会在什么场景用到这个功能
+      placeholder: "每天睡前给孩子听完后考考他"

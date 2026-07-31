@@ -1,0 +1,72 @@
+name: Bug report
+description: 报告一个使用中遇到的问题
+title: "[Bug] 简要描述问题"
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你花时间报告问题！请尽量填写完整信息，方便我们快速定位。
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 你做了什么？
+      description: 你输入的指令或操作步骤
+      placeholder: 我输入了「帮我解读《XX》，15分钟」
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 你期望的结果
+      description: 本来应该发生什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际发生的结果
+      description: 实际发生了什么（如有报错信息请粘贴）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: age
+    attributes:
+      label: 使用年龄段
+      options:
+        - 成人 (18+)
+        - 青少年 (12-18)
+        - 儿童 (3-12)
+        - 幼儿 (0-3)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scene
+    attributes:
+      label: 使用场景
+      options:
+        - 通勤
+        - 跑步
+        - 睡前
+        - 亲子
+        - 深度学习
+        - 午休
+
+  - type: input
+    id: version
+    attributes:
+      label: 技能版本
+      description: SKILL.md 里的 version 字段
+      placeholder: "2.2.0"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: 运行环境
+      description: 操作系统、Python版本、Hermes版本
+      placeholder: "Windows 11 / Python 3.11 / Hermes 0.19"

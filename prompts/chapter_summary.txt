@@ -1,0 +1,25 @@
+请你扮演一个图书摘要助手，为以下书籍章节生成结构化摘要。
+
+书籍：{book_name}
+作者：{author}
+章节：{chapter_title}
+
+== 摘要要求 ==
+请输出以下 JSON 格式：
+
+{
+  "chapter_title": "{chapter_title}",
+  "summary": "约 200 字的章节核心内容摘要",
+  "key_points": ["观点1", "观点2", "观点3"],
+  "notable_quotes": [
+    {
+      "text": "原文金句",
+      "relevance": "为什么这句重要"
+    }
+  ],
+  "importance_score": 0.8,
+  "importance_reason": "本章提出了全书的底层框架，是后续论证的基石"
+}
+
+== 章节正文 ==
+{chapter_content}

@@ -1,0 +1,410 @@
+# Book-to-Audio 全局配置
+# 路径：~/.hermes/skills/productivity/book-to-audio/config.yaml
+
+# === 年龄段配置（v2.0 新增） ===
+# 详见 references/age-group-design.md
+age_group:
+  default: adult                    # toddler | preschool | primary_lower | primary_upper
+                                    # | middle_school | high_school | adult
+  version_mode: single              # single | multi_parent | multi_all
+  auto_depth: true                  # 按年龄自动约束深度等级
+
+  levels:
+    toddler:
+      name: "婴幼儿"
+      age_range: "0-3岁"
+      max_duration_min: 5
+      supported_depths: []
+      sentence_max_chars: 8
+      ai_prompt_template: "prompts/children/toddler_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-XiaoshuangNeural"
+        speed_rate: "-20%"
+        gap_between_segments_ms: 800
+      bgm:
+        style: "轻音乐盒/钢琴"
+        volume_db: -30
+      content_filter: strict
+      add_parent_guidance: true
+      recommendation_categories:
+        - 童话故事
+        - 动物故事
+        - 韵律儿歌
+      max_results: 5
+
+    preschool:
+      name: "学龄前"
+      age_range: "3-6岁"
+      max_duration_min: 8
+      supported_depths: []
+      sentence_max_chars: 12
+      ai_prompt_template: "prompts/children/preschool_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-XiaoxiaoNeural"
+        speed_rate: "-15%"
+        gap_between_segments_ms: 600
+      bgm:
+        style: "欢快儿歌风"
+        volume_db: -28
+      content_filter: strict
+      add_parent_guidance: true
+      recommendation_categories:
+        - 童话故事
+        - 动物故事
+        - 科学启蒙
+        - 成长励志
+      max_results: 8
+
+    primary_lower:
+      name: "小学低年级"
+      age_range: "6-9岁"
+      max_duration_min: 12
+      supported_depths: [quick, standard, deep]
+      sentence_max_chars: 20
+      ai_prompt_template: "prompts/children/primary_lower_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-XiaoxiaoNeural"
+        speed_rate: "-10%"
+        gap_between_segments_ms: 500
+      bgm:
+        style: "轻快原声"
+        volume_db: -26
+      content_filter: moderate
+      add_parent_guidance: true
+      recommendation_categories:
+        - 童话故事
+        - 动物故事
+        - 科学启蒙
+        - 历史人文
+        - 成长励志
+        - 文学经典
+      max_results: 10
+
+    primary_upper:
+      name: "小学高年级"
+      age_range: "9-12岁"
+      max_duration_min: 15
+      supported_depths: [quick, standard, deep]
+      sentence_max_chars: 30
+      ai_prompt_template: "prompts/children/primary_upper_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-YunxiNeural"
+        speed_rate: "-5%"
+        gap_between_segments_ms: 450
+      bgm:
+        style: "安静学习风"
+        volume_db: -24
+      content_filter: moderate
+      add_parent_guidance: false
+      recommendation_categories:
+        - 动物故事
+        - 科学启蒙
+        - 历史人文
+        - 成长励志
+        - 文学经典
+      max_results: 12
+
+    middle_school:
+      name: "初中"
+      age_range: "12-15岁"
+      max_duration_min: 18
+      supported_depths: [quick, standard, deep, full]
+      ai_prompt_template: "prompts/teen/middle_school_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-YunjianNeural"
+        speed_rate: "+0%"
+        gap_between_segments_ms: 400
+      bgm:
+        style: "轻原声或无"
+        volume_db: -20
+      content_filter: light
+      add_parent_guidance: false
+      recommendation_categories: all
+
+    high_school:
+      name: "高中"
+      age_range: "15-18岁"
+      max_duration_min: 25
+      supported_depths: [quick, standard, deep, full]
+      ai_prompt_template: "prompts/teen/high_school_mode.txt"
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-YunyangNeural"
+        speed_rate: "+0%"
+        gap_between_segments_ms: 400
+      bgm:
+        style: "无"
+        volume_db: 0
+      content_filter: light
+      add_parent_guidance: false
+      recommendation_categories: all
+
+    adult:
+      name: "成人"
+      age_range: "18+"
+      max_duration_min: 30
+      supported_depths: [quick, standard, deep, full]
+      sentence_max_chars: 0
+      ai_prompt_template: ""
+      voice:
+        engine: edge-tts
+        primary: "zh-CN-XiaoxiaoNeural"
+        speed_rate: "+0%"
+        gap_between_segments_ms: 400
+      bgm:
+        style: "可选"
+        volume_db: -20
+      content_filter: off
+      add_parent_guidance: false
+      recommendation_categories: all
+
+# === 内容安全（双模式） ===
+content_safety:
+  mode: auto                    # auto(按age_group自动) | kids(儿童青少年严格) | adult(成人宽松)
+  auto_map:
+    toddler: kids               # 0-3岁 → 严格
+    preschool: kids             # 3-6岁 → 严格
+    primary_lower: kids         # 6-9岁 → 严格
+    primary_upper: kids         # 9-12岁 → 严格
+    middle_school: kids         # 12-15岁 → 严格
+    high_school: kids           # 15-18岁 → 严格
+    adult: adult                # 18+ → 宽松
+  kids:
+    blocked_categories: [暴力, 死亡, 恐怖, 成人, 毒品, 犯罪, 敏感政治]
+    parent_warning: true        # 亲子内容额外提醒家长
+    on_block: "替换为安全内容并提示用户"  # 拦截后行为
+  adult:
+    blocked_categories: [违法]
+    on_block: "提示用户该内容可能不合法"
+
+# === 内容过滤器（按年龄级别） ===
+content_filter:
+  strict:
+    blocked_categories:
+      - 暴力/悬疑
+      - 爱情/关系
+      - 政治/社会批判
+      - 商业/经济
+    blocked_keywords:
+      - "死亡"
+      - "杀人"
+      - "战争"
+      - "离婚"
+    allow_with_parent: true
+  moderate:
+    blocked_categories:
+      - 暴力/悬疑
+    blocked_keywords: []
+  light:
+    blocked_categories: []
+    blocked_keywords: []
+
+# === 声音克隆（免费方案） ===
+voice_clone:
+  enabled: false                 # 是否启用声音克隆
+  engine: gpt_sovits             # gpt_sovits | elevenlabs
+  gpt_sovits:
+    type: free                   # free(在线版) | self_hosted(自部署)
+    endpoint: "https://sovits.cn/api"  # 在线版API
+    sample_seconds: 20           # 需要用户录制20秒语音样本
+    sample_requirements:         # 录音要求
+      - "无噪音、无背景音乐"
+      - "清晰人声、语速正常"
+      - "长度20-30秒"
+    usage_limit: "免费额度内可长期使用"
+  elevenlabs:
+    type: paid                   # 付费方案
+    price: "$5/月起"
+    quality: "极高"
+
+# === 交付模式 ===
+delivery_mode:
+  mode: progressive              # progressive(流式:边写边出) | full(一次性出完整)
+  progressive:
+    first_chapter_timeout: 30    # 首段最大等待秒数
+    append_in_background: true   # 后台继续生成剩余章节
+    notify_on_complete: true     # 全部完成后通知用户
+  full:
+    max_wait_minutes: 60         # 用户愿等的最长时间
+    show_progress: true          # 显示进度条
+    estimated_time: true         # 显示预估剩余时间
+
+# === 用户选项（暴露给用户）
+user_options:
+  delivery_mode: true            # 用户可选：一次性出 / 流式出
+  scene: true                    # 用户可选场景
+  voice: true                    # 用户可选声音
+  speed: true                    # 用户可选语速
+  duration: true                 # 用户可选时长
+
+# === 书籍获取 ===
+acquisition:
+  timeout_seconds: 60
+  min_content_length: 500
+  sources_priority:
+    - weread
+    - annas_archive
+    - gutenberg
+    - user_provided
+  weread:
+    api_key_env: "WEREAD_API_KEY"
+    endpoint: "https://i.weread.qq.com/api/agent/gateway"
+  annas_archive:
+    timeout: 15
+  gutenberg:
+    endpoint: "https://www.gutenberg.org/ebooks/search/"
+  converter:
+    calibre_path: "/usr/bin/ebook-convert"
+    marker_path: "/usr/local/bin/marker_single"
+    pdftotext_path: "/usr/bin/pdftotext"
+
+# === 脚本生成 ===
+script_generation:
+  default_mode: "standard"         # speed | standard | deep
+  llm:
+    temperature: 0.6
+    max_tokens: 4096
+  chapter_summary:
+    max_chapter_words: 200
+  pre_summarize: true
+
+# === TTS ===
+tts:
+  default_engine: "edge-tts"       # edge-tts | openai | azure | elevenlabs
+  edge_tts:
+    voice: "zh-CN-XiaoxiaoNeural"
+    rate: "+10%"
+    volume: "+0%"
+    segment_max_chars: 500
+    gap_between_segments_ms: 400
+  openai:
+    model: "tts-1-hd"
+    voice: "nova"
+    speed: 1.0
+    api_key_env: "OPENAI_API_KEY"
+  azure:
+    region: "eastasia"
+    api_key_env: "AZURE_TTS_KEY"
+    voice: "zh-CN-XiaoxiaoNeural"
+  elevenlabs:
+    api_key_env: "ELEVENLABS_API_KEY"
+    voice: "21m00Tcm4TlvDq8ikWAM"
+    model: "eleven_monolingual_v1"
+
+# === 音频后处理 ===
+post_processing:
+  speed:
+    speed_mode: 1.2
+    standard_mode: 1.0
+    deep_mode: 0.95
+  loudness:
+    target: -16
+    lra: 11
+    true_peak: -1.5
+  background_music:
+    enabled: false
+    default_music: "~/.hermes/skills/productivity/book-to-audio/assets/bgm_soft.mp3"
+    volume_db: -25
+    fade_in_ms: 3000
+    fade_out_ms: 5000
+
+# === 场景预设 ===
+scene:
+  default: commute
+  presets:
+    commute:
+      name: "通勤路上"
+      max_duration: 15
+      voice_speed: "+5%"
+      style: "信息密度高，开场直接进入主题"
+      bgm_enabled: false
+      segment_gap_ms: 300
+    running:
+      name: "跑步/运动"
+      max_duration: 8
+      voice_speed: "+10%"
+      style: "节奏感强，金句密集，每段短小精悍"
+      bgm_enabled: true
+      bgm_style: "动感"
+      segment_gap_ms: 200
+    bedtime:
+      name: "睡前听"
+      max_duration: 12
+      voice_speed: "-15%"
+      style: "语速舒缓，语气温柔，结尾有总结安抚"
+      bgm_enabled: true
+      bgm_style: "轻音乐"
+      segment_gap_ms: 600
+    parent_child:
+      name: "亲子共听"
+      max_duration: 10
+      voice_speed: "-10%"
+      style: "互动性强，有提问有回答，适合家长和孩子一起听"
+      bgm_enabled: false
+      segment_gap_ms: 500
+    deep_learning:
+      name: "深度学习"
+      max_duration: 30
+      voice_speed: "+0%"
+      style: "逐章精讲，有论据有案例有批判性思考"
+      bgm_enabled: false
+      segment_gap_ms: 400
+    lunch_break:
+      name: "午休碎片"
+      max_duration: 8
+      voice_speed: "+0%"
+      style: "轻量精华，一个核心观点+一个案例"
+      bgm_enabled: false
+      segment_gap_ms: 300
+
+# === 推荐系统 ===
+recommendation:
+  enabled: true
+  max_results: 5
+  highlight_methods:
+    - llm_knowledge       # LLM知识库回忆（零爬虫，立刻可用）
+    - weread_highlights   # 微信读书热门划线
+    - douban_reviews      # 豆瓣书评引用分析
+  highlight_score_formula: "引用频次 × 情感强度 × 独立性 − 剧透惩罚"
+  trial_audio_seconds: 15   # 试听片段时长
+  cold_start:
+    strategy: "三步引导法"
+    steps:
+      - "场景选择题（你想在什么场景听？）"
+      - "封面兴趣选择（看到哪本书封面感兴趣？）"
+      - "LLM推断（基于以上选择推荐）"
+
+# === 笔记输出 ===
+notes:
+  enabled: true
+  auto_save: true
+  formats:
+    - obsidian_markdown
+    - text_summary
+  obsidian:
+    vault_path_env: "OBSIDIAN_VAULT_PATH"
+    notes_dir: "Book Notes/精读笔记"
+  summary_card:
+    enabled: true
+    sections:
+      - 书名与作者
+      - 核心观点（3-5个）
+      - 金句摘录
+      - 个人感悟
+      - 行动建议
+
+# === 输出 ===
+delivery:
+  default_channel: "local"         # local | obsidian | feishu
+  output_dir: "~/book-to-audio"
+  keep_intermediates: false
+  obsidian:
+    vault_path_env: "OBSIDIAN_VAULT_PATH"
+    notes_dir: "Book Notes"
+  feishu:
+    bot_token_env: "FEISHU_BOT_TOKEN"

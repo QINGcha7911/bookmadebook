@@ -1,0 +1,31 @@
+# 《{{title}}》精华解读文稿
+
+> 解读模式：{{mode}}
+> 音频时长：{{duration}}
+> 生成日期：{{date}}
+
+---
+
+## 开场
+{{segments[0].text}}
+
+---
+
+## 作者背景
+{{author_bio}}
+
+---
+
+{% for seg in core_segments %}
+## {{seg.role}}
+{{seg.text}}
+
+---
+
+{% endfor %}
+## 总结
+{{closing_text}}
+
+---
+
+*本解读由 AI 生成，观点仅供参考，建议阅读原书获得完整理解。*

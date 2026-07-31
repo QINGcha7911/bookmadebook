@@ -1,0 +1,40 @@
+# {{title}}
+
+> **作者**：{{author}}
+> **解读深度**：{{mode}}
+> **生成时间**：{{date}}
+> **音频时长**：{{duration}}
+
+---
+
+## 🎧 音频文件
+[下载音频]({{audio_path}})
+
+---
+
+## 📝 解读文稿
+
+### 开场
+{{segments[0].text}}
+
+### 核心观点
+{% for seg in segments[1:-2] %}
+**{{seg.role}}**
+{{seg.text}}
+{% endfor %}
+
+### 总结
+{{segments[-2].text}}
+
+### 金句
+{% for quote in quotes %}
+> {{quote}}
+{% endfor %}
+
+---
+
+## 📚 书籍信息
+- 书名：{{book_name}}
+- 作者：{{author}}
+- 来源：{{source}}
+- 全长：{{word_count}} 字
