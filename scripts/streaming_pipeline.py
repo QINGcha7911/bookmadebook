@@ -68,10 +68,12 @@ def detect_truncation(duration: float, text_len: int) -> bool:
 
 async def generate_segment(text: str, voice: str, rate: str, out_path: Path):
     max_retries = 2
+    # 负 rate（如 -15%）必须用 --rate= 等号形式，否则被 argparse 误判为选项
+    rate_arg = f"--rate={rate}"
     for attempt in range(max_retries + 1):
         try:
             proc = await asyncio.create_subprocess_exec(
-                "edge-tts", "--voice", voice, "--rate", rate,
+                "edge-tts", "--voice", voice, rate_arg,
                 "--text", text, "--write-media", str(out_path),
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
             )
