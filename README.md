@@ -1,3 +1,5 @@
+[![EN](README_EN.md)](README_EN.md) ｜ [中文](README.md)
+
 # 📚 Listen-Book — 把没时间读的书，变成耳朵里的 15 分钟
 
 > AI 书籍精读音频生成 Skill | 全年龄段 · 多场景 · 多声音 · 多深度
