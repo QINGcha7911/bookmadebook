@@ -1,4 +1,4 @@
-# 📚 Listen-Book — 把你的书变成耳朵的盛宴
+# 📚 Listen-Book — 把没时间读的书，变成耳朵里的 15 分钟
 
 > AI 书籍精读音频生成 Skill | 全年龄段 · 多场景 · 多声音 · 多深度
 > 说一句话 → AI 推荐书 → 生成精读 → 转语音 → 开听！
@@ -6,30 +6,53 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub Stars](https://img.shields.io/github/stars/QINGcha7911/listen-book?style=social)](https://github.com/QINGcha7911/listen-book)
 
 ---
 
-## 🎯 它能做什么
+## 🎯 你是否有这些困扰？
 
-**跑步、开车、通勤、睡前、亲子时光——把任何一本书变成适合你当下场景的精读音频。**
+- 📖 **买了书没时间读**，堆在书架落灰？
+- 🏃 **跑步/通勤时想听书**，但听书App只会干巴巴朗读原文？
+- 👶 **想给孩子讲故事**，但工作太忙没精力？或者想要用**爸爸妈妈自己的声音**讲？
+- 🧠 **听完就忘**，想要要点笔记？
+
+**Listen-Book 把任何一本书变成适合你当下场景的精读音频——30 秒出第一段，边生成边听。**
 
 ```
 你：帮我解读《原子习惯》，跑步时听
-AI：推荐 → 选书 → 生成精读 → 语音输出（30秒出首段）
+AI：推荐 → 选书 → 生成精读 → 语音输出
 ```
 
-### 支持的能力
+---
+
+## 🎧 试听一下
+
+| 示例 | 场景 | 时长 |
+|------|------|------|
+| 🧒 [小王子-儿童睡前版](examples/小王子-儿童睡前版.mp3) | 亲子/睡前 | ~2.5min |
+| 👨‍👩‍👧 [亲子故事-默认声音](examples/亲子故事-默认声音.mp3) | 亲子 | ~1min |
+| 📜 [孙子兵法-速览](examples/孙子兵法-速览.mp3) | 通勤 | ~1min |
+| 🧠 [思考快与慢-精读](examples/思考快与慢-精读.mp3) | 深度学习 | ~2min |
+| 📱 [原子习惯-成人-跑步](examples/原子习惯-成人-跑步.mp3) | 跑步 | ~3min |
+| 👨 [乔布斯传-成人-精读](examples/乔布斯传-成人-精读.mp3) | 深度学习 | ~3min |
+
+---
+
+## ✨ 核心能力
 
 | 能力 | 说明 |
 |------|------|
+| 🎙️ **父母声音克隆** | 录20秒 → 让爸爸妈妈用自己的声音给孩子讲故事（免费）|
 | 🧒 **全年龄段** | 0-3岁幼儿 → 18+成人，7级分级，内容安全过滤 |
 | 🎬 **多场景** | 通勤 / 跑步 / 睡前 / 亲子 / 深度学习 / 午休 |
-| 🎤 **多声音** | 5种内置中文声线，免费；可克隆父母声音（免费） |
+| 🎤 **多声音** | 5种内置中文声线，免费切换 |
 | 📏 **时长自选** | 3分钟速览 → 45分钟深度精读 |
 | 🚀 **流式交付** | 30秒听到第1章，后台续播，不等全量生成 |
 | 📝 **笔记输出** | 精读音频 + 同步生成笔记存入 Obsidian |
 | 🔍 **智能推荐** | 不知道听什么？说个话题，AI 推荐书 + 高光片段 |
 | 🛡️ **内容安全** | 儿童/青少年模式自动过滤暴力、恐怖、成人内容 |
+| ⚖️ **版权合规** | 精读=种草引流（非盗版），书源自公开信息/公版书/用户正版 |
 
 ---
 
@@ -42,7 +65,7 @@ AI：推荐 → 选书 → 生成精读 → 语音输出（30秒出首段）
 git clone https://github.com/QINGcha7911/listen-book.git ~/.hermes/skills/productivity/listen-book
 
 # 依赖
-pip install -r requirements.txt
+pip install edge-tts mutagen
 sudo apt install ffmpeg   # macOS: brew install ffmpeg
 ```
 
@@ -54,6 +77,7 @@ sudo apt install ffmpeg   # macOS: brew install ffmpeg
 给我6岁的女儿解读《西游记》，亲子模式
 我想听关于自律的书
 完整解读《乔布斯传》，45分钟
+用我的声音给孩子讲故事（附上录音）
 ```
 
 ### 3. （可选）配置
@@ -72,21 +96,9 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 
 ## 📖 详细文档
 
-- [Roadmap（开发路线）](docs/ROADMAP.md)
-- [SKILL.md（技能说明，含全部参数）](SKILL.md)
-- [config.yaml（默认配置，含详细注释）](config.yaml)
-
----
-
-## 🎧 示例音频
-
-| 示例 | 年龄 | 场景 | 时长 |
-|------|------|------|------|
-| 《原子习惯》 | 成人 | 跑步 | 42秒（节选） |
-| 《小王子》 | 3-6岁 | 睡前 | 2.5分钟 |
-| 《乔布斯传》 | 成人 | 深度学习 | 1.6分钟（节选） |
-
-> 完整版示例：`examples/` 目录（节选片段，完整精读请在 Hermes 中触发技能生成）
+- [配置说明](config.yaml)
+- [Roadmap](docs/ROADMAP.md)
+- [年龄段与内容安全](SKILL.md)
 
 ---
 
@@ -95,20 +107,15 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 ```
 listen-book/
 ├── SKILL.md              # 主技能文件（含全部配置）
-├── config.yaml           # 默认配置（含详细注释）
-├── requirements.txt      # Python 依赖
-├── prompts/              # 各年龄段提示词模板
-│   ├── children/         # 0-12岁（4级）
-│   └── teen/             # 12-18岁（2级）
+├── config.yaml           # 默认配置
+├── prompts/              # 各年龄段提示词模板（children 4级 + teen 2级）
 ├── scripts/
-│   ├── book_info.py          # 书籍信息获取（豆瓣/维基/古登堡公版/用户上传）
-│   ├── book_fetcher.py       # 书籍正文获取（降级链）
-│   ├── cache_manager.py      # 缓存管理
-│   ├── content_filter.py     # 内容安全过滤器
-│   └── streaming_pipeline.py # 流式生成流水线
+│   ├── book_info.py          # 书籍信息获取（豆瓣/维基/古登堡，全合法）
+│   ├── streaming_pipeline.py # 流式生成流水线（分段+章节标记+批量）
+│   ├── content_filter.py     # 内容安全过滤器（kids/adult 双模式）
+│   └── cache_manager.py      # 三级缓存（L1脚本/L2片段/L3成品）
 ├── templates/            # 输出模板
-├── examples/             # 示例音频
-└── docs/                 # 文档
+└── examples/             # 示例音频
 ```
 
 ---
@@ -119,9 +126,9 @@ listen-book/
 
 - 🐛 遇到问题？[提 Issue](https://github.com/QINGcha7911/listen-book/issues/new?template=bug_report.yml)
 - 💡 有新想法？[提建议](https://github.com/QINGcha7911/listen-book/issues/new?template=feature_request.yml)
-- 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md) 找适合的议题，或阅读 [贡献指南](CONTRIBUTING.md)
+- 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md)
 
-**维护说明**：本项目由 [@QINGcha7911](https://github.com/QINGcha7911) 一个人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏
+**维护说明**：本项目由单人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏
 
 ---
 
