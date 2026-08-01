@@ -39,10 +39,10 @@ AI：推荐 → 选书 → 生成精读 → 语音输出（30秒出首段）
 
 ```bash
 # Hermes Agent 用户
-git clone https://github.com/你的用户名/listen-book.git ~/.hermes/skills/listen-book
+git clone https://github.com/QINGcha7911/listen-book.git ~/.hermes/skills/productivity/listen-book
 
 # 依赖
-pip install edge-tts
+pip install -r requirements.txt
 sudo apt install ffmpeg   # macOS: brew install ffmpeg
 ```
 
@@ -72,11 +72,9 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 
 ## 📖 详细文档
 
-- [中文文档](docs/README.zh-CN.md)
-- [English Docs](docs/README.en.md)
-- [配置说明](docs/CONFIGURATION.md)
-- [年龄段设计](docs/AGE_GROUPS.md)
-- [Roadmap](docs/ROADMAP.md)
+- [Roadmap（开发路线）](docs/ROADMAP.md)
+- [SKILL.md（技能说明，含全部参数）](SKILL.md)
+- [config.yaml（默认配置，含详细注释）](config.yaml)
 
 ---
 
@@ -84,11 +82,11 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 
 | 示例 | 年龄 | 场景 | 时长 |
 |------|------|------|------|
-| 《原子习惯》 | 成人 | 跑步 | 3分钟 |
+| 《原子习惯》 | 成人 | 跑步 | 42秒（节选） |
 | 《小王子》 | 3-6岁 | 睡前 | 2.5分钟 |
-| 《乔布斯传》 | 成人 | 深度学习 | 13分钟 |
+| 《乔布斯传》 | 成人 | 深度学习 | 1.6分钟（节选） |
 
-> 音频文件在 `examples/` 目录
+> 完整版示例：`examples/` 目录（节选片段，完整精读请在 Hermes 中触发技能生成）
 
 ---
 
@@ -97,13 +95,17 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 ```
 listen-book/
 ├── SKILL.md              # 主技能文件（含全部配置）
-├── config.yaml           # 默认配置
+├── config.yaml           # 默认配置（含详细注释）
+├── requirements.txt      # Python 依赖
 ├── prompts/              # 各年龄段提示词模板
 │   ├── children/         # 0-12岁（4级）
 │   └── teen/             # 12-18岁（2级）
 ├── scripts/
-│   ├── streaming_pipeline.py  # 流式生成流水线
-│   └── content_filter.py      # 内容安全过滤器
+│   ├── book_info.py          # 书籍信息获取（豆瓣/维基/古登堡公版/用户上传）
+│   ├── book_fetcher.py       # 书籍正文获取（降级链）
+│   ├── cache_manager.py      # 缓存管理
+│   ├── content_filter.py     # 内容安全过滤器
+│   └── streaming_pipeline.py # 流式生成流水线
 ├── templates/            # 输出模板
 ├── examples/             # 示例音频
 └── docs/                 # 文档
@@ -115,17 +117,17 @@ listen-book/
 
 欢迎提交 Issue 和 PR！
 
-- 🐛 遇到问题？[提 Issue](https://github.com/你的用户名/listen-book/issues/new?template=bug_report.yml)
-- 💡 有新想法？[提建议](https://github.com/你的用户名/listen-book/issues/new?template=feature_request.yml)
-- 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md) 找适合的议题
+- 🐛 遇到问题？[提 Issue](https://github.com/QINGcha7911/listen-book/issues/new?template=bug_report.yml)
+- 💡 有新想法？[提建议](https://github.com/QINGcha7911/listen-book/issues/new?template=feature_request.yml)
+- 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md) 找适合的议题，或阅读 [贡献指南](CONTRIBUTING.md)
 
-**维护说明**：本项目由 [@你的用户名](https://github.com/你的用户名) 一个人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏
+**维护说明**：本项目由 [@QINGcha7911](https://github.com/QINGcha7911) 一个人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏
 
 ---
 
 ## 📄 License
 
-[MIT](LICENSE) © 2026 你的用户名
+[MIT](LICENSE) © 2026 QINGcha7911
 
 ---
 

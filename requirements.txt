@@ -1,0 +1,8 @@
+# listen-book 依赖
+# 安装: pip install -r requirements.txt
+edge-tts>=6.1.0
+mutagen>=1.47.0
+
+# 系统依赖（非 pip）:
+# - ffmpeg: https://ffmpeg.org/download.html (或 apt install ffmpeg / brew install ffmpeg)
+# - Hermes Agent: https://hermes-agent.nousresearch.com (技能运行环境)
