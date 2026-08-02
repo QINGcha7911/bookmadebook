@@ -94,53 +94,69 @@ class CacheManager:
         self._write(path, {"content": content})
 
     # ---------- L2 TTS 片段缓存 ----------
-    def l2_key(self, text: str, voice: str, rate: str) -> str:
-        return self._md5(f"{self._md5(text)}|{voice}|{rate}")
+    def l2_key(self, text: str, voice: str, rate: str,
+               volume: str = "+0%", pitch: str = "+0Hz",
+               style_fp: str = "") -> str:
+        return self._md5(f"{self._md5(text)}|{voice}|{rate}|{volume}|{pitch}|{style_fp}")
 
-    def get_l2(self, text: str, voice: str, rate: str) -> Path | None:
+    def get_l2(self, text: str, voice: str, rate: str,
+               volume: str = "+0%", pitch: str = "+0Hz",
+               style_fp: str = "") -> Path | None:
         """返回音频文件路径（存在且非空则命中）"""
-        path = self._path("l2", self.l2_key(text, voice, rate), ".mp3")
+        key = self.l2_key(text, voice, rate, volume, pitch, style_fp)
+        path = self._path("l2", key, ".mp3")
         if path.exists() and path.stat().st_size > 0:
             entry = self._read(path.with_suffix(".meta.json"))
             if entry is None:
                 # 无 meta 但文件存在仍可用；顺手补一个
-                self.set_l2(text, voice, rate, path)
+                self.set_l2(text, voice, rate, volume, pitch, style_fp, path)
                 return path
             return path
         return None
 
-    def set_l2(self, text: str, voice: str, rate: str, audio_path: Path | str) -> None:
+    def set_l2(self, text: str, voice: str, rate: str,
+               audio_path: Path | str,
+               volume: str = "+0%", pitch: str = "+0Hz",
+               style_fp: str = "") -> None:
         """注册/保存 L2 音频文件"""
         src = Path(audio_path)
-        dest = self._path("l2", self.l2_key(text, voice, rate), ".mp3")
+        key = self.l2_key(text, voice, rate, volume, pitch, style_fp)
+        dest = self._path("l2", key, ".mp3")
         if src.exists() and src != dest:
             try:
                 src.replace(dest)
             except OSError:
                 return
-        meta = self._path("l2", self.l2_key(text, voice, rate), ".meta.json")
-        self._write(meta, {"text_md5": self._md5(text), "voice": voice, "rate": rate})
+        meta = self._path("l2", key, ".meta.json")
+        self._write(meta, {"text_md5": self._md5(text), "voice": voice, "rate": rate,
+                           "volume": volume, "pitch": pitch, "style_fp": style_fp})
 
     # ---------- L3 成品缓存 ----------
-    def l3_key(self, script_hash: str, voice: str, speed: str) -> str:
-        return self._md5(f"{script_hash}|{voice}|{speed}")
+    def l3_key(self, script_hash: str, voice: str, speed: str,
+               style_fp: str = "") -> str:
+        return self._md5(f"{script_hash}|{voice}|{speed}|{style_fp}")
 
-    def get_l3(self, script_hash: str, voice: str, speed: str) -> Path | None:
-        path = self._path("l3", self.l3_key(script_hash, voice, speed), ".mp3")
+    def get_l3(self, script_hash: str, voice: str, speed: str,
+               style_fp: str = "") -> Path | None:
+        path = self._path("l3", self.l3_key(script_hash, voice, speed, style_fp), ".mp3")
         if path.exists() and path.stat().st_size > 0:
             return path
         return None
 
-    def set_l3(self, script_hash: str, voice: str, speed: str, audio_path: Path | str) -> None:
+    def set_l3(self, script_hash: str, voice: str, speed: str,
+               audio_path: Path | str,
+               style_fp: str = "") -> None:
         src = Path(audio_path)
-        dest = self._path("l3", self.l3_key(script_hash, voice, speed), ".mp3")
+        key = self.l3_key(script_hash, voice, speed, style_fp)
+        dest = self._path("l3", key, ".mp3")
         if src.exists() and src != dest:
             try:
                 src.replace(dest)
             except OSError:
                 return
-        meta = self._path("l3", self.l3_key(script_hash, voice, speed), ".meta.json")
-        self._write(meta, {"script_hash": script_hash, "voice": voice, "speed": speed})
+        meta = self._path("l3", key, ".meta.json")
+        self._write(meta, {"script_hash": script_hash, "voice": voice,
+                           "speed": speed, "style_fp": style_fp})
 
     # ---------- 统计与清理 ----------
     def stats(self) -> dict:

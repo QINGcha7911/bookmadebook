@@ -1,0 +1,25 @@
+﻿# style_profiles/ted.yaml — TED 演讲风格配置
+id: ted
+name: "TED 演讲体"
+voice: zh-CN-YunjianNeural        # 中文主推：沉稳有力（296字/分实测）
+base_rate: "+5%"                  # 演讲主线略快，制造台上节奏
+segment_defaults:
+  rate: "+5%"
+  volume: "+0%"
+  pitch: "+0Hz"
+pause_defaults:
+  paragraph: 0.5                  # 段间停顿 s
+  hook_after: 0.7                 # 开场 hook 后
+  golden_sentence: 0.9            # 金句后
+bgm:
+  enabled: true
+  intro: assets/ted_intro.mp3     # 0-15s 音乐 sting
+  outro: assets/ted_outro.mp3     # 结尾 15s 淡出
+  swell_at: ["金句", "行动号召"]
+  duck_level: "-28dB"
+  swell_level: "-22dB"
+sfx:
+  applause: assets/applause.wav
+chapters:
+  use_ted_structure: true
+duration_estimate_chars_per_min: 296
