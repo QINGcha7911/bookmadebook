@@ -317,11 +317,13 @@ def extract_chapters_from_text(full_text: str, segments: List[str],
     return chapters
 
 async def pipeline(book_title: str, full_text: str, voice: str = "auto",
-                   rate: str = "+0%", mode: str = "full",
-                   add_chapters: bool = True, style: str = "normal") -> tuple[str, float]:
+             rate: str = "+0%", mode: str = "full",
+             add_chapters: bool = True, style: str = "normal",
+             user_key: str = None) -> tuple[str, float]:
     """完整流水线：分段→TTS→拼接→章节标记→输出
     voice="auto" 时按文本语言自动选声音（中文→晓晓，英文→Christopher）
     style="ted" 时启用导演层（解析【注解】表演标记，语速起伏+停顿）
+    user_key 用于 BGM 用户配置覆盖（内容+用户 → 选曲）
     """
     try:
         # 语言自动选声音（用户指定了具体声音则用用户的）
@@ -440,7 +442,16 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     cum_time += blk_dur + (b.pause_after or 0)
                 if golden_times:
                     print(f"🎵 检测到 {len(golden_times)} 个情感点（金句垫乐）")
+                # 内容+用户配置 → 自动选 BGM
+                try:
+                    from bgm_selector import select_bgm
+                    bgm_path, bgm_topic = select_bgm(full_text, user_key=user_key)
+                    print(f"🎵 BGM 选择：主题={bgm_topic or '通用'} → {Path(bgm_path).name}")
+                except Exception as e:
+                    print(f"⚠️ BGM 选择失败（用默认）：{e}")
+                    bgm_path = None
                 final_path = mix_bgm(final_path, CACHE_DIR,
+                                     bgm_path=bgm_path,
                                      bgm_level=bgm_level,
                                      golden_times=golden_times)
                 print(f"🎵 BGM 混音完成（电平{bgm_level}）")
@@ -498,7 +509,9 @@ if __name__ == "__main__":
     parser.add_argument("--rate", default="+0%")
     parser.add_argument("--mode", default="full", choices=["full", "progressive"])
     parser.add_argument("--style", default="normal", choices=["normal", "ted"],
-                        help="normal=普通精读 | ted=TED演讲风格（解析【停顿】【金句】【情绪】等注解）")
+                        help="TED 模式（导演层表演标记）")
+    parser.add_argument("--user", default=None,
+                        help="用户标识（用于 BGM 用户配置覆盖，如 --user alice）")
     parser.add_argument("--no-chapters", action="store_true", help="不加章节标记")
     parser.add_argument("--batch", help="批量 JSON 文件路径（jobs 数组）")
     args = parser.parse_args()
@@ -517,6 +530,7 @@ if __name__ == "__main__":
     text = Path(args.file).read_text(encoding="utf-8", errors="replace")
     out_path, duration = asyncio.run(pipeline(
         Path(args.file).stem, text, args.voice, args.rate, args.mode,
-        add_chapters=not args.no_chapters, style=args.style
+        add_chapters=not args.no_chapters, style=args.style,
+        user_key=args.user
     ))
     print(f"输出：{out_path}")

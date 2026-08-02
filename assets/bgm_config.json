@@ -1,0 +1,18 @@
+{
+  "default": "bgm_ambient.mp3",
+  "by_topic": {
+    "教育/学习": ["bgm_piano_open.mp3", "bgm_piano_close.mp3"],
+    "情感/励志": ["bgm_piano_open.mp3", "bgm_piano_close.mp3"],
+    "科技": ["bgm_ambient.mp3"],
+    "冥想/放松": ["bgm_piano_close.mp3"],
+    "商业": ["bgm_ambient.mp3"]
+  },
+  "user_overrides": {
+    "demo": {
+      "default": "bgm_piano_open.mp3",
+      "by_topic": {
+        "冥想/放松": ["bgm_piano_close.mp3"]
+      }
+    }
+  }
+}
