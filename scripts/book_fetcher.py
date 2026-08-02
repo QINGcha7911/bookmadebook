@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """listen-book 书籍获取（合规版）
 
 仅支持合法来源：
@@ -97,78 +97,7 @@ def _http_get(url: str, timeout: int = SOURCE_TIMEOUT) -> str:
 
 
 # ============================================================
-# 来源 1：微信读书
-# ============================================================
-def fetch_weread(title: str, timeout: int = SOURCE_TIMEOUT) -> BookFetchResult:
-    """微信读书 API 获取书籍内容"""
-    api_key = os.environ.get("WEREAD_API_KEY", "")
-    if not api_key:
-        raise BookFetchError("WEREAD_API_KEY 未配置，跳过微信读书")
-
-    endpoint = os.environ.get(
-        "WEREAD_API_ENDPOINT",
-        "https://i.weread.qq.com/api/agent/gateway",
-    )
-    query = urllib.parse.urlencode({"q": title, "api_key": api_key})
-    url = f"{endpoint}?{query}"
-
-    data = _http_get(url, timeout)
-    # 尝试解析 JSON，提取正文
-    try:
-        import json
-        payload = json.loads(data)
-        content = payload.get("content") or payload.get("data", {}).get("content", "")
-        author = payload.get("author") or payload.get("data", {}).get("author", "")
-        title_out = payload.get("title") or title
-        if not content:
-            raise BookFetchError("微信读书返回结果无正文内容")
-        return BookFetchResult(title_out, author, content, "weread", url)
-    except json.JSONDecodeError:
-        # 如果返回的不是 JSON，直接把响应体当文本
-        if len(data) >= MIN_CONTENT_LENGTH:
-            return BookFetchResult(title, "", data, "weread", url)
-        raise BookFetchError(f"微信读书返回异常: {data[:200]}")
-
-
-# ============================================================
-# 来源 2：安娜的档案
-# ============================================================
-def fetch_annas_archive(title: str, timeout: int = SOURCE_TIMEOUT) -> BookFetchResult:
-    """安娜的档案搜索（返回搜索结果页，提取简介/内容）"""
-    search_url = "https://annas-archive.org/search?q=" + urllib.parse.quote(title)
-    html = _http_get(search_url, timeout)
-
-    # 提取第一条结果的链接和描述
-    match = re.search(r'<a[^>]+href="(/md5/[^"]+)"[^>]*>(.*?)</a>', html, re.DOTALL)
-    if not match:
-        raise BookFetchError("安娜的档案未找到匹配书籍")
-
-    book_url = "https://annas-archive.org" + match.group(1)
-    # 解析详情页的简介
-    detail_html = _http_get(book_url, timeout)
-    # 提取出版信息和描述
-    desc_match = re.search(
-        r'<div[^>]*class="[^"]*(?:description|abstract)[^"]*"[^>]*>(.*?)</div>',
-        detail_html, re.DOTALL
-    )
-    content = ""
-    if desc_match:
-        content = re.sub(r"<[^>]+>", "", desc_match.group(1)).strip()
-
-    if not content or len(content) < MIN_CONTENT_LENGTH:
-        # 从目录/摘要里凑内容
-        for pattern in [r"<h2[^>]*>(.*?)</h2>", r"<h3[^>]*>(.*?)</h3>"]:
-            matches = re.findall(pattern, detail_html, re.DOTALL)
-            if matches:
-                content += "\n".join(m.strip() for m in matches[:20]) + "\n"
-        if not content:
-            raise BookFetchError("安娜的档案详情页无可用内容")
-
-    return BookFetchResult(title, "", content, "annas_archive", book_url)
-
-
-# ============================================================
-# 来源 3：Project Gutenberg
+# 来源 1：Project Gutenberg
 # ============================================================
 def fetch_gutenberg(title: str, timeout: int = SOURCE_TIMEOUT) -> BookFetchResult:
     """Project Gutenberg 公版书获取"""
@@ -317,8 +246,6 @@ def fetch_book(title: str, source: str = "auto") -> BookFetchResult:
         try:
             print(f"  🔍 尝试来源: {src}")
             result = {
-                "weread": fetch_weread,
-                "annas_archive": fetch_annas_archive,
                 "gutenberg": fetch_gutenberg,
             }[src](title)
             if result.valid:
@@ -340,7 +267,7 @@ def main():
     parser = argparse.ArgumentParser(description="listen-book 书籍获取降级链")
     parser.add_argument("query", nargs="?", help="书名或本地文件路径")
     parser.add_argument("--source", default="auto",
-                        choices=["auto", "weread", "annas_archive", "gutenberg", "user_file", "url"])
+                        choices=["auto", "gutenberg", "user_file", "url"])
     parser.add_argument("--file", help="本地文件路径（等价 source=user_file）")
     parser.add_argument("--url", help="远程 URL（等价 source=url）")
     parser.add_argument("--output", "-o", help="输出 Markdown 路径（默认 stdout）")
