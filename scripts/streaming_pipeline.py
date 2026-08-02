@@ -36,7 +36,65 @@ def friendly_error(e: Exception) -> str:
         return "⚠️ 文件不存在，请检查路径。"
     return f"⚠️ 生成失败：{msg[:200]}"
 
+def detect_language(text: str) -> str:
+    """检测文本主要语言：zh / en / other"""
+    import re
+    # 统计中文字符占比
+    zh_chars = len(re.findall(r'[\u4e00-\u9fff]', text))
+    en_words = len(re.findall(r'[a-zA-Z]{2,}', text))
+    total = zh_chars + en_words
+    if total == 0:
+        return "zh"
+    return "zh" if zh_chars / total > 0.3 else "en"
+
+
+# 各语言默认声音
+LANG_VOICES = {
+    "zh": "zh-CN-XiaoxiaoNeural",       # 中文默认：晓晓
+    "en": "en-US-ChristopherNeural",    # 英文默认：Christopher（沉稳男声）
+}
+
+
+def resolve_voice(voice: str, text: str) -> str:
+    """解析声音：用户显式指定则用指定的；否则按语言自动选"""
+    if voice and voice != "auto":
+        return voice
+    lang = detect_language(text)
+    return LANG_VOICES.get(lang, "zh-CN-XiaoxiaoNeural")
+
+
+def clean_markdown_for_tts(text: str) -> str:
+    """清理 markdown 符号，防止 TTS 朗读出 #、*、- 等字符
+    标题行（# 开头）整个删除，不朗读章节标题，直接进入正文"""
+    import re
+    # 1. 标题行整个删除（# 开头的一行，含标题文字）
+    text = re.sub(r'^#{1,6}\s*.*$', '', text, flags=re.MULTILINE)
+    # 2. 去掉粗体/斜体符号 (** **, * *)
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    text = re.sub(r'(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)', r'\1', text)
+    # 3. 去掉行内代码和代码块
+    text = re.sub(r'`{1,3}.*?`{1,3}', '', text, flags=re.DOTALL)
+    # 4. 去掉链接 [text](url) → text
+    text = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text)
+    # 5. 去掉列表符号 (-, *, 1.)
+    text = re.sub(r'^\s*[-*•]\s+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^\s*\d+\.\s+', '', text, flags=re.MULTILINE)
+    # 6. 去掉引用符 (>)
+    text = re.sub(r'^>\s*', '', text, flags=re.MULTILINE)
+    # 7. 去掉分隔线 (---)
+    text = re.sub(r'^---+$', '', text, flags=re.MULTILINE)
+    # 8. 去掉 markdown 表格竖线和表头符号
+    text = re.sub(r'\|', '，', text)
+    # 9. 去掉"（共鸣式，40秒）"这类制作说明括号
+    text = re.sub(r'[（(](?:共鸣式|共情式|约\d+秒|\d+分钟|开场|结尾)[^）)]*[）)]', '', text)
+    # 10. 压缩多余空行
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
+
 def smart_split_text(text: str, max_chars: int = MAX_SEGMENT_CHARS) -> List[str]:
+    # 先清理 markdown 符号，防止 TTS 朗读 # * - 等字符
+    text = clean_markdown_for_tts(text)
     segments = []
     remaining = text.strip()
     while len(remaining) > max_chars:
@@ -165,11 +223,15 @@ def extract_chapters_from_text(full_text: str, segments: List[str],
         cursor = end
     return chapters
 
-async def pipeline(book_title: str, full_text: str, voice: str = "zh-CN-XiaoxiaoNeural",
+async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                    rate: str = "+0%", mode: str = "full",
                    add_chapters: bool = True) -> tuple[str, float]:
-    """完整流水线：分段→TTS→拼接→章节标记→输出"""
+    """完整流水线：分段→TTS→拼接→章节标记→输出
+    voice="auto" 时按文本语言自动选声音（中文→晓晓，英文→Christopher）
+    """
     try:
+        # 语言自动选声音（用户指定了具体声音则用用户的）
+        voice = resolve_voice(voice, full_text)
         # L3 缓存检查
         script_hash = hashlib.md5(full_text.encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
@@ -265,7 +327,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="listen-book 流水线")
     parser.add_argument("-f", "--file", help="文本文件路径")
     parser.add_argument("-o", "--output", help="输出文件路径")
-    parser.add_argument("--voice", default="zh-CN-XiaoxiaoNeural")
+    parser.add_argument("--voice", default="auto",
+                        help="声音（auto=按语言自动选，或指定如 zh-CN-XiaoxiaoNeural / en-US-ChristopherNeural）")
     parser.add_argument("--rate", default="+0%")
     parser.add_argument("--mode", default="full", choices=["full", "progressive"])
     parser.add_argument("--no-chapters", action="store_true", help="不加章节标记")
