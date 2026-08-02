@@ -1,231 +1,205 @@
 ---
 name: listen-book
-version: 2.1.0
+version: 2.2.0
 description: |-
-  AI 书籍精读音频生成 — 覆盖全年龄段（3岁+），支持多场景、多声音、多深度。
-  用户说一句话 → AI推荐书籍 → 生成精读脚本 → TTS转语音 → 输出MP3+笔记。
-  专为跑步/开车/通勤/睡前/亲子等场景设计。
-  触发词：解读、精读、推荐书、听书、讲书、有声书、朗读、读书、语音、听、讲故事、书评、拆书。
+  AI 书籍精读音频生成 — 全年龄段（3岁+），多场景、多声音、多深度。
+  用户一句话 → 推荐书籍 → 生成精读脚本 → TTS转音频 → 交付 MP3 + 笔记。
+  触发词：解读、精读、推荐书、听书、讲书、有声书、朗读、读书、语音、听、讲故事、书评、拆书。  
 requires: python>=3.10
-settings:
-  age_group: adult              # toddler | preschool | primary_lower | primary_upper
-                                # | middle_school | high_school | adult
-  scene: commute                # commute | running | bedtime | parent_child | deep_learning | lunch_break
-  depth: standard               # quick | standard | deep | full
-  duration: auto                # auto=自动匹配, 或指定分钟数
-  voice: auto                   # auto(按年龄自动), 或指定: xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
-  speed: auto                   # auto(按年龄), 或指定: 0.8~1.5
-  language: zh                  # zh(中文) | en(英文)
-  recommend_count: 3            # 推荐数量 3-5
-  output_format: audio          # audio | script | both
+
+---
+# listen-book — AI 执行指南
+
+> 本文档是给 AI 的执行指南，不是用户手册。拿到任务后按以下流程走。
+
 ---
 
-# listen-book — AI 书籍精读音频生成
+## 一、执行流程总览
 
-## 能力概述
+Step 1: 解析用户意图 → 确定参数（书/年龄/场景/深度/声音）
+Step 2: 获取书籍信息 → book_info.py（公开信息）或 book_fetcher.py（全文）
+Step 3: 生成精读脚本 → AI 生成（按年龄段选择 prompts/ 模板）
+Step 4: TTS 转音频 → streaming_pipeline.py（分段生成→拼接→章节标记）
+Step 5: 交付用户 → MP3 文件 + Markdown 文稿
 
-把你的书变成耳朵的盛宴。全年龄段覆盖，多种场景适配。
+---
 
-```
-你说「我想听关于自律的书，跑步时听」
-  → AI推荐3本，每本附打动人的片段
-  → 你选一本
-  → AI生成精读脚本（按年龄段和场景定制）
-  → TTS转为语音
-  → 输出MP3 + 笔记文稿
-```
+## 二、Step 1 — 解析用户意图
 
-## 年龄段分级
+从用户输入中提取以下参数，缺失的用默认值：
 
-| 配置值 | 年龄 | 推荐声音 | 语速 | 单次时长 |
-|--------|------|---------|------|---------|
-| `toddler` | 0-3岁 | 小双(童趣) | -20% | ≤5min |
-| `preschool` | 3-6岁 | 晓晓(温柔) | -15% | ≤8min |
-| `primary_lower` | 6-9岁 | 晓晓(温暖) | -10% | ≤12min |
-| `primary_upper` | 9-12岁 | 云希(阳光) | -5% | ≤15min |
-| `middle_school` | 12-15岁 | 云健(沉稳) | 正常 | ≤18min |
-| `high_school` | 15-18岁 | 云扬(浑厚) | 正常 | ≤25min |
-| `adult` | 18+ | 晓晓(默认) | 可调 | ≤30min |
+| 参数 | 配置键 | 默认值 | 如何从用户语言推断 |
+|------|--------|--------|-------------------|
+| 书名/主题 | book_title | 必填 | 直接提到的书名，或要求推荐某主题 |
+| 年龄段 | age_group | adult | "6岁"→primary_lower, "初中"→middle_school, "睡前"→bedtime场景 |
+| 场景 | scene | commute | "跑步"→running, "睡前"→bedtime, "和孩子"→parent_child |
+| 深度 | depth | standard | "速览"→quick, "深度"→deep, "完整"→full |
+| 声音 | voice | 按年龄自动选 | "男声"→yunxi, "温柔"→xiaoxiao |
+| 语速 | speed | 按年龄自动设 | 可被 age_group 覆盖 |
+| 时长(分钟) | duration | auto | 用户说了具体分钟数则设置 |
+| 交付模式 | delivery_mode | progressive | "完整"→full, 默认→progressive |
+| 输出类型 | output_format | audio | "只要文稿"→script, "都要"→both |
+年龄段口语映射表（完整映射见 config.yaml）：
+- 0-3岁/toddler, 3-6岁/preschool, 6-9岁/primary_lower, 9-12岁/primary_upper
+- 12-15岁/middle_school, 15-18岁/high_school, 18+/adult
 
-## 场景预设
+场景口语映射表：
+- 通勤/地铁/开车→commute, 跑步/运动→running, 睡前/晚安→bedtime
+- 亲子/陪孩子→parent_child, 学习/研究→deep_learning, 午休→lunch_break
 
-| 场景 | 说明 | 推荐时长 | 风格 |
-|------|------|---------|------|
-| `commute` | 通勤路上 | 10-15min | 信息密度高 |
-| `running` | 跑步/运动 | 5-8min | 节奏感强，金句密集 |
-| `bedtime` | 睡前听 | 8-12min | 语速慢，语气舒缓 |
-| `parent_child` | 亲子共听 | 5-10min | 互动性强 |
-| `deep_learning` | 深度学习 | 20-30min | 逐章精讲 |
-| `lunch_break` | 午休碎片 | 5-8min | 轻量精华 |
+---
 
-## 声音克隆（免费 | 让父母用自己的声音给孩子讲故事）
+## 三、Step 2 — 获取书籍信息
 
-### 三步搞定（约5分钟）
+### 3.1 确定获取策略
 
-```
-第1步：用手机录一段话（20-30秒）
-  「你好，我是爸爸/妈妈，今天给你讲一个小故事…」
-  （找个安静的地方录，效果最好）
+用户提供了文件/文本？→ 直接用用户提供内容（最优先）
+否：判断是否公版书 → 公版书：用 book_fetcher.py 获取全文（古登堡计划）→ 现代书：用 book_info.py 获取公开信息（豆瓣+维基）
 
-第2步：把录音发给我们，说「用我的声音」
+### 3.2 调用脚本
 
-第3步：之后所有给孩子的内容，都会用你的声音讲
-```
+# 现代版权书：获取公开信息（简介+评分+金句+评价）
+python scripts/book_info.py "书名"
 
-**全程免费，只需要录一段音。** 适合想给孩子更亲近体验的家长。
-- 不想折腾？默认的"晓晓慢速讲故事"效果也很好，开箱即用。
-- 配置细节在 `config.yaml` 的 `voice_clone` 节，一般不用改。
+# 公版书：获取完整文本
+python scripts/book_fetcher.py "书名"
 
-### 调用示例
-```
-# 配置父母声音
-用我的声音给孩子讲故事（附上录音文件）
+# 用户提供文件
+python scripts/book_info.py --file /path/to/book.txt
 
-# 用父母声音给孩子解读
-用爸爸的声音给5岁的孩子解读《小王子》，亲子模式
-```
+# 如果用户说"推荐书"（没有指定具体书）
+→ 先用 LLM 按 age_group 的 recommendation_categories 推荐 3 本书
+→ 用户选择后，再走上述获取流程
 
-## 场景口语映射（用户口语 → 配置值）
+### 3.3 合规原则
+- 精读是"种草引流"，不是盗版替代
+- 现代书只用公开信息（豆瓣简介+维基百科+公开书评）
+- 公版书可获取全文（作者逝世超50年）
+- 音频结尾附购书链接（现代书）
 
-| 用户口语 | 配置值 | 说明 |
-|---------|--------|------|
-| 通勤/上班路上/地铁/公交/开车 | `commute` | 通勤路上 |
-| 跑步/运动/健身/锻炼/走路 | `running` | 跑步运动 |
-| 睡前/睡觉前/晚上/晚安 | `bedtime` | 睡前听 |
-| 和孩子/陪孩子/亲子/宝宝/小朋友 | `parent_child` | 亲子共听 |
-| 学习/深度学习/研究/上课 | `deep_learning` | 深度学习 |
-| 午休/吃饭时/碎片时间 | `lunch_break` | 午休碎片 |
+---
 
-## 年龄段口语映射（用户口语 → 配置值）
+## 四、Step 3 — 生成精读脚本
 
-| 用户口语 | 配置值 | 年龄 |
-|---------|--------|------|
-| 婴儿/宝宝/1岁/2岁/3岁 | `toddler` | 0-3岁 |
-| 幼儿园/学前班/4岁/5岁/6岁 | `preschool` | 3-6岁 |
-| 一年级/二年级/三年级/7岁/8岁/9岁 | `primary_lower` | 6-9岁 |
-| 四年级/五年级/六年级/10岁/11岁/12岁 | `primary_upper` | 9-12岁 |
-| 初中/初一/初二/初三/13岁/14岁/15岁 | `middle_school` | 12-15岁 |
-| 高中/高一/高二/高三/16岁/17岁/18岁 | `high_school` | 15-18岁 |
-| 自己/成人/大人 | `adult` | 18+ |
+### 4.1 选择提示词模板
 
-## 内容安全（双模式）
+| age_group | 模板路径 | 特殊处理 |
+|-----------|---------|---------|
+| toddler | prompts/children/toddler_mode.txt | 无观点结构，纯故事+互动 |
+| preschool | prompts/children/preschool_mode.txt | 简单情节+提问 |
+| primary_lower | prompts/children/primary_lower_mode.txt | 故事+知识点 |
+| primary_upper | prompts/children/primary_upper_mode.txt | 多观点+案例 |
+| middle_school | prompts/teen/middle_school_mode.txt | 批判性思考 |
+| high_school | prompts/teen/high_school_mode.txt | 深度分析 |
+| adult | prompts/standard_mode.txt | 完整精读结构 |
+深度等级覆盖：depth = quick/standard/deep/full，但 age_group 会限制可选深度。
+- toddler/preschool 只支持 standard
+- primary_lower/upper 支持 quick/standard/deep
+- middle_school/high_school/adult 支持全部
 
-根据听众年龄自动选择内容过滤级别：
+### 4.2 内容安全过滤
 
-| 模式 | 适用 | 过滤内容 | 行为 |
-|------|------|---------|------|
-| 🧒 **kids 模式** | 0-18岁所有年龄段 | 暴力、死亡、恐怖、成人、毒品、犯罪、敏感政治 | 自动替换为安全内容，并提示用户 |
-| 👨 **adult 模式** | 18+成人 | 仅违法内容（贩毒、制毒等） | 提示用户内容可能不合法 |
+在生成脚本后、送入 TTS 前，必须过内容安全过滤：
 
-**自动映射：** 设置 `age_group` 后自动匹配过滤模式，无需手动配置。
-- `age_group=toddler~high_school` → 自动使用 kids 严格模式
-- `age_group=adult` → 自动使用 adult 宽松模式
+from scripts.content_filter import ContentFilter
+mode = "kids" if age_group != "adult" else "adult"
+cf = ContentFilter(mode)
+result = cf.check(script_text)
 
-**亲子提醒：** kids 模式下，检测到恋爱/婚姻等话题时，会额外提醒家长"建议陪听"。
+if not result["safe"]:
+    # 替换不适内容为安全表述，重新生成该段
+elif "warnings" in result:
+    # 提醒家长陪听
 
-**手动覆盖：** 如需强制指定，可用 `content_safety_mode=kids` 或 `content_safety_mode=adult`。
+### 4.3 脚本输出格式
 
-## 书籍来源（合规版）
+生成 JSON 格式的结构化脚本，segments 的 text 拼接为完整文本送入 TTS。
 
-**产品理念：精读音频是"种草引流"，不是盗版替代。用户听了精读 → 被种草 → 购买原书。**
+---
 
-| 优先级 | 来源 | 说明 |
-|--------|------|------|
-| 1️⃣ | **豆瓣公开信息**（简介/评分） | 自动获取，全合法 |
-| 2️⃣ | **维基百科**（作者背景/概述） | 自动获取，全合法 |
-| 3️⃣ | **古登堡计划**（仅公版书） | 自动获取，作者逝世超50年 |
-| 4️⃣ | **用户提供**（上传正版/粘贴文本） | 完全合法，用户自己购买的书 |
+## 五、Step 4 — TTS 转音频
 
-**已移除影子图书馆来源**（安娜的档案等），不碰版权灰色地带。
+### 5.1 调用流水线
 
-### 公版书自动识别
-内置常见公版书清单（四大名著、论语、孙子兵法、小王子、老人与海等60+本）+ 作者逝世年份检测，公版书可获取完整文本，现代书用公开简介生成精读。
+python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 
-### 现代版权书处理
-- 自动从豆瓣获取简介/评分/评价 → 生成"种草式精读"
-- 音频结尾附**购书链接**（京东/当当），实现"听了→想买→去买"转化
-- 用户如有正版电子书，也可上传获取更深度精读
+### 5.2 声音选择逻辑
 
-## 交付模式（用户可选）
+| age_group | 声音 | 语速 |
+|-----------|------|------|
+| toddler | zh-CN-XiaoshuangNeural | -20% |
+| preschool | zh-CN-XiaoxiaoNeural | -15% |
+| primary_lower | zh-CN-XiaoxiaoNeural | -10% |
+| primary_upper | zh-CN-YunxiNeural | -5% |
+| middle_school | zh-CN-YunjianNeural | +0% |
+| high_school | zh-CN-YunyangNeural | +0% |
+| adult | zh-CN-XiaoxiaoNeural | +0% |
+### 5.3 流水线内部处理（自动）
 
-两种交付方式满足不同用户的偏好：
+1. smart_split_text() → 按自然断点分3000字以内段
+2. 逐段调 edge-tts 生成 MP3
+3. 三级缓存检查（L1脚本/L2片段/L3成品）
+4. ffmpeg 拼接所有段
+5. add_chapter_markers() → 写入 ID3v2 章节标记
+6. 输出最终 MP3
 
-| 模式 | 配置值 | 用户说 | 体验 |
-|------|--------|--------|------|
-| 🚀 **流式** | `mode=progressive` | 「解读乔布斯，45分钟」 | **30秒听到第1章**，后续在后台自动生成并续播，全程播放不间断 |
-| 📦 **完整版** | `mode=full` | 「完整解读乔布斯，45分钟」 | 等一段时间，**一次性拿到完整45分钟音频文件** |
+---
 
-### 选择建议
+## 六、Step 5 — 交付用户
 
-| 你的时间 | 推荐模式 | 理由 |
-|---------|---------|------|
-| ⏰ 现在就要听 | **流式** | 30秒出第一段，不等全部写完 |
-| 🧘 不着急慢慢听 | **流式** | 边听边生成，无感知等待 |
-| 📥 想下载保存 | **完整版** | 一次性拿到完整文件 |
-| 🏃 跑步时听 | **流式** | 先开跑，第一章生成后自动播放 |
+| 文件类型 | 路径 | 说明 |
+|---------|------|------|
+| MP3 音频 | ~/listen-book/{书名}_{timestamp}.mp3 | 主交付物 |
+| Markdown 文稿 | 同目录 .md 后缀 | 用 templates/script_doc.md.j2 渲染 |
+| Obsidian 笔记 | Obsidian vault（如配置） | 自动存入 |
+交付模式：
+- progressive（默认）：30秒内出第1章音频，后台继续生成后续章节
+- full：等全部生成完一次性交付
 
-### 调用示例
+---
 
-```
-# 流式（默认）
-解读乔布斯传，45分钟
+## 七、关键脚本说明
 
-# 完整版
-完整解读乔布斯传，45分钟
-一次性给我《原子习惯》的45分钟精读
+| 脚本 | 功能 | 调用时机 |
+|------|------|---------|
+| scripts/book_info.py | 获取书籍公开信息（豆瓣+维基） | Step 2，现代书 |
+| scripts/book_fetcher.py | 获取书籍全文（多源降级） | Step 2，公版书 |
+| scripts/content_filter.py | 内容安全过滤 | Step 3 生成脚本后 |
+| scripts/streaming_pipeline.py | TTS 分段生成→拼接→章节标记 | Step 4 |
+| scripts/cache_manager.py | 三级缓存（被 pipeline 自动调用） | 内部依赖 |
+脚本间依赖关系：
+book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filter.py 检查 → streaming_pipeline.py → cache_manager.py → 输出 MP3 + 文稿
 
-# 带参数
-/解读 乔布斯传 mode=full duration=45
+---
 
-### 一句话调用（最简单）
-```
-帮我解读《原子习惯》
-我想听关于投资的书，跑步时听
-给我女儿解读《小王子》，她6岁
-```
+## 八、错误处理
 
-### 带参数调用
-```
-深度解读《思考快与慢》，30分钟，沉稳男声
-给8岁的孩子速览《西游记》，亲子模式
-```
+| 错误场景 | 处理方式 |
+|---------|---------|
+| 书籍获取失败 | 告知用户，建议上传正版电子书或粘贴文本 |
+| 内容安全拦截 | 替换不适内容，提示用户已自动调整 |
+| TTS 连接失败 | 重试2次，仍失败则提示检查网络 |
+| 音频拼接失败 | 检查 ffmpeg 安装，提示用户 |
+| 缓存命中 | 跳过生成，直接使用缓存文件 |
 
-### 场景模式
-```
-/book scene=running topic=自律
-/book age=preschool scene=bedtime
-/book recommend topic=心理学 depth=deep
-```
+---
 
-## 配置文件
+## 九、配置文件
 
-详见 `config.yaml`，支持全量参数自定义。
+详见 config.yaml（带【常用】/【高级】标记），核心关注：
+- age_group.default — 默认年龄段
+- scene.default — 默认场景
+- delivery_mode.mode — 交付模式
+- tts.default_engine — TTS 引擎
+- content_safety.mode — 内容安全模式
 
-## 深度等级
+详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。
 
-| 等级 | 时长 | 字数 | 内容结构 |
-|------|------|------|---------|
-| quick | 3-5min | 300-500 | 结论+1案例 |
-| standard | 7-10min | 700-1000 | 开场+3~4观点+金句+总结 |
-| deep | 12-20min | 1200-2000 | 观点+论据链+对比+批判+行动 |
-| full | 20-30min | 2000-3000 | 逐章精讲+多视角+扩展 |
+## 十、文件结构
 
-## 文件结构
-
-```
 listen-book/
-├── SKILL.md              ← 本文件
-├── config.yaml           ← 全局配置（年龄段/声音/场景/获取/TTS）
-├── prompts/              ← 各年龄段提示词模板
-│   ├── children/         ← 3-12岁
-│   └── teen/             ← 12-18岁
-├── templates/            ← 输出模板
-├── scripts/              ← 工具脚本
-└── references/           ← 设计文档
-```
-
-## 输出
-
-- **音频**：MP3文件（edge-tts默认，支持Azure/OpenAI TTS切换）
-- **文稿**：精读脚本Markdown（自动存入Obsidian）
-- **笔记**：要点卡片（方便回顾）
+├── SKILL.md                    ← 本文件（AI执行指南）
+├── config.yaml                 ← 全局配置（【常用】+【高级】标记）
+├── references/EXECUTION_GUIDE.md  ← 详细执行参考
+├── prompts/                    ← 精读脚```
+## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构listen-book/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）```
