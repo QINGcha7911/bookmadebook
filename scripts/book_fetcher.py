@@ -1,11 +1,12 @@
 ﻿#!/usr/bin/env python3
-"""listen-book 书籍获取降级链
+"""listen-book 书籍获取（合规版）
 
-多来源书籍内容获取，按优先级自动降级：
-1. 微信读书 API（如果配置了 WEREAD_API_KEY）
-2. 安娜的档案（annas-archive.org 搜索）
-3. Project Gutenberg（公版书）
-4. 用户提供的文件/URL
+仅支持合法来源：
+1. Project Gutenberg（公版书，作者逝世超50年）
+2. 用户提供的文件/URL（正版电子书/粘贴文本）
+
+现代版权书请用 book_info.py（豆瓣公开信息/维基百科）。
+已移除影子图书馆（安娜的档案）和微信读书抓取。
 
 要求：
 - 每个来源 15 秒超时，全局 60 秒
@@ -14,10 +15,10 @@
 - 失败自动降级到下一个来源
 
 用法：
-    python book_fetcher.py "书名"                    # 自动降级获取
+    python book_fetcher.py "书名"                    # 公版书自动获取
     python book_fetcher.py --file xxx.pdf            # 本地文件
     python book_fetcher.py --url https://...         # 远程 URL
-    python book_fetcher.py --source weread "书名"    # 指定来源
+    python book_fetcher.py --source gutenberg "书名"  # 指定来源
 """
 import argparse
 import hashlib
@@ -290,23 +291,22 @@ def _convert_ebook(p: Path) -> str:
 # 统一入口
 # ============================================================
 def fetch_book(title: str, source: str = "auto") -> BookFetchResult:
-    """按优先级获取书籍，失败自动降级
+    """按优先级获取书籍，失败自动降级（合规版）
 
-    source: auto | weread | annas_archive | gutenberg | user_file | url
+    source: auto | gutenberg | user_file | url
+    仅支持合法来源：古登堡计划（公版书）、用户提供文件/URL。
+    现代版权书请用 book_info.py 获取公开信息（豆瓣/维基）。
     """
     if source == "user_file":
         return fetch_user_file(title)
     if source == "url":
         return fetch_user_url(title)
-    if source not in ("auto", "weread", "annas_archive", "gutenberg"):
-        raise BookFetchError(f"未知来源: {source}")
-
-    order = {
-        "weread": ["weread", "annas_archive", "gutenberg"],
-        "annas_archive": ["annas_archive", "gutenberg"],
-        "gutenberg": ["gutenberg"],
-        "auto": ["weread", "annas_archive", "gutenberg"],
-    }[source]
+    if source == "gutenberg":
+        order = ["gutenberg"]
+    elif source == "auto":
+        order = ["gutenberg"]
+    else:
+        raise BookFetchError(f"未知来源: {source}（合规版仅支持 gutenberg/user_file/url）")
 
     errors = []
     start = time.time()
