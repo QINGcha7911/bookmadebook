@@ -202,4 +202,8 @@ listen-book/
 ├── config.yaml                 ← 全局配置（【常用】+【高级】标记）
 ├── references/EXECUTION_GUIDE.md  ← 详细执行参考
 ├── prompts/                    ← 精读脚```
-## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构listen-book/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）```
+## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构listen-book/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）
+---
+
+> **AIGC 合规声明**：本技能生成的内容由 AI 生成，请遵循相关法律法规及《人工智能生成合成内容标识办法》使用与传播。生成音频请在开头/结尾标注"本音频由AI生成"。
+
