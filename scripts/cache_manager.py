@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """listen-book 三级缓存管理器
 
 L1 脚本缓存:  key = book_hash + age_group + scene + depth
