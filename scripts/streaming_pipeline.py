@@ -317,9 +317,10 @@ def extract_chapters_from_text(full_text: str, segments: List[str],
     return chapters
 
 async def pipeline(book_title: str, full_text: str, voice: str = "auto",
-             rate: str = "+0%", mode: str = "full",
-             add_chapters: bool = True, style: str = "normal",
-             user_key: str = None) -> tuple[str, float]:
+                   rate: str = "+0%", mode: str = "full",
+                   add_chapters: bool = True, style: str = "normal",
+                   target_minutes: float = None,
+                   user_key: str = None) -> tuple[str, float]:
     """完整流水线：分段→TTS→拼接→章节标记→输出
     voice="auto" 时按文本语言自动选声音（中文→晓晓，英文→Christopher）
     style="ted" 时启用导演层（解析【注解】表演标记，语速起伏+停顿）
@@ -328,6 +329,25 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
     try:
         # 语言自动选声音（用户指定了具体声音则用用户的）
         voice = resolve_voice(voice, full_text)
+
+        # 目标时长校验（核心：时长是目标，语速是常量，字数是变量）
+        if target_minutes:
+            try:
+                from speed_probe import get_speed, calc_target_chars
+                measured_speed = get_speed(voice, rate)
+                # 去除 markdown 标记后的有效字数
+                import re as _re
+                clean_text = _re.sub(r'[#*`>|\-\n]', '', full_text)
+                actual_chars = len(clean_text.replace(' ', ''))
+                needed_chars = calc_target_chars(target_minutes, measured_speed)
+                est_minutes = actual_chars / measured_speed
+                print(f"📐 目标 {target_minutes}分钟 | 实测语速 {measured_speed:.0f}字/分 | "
+                      f"当前 {actual_chars}字 ≈ {est_minutes:.1f}分钟 | 需要 {needed_chars}字")
+                if est_minutes < target_minutes * 0.9:
+                    print(f"⚠️ 内容不足：当前约{est_minutes:.0f}分钟，距目标还差"
+                          f"{needed_chars - actual_chars}字，请补充内容后重试")
+            except Exception as e:
+                print(f"⚠️ 时长预估失败（继续生成）：{e}")
 
         # TED 模式：检测到注解标记则启用导演层
         ted_blocks = None
@@ -512,6 +532,8 @@ if __name__ == "__main__":
                         help="TED 模式（导演层表演标记）")
     parser.add_argument("--user", default=None,
                         help="用户标识（用于 BGM 用户配置覆盖，如 --user alice）")
+    parser.add_argument("--target-minutes", type=float, default=None,
+                        help="目标时长(分钟)：生成前按实测语速校验字数是否达标")
     parser.add_argument("--no-chapters", action="store_true", help="不加章节标记")
     parser.add_argument("--batch", help="批量 JSON 文件路径（jobs 数组）")
     args = parser.parse_args()
@@ -531,6 +553,7 @@ if __name__ == "__main__":
     out_path, duration = asyncio.run(pipeline(
         Path(args.file).stem, text, args.voice, args.rate, args.mode,
         add_chapters=not args.no_chapters, style=args.style,
+        target_minutes=args.target_minutes,
         user_key=args.user
     ))
     print(f"输出：{out_path}")
