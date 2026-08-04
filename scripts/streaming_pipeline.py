@@ -360,8 +360,10 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 print(f"⚠️ 导演层解析失败，回退普通模式：{e}")
                 ted_blocks = None
 
-        # L3 缓存检查
-        script_hash = hashlib.md5(full_text.encode()).hexdigest()
+        # L3 缓存检查（key 基于清理后文本，防止旧版含标题内容命中缓存）
+        import re as _re3
+        cache_text = _re3.sub(r'^#{1,6}\s*.*$', '', full_text, flags=_re3.MULTILINE)
+        script_hash = hashlib.md5(cache_text.encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:

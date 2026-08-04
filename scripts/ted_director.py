@@ -50,6 +50,13 @@ class TTSBlock:
 
 def parse_annotations(text: str, default_voice: str = "zh-CN-YunjianNeural") -> List[TTSBlock]:
     """解析带注解的演讲稿，返回块级 TTS 配置列表"""
+    # 先清理 markdown：标题行(#开头)整行删除 + 其他符号清理，防止被朗读
+    import re as _re
+    text = _re.sub(r'^#{1,6}\s*.*$', '', text, flags=_re.MULTILINE)  # 标题行整行删
+    text = text.replace('**', '').replace('*', '').replace('`', '')  # 粗体/斜体/代码
+    text = _re.sub(r'^\s*[-*]\s+', '', text, flags=_re.MULTILINE)    # 列表符号
+    text = _re.sub(r'^\s*>\s*', '', text, flags=_re.MULTILINE)       # 引用符号
+    text = _re.sub(r'\|', ' ', text)                                  # 表格竖线
     blocks: List[TTSBlock] = []
     current = TTSBlock(text="", voice=default_voice)
     pending_pause = 0.0
