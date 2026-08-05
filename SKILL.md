@@ -107,7 +107,35 @@ python scripts/book_info.py --file /path/to/book.txt
 | middle_school | prompts/teen/middle_school_mode.txt | 批判性思考 |
 | high_school | prompts/teen/high_school_mode.txt | 深度分析 |
 | adult | prompts/standard_mode.txt | 完整精读结构 |
-深度等级覆盖：depth = quick/standard/deep/full，但 age_group 会限制可选深度。
+
+### 4.2 内容质量铁律（用户亲定，必须遵守）
+
+**① 内容量诚实告知**
+- 生成前用 `--target-minutes` 校验：实测语速 × 目标分钟 = 需要字数
+- **内容不足时直接报错停止**，明确告知用户：
+  - 当前稿子约 X 分钟，距目标还差 X 字
+  - 选项：①补充更多书中真实情节 ②缩短目标时长 ③换书
+- **禁止默默生成注水版**（用重复内容/空话凑时长）
+
+**② 零重复规则**
+- 金句只出现一次（正文讲过就不再进金句集锦）
+- 同一情节/场景全稿只讲一次，禁止"换个说法再讲一遍"
+- 每个段落必须有信息增量（新情节/新人物/新细节）
+- 写完自检：发现"前面说过/正如刚才提到"或意思重复的内容，删掉
+- 宁短勿滥：内容不够就诚实写短，绝不注水
+
+**③ 讲书结构（书籍90%+解读10%）**
+- 90% 篇幅讲书里的内容（情节/人物/故事/细节/对话）
+- ≤10% 解读（段落结尾1-2句点题，全书结尾总结）
+- 每段开头先亮主旨（TED式分段主旨），不平铺直叙
+
+**④ 抑扬顿挫与本地化**
+- 情绪标注14种（开心/悲伤/紧张/温柔/坚定/疑惑/神秘/爆发/轻声等），每段至少2-3个情绪
+- 写作语言符合目标国家的表达习惯（日文ねよ/敬语，英文口语化，中文语气词）
+
+---
+
+**深度等级覆盖**：depth = quick/standard/deep/full，但 age_group 会限制可选深度。
 - toddler/preschool 只支持 standard
 - primary_lower/upper 支持 quick/standard/deep
 - middle_school/high_school/adult 支持全部
