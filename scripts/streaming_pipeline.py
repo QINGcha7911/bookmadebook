@@ -37,11 +37,16 @@ def friendly_error(e: Exception) -> str:
     return f"⚠️ 生成失败：{msg[:200]}"
 
 def detect_language(text: str) -> str:
-    """检测文本主要语言：zh / en / other"""
+    """检测文本主要语言：zh / en / ja / other"""
     import re
     # 统计中文字符占比
     zh_chars = len(re.findall(r'[\u4e00-\u9fff]', text))
+    # 统计日文假名
+    ja_chars = len(re.findall(r'[\u3040-\u30ff\u31f0-\u31ff]', text))
     en_words = len(re.findall(r'[a-zA-Z]{2,}', text))
+    # 日文优先（假名是日文独有）
+    if ja_chars > 0 and ja_chars >= zh_chars * 0.3:
+        return "ja"
     total = zh_chars + en_words
     if total == 0:
         return "zh"
@@ -52,15 +57,53 @@ def detect_language(text: str) -> str:
 LANG_VOICES = {
     "zh": "zh-CN-XiaoxiaoNeural",       # 中文默认：晓晓
     "en": "en-US-ChristopherNeural",    # 英文默认：Christopher（沉稳男声）
+    "ja": "ja-JP-NanamiNeural",         # 日文默认：Nanami（日本女声）
 }
+
+# 内容类型 → 声音映射（优化①：依据内容定声音）
+CONTENT_VOICES = [
+    ("童话", ["童话", "睡前", "小王子", "丑小鸭", "小红帽", "格林", "安徒生", "儿童", "宝宝", "宝贝"],
+     "zh-CN-XiaoxiaoNeural", "晓晓：温柔慢速，适合儿童/童话"),
+    ("儿童科普", ["为什么", "十万个", "百科", "科普", "好奇"],
+     "zh-CN-XiaoyiNeural", "晓伊：阳光活泼，适合儿童科普"),
+    ("职场", ["职场", "汇报", "管理", "会议", "同事", "老板", "工作", "项目", "制度", "体制", "上班"],
+     "zh-CN-YunjianNeural", "云健：沉稳专业，适合职场/干货"),
+    ("悬疑", ["悬疑", "谋杀", "案件", "侦探", "推理", "秘密", "真相", "阴谋", "死亡"],
+     "zh-CN-YunyangNeural", "云扬：低沉神秘，适合悬疑/推理"),
+    ("励志", ["励志", "加油", "奋斗", "梦想", "坚持", "不要放弃", "热血", "努力", "成功"],
+     "zh-CN-YunxiNeural", "云希：阳光有力，适合励志/燃向"),
+    ("情感", ["爱情", "恋爱", "喜欢", "分手", "想念", "心动", "告白", "婚姻", "泪", "哭"],
+     "zh-CN-XiaoxiaoNeural", "晓晓：温柔细腻，适合情感/爱情"),
+    ("历史", ["历史", "朝代", "皇帝", "战争", "王朝", "古代", "明朝", "唐朝", "宋朝"],
+     "zh-CN-YunjianNeural", "云健：沉稳讲述，适合历史"),
+]
+
+
+def detect_content_type(text: str) -> str:
+    """检测内容类型：童话/职场/悬疑/励志/情感/历史/通用"""
+    for ctype, keywords, voice, desc in CONTENT_VOICES:
+        for kw in keywords:
+            if kw in text:
+                return ctype
+    return "通用"
 
 
 def resolve_voice(voice: str, text: str) -> str:
-    """解析声音：用户显式指定则用指定的；否则按语言自动选"""
+    """解析声音：用户显式指定则用指定的；否则按内容类型+语言自动选（优化①）"""
     if voice and voice != "auto":
         return voice
+    # 先检测语言（日语/英语优先按语言选）
     lang = detect_language(text)
-    return LANG_VOICES.get(lang, "zh-CN-XiaoxiaoNeural")
+    if lang == "ja":
+        return "ja-JP-NanamiNeural"
+    if lang == "en":
+        return "en-US-ChristopherNeural"
+    # 中文：按内容类型匹配声音
+    ctype = detect_content_type(text)
+    for ct, kws, v, desc in CONTENT_VOICES:
+        if ct == ctype:
+            return v
+    return "zh-CN-XiaoxiaoNeural"
 
 
 def clean_markdown_for_tts(text: str) -> str:

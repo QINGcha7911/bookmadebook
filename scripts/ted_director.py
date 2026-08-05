@@ -29,6 +29,16 @@ EMOTION_MAP = {
     '低沉': {'rate': '-5%', 'volume': '-3%', 'pitch': '-8Hz'},
     '温暖': {'rate': '-3%', 'volume': '+2%', 'pitch': '+4Hz'},
     '激昂': {'rate': '+6%', 'volume': '+5%', 'pitch': '+10Hz'},
+    # 优化②：更多情绪维度（抑扬顿挫）
+    '开心': {'rate': '+4%', 'volume': '+3%', 'pitch': '+6Hz'},   # 轻快上扬
+    '悲伤': {'rate': '-6%', 'volume': '-4%', 'pitch': '-10Hz'},  # 缓慢低沉
+    '紧张': {'rate': '+7%', 'volume': '+2%', 'pitch': '+3Hz'},   # 急促
+    '温柔': {'rate': '-4%', 'volume': '-2%', 'pitch': '+2Hz'},   # 柔和
+    '坚定': {'rate': '-2%', 'volume': '+6%', 'pitch': '+5Hz'},   # 有力
+    '疑惑': {'rate': '+2%', 'volume': '+1%', 'pitch': '+12Hz'},  # 上扬疑问
+    '神秘': {'rate': '-7%', 'volume': '-5%', 'pitch': '-12Hz'},  # 低沉缓慢
+    '爆发': {'rate': '+9%', 'volume': '+7%', 'pitch': '+12Hz'},  # 强烈（少见，用于高潮）
+    '轻声': {'rate': '-8%', 'volume': '-6%', 'pitch': '-4Hz'},   # 耳语/私语
 }
 
 
