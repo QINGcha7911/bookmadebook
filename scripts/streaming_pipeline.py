@@ -387,8 +387,16 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 print(f"📐 目标 {target_minutes}分钟 | 实测语速 {measured_speed:.0f}字/分 | "
                       f"当前 {actual_chars}字 ≈ {est_minutes:.1f}分钟 | 需要 {needed_chars}字")
                 if est_minutes < target_minutes * 0.9:
-                    print(f"⚠️ 内容不足：当前约{est_minutes:.0f}分钟，距目标还差"
-                          f"{needed_chars - actual_chars}字，请补充内容后重试")
+                    raise BookToAudioError(
+                        f"📢 内容量不足：当前稿子约{est_minutes:.0f}分钟，"
+                        f"距目标{target_minutes}分钟还差{needed_chars - actual_chars}字。\n"
+                        f"请二选一：\n"
+                        f"  ① 补充更多书中的真实情节（推荐，不注水）\n"
+                        f"  ② 缩短目标时长到约{est_minutes:.0f}分钟\n"
+                        f"  ③ 换一本内容更丰富的书\n"
+                        f"注意：禁止用重复内容/空话凑时长，宁短勿滥。")
+            except BookToAudioError:
+                raise  # 内容不足：必须停止，诚实告知用户
             except Exception as e:
                 print(f"⚠️ 时长预估失败（继续生成）：{e}")
 
