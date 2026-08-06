@@ -59,18 +59,20 @@ def main():
     # 输出路径默认 ./listen-book 输出目录
     output = args.output or str(Path("listen-book-output") / f"{book}-{int(minutes)}min.mp3")
 
-    # 调用 harness 主控
+    # 调用 harness 主控（真正执行，不再只是打印）
+    # 注：harness --book 模式会自动获取书籍信息+生成速览稿；如需深度讲书稿，
+    # 先用 prompts/ 模板 + LLM 写稿，再 --file 传入。
     cmd = [sys.executable, str(SCRIPTS / "harness.py"),
-           "--file", "<讲书稿>", "--target-minutes", str(minutes),
+           "--book", book,
+           "--target-minutes", str(minutes),
            "--voice", args.voice, "--style", args.style,
            "--output", output]
-    # 注：harness 需要讲书稿文件。这里提示用户/Agent 先用 prompts 模板生成稿子，
-    # 或后续版本接入 LLM 自动写稿。
-    print(f"🔗 将调用 harness 主控: {' '.join(cmd)}")
-    print("\n📢 说明: 一键入口需要讲书稿文件（用 prompts/ 模板 + LLM 生成）。")
-    print("   完整流程: 写稿 → 质量门 → 生成 → 验证门 → 输出")
-    print(f"   生成后输出到: {output}")
-    sys.exit(0)
+    print(f"🔗 调用 harness 主控: {' '.join(cmd)}\n")
+    r = subprocess.run(cmd)
+    if r.returncode != 0:
+        print(f"\n📢 生成失败（exit {r.returncode}）。如为质量门/验证门拦截，请补充内容或调整时长。")
+        sys.exit(r.returncode)
+    print(f"\n✅ 完成！音频输出到: {output}")
 
 
 if __name__ == "__main__":

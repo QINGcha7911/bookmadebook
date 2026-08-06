@@ -19,6 +19,7 @@ import argparse
 import asyncio
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 SCRIPTS = Path(__file__).parent
@@ -52,10 +53,26 @@ def main():
     if args.book:
         run_stage("书籍信息获取", [sys.executable, str(SCRIPTS / "book_info.py"), args.book], 4)
         print(f"  ✅ 书籍信息已获取: {args.book}")
+        # --book 无 --file 时：自动生成"速览版"讲书稿（书籍简介+金句提示），
+        # 并提示用 prompts/ 模板生成深度讲书稿以获得更好效果。
+        if not args.file:
+            tmp_script = Path(tempfile.mkdtemp(prefix="listenbook_script_")) / "script.txt"
+            try:
+                import subprocess as _sp
+                r = _sp.run([sys.executable, str(SCRIPTS / "book_info.py"), args.book],
+                            capture_output=True, text=True, timeout=60)
+                brief = r.stdout[-3000:] if r.stdout else f"关于《{args.book}》的讲书内容。"
+                # 清洗：去掉命令行输出噪音，保留简介正文
+                clean_lines = [l for l in brief.split("\n")
+                               if l.strip() and not l.startswith(("🔍", "✅", "[来源", "尝试"))]
+                tmp_script.write_text("\n".join(clean_lines) + "\n\n【金句】这是一本值得细读的好书，请用心感受书中的智慧。",
+                                      encoding="utf-8")
+                args.file = str(tmp_script)
+                print(f"  📄 已自动生成速览稿: {args.file}")
+            except Exception as e:
+                print(f"  ⚠️ 速览稿生成失败（{e}），请用 --file 提供讲书稿")
 
     # ── 阶段2: 生成讲书稿（LLM 写稿，提示词模板）──
-    # 说明：讲书稿由调用方（Agent/用户）用 prompts/ 模板生成后传入 --file，
-    # 或由 --book 模式 + LLM 完成。这里如果只有 --book，提示需要 --file 或由外层 Agent 写稿。
     if args.file:
         text_path = Path(args.file)
     else:

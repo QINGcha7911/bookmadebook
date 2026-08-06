@@ -59,6 +59,10 @@ def detect_language(text: str) -> str:
 def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
     """从 speed_cache.json 读实测语速，缺省按语言估算。
 
+    兼容两种缓存格式（speed_probe 的历史格式 vs entries 列表格式）：
+    - 扁平: {"zh-CN-XiaoxiaoNeural|+0%": 282.0}
+    - 列表: {"entries": [{"voice": ..., "rate": ..., "chars_per_min": ...}]}
+
     style="ted" 时乘 0.85 系数——TED 模式的情绪标注（rate-3%/放慢-5%）
     和停顿会让实际语速比测速慢约 15%（实测 282→约240字/分）。
     """
@@ -68,10 +72,16 @@ def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
     try:
         with open(cache_path, encoding="utf-8") as f:
             cache = json.load(f)
-        for entry in cache.get("entries", []):
-            if entry.get("voice") == voice and entry.get("rate") == "+0%":
-                speed = float(entry["chars_per_min"])
-                break
+        if isinstance(cache, dict):
+            # 格式1: 扁平 {"voice|rate": speed}
+            flat_key = f"{voice}|+0%"
+            if flat_key in cache:
+                speed = float(cache[flat_key])
+            # 格式2: {"entries": [...]}
+            for entry in cache.get("entries", []):
+                if entry.get("voice") == voice and entry.get("rate") == "+0%":
+                    speed = float(entry["chars_per_min"])
+                    break
     except Exception:
         pass
     if style == "ted":

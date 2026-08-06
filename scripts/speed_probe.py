@@ -98,15 +98,17 @@ def get_speed(voice: str, rate: str = "+0%", force: bool = False) -> float:
     except Exception as e:
         # 失败时回退到默认值
         default_speeds = {
-            "zh-CN-XiaoxiaoNeural": 470.0,
-            "zh-CN-YunjianNeural": 296.0,
+            # 与 quality_gate 的默认值保持一致（实测校准值，勿改回旧的高估）
+            "zh-CN-XiaoxiaoNeural": 282.0,
+            "zh-CN-YunjianNeural": 284.0,
             "zh-CN-YunxiNeural": 350.0,
             "zh-CN-YunyangNeural": 320.0,
             "zh-CN-XiaoshuangNeural": 250.0,
             "en-US-ChristopherNeural": 180.0,
             "en-US-AndrewNeural": 190.0,
+            "ja-JP-NanamiNeural": 273.0,
         }
-        fallback = default_speeds.get(voice, 300.0)
+        fallback = default_speeds.get(voice, 282.0)
         print(f"⚠️ 测速失败({e})，使用默认值 {fallback} 字/分")
         return fallback
 
