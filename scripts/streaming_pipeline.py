@@ -363,7 +363,8 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                    rate: str = "+0%", mode: str = "full",
                    add_chapters: bool = True, style: str = "normal",
                    target_minutes: float = None,
-                   user_key: str = None) -> tuple[str, float]:
+                   user_key: str = None,
+                   output_path: str = None) -> tuple[str, float]:
     """完整流水线：分段→TTS→拼接→章节标记→输出
     voice="auto" 时按文本语言自动选声音（中文→晓晓，英文→Christopher）
     style="ted" 时启用导演层（解析【注解】表演标记，语速起伏+停顿）
@@ -544,6 +545,19 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         l3_final = cache_mgr.get_l3(script_hash, voice, speed_key) or final_path
 
         print(f"✅ 完成！总时长 {total_duration/60:.1f} 分钟")
+
+        # --output 支持：复制到指定路径（此前 -o 从未生效）
+        if output_path:
+            try:
+                import shutil
+                dest = Path(output_path).expanduser()
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(str(l3_final), dest)
+                print(f"📦 已输出到: {dest}")
+                return str(dest), total_duration
+            except Exception as e:
+                print(f"⚠️ 复制到输出路径失败（{e}），返回缓存路径")
+
         return str(l3_final), total_duration
 
     except BookToAudioError as e:
@@ -607,6 +621,26 @@ if __name__ == "__main__":
         parser.error("需要 -f 或 --batch")
     text = Path(args.file).read_text(encoding="utf-8", errors="replace")
 
+    # ── 内容安全过滤（content_filter 真正接线）──
+    try:
+        import importlib.util
+        cf_spec = importlib.util.spec_from_file_location(
+            "content_filter", Path(__file__).parent / "content_filter.py")
+        cf = importlib.util.module_from_spec(cf_spec)
+        cf_spec.loader.exec_module(cf)
+        # 按年龄段自动选模式：默认 adult；未来可接 config.yaml 的 age_group
+        cf_inst = cf.ContentFilter("adult")
+        cf_result = cf_inst.check(text)
+        if not cf_result.get("safe", True):
+            print(f"\n📢 内容安全拦截: {cf_result.get('reason', '')}")
+            for hit in cf_result.get("hits", []):
+                print(f"  ❌ {hit}")
+            print("  请修正内容后重试。")
+            sys.exit(5)
+        print(f"  ✅ 内容安全通过（{cf_result.get('mode', 'adult')}模式）")
+    except Exception as e:
+        print(f"  ⚠️ 内容过滤跳过（{e}）")  # 过滤失败不阻断（与质量门不同，属建议层）
+
     # ── Harness 质量门：生成前校验（内容不足/重复/金句去重/markdown残留）──
     if args.target_minutes:
         try:
@@ -642,7 +676,8 @@ if __name__ == "__main__":
         Path(args.file).stem, text, args.voice, args.rate, args.mode,
         add_chapters=not args.no_chapters, style=args.style,
         target_minutes=args.target_minutes,
-        user_key=args.user
+        user_key=args.user,
+        output_path=args.output
     ))
     print(f"输出：{out_path}")
 

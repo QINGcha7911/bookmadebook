@@ -97,7 +97,17 @@ def parse_annotations(text: str, default_voice: str = "zh-CN-YunjianNeural") -> 
 
         # 解析注解内容
         tag = m.group(1)
-        # 停顿
+        # BGM 优先（避免【BGM：停】被停顿正则误判——"停"字冲突）
+        if 'BGM' in tag or 'bgm' in tag:
+            if '起' in tag or 'start' in tag.lower() or '开' in tag:
+                pending_bgm = "start"
+            elif '止' in tag or 'swell' in tag.lower() or '涨' in tag:
+                pending_bgm = "swell"
+            elif '停' in tag or 'stop' in tag.lower() or '关' in tag:
+                pending_bgm = "stop"
+            pos = m.end()
+            continue
+        # 停顿（语义：标记后的文本段前停顿——pause_before，而非 pause_after）
         pm = PAUSE_PATTERN.search(tag)
         if pm:
             val = pm.group(1) or pm.group(2) or "0.5"
@@ -111,16 +121,6 @@ def parse_annotations(text: str, default_voice: str = "zh-CN-YunjianNeural") -> 
                 pending_emotion = EMOTION_MAP[name]
                 pos = m.end()
                 continue
-        # BGM
-        if 'BGM' in tag or 'bgm' in tag:
-            if '起' in tag or 'start' in tag.lower():
-                pending_bgm = "start"
-            elif '止' in tag or '停' in tag:
-                pending_bgm = "stop"
-            elif 'swell' in tag.lower() or '涨' in tag:
-                pending_bgm = "swell"
-            pos = m.end()
-            continue
         # 金句
         if '金句' in tag:
             if current.text:
@@ -154,6 +154,18 @@ def parse_annotations(text: str, default_voice: str = "zh-CN-YunjianNeural") -> 
             blocks.append(current)
             current = TTSBlock(text="", voice=default_voice)
         current.text = tail.strip()
+        # tail 也应用 pending 的 pause/bgm/emotion（注解在文本开头时）
+        if pending_pause:
+            current.pause_after = pending_pause
+            pending_pause = 0.0
+        if pending_bgm:
+            current.bgm_event = pending_bgm
+            pending_bgm = None
+        if pending_emotion:
+            current.rate = pending_emotion.get('rate', '+0%')
+            current.volume = pending_emotion.get('volume', '+0%')
+            current.pitch = pending_emotion.get('pitch', '+0%')
+            pending_emotion = {}
     if current.text:
         blocks.append(current)
 

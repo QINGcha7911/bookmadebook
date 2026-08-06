@@ -311,7 +311,10 @@ def fetch_gutenberg_summary(title: str, timeout: int = SOURCE_TIMEOUT) -> BookIn
     sys_path = os.path.dirname(os.path.abspath(__file__))
     # 复用旧 book_fetcher 的 gutenberg 逻辑（如存在）
     try:
-        sys_path_old = os.path.join(os.path.dirname(sys_path), "book_fetcher.py")
+        sys_path_old = os.path.join(sys_path, "book_fetcher.py")  # 修复：同目录 scripts/
+        if not os.path.exists(sys_path_old):
+            # 兜底：仓库根目录
+            sys_path_old = os.path.join(os.path.dirname(sys_path), "book_fetcher.py")
         if os.path.exists(sys_path_old):
             import importlib.util
             spec = importlib.util.spec_from_file_location("book_fetcher_old", sys_path_old)
