@@ -103,6 +103,7 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 - [配置说明](config.yaml)
 - [Roadmap](docs/ROADMAP.md)
 - [年龄段与内容安全](SKILL.md)
+- [Harness 执行框架架构](docs/harness-architecture.md)
 
 ---
 
@@ -116,6 +117,8 @@ listen-book/
 ├── scripts/
 │   ├── book_info.py          # 书籍信息获取（豆瓣/维基/古登堡，全合法）
 │   ├── streaming_pipeline.py # 流式生成流水线（分段+章节标记+批量）
+│   ├── quality_gate.py       # 🛡️ Harness质量门：生成前校验（字数/重复/金句去重/markdown/版权）
+│   ├── output_verify.py      # 🛡️ Harness输出验证门：生成后校验（标题残留/时长偏差/完整性）
 │   ├── content_filter.py     # 内容安全过滤器（kids/adult 双模式）
 │   └── cache_manager.py      # 三级缓存（L1脚本/L2片段/L3成品）
 ├── templates/            # 输出模板
