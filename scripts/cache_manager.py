@@ -20,6 +20,8 @@ import time
 from pathlib import Path
 
 CACHE_ROOT = Path(os.path.expanduser("~/.hermes/cache/listen-book"))
+# 缓存 schema 版本：键结构变更时+1，强制旧缓存失效（避免旧键复用错误音频）
+CACHE_SCHEMA_VERSION = "v2"
 DEFAULT_TTL = {
     "l1": 30 * 24 * 3600,      # 脚本缓存 30 天
     "l2": 7 * 24 * 3600,       # TTS 片段缓存 7 天
@@ -39,7 +41,8 @@ class CacheManager:
     # ---------- 通用工具 ----------
     @staticmethod
     def _md5(text: str) -> str:
-        return hashlib.md5(text.encode("utf-8", errors="replace")).hexdigest()
+        # 前缀带 schema 版本：键结构变更时旧缓存自动失效
+        return hashlib.md5(f"{CACHE_SCHEMA_VERSION}|{text}".encode("utf-8", errors="replace")).hexdigest()
 
     def _path(self, level: str, key: str, suffix: str = ".json") -> Path:
         """按 key 生成缓存文件路径，支持子目录散列"""

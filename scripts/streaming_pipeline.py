@@ -411,10 +411,10 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 print(f"⚠️ 导演层解析失败，回退普通模式：{e}")
                 ted_blocks = None
 
-        # L3 缓存检查（key 基于清理后文本，防止旧版含标题内容命中缓存）
+        # L3 缓存检查（key 基于清理后文本 + style，防止旧版/不同风格互相命中）
         import re as _re3
         cache_text = _re3.sub(r'^#{1,6}\s*.*$', '', full_text, flags=_re3.MULTILINE)
-        script_hash = hashlib.md5(cache_text.encode()).hexdigest()
+        script_hash = hashlib.md5(f"{cache_text}|style:{style}".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
@@ -450,9 +450,10 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     seg_rate = "-3%"
                     seg_volume = "+3%"
                     pause_before = max(pause_before, 0.6)
-            # L2 缓存检查（含风格指纹）
+            # L2 缓存检查（含风格指纹：volume/pitch 必须传入，否则不同情绪块互相命中）
             l2_key = f"{seg}|{seg_voice}|{seg_rate}|{seg_volume}|{seg_pitch}"
-            l2_hit = cache_mgr.get_l2(seg, seg_voice, seg_rate)
+            l2_hit = cache_mgr.get_l2(seg, seg_voice, seg_rate,
+                                      volume=seg_volume, pitch=seg_pitch)
             if l2_hit:
                 seg_files.append(str(l2_hit))
                 d = get_audio_duration(l2_hit)
@@ -462,9 +463,11 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             out = CACHE_DIR / f"{hashlib.md5(l2_key.encode()).hexdigest()[:12]}.mp3"
             print(f"  🎤 [{i+1}/{len(segments)}] 生成中... (rate={seg_rate} vol={seg_volume})")
             await generate_segment(seg, seg_voice, seg_rate, out, seg_volume, seg_pitch)
-            cache_mgr.set_l2(seg, seg_voice, seg_rate, out)
+            cache_mgr.set_l2(seg, seg_voice, seg_rate, out,
+                             volume=seg_volume, pitch=seg_pitch)
             # set_l2 会把文件移到 l2 子目录，使用缓存命中路径
-            l2_final = cache_mgr.get_l2(seg, seg_voice, seg_rate) or out
+            l2_final = cache_mgr.get_l2(seg, seg_voice, seg_rate,
+                                        volume=seg_volume, pitch=seg_pitch) or out
             d = get_audio_duration(l2_final)
             durations.append(d)
             total_duration += d
@@ -627,8 +630,13 @@ if __name__ == "__main__":
                     print(f"  ⚠️ {w}")
             print(f"  ✅ 质量门通过（{qg_report['stats']['chars']}字 ≈ "
                   f"{qg_report['stats']['est_minutes']}分钟）")
+        except SystemExit:
+            raise  # 质量门明确判失败（exit 2），直接传播
         except Exception as e:
-            print(f"  ⚠️ 质量门跳过（{e}）")
+            # fail-closed：质量门异常必须退出，禁止静默跳过（否则校验形同虚设）
+            print(f"\n📢 Harness 质量门异常（fail-closed）: {e}")
+            print("  质量门无法执行时禁止继续生成——请修复质量门或检查环境（如 numpy 缺失）。")
+            sys.exit(2)
 
     out_path, duration = asyncio.run(pipeline(
         Path(args.file).stem, text, args.voice, args.rate, args.mode,
@@ -645,7 +653,27 @@ if __name__ == "__main__":
             "output_verify", Path(__file__).parent / "output_verify.py")
         ov = importlib.util.module_from_spec(ov_spec)
         ov_spec.loader.exec_module(ov)
-        ov_report = ov.verify(out_path, args.target_minutes, title_sample=None)
+        # 生成真实标题朗读样本（书名 + 声音），让"标题残留检测"真正运行
+        title_sample_path = None
+        try:
+            import tempfile, subprocess as _sp
+            book_title = Path(args.file).stem if args.file else "听书"
+            _td = tempfile.mkdtemp(prefix="listenbook_title_")
+            title_sample_path = Path(_td) / "title_sample.mp3"
+            _sp.run(
+                ["edge-tts", "--voice", args.voice, "--text", book_title,
+                 "--write-media", str(title_sample_path)],
+                capture_output=True, timeout=60)
+            if not title_sample_path.exists() or title_sample_path.stat().st_size < 100:
+                title_sample_path = None
+        except Exception:
+            title_sample_path = None  # 标题样本生成失败则跳过该子检测（不 fail-closed）
+        ov_report = ov.verify(out_path, args.target_minutes,
+                              title_sample=title_sample_path)
+        if title_sample_path is None:
+            print("  ⚠️ 标题样本生成失败，跳过标题残留检测（其他验证继续）")
+        elif ov_report["stats"].get("title_corr") is not None:
+            print(f"  📡 标题残留检测: corr={ov_report['stats']['title_corr']}")
         if not ov_report["passed"]:
             print("\n📢 Harness 输出验证拦截（生成后）:")
             for e in ov_report["errors"]:
@@ -657,5 +685,10 @@ if __name__ == "__main__":
                 print(f"  ⚠️ {w}")
         print(f"  ✅ 输出验证通过（{ov_report['stats']['duration']}秒，"
               f"偏差{ov_report['stats'].get('deviation', 0)}%）")
+    except SystemExit:
+        raise  # 输出验证明确判失败（exit 3），直接传播
     except Exception as e:
-        print(f"  ⚠️ 输出验证跳过（{e}）")
+        # fail-closed：输出验证异常必须退出，禁止静默跳过
+        print(f"\n📢 Harness 输出验证异常（fail-closed）: {e}")
+        print("  输出验证无法执行时禁止交付——请修复验证门或检查环境（如 numpy 缺失）。")
+        sys.exit(3)
