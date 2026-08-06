@@ -217,13 +217,15 @@ def main():
     ap.add_argument("--voice", default="zh-CN-XiaoxiaoNeural", help="TTS声音")
     ap.add_argument("--book-title", help="书名（用于版权检查）")
     ap.add_argument("--lang", choices=["zh", "en", "ja"], help="语言（自动检测）")
+    ap.add_argument("--style", default="normal", choices=["normal", "ted"],
+                    help="风格（ted=TED导演层，语速×0.85校准）")
     args = ap.parse_args()
 
     with open(args.text, encoding="utf-8") as f:
         text = f.read()
 
     report = validate(text, args.target_minutes, args.voice,
-                      args.book_title, args.lang)
+                      args.book_title, args.lang, args.style)
 
     print(f"📊 质量门报告:")
     print(f"   语言: {report['stats']['lang']} | 字数: {report['stats']['chars']} | "
