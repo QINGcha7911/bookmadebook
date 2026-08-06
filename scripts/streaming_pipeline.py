@@ -703,13 +703,14 @@ if __name__ == "__main__":
         title_sample_path = None
         try:
             import tempfile, subprocess as _sp
-            book_title = Path(args.file).stem if args.file else "听书"
+            # 书名：用文件名作为标题样本文本（TTS读文件名即可验证标题朗读）
+            book_title_for_sample = Path(args.file).stem if args.file else "听书"
             # 关键：args.voice 可能是 "auto"，edge-tts 不认 → 用 resolve_voice 解析真实声音
             real_voice = resolve_voice(args.voice, text)
             _td = tempfile.mkdtemp(prefix="listenbook_title_")
             title_sample_path = Path(_td) / "title_sample.mp3"
             _sp.run(
-                ["edge-tts", "--voice", real_voice, "--text", book_title,
+                ["edge-tts", "--voice", real_voice, "--text", book_title_for_sample,
                  "--write-media", str(title_sample_path)],
                 capture_output=True, timeout=60)
             if not title_sample_path.exists() or title_sample_path.stat().st_size < 100:

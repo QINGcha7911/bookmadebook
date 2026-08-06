@@ -103,8 +103,15 @@ def main():
     run_stage("生成（streaming_pipeline）", pipe_cmd, 4)
 
     # ── 阶段5: 输出验证门（生成后校验，双保险）──
-    # pipeline 输出在缓存目录，验证门由 pipeline 内部已跑；这里从日志无法取路径，
-    # 故依赖 pipeline 内部验证（已 fail-closed）。若需独立复验，可手动指定 --output。
+    # pipeline 内部已跑验证（fail-closed），这里用 --output 路径独立复验兜底
+    if args.output and Path(args.output).exists():
+        ov_cmd = [sys.executable, str(SCRIPTS / "output_verify.py"),
+                  "--audio", args.output,
+                  "--target-minutes", str(args.target_minutes)]
+        run_stage("输出验证门（独立复验）", ov_cmd, 3)
+    else:
+        print("  ℹ️ 未指定 --output 或输出不存在，依赖 pipeline 内部验证（已 fail-closed）")
+
     print("\n✅ Harness 全流程完成：质量门通过 → 生成成功 → 输出验证通过 → 交付。")
 
 
