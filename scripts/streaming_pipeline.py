@@ -614,7 +614,8 @@ if __name__ == "__main__":
             qg_spec.loader.exec_module(qg)
             qg_report = qg.validate(
                 text, args.target_minutes, args.voice,
-                book_title=Path(args.file).stem)
+                book_title=Path(args.file).stem,
+                style=args.style)
             if not qg_report["passed"]:
                 print("\n📢 Harness 质量门拦截（生成前）:")
                 for e in qg_report["errors"]:

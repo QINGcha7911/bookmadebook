@@ -56,19 +56,27 @@ def detect_language(text: str) -> str:
     return "zh"
 
 
-def get_speed_cached(voice: str, lang: str) -> float:
-    """从 speed_cache.json 读实测语速，缺省按语言估算。"""
+def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
+    """从 speed_cache.json 读实测语速，缺省按语言估算。
+
+    style="ted" 时乘 0.85 系数——TED 模式的情绪标注（rate-3%/放慢-5%）
+    和停顿会让实际语速比测速慢约 15%（实测 282→约240字/分）。
+    """
     import json, os
     cache_path = os.path.expanduser("~/.hermes/cache/listen-book/speed_cache.json")
+    speed = {"zh": 282.0, "ja": 273.0, "en": 200.0}.get(lang, 260.0)
     try:
         with open(cache_path, encoding="utf-8") as f:
             cache = json.load(f)
         for entry in cache.get("entries", []):
             if entry.get("voice") == voice and entry.get("rate") == "+0%":
-                return float(entry["chars_per_min"])
+                speed = float(entry["chars_per_min"])
+                break
     except Exception:
         pass
-    return {"zh": 282.0, "ja": 273.0, "en": 200.0}.get(lang, 260.0)
+    if style == "ted":
+        speed *= 0.85
+    return speed
 
 
 def find_duplicate_paragraphs(text: str, threshold: float = 0.75) -> list:
@@ -141,7 +149,7 @@ def check_copyright(text: str, book_title: str) -> list:
 
 
 def validate(text: str, target_minutes: float, voice: str, book_title: str = None,
-             lang: str = None) -> dict:
+             lang: str = None, style: str = "normal") -> dict:
     """执行全部质量校验，返回报告。"""
     report = {"passed": True, "errors": [], "warnings": [], "stats": {}}
 
@@ -152,7 +160,7 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
 
     # 2. 字数/时长校验
     chars = effective_chars(text)
-    speed = get_speed_cached(voice, lang)
+    speed = get_speed_cached(voice, lang, style)
     est_minutes = chars / speed
     report["stats"]["chars"] = chars
     report["stats"]["speed"] = speed
