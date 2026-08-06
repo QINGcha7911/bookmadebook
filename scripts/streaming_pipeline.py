@@ -603,6 +603,32 @@ if __name__ == "__main__":
     if not args.file:
         parser.error("需要 -f 或 --batch")
     text = Path(args.file).read_text(encoding="utf-8", errors="replace")
+
+    # ── Harness 质量门：生成前校验（内容不足/重复/金句去重/markdown残留）──
+    if args.target_minutes:
+        try:
+            import importlib.util
+            qg_spec = importlib.util.spec_from_file_location(
+                "quality_gate", Path(__file__).parent / "quality_gate.py")
+            qg = importlib.util.module_from_spec(qg_spec)
+            qg_spec.loader.exec_module(qg)
+            qg_report = qg.validate(
+                text, args.target_minutes, args.voice,
+                book_title=Path(args.file).stem)
+            if not qg_report["passed"]:
+                print("\n📢 Harness 质量门拦截（生成前）:")
+                for e in qg_report["errors"]:
+                    print(f"  ❌ {e}")
+                print("  请修正讲书稿后重试（补充内容/去重/缩时长），禁止注水。")
+                sys.exit(2)
+            if qg_report["warnings"]:
+                for w in qg_report["warnings"]:
+                    print(f"  ⚠️ {w}")
+            print(f"  ✅ 质量门通过（{qg_report['stats']['chars']}字 ≈ "
+                  f"{qg_report['stats']['est_minutes']}分钟）")
+        except Exception as e:
+            print(f"  ⚠️ 质量门跳过（{e}）")
+
     out_path, duration = asyncio.run(pipeline(
         Path(args.file).stem, text, args.voice, args.rate, args.mode,
         add_chapters=not args.no_chapters, style=args.style,
@@ -610,3 +636,25 @@ if __name__ == "__main__":
         user_key=args.user
     ))
     print(f"输出：{out_path}")
+
+    # ── Harness 输出验证门：生成后校验（标题残留/时长偏差/完整性）──
+    try:
+        import importlib.util
+        ov_spec = importlib.util.spec_from_file_location(
+            "output_verify", Path(__file__).parent / "output_verify.py")
+        ov = importlib.util.module_from_spec(ov_spec)
+        ov_spec.loader.exec_module(ov)
+        ov_report = ov.verify(out_path, args.target_minutes, title_sample=None)
+        if not ov_report["passed"]:
+            print("\n📢 Harness 输出验证拦截（生成后）:")
+            for e in ov_report["errors"]:
+                print(f"  ❌ {e}")
+            print("  禁止交付！请修复后重新生成。")
+            sys.exit(3)
+        if ov_report.get("warnings"):
+            for w in ov_report["warnings"]:
+                print(f"  ⚠️ {w}")
+        print(f"  ✅ 输出验证通过（{ov_report['stats']['duration']}秒，"
+              f"偏差{ov_report['stats'].get('deviation', 0)}%）")
+    except Exception as e:
+        print(f"  ⚠️ 输出验证跳过（{e}）")
