@@ -18,6 +18,7 @@ from pathlib import Path
 TOPIC_KEYWORDS = {
     "教育/学习": ["读书", "学习", "知识", "教育", "成长", "阅读", "书本", "课程", "思考", "智慧", "book", "study", "learn", "read"],
     "情感/励志": ["坚持", "梦想", "行动", "希望", "勇气", "努力", "奋斗", "相信", "未来", "自己", "dream", "hope", "courage", "believe"],
+    "历史/史诗": ["历史", "帝国", "战争", "王朝", "征服", "古代", "文明", "皇帝", "将军", "蒙古", "罗马", "埃及", "战场", "史诗", "history", "empire", "war", "conquer", "ancient"],
     "科技": ["人工智能", "科技", "技术", "智能", "数据", "代码", "AI", "算法", "编程", "tech", "AI", "code", "algorithm"],
     "冥想/放松": ["冥想", "放松", "平静", "内心", "呼吸", "宁静", "治愈", "安详", "冥想", "calm", "meditat", "peace", "relax", "breath"],
     "商业": ["商业", "创业", "市场", "产品", "用户", "企业", "管理", "经营", "business", "market", "startup", "product"],
@@ -29,6 +30,7 @@ DEFAULT_CONFIG = {
     "by_topic": {
         "教育/学习": ["bgm_piano_open.mp3", "bgm_piano_close.mp3"],
         "情感/励志": ["bgm_piano_open.mp3", "bgm_piano_close.mp3"],
+        "历史/史诗": ["bgm_ambient.mp3", "bgm_piano_open.mp3"],
         "科技": ["bgm_ambient.mp3"],
         "冥想/放松": ["bgm_piano_close.mp3"],
         "商业": ["bgm_ambient.mp3"],

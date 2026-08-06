@@ -204,17 +204,16 @@ def get_audio_duration(path: Path) -> float:
 
 
 def mix_bgm(voice_path: Path, cache_dir: Path, bgm_path: str = None,
-            bgm_level: float = 0.06,
+            bgm_level: float = 0.18,
             golden_times: Optional[List[float]] = None) -> Path:
-    """TED 智能 BGM 混音：开场+结尾+情感点轻垫，人声主导（闪避）
+    """TED 智能 BGM 混音：开头+结尾垫乐，人声主导（闪避）
 
-    设计（参考 TED 官方风格 + 智能配乐）：
-    - 开场 0-15s：音乐淡入淡出（-22dB）
-    - 情感点（金句/激昂处）：音乐轻浮起 3-5s
-    - 结尾 15s：音乐淡出收尾
-    - 正文说话时：音乐极低（-28dB）甚至无声
-    bgm_level: 音乐基础音量（0.06≈-28dB 克制版；0.15≈-20dB 明显版）
-    golden_times: 情感点时间列表（秒），在这些位置轻垫音乐
+    设计（用户偏好 2026-08-06）：
+    - 开头：BGM 淡入垫乐，时长 = min(60s, 音频时长×25%)，至少 30s
+    - 结尾：BGM 淡出收尾，同样时长
+    - 中间：无人声时也无 BGM（纯讲书）
+    - bgm_level: 音乐基础音量（0.18≈-24dB 轻柔版）
+    - golden_times: 兼容保留（不再使用金句垫乐，用户偏好开头结尾）
     """
     import math
     bgm = Path(bgm_path) if bgm_path else Path(os.path.expanduser(
@@ -229,55 +228,42 @@ def mix_bgm(voice_path: Path, cache_dir: Path, bgm_path: str = None,
 
     out = cache_dir / f"mixed_{voice_path.stem}.mp3"
 
-    # 情感点垫乐：每个金句处 5s 轻浮起（淡入淡出）
-    # 音乐流先 asplit 分成多路（开场1路 + 每个情感点1路）
-    # 注意：各部分之间用 ; 连接（join 负责），不要在元素内部加分号
-    n_music = 1 + len(golden_times or [])
-    asplit_str = f"[1:a]asplit={n_music}"
-    for i in range(n_music):
-        asplit_str += f"[m{i}]"
-    filter_parts = [asplit_str]
+    # 获取人声时长（决定开头/结尾垫乐时长）
+    try:
+        probe = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "csv=p=0", str(voice_path)],
+            capture_output=True, text=True, timeout=30)
+        total_dur = float(probe.stdout.strip() or 120)
+    except Exception:
+        total_dur = 120.0
 
-    # 开场垫乐：前 15s（用 m0）
+    # 开头/结尾垫乐时长：min(60s, 25%总时长)，下限30s
+    edge_dur = max(30, min(60, int(total_dur * 0.25)))
+    # 防止超出音频时长的一半（短音频保护）
+    edge_dur = min(edge_dur, int(total_dur / 2))
+
+    # 音乐流 asplit 两路：开头 + 结尾
+    filter_parts = ["[1:a]asplit=2[m_open][m_close]"]
+
+    # 开头垫乐：从0开始 edge_dur 秒，淡入淡出
     filter_parts.append(
-        f"[m0]atrim=start=0:duration=15,asetpts=PTS-STARTPTS,"
-        f"volume={bgm_level},afade=t=in:d=2,afade=t=out:st=11:d=4[bgm_open]"
+        f"[m_open]atrim=start=0:duration={edge_dur},asetpts=PTS-STARTPTS,"
+        f"volume={bgm_level*3.0},afade=t=in:d=3,afade=t=out:st={edge_dur-4}:d=4[bgm_open]"
     )
 
-    # 情感点垫乐（用 m1..mN）
-    swell_tags = []
-    if golden_times:
-        for gi, gt in enumerate(golden_times):
-            start = max(0, gt - 1)
-            tag = f"sw{gi}"
-            swell_tags.append(f"[{tag}]")
-            filter_parts.append(
-                f"[m{gi+1}]atrim=start={start}:duration=5,asetpts=PTS-STARTPTS,"
-                f"volume={bgm_level*1.5},afade=t=in:d=1,afade=t=out:st=3.5:d=1.5[{tag}]"
-            )
-
-    # 人声分流
-    filter_parts.append("[0:a]asplit=2[voice_main][voice_side]")
-
-    # 混合所有音乐轨（开场 + 情感点）
-    music_inputs = ["[bgm_open]"] + swell_tags
-    if len(music_inputs) > 1:
-        amix_str = "".join(music_inputs)
-        filter_parts.append(
-            f"{amix_str}amix=inputs={len(music_inputs)}:normalize=0[music_all]"
-        )
-        music_ref = "[music_all]"
-    else:
-        music_ref = "[bgm_open]"
-
-    # 闪避 + 最终混音（两个独立 filter 链，用分号分隔）
+    # 结尾垫乐：从 total_dur-edge_dur 开始 edge_dur 秒，淡入淡出
+    end_start = max(0, total_dur - edge_dur)
     filter_parts.append(
-        f"{music_ref}[voice_side]sidechaincompress="
-        f"threshold=0.05:ratio=6:attack=100:release=600[ducked]"
+        f"[m_close]atrim=start=0:duration={edge_dur},asetpts=PTS-STARTPTS,"
+        f"volume={bgm_level*3.0},afade=t=in:d=3,afade=t=out:st={edge_dur-4}:d=4,"
+        f"adelay={int(end_start*1000)}|{int(end_start*1000)}[bgm_close]"
     )
+
+    # 直接 3 路混音：人声 + 开头音乐 + 结尾音乐（normalize=0 保留音量）
     filter_parts.append(
-        f"[voice_main][ducked]amix=inputs=2:duration=first:dropout_transition=2,"
-        f"loudnorm=I=-16:TP=-1.5:LRA=11[aout]"
+        "[0:a][bgm_open][bgm_close]amix=inputs=3:duration=first:normalize=0:dropout_transition=2,"
+        "alimiter=limit=0.95[aout]"
     )
 
     cmd = [
@@ -412,10 +398,12 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 print(f"⚠️ 导演层解析失败，回退普通模式：{e}")
                 ted_blocks = None
 
-        # L3 缓存检查（key 基于清理后文本 + style，防止旧版/不同风格互相命中）
+        # L3 缓存检查（key 基于清理后文本 + style + BGM设置，防止旧版/不同风格/不同BGM互相命中）
         import re as _re3
         cache_text = _re3.sub(r'^#{1,6}\s*.*$', '', full_text, flags=_re3.MULTILINE)
-        script_hash = hashlib.md5(f"{cache_text}|style:{style}".encode()).hexdigest()
+        bgm_level_key = os.environ.get("LISTEN_BOOK_BGM", "0.15")
+        script_hash = hashlib.md5(
+            f"{cache_text}|style:{style}|bgm:{bgm_level_key}".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
@@ -507,7 +495,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         # TED 模式：智能 BGM 混音（开场+金句垫乐+结尾）
         if ted_blocks:
             try:
-                bgm_level = float(os.environ.get("LISTEN_BOOK_BGM", "0.06"))
+                bgm_level = float(os.environ.get("LISTEN_BOOK_BGM", "0.18"))
                 # 计算金句/激昂块的时间点（用于情感点垫乐）
                 golden_times = []
                 cum_time = 0.0
