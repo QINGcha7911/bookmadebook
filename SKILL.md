@@ -150,6 +150,12 @@ python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --boo
 - 自动提取【金句】标记 → 视频中段淡入淡出显示
 - 输出 1080×1920 竖版（小红书/抖音适配）
 
+**音频/视频自适应**（2026-08-07）：
+- `python listen.py "《小王子》10分钟"` → 默认音频
+- `python listen.py "《小王子》10分钟视频"` / "做个视频" / "短片" → 自动识别为视频
+- 视频模式：先生成音频（harness）→ 再合成实景视频（video_composer）
+- 输出类型可强制指定：`--output-type audio|video`
+
 **视频验收要点**（用户偏好）：
 - 画面必须"活的"（星星闪/粒子动/Ken Burns），不能静态
 - 场景切换要连贯（同主题+交叉溶解），不要硬切跳跃
