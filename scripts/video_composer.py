@@ -22,6 +22,8 @@ import json
 import os
 import re
 import subprocess
+from pathlib import Path
+os.chdir(Path(__file__).parent)
 import sys
 import tempfile
 from pathlib import Path
@@ -35,8 +37,8 @@ except ImportError:
 W, H = 1080, 1920          # 竖版 9:16
 FPS = 25
 XFADE_DUR = 1.5             # 交叉溶解时长
-FONT_BOLD = "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc"
-FONT_REG = "/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc"
+FONT_BOLD = str(Path(__file__).parent.parent / "assets" / "fonts" / "msyhbd.ttc")
+FONT_REG = str(Path(__file__).parent.parent / "assets" / "fonts" / "msyh.ttc")
 
 # 主题 → 实景图 URL（Unsplash 免费图库，同主题相近画面）
 THEMES = {
@@ -142,8 +144,8 @@ def make_filter(images: list[Path], audio_dur: float, quotes: list[str],
     if book_title:
         text_filters.append(
             f"drawtext=fontfile={FONT_BOLD}:text='{book_title}':fontsize=70:fontcolor=white:"
-            f"borderw=4:bordercolor=black@0.6:x=(w-text_w)/2:y=300:"
-            f"alpha='if(lt(t,2),0,if(lt(t,3),(t-2),if(lt(t,8),1,if(lt(t,10),(10-t),0))))'"
+            f"borderw=4:bordercolor=black@0.6:x=(w-text_w)/2:y=180:"
+            f"alpha='if(lt(t,1),0,if(lt(t,2),(t-1),if(lt(t,6),1,if(lt(t,7),(7-t),0))))'"
         )
     # 金句平均分布在视频后半段
     if quotes:

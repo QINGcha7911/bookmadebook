@@ -19,6 +19,7 @@ TOPIC_KEYWORDS = {
     "教育/学习": ["读书", "学习", "知识", "教育", "成长", "阅读", "书本", "课程", "思考", "智慧", "book", "study", "learn", "read"],
     "情感/励志": ["坚持", "梦想", "行动", "希望", "勇气", "努力", "奋斗", "相信", "未来", "自己", "dream", "hope", "courage", "believe"],
     "历史/史诗": ["历史", "帝国", "战争", "王朝", "征服", "古代", "文明", "皇帝", "将军", "蒙古", "罗马", "埃及", "战场", "史诗", "history", "empire", "war", "conquer", "ancient"],
+    "科幻/悬疑": ["科幻", "宇宙", "三体", "外星", "星际", "机器人", "未来世界", "悬疑", "侦探", "推理", "谜团", "神秘", "非凡", "克苏鲁", "蒸汽朋克", "邪神", "旧日", "低语", "超凡", "魔药", "序列", "science fiction", "sci-fi", "mystery", "alien", "space", "horror"],
     "科技": ["人工智能", "科技", "技术", "智能", "数据", "代码", "AI", "算法", "编程", "tech", "AI", "code", "algorithm"],
     "冥想/放松": ["冥想", "放松", "平静", "内心", "呼吸", "宁静", "治愈", "安详", "冥想", "calm", "meditat", "peace", "relax", "breath"],
     "商业": ["商业", "创业", "市场", "产品", "用户", "企业", "管理", "经营", "business", "market", "startup", "product"],
@@ -91,12 +92,18 @@ def select_bgm(text: str, user_key: str = None, config: dict = None) -> tuple:
     - text: 完整文本（用于主题检测）
     - user_key: 用户标识（用于用户配置覆盖）
     - config: 可选配置（默认从 bgm_config.json 加载）
+    - 返回 (None, topic) 表示该主题不需要 BGM（如科幻/悬疑，用户偏好纯人声）
     """
     cfg = config or load_config()
     assets = _find_assets_dir()
 
     topic = detect_topic(text)
     bgm_name = cfg.get("default", "bgm_ambient.mp3")
+
+    # 0. 无BGM主题（用户偏好：科幻/悬疑纯人声更沉浸，2026-08-07确认）
+    NO_BGM_TOPICS = {"科幻/悬疑"}
+    if topic in NO_BGM_TOPICS:
+        return None, topic
 
     # 1. 用户配置覆盖（优先级最高）
     if user_key:

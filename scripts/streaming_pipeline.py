@@ -401,9 +401,16 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         # L3 缓存检查（key 基于清理后文本 + style + BGM设置，防止旧版/不同风格/不同BGM互相命中）
         import re as _re3
         cache_text = _re3.sub(r'^#{1,6}\s*.*$', '', full_text, flags=_re3.MULTILINE)
-        bgm_level_key = os.environ.get("LISTEN_BOOK_BGM", "0.15")
+        bgm_level_key = os.environ.get("LISTEN_BOOK_BGM", "0.18")
+        # 检测主题是否无BGM（科幻/悬疑→纯人声），避免带BGM/无BGM版本缓存混淆
+        try:
+            from bgm_selector import select_bgm as _sel
+            _bgm_sel, _topic_sel = _sel(cache_text)
+            bgm_mode = "nobgm" if _bgm_sel is None else "bgm"
+        except Exception:
+            bgm_mode = "bgm"
         script_hash = hashlib.md5(
-            f"{cache_text}|style:{style}|bgm:{bgm_level_key}".encode()).hexdigest()
+            f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
@@ -480,7 +487,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     print(f"  ⏸️ 插入停顿 {pause}s")
 
         print(f"🔗 拼接 {len(seg_files)} 段...")
-        final_path = CACHE_DIR / f"{hashlib.md5((book_title+voice+rate).encode()).hexdigest()[:10]}.mp3"
+        final_path = CACHE_DIR / f"{script_hash[:10]}.mp3"
         concat_file = CACHE_DIR / "concat_list.txt"
         concat_file.write_text("\n".join(f"file '{f.replace(chr(92), chr(47))}'" for f in seg_files))
 
@@ -511,15 +518,22 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 try:
                     from bgm_selector import select_bgm
                     bgm_path, bgm_topic = select_bgm(full_text, user_key=user_key)
-                    print(f"🎵 BGM 选择：主题={bgm_topic or '通用'} → {Path(bgm_path).name}")
+                    if bgm_path is None:
+                        print(f"🎵 主题={bgm_topic or '未知'} → 无BGM（纯人声，用户偏好）")
+                        bgm_skip = True
+                    else:
+                        bgm_skip = False
+                        print(f"🎵 BGM 选择：主题={bgm_topic or '通用'} → {Path(bgm_path).name}")
                 except Exception as e:
                     print(f"⚠️ BGM 选择失败（用默认）：{e}")
                     bgm_path = None
-                final_path = mix_bgm(final_path, CACHE_DIR,
-                                     bgm_path=bgm_path,
-                                     bgm_level=bgm_level,
-                                     golden_times=golden_times)
-                print(f"🎵 BGM 混音完成（电平{bgm_level}）")
+                    bgm_skip = True
+                if not bgm_skip:
+                    final_path = mix_bgm(final_path, CACHE_DIR,
+                                         bgm_path=bgm_path,
+                                         bgm_level=bgm_level,
+                                         golden_times=golden_times)
+                    print(f"🎵 BGM 混音完成（电平{bgm_level}）")
             except Exception as e:
                 print(f"⚠️ BGM 混音失败（跳过）：{e}")
 
