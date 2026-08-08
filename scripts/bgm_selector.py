@@ -100,6 +100,13 @@ def select_bgm(text: str, user_key: str = None, config: dict = None) -> tuple:
     topic = detect_topic(text)
     bgm_name = cfg.get("default", "bgm_ambient.mp3")
 
+    # 0.5 传记/历史语境优先（用户反馈：苏东坡传等人物传记被误判为冥想/放松，
+    #      BGM不匹配。含≥2个传记特征词时强制归为历史/史诗，2026-08-08修复）
+    BIO_CONTEXT = ["传记", "传——", "的一生", "生平", "历史人物", "列传", "年谱",
+                   "少年", "中年", "晚年", "临终", "病逝", "享年", "乌台", "被贬"]
+    if sum(1 for kw in BIO_CONTEXT if kw in text) >= 2:
+        topic = "历史/史诗"
+
     # 0. 无BGM主题（用户偏好：科幻/悬疑纯人声更沉浸，2026-08-07确认）
     NO_BGM_TOPICS = {"科幻/悬疑"}
     if topic in NO_BGM_TOPICS:
