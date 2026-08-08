@@ -1,6 +1,6 @@
 # ============================================================
-# listen-book 全局配置文件
-# 路径：listen-book/config.yaml
+# bookmadebook 全局配置文件
+# 路径：bookmadebook/config.yaml
 # ============================================================
 # 说明：
 #   - 【常用】标记的项：用户会经常调整
@@ -28,7 +28,7 @@ speed:
 
 # === 【常用】交付与输出 ===
 delivery:
-  output_dir: "~/listen-book"        # 输出目录
+  output_dir: "~/bookmadebook"        # 输出目录
   default_channel: local             # local|obsidian|feishu
   output_format: audio               # audio|script|both
   keep_intermediates: false          # 是否保留中间文件

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 视频合成器 —— 讲书音频 → 实景动态视频
+"""bookmadebook 视频合成器 —— 讲书音频 → 实景动态视频
 
 设计原则（效果先行，2026-08-07 用户确认）：
 - 实景写实照片（Unsplash 免费图库），不用 AI 生图
@@ -37,8 +37,8 @@ except ImportError:
 W, H = 1080, 1920          # 竖版 9:16
 FPS = 25
 XFADE_DUR = 1.5             # 交叉溶解时长
-FONT_BOLD = str(Path(__file__).parent.parent / "assets" / "fonts" / "msyhbd.ttc")
-FONT_REG = str(Path(__file__).parent.parent / "assets" / "fonts" / "msyh.ttc")
+FONT_BOLD = "../assets/fonts/msyhbd.ttc"
+FONT_REG = "../assets/fonts/msyh.ttc"
 
 # 主题 → 实景图 URL（Unsplash 免费图库，同主题相近画面）
 THEMES = {
@@ -193,7 +193,7 @@ def get_duration(audio: str) -> float:
 
 
 def main():
-    ap = argparse.ArgumentParser(description="listen-book 视频合成器")
+    ap = argparse.ArgumentParser(description="bookmadebook 视频合成器")
     ap.add_argument("--script", required=True, help="讲书稿 txt")
     ap.add_argument("--audio", required=True, help="音频 mp3")
     ap.add_argument("--output", default="output.mp4", help="输出视频路径")

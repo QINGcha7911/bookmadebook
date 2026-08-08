@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 书籍获取（合规版）
+"""bookmadebook 书籍获取（合规版）
 
 仅支持合法来源：
 1. Project Gutenberg（公版书，作者逝世超50年）
@@ -39,7 +39,7 @@ MIN_CONTENT_LENGTH = 500
 GLOBAL_TIMEOUT = 60
 SOURCE_TIMEOUT = 15
 
-CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/listen-book/books"))
+CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/bookmadebook/books"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 
@@ -80,7 +80,7 @@ def _http_get(url: str, timeout: int = SOURCE_TIMEOUT) -> str:
     """带 UA 的 HTTP GET，网络不稳定时自动重试 2 次"""
     req = urllib.request.Request(url, headers={
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                      "(KHTML, like Gecko) Chrome/120.0 Safari/537.36 listen-book/1.0"
+                      "(KHTML, like Gecko) Chrome/120.0 Safari/537.36 bookmadebook/1.0"
     })
     last_err = None
     for attempt in range(3):
@@ -264,7 +264,7 @@ def fetch_book(title: str, source: str = "auto") -> BookFetchResult:
 
 def main():
     global MIN_CONTENT_LENGTH
-    parser = argparse.ArgumentParser(description="listen-book 书籍获取降级链")
+    parser = argparse.ArgumentParser(description="bookmadebook 书籍获取降级链")
     parser.add_argument("query", nargs="?", help="书名或本地文件路径")
     parser.add_argument("--source", default="auto",
                         choices=["auto", "gutenberg", "user_file", "url"])

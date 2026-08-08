@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book Harness 主控
+"""bookmadebook Harness 主控
 
 串联完整执行流程，每阶段强制校验，失败即停止（fail-closed）：
   book_info → quality_gate → ted_director(分段) → streaming_pipeline(生成)
@@ -35,7 +35,7 @@ def run_stage(name: str, cmd: list, fail_code: int) -> None:
 
 
 def main():
-    ap = argparse.ArgumentParser(description="listen-book Harness 主控")
+    ap = argparse.ArgumentParser(description="bookmadebook Harness 主控")
     ap.add_argument("--book", help="书名（走 book_info 获取信息）")
     ap.add_argument("--file", help="讲书稿文件（跳过书籍获取）")
     ap.add_argument("--target-minutes", type=float, required=True, help="目标时长（分钟）")

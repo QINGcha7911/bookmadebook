@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book Harness — 内容质量门 (quality gate)
+"""bookmadebook Harness — 内容质量门 (quality gate)
 
 在 TTS 生成前对讲书稿做强制质量校验，不通过则停止（诚实告知），
 杜绝注水/重复/标题残留。这是 harness 控制循环的核心环节之一。
@@ -41,7 +41,7 @@ def effective_chars(text: str) -> int:
     """有效字数（去空白/注解/标点后按语言计）。"""
     clean = strip_markdown(text)
     clean = re.sub(r'【[^】]*】', '', clean)  # 去注解
-    clean = re.sub(r'[，。！？、；：""''（）\s\d]', '', clean)
+    clean = re.sub(r'[，。！？、；：""''（）\\s\\d]', '', clean)
     return len(clean)
 
 
@@ -67,7 +67,7 @@ def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
     和停顿会让实际语速比测速慢约 15%（实测 282→约240字/分）。
     """
     import json, os
-    cache_path = os.path.expanduser("~/.hermes/cache/listen-book/speed_cache.json")
+    cache_path = os.path.expanduser("~/.hermes/cache/bookmadebook/speed_cache.json")
     speed = {"zh": 282.0, "ja": 273.0, "en": 200.0}.get(lang, 260.0)
     try:
         with open(cache_path, encoding="utf-8") as f:
@@ -221,7 +221,7 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
 
 
 def main():
-    ap = argparse.ArgumentParser(description="listen-book 内容质量门")
+    ap = argparse.ArgumentParser(description="bookmadebook 内容质量门")
     ap.add_argument("--text", required=True, help="讲书稿文件路径")
     ap.add_argument("--target-minutes", type=float, help="目标时长（分钟）")
     ap.add_argument("--voice", default="zh-CN-XiaoxiaoNeural", help="TTS声音")

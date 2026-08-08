@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book Harness — 输出验证门 (output verify)
+"""bookmadebook Harness — 输出验证门 (output verify)
 
 在 TTS 生成完成后验证最终音频质量：
 1. 开头无标题/符号朗读（波形相关性检测 vs 标题朗读样本）
@@ -105,7 +105,7 @@ def verify(audio: str, target_minutes: float = None,
 
 
 def main():
-    ap = argparse.ArgumentParser(description="listen-book 输出验证门")
+    ap = argparse.ArgumentParser(description="bookmadebook 输出验证门")
     ap.add_argument("--audio", required=True, help="生成的音频文件")
     ap.add_argument("--target-minutes", type=float, help="目标时长（分钟）")
     ap.add_argument("--title-sample", help="标题朗读样本（开头对比用）")

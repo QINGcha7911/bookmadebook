@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 一键入口（音频/视频自适应）
+"""bookmadebook 一键入口（音频/视频自适应）
 
 把"书 → 音频/视频"简化为一条命令（yt-dlp 风格）：
     python listen.py "《小王子》10分钟"            # 默认音频
@@ -64,13 +64,13 @@ def parse_request(text: str) -> dict:
 
 
 def main():
-    ap = argparse.ArgumentParser(description="listen-book 一键入口（音频/视频自适应）")
+    ap = argparse.ArgumentParser(description="bookmadebook 一键入口（音频/视频自适应）")
     ap.add_argument("request", nargs="?", help='自然语言请求，如 "《小王子》10分钟" 或 "小王子 10分钟视频"')
     ap.add_argument("--voice", default="auto", help="TTS声音（auto=按内容自动选）")
     ap.add_argument("--style", default="ted", choices=["normal", "ted"], help="朗读风格")
     ap.add_argument("--theme", default="desert", choices=["desert", "forest", "ocean"],
                     help="视频实景主题（视频模式）")
-    ap.add_argument("--output", help="输出文件路径（默认 ./listen-book-output/<书名>.mp4/.mp3）")
+    ap.add_argument("--output", help="输出文件路径（默认 ./bookmadebook-output/<书名>.mp4/.mp3）")
     ap.add_argument("--target-minutes", type=float, help="目标时长（分钟，覆盖自然语言解析）")
     ap.add_argument("--output-type", choices=["audio", "video"],
                     help="输出类型（覆盖自然语言识别：audio=音频 video=视频）")
@@ -85,7 +85,7 @@ def main():
     output_type = args.output_type or req["output_type"]
     print(f"📖 请求解析: 书名={book} | 时长={minutes}分钟 | 输出={output_type} | 声音={args.voice}")
 
-    out_dir = Path("listen-book-output")
+    out_dir = Path("bookmadebook-output")
     out_dir.mkdir(parents=True, exist_ok=True)
     ext = ".mp4" if output_type == "video" else ".mp3"
     output = args.output or str(out_dir / f"{book}-{int(minutes)}min{ext}")

@@ -1,5 +1,5 @@
 ---
-name: listen-book
+name: bookmadebook
 version: 2.2.0
 description: |-
   AI 书籍精读音频生成 — 全年龄段（3岁+），多场景、多声音、多深度。
@@ -8,7 +8,7 @@ description: |-
 requires: python>=3.10
 
 ---
-# listen-book — AI 执行指南
+# bookmadebook — AI 执行指南
 
 > 本文档是给 AI 的执行指南，不是用户手册。拿到任务后按以下流程走。
 
@@ -163,7 +163,7 @@ python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --boo
 
 ### 4.3 Harness 执行框架（质量门 + 输出验证门）
 
-listen-book 采用 **Harness 控制循环**（不是"给AI知识后自由发挥"），生成全程强制校验：
+bookmadebook 采用 **Harness 控制循环**（不是"给AI知识后自由发挥"），生成全程强制校验：
 
 ```
 讲书稿 → [quality_gate 质量门] → streaming_pipeline 生成 → [output_verify 验证门] → 交付
@@ -244,7 +244,7 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 
 | 文件类型 | 路径 | 说明 |
 |---------|------|------|
-| MP3 音频 | ~/listen-book/{书名}_{timestamp}.mp3 | 主交付物 |
+| MP3 音频 | ~/bookmadebook/{书名}_{timestamp}.mp3 | 主交付物 |
 | Markdown 文稿 | 同目录 .md 后缀 | 用 templates/script_doc.md.j2 渲染 |
 | Obsidian 笔记 | Obsidian vault（如配置） | 自动存入 |
 交付模式：
@@ -292,12 +292,12 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 
 ## 十、文件结构
 
-listen-book/
+bookmadebook/
 ├── SKILL.md                    ← 本文件（AI执行指南）
 ├── config.yaml                 ← 全局配置（【常用】+【高级】标记）
 ├── references/EXECUTION_GUIDE.md  ← 详细执行参考
 ├── prompts/                    ← 精读脚```
-## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构listen-book/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）
+## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构bookmadebook/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）
 ---
 
 > **AIGC 合规声明**：本技能生成的内容由 AI 生成，请遵循相关法律法规及《人工智能生成合成内容标识办法》使用与传播。生成音频请在开头/结尾标注"本音频由AI生成"。

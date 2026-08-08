@@ -46,13 +46,13 @@ def _find_assets_dir() -> Path:
     p = Path(__file__).resolve().parent.parent / "assets"
     if p.exists():
         return p
-    # 2. ~/listen-book/assets
-    p = Path.home() / "listen-book" / "assets"
+    # 2. ~/bookmadebook/assets
+    p = Path.home() / "bookmadebook" / "assets"
     if p.exists():
         return p
     # 3. 仓库目录
-    for cand in [Path(r"D:\AI软件\GitHub\listen-book\assets"),
-                 Path("C:\\Users\\dongj\\.hermes\\skills\\productivity\\listen-book\\assets")]:
+    for cand in [Path(r"D:\AI软件\GitHub\bookmadebook\assets"),
+                 Path(__file__).parent.parent / "assets"]:
         if cand.exists():
             return cand
     return Path(__file__).resolve().parent.parent / "assets"

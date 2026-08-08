@@ -1,6 +1,6 @@
 [![EN](README_EN.md)](README_EN.md) ｜ [中文](README.md)
 
-# 📚 Listen-Book — 把没时间读的书，变成耳朵里的 15 分钟
+# 📚 Bookmadebook — 把没时间读的书，变成耳朵里的 15 分钟
 
 > AI 书籍精读音频生成 Skill | 全年龄段 · 多场景 · 多声音 · 多深度
 > 说一句话 → AI 推荐书 → 生成精读 → 转语音 → 开听！
@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub Stars](https://img.shields.io/github/stars/QINGcha7911/listen-book?style=social)](https://github.com/QINGcha7911/listen-book)
+[![GitHub Stars](https://img.shields.io/github/stars/QINGcha7911/bookmadebook?style=social)](https://github.com/QINGcha7911/bookmadebook)
 
 ---
 
@@ -19,7 +19,7 @@
 - 👶 **想给孩子讲故事**，但工作太忙没精力？或者想要用**爸爸妈妈自己的声音**讲？
 - 🧠 **听完就忘**，想要要点笔记？
 
-**Listen-Book 把任何一本书变成适合你当下场景的精读音频——30 秒出第一段，边生成边听。**
+**Bookmadebook 把任何一本书变成适合你当下场景的精读音频——30 秒出第一段，边生成边听。**
 
 ```
 你：帮我解读《原子习惯》，跑步时听
@@ -66,7 +66,7 @@ AI：推荐 → 选书 → 生成精读 → 语音输出
 
 ```bash
 # Hermes Agent 用户
-git clone https://github.com/QINGcha7911/listen-book.git ~/.hermes/skills/productivity/listen-book
+git clone https://github.com/QINGcha7911/bookmadebook.git ~/.hermes/skills/productivity/bookmadebook
 
 # 依赖
 pip install edge-tts mutagen
@@ -110,7 +110,7 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 ## 🏗️ 项目结构
 
 ```
-listen-book/
+bookmadebook/
 ├── SKILL.md              # 主技能文件（含全部配置）
 ├── config.yaml           # 默认配置
 ├── prompts/              # 各年龄段提示词模板（children 4级 + teen 2级）
@@ -131,8 +131,8 @@ listen-book/
 
 欢迎提交 Issue 和 PR！
 
-- 🐛 遇到问题？[提 Issue](https://github.com/QINGcha7911/listen-book/issues/new?template=bug_report.yml)
-- 💡 有新想法？[提建议](https://github.com/QINGcha7911/listen-book/issues/new?template=feature_request.yml)
+- 🐛 遇到问题？[提 Issue](https://github.com/QINGcha7911/bookmadebook/issues/new?template=bug_report.yml)
+- 💡 有新想法？[提建议](https://github.com/QINGcha7911/bookmadebook/issues/new?template=feature_request.yml)
 - 📋 想一起开发？看 [Roadmap](docs/ROADMAP.md)
 
 **维护说明**：本项目由单人维护，通过 AI Agent 团队（Hermes/Codex）自动化处理 Issue 分类、Bug 修复和功能开发。回复速度取决于复杂度，感谢理解 🙏

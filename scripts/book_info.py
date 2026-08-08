@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 书籍信息获取（合规版）
+"""bookmadebook 书籍信息获取（合规版）
 
 核心思路：精读音频是"引流种草"，不是盗版替代。
 用户听了精读 → 被种草 → 去购买原书。
@@ -30,10 +30,10 @@ from pathlib import Path
 SOURCE_TIMEOUT = 15
 GLOBAL_TIMEOUT = 60
 
-CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/listen-book/info"))
+CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/bookmadebook/info"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
-UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) listen-book/1.0"}
+UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) bookmadebook/1.0"}
 
 
 class BookInfoError(Exception):
@@ -332,7 +332,7 @@ def fetch_gutenberg_summary(title: str, timeout: int = SOURCE_TIMEOUT) -> BookIn
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="listen-book 书籍信息获取（合规）")
+    parser = argparse.ArgumentParser(description="bookmadebook 书籍信息获取（合规）")
     parser.add_argument("title", nargs="?", help="书名")
     parser.add_argument("--file", help="用户上传的文件")
     parser.add_argument("--text", help="用户粘贴的文本")

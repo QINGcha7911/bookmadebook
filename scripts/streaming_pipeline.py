@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 流式流水线 v3 — 分段生成+截断检测+章节标记+批量
+"""bookmadebook 流式流水线 v3 — 分段生成+截断检测+章节标记+批量
 
 v3 新增：
 1. ID3v2 CHAP 章节标记（优先 mutagen，fallback ffmpeg）
@@ -16,7 +16,7 @@ except ImportError:
     sys.path.insert(0, str(Path(__file__).parent))
     from cache_manager import CacheManager
 
-CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/listen-book"))
+CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/bookmadebook"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 MAX_SEGMENT_CHARS = 3000
@@ -217,7 +217,7 @@ def mix_bgm(voice_path: Path, cache_dir: Path, bgm_path: str = None,
     """
     import math
     bgm = Path(bgm_path) if bgm_path else Path(os.path.expanduser(
-        "~/listen-book/assets/bgm_ambient.mp3"))
+        "~/bookmadebook/assets/bgm_ambient.mp3"))
     if not bgm.exists():
         # 回退到仓库 assets
         alt = Path(__file__).parent.parent / "assets" / "bgm_ambient.mp3"
@@ -489,7 +489,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         print(f"🔗 拼接 {len(seg_files)} 段...")
         final_path = CACHE_DIR / f"{script_hash[:10]}.mp3"
         concat_file = CACHE_DIR / "concat_list.txt"
-        concat_file.write_text("\n".join(f"file '{f.replace(chr(92), chr(47))}'" for f in seg_files))
+        concat_file.write_text("\n".join(f"file '{f.replace(chr(92), chr(47))}'" for f in seg_files))  # 反斜杠→正斜杠（ffmpeg concat 要求）
 
         result = subprocess.run(
             ["ffmpeg", "-f", "concat", "-safe", "0", "-i", str(concat_file),
@@ -593,7 +593,7 @@ async def batch_pipeline(jobs: List[dict]):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="listen-book 流水线")
+    parser = argparse.ArgumentParser(description="bookmadebook 流水线")
     parser.add_argument("-f", "--file", help="文本文件路径")
     parser.add_argument("-o", "--output", help="输出文件路径")
     parser.add_argument("--voice", default="auto",

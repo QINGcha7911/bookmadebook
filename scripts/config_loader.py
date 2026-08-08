@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 配置加载器
+"""bookmadebook 配置加载器
 
 让 config.yaml 被所有脚本真正读取（此前是"死配置"）。
 提供统一的 load_config / get() 接口。
@@ -36,7 +36,7 @@ def _find_config() -> Path:
         return CONFIG_PATH
     # 技能目录兜底（Hermes skills 安装形态）
     candidates = [
-        Path(__file__).resolve().parent.parent.parent / "listen-book" / "config.yaml",
+        Path(__file__).resolve().parent.parent.parent / "bookmadebook" / "config.yaml",
         Path.home() / ".hermes" / "skills" / "productivity" / "book-to-audio" / "config.yaml",
     ]
     for c in candidates:
@@ -81,4 +81,4 @@ if __name__ == "__main__":
     print(f"   配置节: {list(cfg.keys())}")
     print(f"   voice.default = {get('voice.default', 'auto')}")
     print(f"   age_group.default = {get('age_group.default', 'adult')}")
-    print(f"   delivery.output_dir = {get('delivery.output_dir', '~/listen-book')}")
+    print(f"   delivery.output_dir = {get('delivery.output_dir', '~/bookmadebook')}")

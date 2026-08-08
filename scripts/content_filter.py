@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""listen-book 内容安全过滤器
+"""bookmadebook 内容安全过滤器
 
 两种模式：
 - kids_mode: 儿童/青少年（严格过滤：暴力、死亡、恐怖、成人内容）

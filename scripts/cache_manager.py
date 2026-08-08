@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""listen-book 三级缓存管理器
+"""bookmadebook 三级缓存管理器
 
 L1 脚本缓存:  key = book_hash + age_group + scene + depth
 L2 TTS片段缓存: key = text_md5 + voice + rate
 L3 成品缓存:    key = script_hash + voice + speed
 
-缓存目录: ~/.hermes/cache/listen-book/{l1,l2,l3}/
+缓存目录: ~/.hermes/cache/bookmadebook/{l1,l2,l3}/
 
 用法:
     from cache_manager import CacheManager
@@ -19,7 +19,7 @@ import os
 import time
 from pathlib import Path
 
-CACHE_ROOT = Path(os.path.expanduser("~/.hermes/cache/listen-book"))
+CACHE_ROOT = Path(os.path.expanduser("~/.hermes/cache/bookmadebook"))
 # 缓存 schema 版本：键结构变更时+1，强制旧缓存失效（避免旧键复用错误音频）
 CACHE_SCHEMA_VERSION = "v2"
 DEFAULT_TTL = {
