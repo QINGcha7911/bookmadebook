@@ -12,12 +12,15 @@ from PIL import Image, ImageDraw, ImageFont
 W, H = 1080, 1920
 
 # 字体解析：项目字体 > 系统 Noto CJK（OFL 许可）> fc-match 兜底
+_PROJ_FONTS = Path(__file__).resolve().parent.parent / "assets" / "fonts"
 FONT_CANDIDATES = {
     "bold": [
+        _PROJ_FONTS / "msyhbd.ttc",
         Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"),
         Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"),
     ],
     "serif": [
+        _PROJ_FONTS / "msyhbd.ttc",
         Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc"),
         Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc"),
     ],

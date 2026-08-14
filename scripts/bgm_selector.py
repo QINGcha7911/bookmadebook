@@ -98,6 +98,9 @@ def select_bgm(text: str, user_key: str = None, config: dict = None) -> tuple:
     assets = _find_assets_dir()
 
     topic = detect_topic(text)
+    # 2026-08-14 用户要求删除 BGM（纯人声，所有内容无背景音乐）。
+    # 如需恢复：删除下面这一行 return 即可。
+    return None, topic
     bgm_name = cfg.get("default", "bgm_ambient.mp3")
 
     # 0.5 传记/历史语境优先（用户反馈：苏东坡传等人物传记被误判为冥想/放松，

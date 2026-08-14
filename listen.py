@@ -11,7 +11,7 @@
 流程：音频 → harness 主控（质量门→生成→验证门）；视频 → 音频 + video_composer 合成。
 
 用法:
-    python listen.py "书名 时长分钟[视频|音频]" [--voice VOICE] [--style normal|ted] [--theme desert|forest|ocean] [--output PATH]
+    python listen.py "书名 时长分钟[视频|音频]" [--voice VOICE] [--style normal|ted] [--theme desert|forest|ocean] [--output PATH] [--file 讲书稿.txt]
 """
 import argparse
 import re
@@ -68,9 +68,12 @@ def main():
     ap.add_argument("request", nargs="?", help='自然语言请求，如 "《小王子》10分钟" 或 "小王子 10分钟视频"')
     ap.add_argument("--voice", default="auto", help="TTS声音（auto=按内容自动选）")
     ap.add_argument("--style", default="ted", choices=["normal", "ted"], help="朗读风格")
-    ap.add_argument("--theme", default="desert", choices=["desert", "forest", "ocean"],
+    ap.add_argument("--theme", default="desert", choices=["auto", "desert", "forest", "ocean",
+                   "palace", "sunrise", "starry", "rain", "library", "warm_home", "snow",
+                   "tech_city", "temple", "hongkong", "pasture", "ship"],
                     help="视频实景主题（视频模式）")
     ap.add_argument("--output", help="输出文件路径（默认 ./bookmadebook-output/<书名>.mp4/.mp3）")
+    ap.add_argument("--file", help="讲书稿 txt（透传给 harness/video_composer）")
     ap.add_argument("--target-minutes", type=float, help="目标时长（分钟，覆盖自然语言解析）")
     ap.add_argument("--output-type", choices=["audio", "video"],
                     help="输出类型（覆盖自然语言识别：audio=音频 video=视频）")
@@ -83,7 +86,8 @@ def main():
     minutes = args.target_minutes or req["minutes"]
     book = req["book"]
     output_type = args.output_type or req["output_type"]
-    print(f"📖 请求解析: 书名={book} | 时长={minutes}分钟 | 输出={output_type} | 声音={args.voice}")
+    file_note = f" | 讲书稿={args.file}" if args.file else ""
+    print(f"📖 请求解析: 书名={book} | 时长={minutes}分钟 | 输出={output_type} | 声音={args.voice}{file_note}")
 
     out_dir = Path("bookmadebook-output")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -93,10 +97,13 @@ def main():
     # ── 第一步：生成音频（harness 主控：质量门→生成→验证门）──
     audio_tmp = str(out_dir / f"{book}-{int(minutes)}min_tmp.mp3")
     cmd = [sys.executable, str(SCRIPTS / "harness.py"),
-           "--book", book,
            "--target-minutes", str(minutes),
            "--voice", args.voice, "--style", args.style,
            "--output", audio_tmp]
+    if args.file:
+        cmd += ["--file", args.file]
+    else:
+        cmd += ["--book", book]
     print(f"🔗 [1/2] 生成音频: {' '.join(cmd)}\n")
     r = subprocess.run(cmd)
     if r.returncode != 0:
@@ -106,27 +113,27 @@ def main():
 
     # ── 第二步（视频模式）：合成实景动态视频 ──
     if output_type == "video":
+        # 确定讲书稿路径（--file 优先，否则自动速览稿）
+        if args.file:
+            script_path = Path(args.file)
+            if not script_path.exists():
+                print(f"❌ 讲书稿不存在: {script_path}")
+                sys.exit(1)
+        else:
+            script_path = out_dir / f"{book}-{int(minutes)}min_script.txt"
+            try:
+                r2 = subprocess.run([sys.executable, str(SCRIPTS / "book_info.py"), book],
+                                    capture_output=True, text=True, timeout=60)
+                script_path.write_text(r2.stdout[-3000:] or f"关于《{book}》的讲书内容。\n",
+                                       encoding="utf-8")
+            except Exception as exc:
+                print(f"⚠️ 自动速览稿失败: {exc}")
+
         print(f"\n🔗 [2/2] 合成视频（主题={args.theme}）...")
         vcmd = [sys.executable, str(SCRIPTS / "video_composer.py"),
-                "--script", "（讲书稿）", "--audio", audio_tmp,
+                "--script", str(script_path), "--audio", audio_tmp,
                 "--book", book, "--theme", args.theme,
                 "--output", output]
-        # 注：harness --book 模式内部生成速览稿；正式用 --file 传入讲书稿
-        # 这里简化：video_composer 需要讲书稿提取金句，用临时空稿（金句自动从音频文本提取）
-        # 实际使用时：先生成讲书稿文件 → --script 传入
-        print(f"  （注：视频模式需讲书稿提取金句，建议先写稿再合成）")
-        # 直接调用 video_composer（用 harness 的速览稿逻辑）
-        script_path = out_dir / f"{book}-{int(minutes)}min_script.txt"
-        # 尝试获取书籍信息生成速览稿
-        try:
-            r2 = subprocess.run([sys.executable, str(SCRIPTS / "book_info.py"), book],
-                                capture_output=True, text=True, timeout=60)
-            script_path.write_text(r2.stdout[-3000:] or f"关于《{book}》的讲书内容。\n",
-                                   encoding="utf-8")
-        except Exception:
-            script_path.write_text(f"《{book}》精讲。\n", encoding="utf-8")
-        vcmd[1] = str(SCRIPTS / "video_composer.py")
-        vcmd[vcmd.index("--script") + 1] = str(script_path)
         print(f"🔗 调用: {' '.join(vcmd)}\n")
         rv = subprocess.run(vcmd)
         if rv.returncode != 0:

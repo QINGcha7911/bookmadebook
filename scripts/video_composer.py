@@ -23,6 +23,7 @@ import os
 import re
 import subprocess
 from pathlib import Path
+_ORIG_CWD = os.getcwd()
 os.chdir(Path(__file__).parent)
 import sys
 import tempfile
@@ -291,6 +292,14 @@ def main():
     ap.add_argument("--author", default="", help="作者")
     ap.add_argument("--fast", action="store_true", help="快速模式：preset faster + crf 26（长视频/预览用）")
     args = ap.parse_args()
+
+    def _abs(p: str) -> str:
+        pth = Path(p)
+        return str(pth if pth.is_absolute() else Path(_ORIG_CWD) / pth)
+
+    args.script = _abs(args.script)
+    args.audio = _abs(args.audio)
+    args.output = _abs(args.output)
 
     script_text = Path(args.book).read_text(encoding="utf-8") if False else \
         Path(args.script).read_text(encoding="utf-8", errors="replace")

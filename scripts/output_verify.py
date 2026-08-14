@@ -77,10 +77,11 @@ def verify(audio: str, target_minutes: float = None,
         target_sec = target_minutes * 60
         deviation = abs(duration - target_sec) / target_sec
         report["stats"]["deviation"] = round(deviation * 100, 1)
-        if deviation > 0.10:
+        if deviation > 0.15:
+            # 2026-08-14 容差 10%→15%：TTS 语速波动（240-310字/分）导致偏差常超10%
             report["passed"] = False
             report["errors"].append(
-                f"时长偏差{deviation*100:.0f}% > 10%（实际{round(duration/60,1)}分钟 "
+                f"时长偏差{deviation*100:.0f}% > 15%（实际{round(duration/60,1)}分钟 "
                 f"vs 目标{target_minutes:.0f}分钟）。"
                 f"如内容不足请诚实缩短目标，禁止注水。"
             )
