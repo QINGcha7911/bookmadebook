@@ -108,6 +108,9 @@ def select_bgm(text: str, user_key: str = None, config: dict = None) -> tuple:
         topic = "历史/史诗"
 
     # 0. 无BGM主题（用户偏好：科幻/悬疑纯人声更沉浸，2026-08-07确认）
+    #    强制无BGM：LISTEN_BOOK_NOBGM=1（2026-08-11 用户要求商务男声纯人声）
+    if os.environ.get("LISTEN_BOOK_NOBGM") == "1":
+        return None, topic
     NO_BGM_TOPICS = {"科幻/悬疑"}
     if topic in NO_BGM_TOPICS:
         return None, topic

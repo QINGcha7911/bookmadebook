@@ -162,20 +162,45 @@ python scripts/book_info.py --file /path/to/book.txt
 
 ### 4.4 视频合成（讲书音频 → 实景动态视频）
 
-**设计原则（2026-08-07 用户确认）**：
+**设计原则（2026-08-07 用户确认，2026-08-11 升级）**：
 - 实景写实照片（Unsplash 免费图库），不用 AI 生图
 - 同主题连贯画面（如沙漠星空系列），避免场景跳跃
 - 交叉溶解过渡（xfade 1.5s），画面平滑流动
 - 文字只保留金句 + 书名，淡入淡出
 - Ken Burns 缓慢缩放（zoompan），动态不呆板
+- **文字层用 PIL 预渲染 PNG + overlay**（替代 drawtext，规避中文转义/断行/描边坑）
+- **字体用思源黑体/宋体（Noto CJK，OFL 商用合规）**，不用微软雅黑（商用侵权风险）
+- **画面 scale 必须 cover 模式**（`force_original_aspect_ratio=increase` + `crop`），防横图拉伸变形（2026-08-11 用户反馈"字体压太扁"根因）
 
 **用法**：
 ```bash
 python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --book 书名 --output out.mp4
 ```
-- `--theme desert|forest|ocean` 选择实景主题（沙漠/森林/海洋）
+- `--theme auto`（默认）按内容自动选主题；也可手动指定（desert/forest/ocean/palace/sunrise/starry/rain/library/warm_home/snow/tech_city/temple）
+- `--scene-from auto|script|manual` 场景来源（标记/自动/手动）
+- `--dry-run` 只输出场景规划不合成
 - 自动提取【金句】标记 → 视频中段淡入淡出显示
 - 输出 1080×1920 竖版（小红书/抖音适配）
+
+**场景自动选择（2026-08-11 新增）**：
+- 优先级：`--theme 手动 > 讲书稿【场景：XX】标记 > 自动检测（加权关键词统计）> 兜底 desert`
+- `scene_selector.py`：复用 streaming_pipeline 的 CONTENT_VOICES，**加权统计**各类关键词命中数取最高（不是首命中——张居正传"汇报"误判职场教训）
+- `scene_library.py`：本地素材库（assets/scenes/<theme>/ + ~/.cache/bookmadebook/scenes/），降级链 本地→缓存→下载→desert 兜底
+- 多章节：`【场景：palace】` 标记可切段换主题，≤3 场景/片
+- 素材清单：`assets/scenes/manifest.json`（11 主题 Unsplash URL，**已人工目检**：2026-08-11 清理了耳机/合影/手机等错配图）
+- **注意**：manifest 中未逐一验证的 URL 内容可能不符（盲猜 ID 教训），新主题素材需人工目检
+- **scene_fetcher.py**（2026-08-11 新增）：Pexels API 搜索下载素材（`--theme palace --download 3`），需 `PEXELS_API_KEY` 环境变量；API 返回真实图片+描述，杜绝盲猜
+- **强制无 BGM**：`LISTEN_BOOK_NOBGM=1` 环境变量（2026-08-11 用户要求商务/干货内容纯人声，配合云健男声）
+- **战争/军事题材**：关键词自动选 ww2 主题（士兵剪影图，2026-08-13）；`--rate=-10%` 注意用等号（`-10%` 会被 argparse 误解析）
+- **船王/航运题材**：ship 主题（集装箱货轮图，2026-08-13）；**香港/政坛题材**：hongkong 主题（香港天际线图）；用户偏好：商务/传记男声用云健（zh-CN-YunjianNeural）比云扬更沉稳
+- **Pexels 城市搜索坑**：搜 "hong kong skyline" 会混入里斯本/迪拜等相似城市港图，**下载后必须 vision 目检地标**（IFC/中银/摩天轮）再入库（2026-08-13 里斯本混入教训）
+- **牧场/游牧题材**：pasture 主题（雪原羊群图，2026-08-13）；**磁性女声**：晓晓 + `--pitch=-15Hz`（低沉磁性，2026-08-13 新增 CLI 参数，注意用等号）
+- **超长视频（45分钟）**：video_composer 主合成 timeout 已放宽到 7200s（2小时）；45 分钟≈13500字讲书稿，可 delegate_task 并行分章节写稿再合并
+- **渲染提速（2026-08-13）**：zoompan 内部渲染分辨率从 2160×3840 降到 1080×1920（原来先放大 4K 再缩回 1080p = 白算 3/4 像素），45 分钟视频合成从 80-90 分钟 → 25-30 分钟，画质无差别
+- **交付分层（2026-08-13 新增 deliver.py，仅作可选工具）**：用户想要多长就生成多长，**时长不做任何限制**。deliver.py 只是辅助工具（按时长压缩/分层），是否使用由用户决定——用户要完整视频就给完整视频，要音频就给音频，要 5 分钟精华就做 5 分钟精华
+- **小红书精华版（2026-08-13）**：小红书平台限制为参考信息（单条视频限 15 分钟、普通号最佳 5 分钟、MP4/720p+/竖版9:16），**不是技能限制**——用户要发小红书时可按此做精华版，用户要完整版就做完整版，一切以用户需求为准
+- **场景标记铁律（2026-08-13 修复）**：`【场景：XX】`必须放在章节标题**正上方**；每章一个标记；相邻章节可用同主题（解析器已修：只合并 <50 字符内重复标记，不再吞段）；音频章节数与标记数不一致时按字数比例分配
+- **ffprobe 章节排序坑（2026-08-14 实测）**：ffprobe 读 MP3 ID3 CHAP 按**字符串**排序（`"560"<"57"`，因 `'6'<'7'`），10 分钟稿章节被排成 `0→560→57→193...`，导致场景时间轴出现负区间 → 合成报 `Numerical result out of range`。**scene_selector.read_audio_chapters 已加 `chapters.sort(key=start)` 按数字重排**——改稿后必须 dry-run 验证时间轴（逐段 start<end 递增）再合成
 
 **音频/视频自适应**（2026-08-07）：
 - `python listen.py "《小王子》10分钟"` → 默认音频

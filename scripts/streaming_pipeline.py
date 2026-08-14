@@ -350,11 +350,13 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                    add_chapters: bool = True, style: str = "normal",
                    target_minutes: float = None,
                    user_key: str = None,
-                   output_path: str = None) -> tuple[str, float]:
+                   output_path: str = None,
+                   pitch: str = "+0Hz") -> tuple[str, float]:
     """完整流水线：分段→TTS→拼接→章节标记→输出
     voice="auto" 时按文本语言自动选声音（中文→晓晓，英文→Christopher）
     style="ted" 时启用导演层（解析【注解】表演标记，语速起伏+停顿）
     user_key 用于 BGM 用户配置覆盖（内容+用户 → 选曲）
+    pitch 全局音调（Hz），如 -15Hz 低沉磁性（2026-08-13 新增）
     """
     try:
         # 语言自动选声音（用户指定了具体声音则用用户的）
@@ -433,7 +435,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             seg_voice = voice
             seg_rate = rate
             seg_volume = "+0%"
-            seg_pitch = "+0Hz"
+            seg_pitch = pitch
             pause_before = 0.0
             if ted_blocks and i < len(ted_blocks):
                 b = ted_blocks[i]
@@ -599,6 +601,8 @@ if __name__ == "__main__":
     parser.add_argument("--voice", default="auto",
                         help="声音（auto=按语言自动选，或指定如 zh-CN-XiaoxiaoNeural / en-US-ChristopherNeural）")
     parser.add_argument("--rate", default="+0%")
+    parser.add_argument("--pitch", default="+0Hz",
+                        help="全局音调（Hz），如 -15Hz 低沉磁性、+10Hz 明亮（2026-08-13 新增）")
     parser.add_argument("--mode", default="full", choices=["full", "progressive"])
     parser.add_argument("--style", default="normal", choices=["normal", "ted"],
                         help="TED 模式（导演层表演标记）")
@@ -690,7 +694,8 @@ if __name__ == "__main__":
         add_chapters=not args.no_chapters, style=args.style,
         target_minutes=args.target_minutes,
         user_key=args.user,
-        output_path=args.output
+        output_path=args.output,
+        pitch=args.pitch
     ))
     print(f"输出：{out_path}")
 
