@@ -211,6 +211,33 @@ def _fallback_quote_times(quotes: list, audio_dur: float) -> list:
             for qi in range(len(quotes))]
 
 
+def _quote_times(quotes: list, script_text: str,
+                 audio_chapter_starts: list, audio_dur: float) -> list:
+    """金句时间轴：按金句在讲书稿中的字符位置比例映射到音频时间轴。
+
+    不能直接取前 N 个 CHAP 起点——音频 CHAP 数量 = 分段数（可远大于金句数），
+    前 N 个全堆在开头（朱元璋 10min 实测：前4 CHAP=0/6.9/48.6/49.1s）。
+    也不用 CHAP 取整——CHAP 后半段稀疏会再次聚集（257/262/262s）。
+    线性映射（稿中位置比例 × 总时长）最贴近金句实际被念到的时刻。
+    """
+    fb = _fallback_quote_times(quotes, audio_dur)
+    if not quotes:
+        return []
+    if not script_text:
+        return fb
+    n_chars = len(script_text)
+    out = []
+    for qi, q in enumerate(quotes):
+        qtext = q.strip("「」 ")
+        # 前缀匹配（抗标点/句号差异），取前12字定位
+        idx = script_text.find(qtext[:12]) if len(qtext) >= 4 else -1
+        if idx < 0:
+            out.append(fb[qi])
+            continue
+        out.append(audio_dur * idx / max(n_chars, 1))
+    return out
+
+
 def _clip_display_start(start, audio_dur: float) -> float:
     """确保淡入区间不会落在音频结束之后。"""
     if audio_dur <= 0:
@@ -317,17 +344,21 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             text_parts.append(f"[{prev_v}][ch{ci}]overlay=0:0[o_ch{ci}]")
             prev_v = f"o_ch{ci}"
 
-    # ③ 金句：优先取 CHAP 章节起始时间，读不到保留后段均布回退
+    # ③ 金句：按稿中位置映射 CHAP 时间轴（不能取前N个CHAP——数量不一致会全堆开头）
     if quotes:
         fallback_quote_times = _fallback_quote_times(quotes, audio_dur)
+        quote_times = _quote_times(quotes, script_text,
+                                   audio_chapter_starts, audio_dur)
         for qi, q in enumerate(quotes):
             qk = f"quote_{qi}"
-            ts = (_clip_display_start(audio_chapter_starts[qi], audio_dur)
-                  if qi < len(audio_chapter_starts)
-                  else fallback_quote_times[qi])
+            ts = _clip_display_start(quote_times[qi], audio_dur)
             is_last = (qi == len(quotes) - 1)
-            te = audio_dur if is_last else min(audio_dur, ts + 8)
-            if is_last:
+            # 末句金句若靠近片尾则保持到结束（升华收束），否则也限时淡出防霸屏
+            if is_last and audio_dur - ts <= 18:
+                te = audio_dur
+            else:
+                te = min(audio_dur, ts + 12)
+            if is_last and audio_dur - ts <= 18:
                 fade_out = ""
             elif te - ts > 0.9:
                 fade_out = f",fade=t=out:st={te-0.8}:d=0.8:alpha=1"
