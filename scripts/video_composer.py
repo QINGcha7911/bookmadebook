@@ -36,6 +36,7 @@ except ImportError:
     HAS_PIL = False
 
 W, H = 1080, 1920          # 竖版 9:16
+ZOOM_W, ZOOM_H = 540, 960  # zoompan 低分辨率，输出前再放大
 FPS = 25
 XFADE_DUR = 1.5             # 交叉溶解时长
 FONT_BOLD = "../assets/fonts/msyhbd.ttc"
@@ -130,26 +131,119 @@ def extract_quotes(script_text: str) -> list[str]:
     return quotes[:4]  # 最多4句
 
 
+from functools import lru_cache
+
+@lru_cache(maxsize=256)
+def _image_is_1080x1920(img) -> bool:
+    """场景库输出 1080×1920 时跳过归一化 scale/crop。带缓存（同一图多次调用不重复探测）。
+    入参可能是 SceneSegment 对象，需先转 str 才可哈希。"""
+    try:
+        img = str(img)
+    except Exception:
+        return False
+    try:
+        if HAS_PIL:
+            with Image.open(str(img)) as im:
+                return im.size == (W, H)
+    except Exception:
+        pass
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x",
+             str(img)],
+            capture_output=True, text=True, timeout=10)
+        w, h = r.stdout.strip().split("x")
+        return int(w) == W and int(h) == H
+    except Exception:
+        return False
+
+
+def read_audio_chapters(audio: str) -> list[float]:
+    """读取 MP3 ID3 CHAP 章节起始时间；无章节/读取失败返回空列表。"""
+    if not audio:
+        return []
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_chapters", "-of", "json",
+             str(audio)],
+            capture_output=True, timeout=30)
+        if r.returncode != 0:
+            return []
+        data = json.loads(r.stdout.decode("utf-8", errors="replace") or "{}")
+        starts = []
+        for ch in data.get("chapters", []):
+            try:
+                start = float(ch.get("start_time"))
+            except (TypeError, ValueError):
+                continue
+            if start >= 0:
+                starts.append(start)
+        starts.sort()
+        return starts
+    except Exception:
+        return []
+
+
+def _fallback_chapter_times(chapters: list, script_text: str,
+                            audio_dur: float) -> list:
+    """无 CHAP 时按标题字符位置估算章节时间。"""
+    audio_dur_chars = len(script_text) or 1
+    times = []
+    char_cursor = 0
+    for ci, ch in enumerate(chapters):
+        idx = script_text.find(ch, char_cursor)
+        if idx >= 0:
+            times.append(audio_dur * idx / audio_dur_chars)
+            char_cursor = max(char_cursor, idx + len(ch))
+        else:
+            times.append(audio_dur * ci / len(chapters))
+    return times
+
+
+def _fallback_quote_times(quotes: list, audio_dur: float) -> list:
+    """无 CHAP 时保留后段均布逻辑。"""
+    if not quotes:
+        return []
+    quote_zone_start = audio_dur * 0.3
+    quote_zone = audio_dur * 0.65
+    return [quote_zone_start + qi * (quote_zone / len(quotes))
+            for qi in range(len(quotes))]
+
+
+def _clip_display_start(start, audio_dur: float) -> float:
+    """确保淡入区间不会落在音频结束之后。"""
+    if audio_dur <= 0:
+        return 0.0
+    return max(0.0, min(float(start), audio_dur - 1.0))
+
+
 def make_filter(plan, audio_dur: float, quotes: list[str],
-                book_title: str, author: str = "", script_text: str = ""):
+                book_title: str, author: str = "", script_text: str = "",
+                audio: str = ""):
     """构建 ffmpeg filter_complex：Ken Burns + xfade + 金句文字
-    plan: ScenePlan（支持可变时长分段 + 多场景）"""
+    plan: ScenePlan（支持可变时长分段 + 多场景）
+    audio: 有 CHAP 时用于对齐章节/金句时间"""
     items = plan.images_with_durations() if hasattr(plan, "images_with_durations") else \
         [(p, audio_dur / len(plan)) for p in plan]
     n = len(items)
     parts = []
-    # 每张图 Ken Burns 缩放（独立时长）；scale 用 cover 模式防拉伸变形
+    # 每张图 Ken Burns 缩放（独立时长）；非 1080×1920 先归一化，再降采样给 zoompan
     # 缩放速度按段时长分配：zoom 从 1.0→1.15 铺满整段（on=输出帧号），避免"4秒后静止"
     for i, (img, dur) in enumerate(items):
         zoom_in = (i % 2 == 0)
         zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
                  if zoom_in else
                  f"max(1.15-0.15*on/{max(int(dur*FPS),1)},1.0)")
+        normalize = ("" if _image_is_1080x1920(img) else
+                     f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+                     f"crop={W}:{H},")
         parts.append(
-            f"[{i}:v]scale=1080:1920:force_original_aspect_ratio=increase,"
-            f"crop=1080:1920,zoompan=z='{zexpr}':"
+            f"[{i}:v]{normalize}scale={ZOOM_W}:{ZOOM_H},"
+            f"zoompan=z='{zexpr}':"
             f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-            f"d={int(dur*FPS)}:s={W}x{H}:fps={FPS},"
+            f"d={int(dur*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
+            f"scale={W}:{H}:flags=lanczos,"
             f"trim=duration={dur+XFADE_DUR},setpts=PTS-STARTPTS[v{i}]"
         )
     # xfade 交叉溶解（累计可变时长）
@@ -172,6 +266,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             t = re.sub(r"^#+\s*", "", line).strip()
             if t:
                 chapters.append(t)
+    audio_chapter_starts = read_audio_chapters(audio)
     layers = tl.render_all(book_title, quotes, chapters, author=author,
                            watermark=book_title)
     # 全部文字层作为 PNG 输入
@@ -195,16 +290,15 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     text_parts.append(f"[{prev_v}][bk]overlay=0:0[o_book]")
     prev_v = "o_book"
 
-    # ② 章节标签：每章闪现 ≤5s（时间轴按字数比例估算）
-    audio_dur_chars = len(script_text) or 1
+    # ② 章节标签：每章闪现 ≤5s（优先 CHAP 起始时间，读不到按字数估算）
     if chapters:
-        char_cursor = 0
-        chapter_times = []
-        for ci, ch in enumerate(chapters):
-            idx = script_text.find(ch, char_cursor)
-            chapter_times.append((audio_dur * idx / audio_dur_chars) if idx >= 0
-                                 else (audio_dur * ci / len(chapters)))
-            char_cursor = max(char_cursor, idx + len(ch)) if idx >= 0 else char_cursor
+        fallback_chapter_times = _fallback_chapter_times(
+            chapters, script_text, audio_dur)
+        chapter_times = [
+            audio_chapter_starts[ci] if ci < len(audio_chapter_starts)
+            else fallback_chapter_times[ci]
+            for ci in range(len(chapters))
+        ]
         for ci, ch in enumerate(chapters):
             ck = f"chapter_{ci}"
             if ck not in png_map:
@@ -223,19 +317,22 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             text_parts.append(f"[{prev_v}][ch{ci}]overlay=0:0[o_ch{ci}]")
             prev_v = f"o_ch{ci}"
 
-    # ③ 金句：时间窗保留现状逻辑（后段均布，最后一句留片尾）
+    # ③ 金句：优先取 CHAP 章节起始时间，读不到保留后段均布回退
     if quotes:
-        quote_zone_start = audio_dur * 0.3
-        quote_zone = audio_dur * 0.65
+        fallback_quote_times = _fallback_quote_times(quotes, audio_dur)
         for qi, q in enumerate(quotes):
             qk = f"quote_{qi}"
-            ts = quote_zone_start + qi * (quote_zone / len(quotes))
+            ts = (_clip_display_start(audio_chapter_starts[qi], audio_dur)
+                  if qi < len(audio_chapter_starts)
+                  else fallback_quote_times[qi])
             is_last = (qi == len(quotes) - 1)
-            te = audio_dur if is_last else ts + 8
+            te = audio_dur if is_last else min(audio_dur, ts + 8)
             if is_last:
                 fade_out = ""
-            else:
+            elif te - ts > 0.9:
                 fade_out = f",fade=t=out:st={te-0.8}:d=0.8:alpha=1"
+            else:
+                fade_out = ""
             q_idx = png_map[qk]
             text_parts.append(f"[{png_base+q_idx}:v]format=rgba,"
                               f"fade=t=in:st={ts+0.5}:d=0.8:alpha=1{fade_out}[q{qi}]")
@@ -300,7 +397,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="只输出场景规划不合成")
     ap.add_argument("--book", default="", help="书名（封面文字）")
     ap.add_argument("--author", default="", help="作者")
-    ap.add_argument("--fast", action="store_true", help="快速模式：preset faster + crf 26（长视频/预览用）")
+    ap.add_argument("--fast", action="store_true", help="快速模式：crf 26（默认 preset faster；长视频/预览用）")
     args = ap.parse_args()
 
     def _abs(p: str) -> str:
@@ -351,7 +448,7 @@ def main():
 
         # 视频帧流（无音频）
         flt, png_inputs = make_filter(plan, audio_dur, quotes, book_title,
-                                      args.author, script_text)
+                                      args.author, script_text, args.audio)
         video_mp4 = tmpdir / "video_noaudio.mp4"
         cmd = ["ffmpeg", "-y", "-v", "error"]
         for img, dur in items:
@@ -360,7 +457,7 @@ def main():
         for png in png_inputs:
             cmd += ["-loop", "1", "-t", str(audio_dur), "-i", str(png)]
         cmd += ["-filter_complex", flt, "-map", "[vout]",
-                "-c:v", "libx264", "-preset", "faster" if args.fast else "medium",
+                "-c:v", "libx264", "-preset", "faster",
                 "-crf", "26" if args.fast else "23",
                 "-t", f"{audio_dur}", str(video_mp4)]
         print("🎬 合成视频（Ken Burns + 交叉溶解 + 金句）...")
