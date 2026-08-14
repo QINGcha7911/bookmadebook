@@ -6,7 +6,7 @@ v3 新增：
 2. 批量模式：多本书排队生成
 3. 接入 cache_manager 三级缓存
 """
-import asyncio, subprocess, json, os, sys, time, hashlib, re
+import asyncio, subprocess, json, os, sys, time, hashlib, re, uuid
 from pathlib import Path
 from typing import List, Optional
 
@@ -410,7 +410,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 print(f"⚠️ 导演层解析失败，回退普通模式：{e}")
                 ted_blocks = None
 
-        # L3 缓存检查（key 基于清理后文本 + style + BGM设置，防止旧版/不同风格/不同BGM互相命中）
+        # L3 缓存检查（key 基于清理后文本 + style + BGM设置 + pitch，防止旧版/不同风格/不同BGM/不同音调互相命中）
         import re as _re3
         cache_text = _re3.sub(r'^#{1,6}\s*.*$', '', full_text, flags=_re3.MULTILINE)
         bgm_level_key = os.environ.get("LISTEN_BOOK_BGM", "0.18")
@@ -422,11 +422,22 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         except Exception:
             bgm_mode = "bgm"
         script_hash = hashlib.md5(
-            f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}".encode()).hexdigest()
+            f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}|pitch:{pitch}".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
             print(f"✅ L3 缓存命中：{l3_hit}")
+            # --output 支持：L3 命中也要复制到指定路径（否则输出参数静默失效）
+            if output_path:
+                try:
+                    import shutil
+                    dest = Path(output_path).expanduser()
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(str(l3_hit), dest)
+                    print(f"📦 已输出到: {dest}")
+                    return str(dest), get_audio_duration(l3_hit)
+                except Exception as e:
+                    print(f"⚠️ 复制到输出路径失败（{e}），返回缓存路径")
             return str(l3_hit), get_audio_duration(l3_hit)
 
         if ted_blocks:
@@ -437,9 +448,48 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             segments = smart_split_text(full_text)
             print(f"📚 分段完成：{len(segments)} 段")
 
-        seg_files = []
-        durations = []
-        total_duration = 0
+        sem = asyncio.Semaphore(4)
+        run_token = f"{os.getpid()}_{uuid.uuid4().hex[:8]}"
+        l2_key_locks: dict = {}
+        l2_final_by_key: dict = {}
+        seg_records: list = [None] * len(segments)
+
+        def _l2_lock(key: str) -> asyncio.Lock:
+            lock = l2_key_locks.get(key)
+            if lock is None:
+                lock = asyncio.Lock()
+                l2_key_locks[key] = lock
+            return lock
+
+        async def _render_segment(job: dict):
+            i = job["i"]
+            seg = job["seg"]
+            seg_voice = job["voice"]
+            seg_rate = job["rate"]
+            seg_volume = job["volume"]
+            seg_pitch = job["pitch"]
+            l2_key = job["l2_key"]
+            try:
+                async with sem:
+                    async with _l2_lock(l2_key):
+                        l2_final = l2_final_by_key.get(l2_key)
+                        if l2_final is None:
+                            out = CACHE_DIR / f"{hashlib.md5(l2_key.encode()).hexdigest()[:12]}.mp3"
+                            print(f"  🎤 [{i+1}/{len(segments)}] 生成中... (rate={seg_rate} vol={seg_volume})")
+                            await generate_segment(seg, seg_voice, seg_rate, out,
+                                                   seg_volume, seg_pitch)
+                            cache_mgr.set_l2(seg, seg_voice, seg_rate, out,
+                                             volume=seg_volume, pitch=seg_pitch)
+                            # set_l2 会把文件移到 l2 子目录，使用缓存命中路径
+                            l2_final = str(cache_mgr.get_l2(
+                                seg, seg_voice, seg_rate,
+                                volume=seg_volume, pitch=seg_pitch) or out)
+                            l2_final_by_key[l2_key] = l2_final
+                return i, l2_final
+            except Exception as e:
+                raise BookToAudioError(f"第 {i+1} 段生成失败：{e}") from e
+
+        pending_jobs = []
         for i, seg in enumerate(segments):
             # TED 模式的块级参数
             seg_voice = voice
@@ -463,29 +513,51 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             l2_hit = cache_mgr.get_l2(seg, seg_voice, seg_rate,
                                       volume=seg_volume, pitch=seg_pitch)
             if l2_hit:
-                seg_files.append(str(l2_hit))
-                d = get_audio_duration(l2_hit)
-                durations.append(d)
-                total_duration += d
+                seg_records[i] = {
+                    "path": str(l2_hit),
+                    "duration": get_audio_duration(l2_hit),
+                    "pending": False,
+                }
                 continue
-            out = CACHE_DIR / f"{hashlib.md5(l2_key.encode()).hexdigest()[:12]}.mp3"
-            print(f"  🎤 [{i+1}/{len(segments)}] 生成中... (rate={seg_rate} vol={seg_volume})")
-            await generate_segment(seg, seg_voice, seg_rate, out, seg_volume, seg_pitch)
-            cache_mgr.set_l2(seg, seg_voice, seg_rate, out,
-                             volume=seg_volume, pitch=seg_pitch)
-            # set_l2 会把文件移到 l2 子目录，使用缓存命中路径
-            l2_final = cache_mgr.get_l2(seg, seg_voice, seg_rate,
-                                        volume=seg_volume, pitch=seg_pitch) or out
-            d = get_audio_duration(l2_final)
-            durations.append(d)
-            total_duration += d
-            if detect_truncation(d, len(seg)):
-                print(f"  ⚠️ 第{i+1}段可能被截断（{d:.0f}s），建议缩短该段")
-            seg_files.append(str(l2_final))
-            # TED 模式：块后插入停顿（静音）
+            pending_jobs.append({
+                "i": i,
+                "seg": seg,
+                "voice": seg_voice,
+                "rate": seg_rate,
+                "volume": seg_volume,
+                "pitch": seg_pitch,
+                "l2_key": l2_key,
+            })
+
+        if pending_jobs:
+            results = await asyncio.gather(
+                *(_render_segment(job) for job in pending_jobs),
+                return_exceptions=True
+            )
+            errors = [r for r in results if isinstance(r, Exception)]
+            if errors:
+                detail = "; ".join(str(e) for e in errors)
+                raise BookToAudioError(f"分段并发生成失败：{detail}")
+            for i, l2_final in results:
+                seg_records[i] = {
+                    "path": l2_final,
+                    "duration": get_audio_duration(Path(l2_final)),
+                    "pending": True,
+                }
+
+        seg_files = []
+        durations = []
+        total_duration = 0
+        for i, rec in enumerate(seg_records):
+            seg_files.append(rec["path"])
+            durations.append(rec["duration"])
+            total_duration += rec["duration"]
+            if rec["pending"] and detect_truncation(rec["duration"], len(segments[i])):
+                print(f"  ⚠️ 第{i+1}段可能被截断（{rec['duration']:.0f}s），建议缩短该段")
+            # TED 模式：块后插入停顿（静音）——与 L2 是否命中无关，停顿是导演层编排
             if ted_blocks and i < len(ted_blocks) and ted_blocks[i].pause_after > 0:
                 pause = ted_blocks[i].pause_after
-                silence = CACHE_DIR / f"silence_{pause}.mp3"
+                silence = CACHE_DIR / f"silence_{pause}_{run_token}.mp3"
                 if not silence.exists():
                     subprocess.run(
                         ["ffmpeg", "-f", "lavfi", "-i", f"anullsrc=r=24000:cl=mono",
@@ -499,7 +571,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     print(f"  ⏸️ 插入停顿 {pause}s")
 
         print(f"🔗 拼接 {len(seg_files)} 段...")
-        final_path = CACHE_DIR / f"{script_hash[:10]}.mp3"
+        final_path = CACHE_DIR / f"{script_hash[:10]}_{run_token}.mp3"
         # AI 生成声明（合规）：放音频最开头，L2 缓存复用
         try:
             disc_l2 = cache_mgr.get_l2(AI_DISCLOSURE_TEXT, voice, rate,
@@ -507,7 +579,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             if disc_l2:
                 disclosure_path = str(disc_l2)
             else:
-                disc_out = CACHE_DIR / f"{AI_DISCLOSURE_KEY}_{voice}_{rate}.mp3"
+                disc_out = CACHE_DIR / f"{AI_DISCLOSURE_KEY}_{voice}_{rate}_{pitch}_{run_token}.mp3"
                 await generate_segment(AI_DISCLOSURE_TEXT, voice, rate, disc_out,
                                        volume="+0%", pitch=pitch)
                 cache_mgr.set_l2(AI_DISCLOSURE_TEXT, voice, rate, disc_out,
@@ -521,7 +593,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             print(f"  📢 已插入 AI 生成声明 ({d0:.1f}s)")
         except Exception as e:
             print(f"  ⚠️ AI 声明插入失败（不影响主音频）：{e}")
-        concat_file = CACHE_DIR / "concat_list.txt"
+        concat_file = CACHE_DIR / f"concat_list_{run_token}.txt"
         concat_file.write_text("\n".join(f"file '{f.replace(chr(92), chr(47))}'" for f in seg_files))  # 反斜杠→正斜杠（ffmpeg concat 要求）
 
         result = subprocess.run(
