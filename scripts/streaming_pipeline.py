@@ -185,19 +185,35 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
     args = ["edge-tts", "--voice", voice, f"--rate={rate}",
             f"--volume={volume}", f"--pitch={pitch}",
             "--text", text, "--write-media", str(out_path)]
+    # 单段子进程超时：edge-tts 并发下可能 hang（token 竞争），必须超时 kill 释放 Semaphore
+    proc_timeout = 90
     for attempt in range(max_retries + 1):
+        proc = None
         try:
             proc = await asyncio.create_subprocess_exec(
                 *args,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
             )
-            await proc.wait()
+            await asyncio.wait_for(proc.wait(), timeout=proc_timeout)
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise BookToAudioError("NoAudioReceived")
             return out_path
-        except Exception as e:
+        except asyncio.TimeoutError:
+            # hang 进程必须 kill，否则占住 Semaphore 导致 gather 永不返回
+            if proc and proc.returncode is None:
+                proc.kill()
+                await proc.wait()
             if attempt < max_retries:
-                await asyncio.sleep(2 * (attempt + 1))
+                await asyncio.sleep(3 * (attempt + 1))
+                continue
+            raise BookToAudioError("语音服务无响应（超时90s），已终止进程。"
+                                   "网络/并发限流时请降低并发或稍后重试。")
+        except Exception as e:
+            if proc and proc.returncode is None:
+                proc.kill()
+                await proc.wait()
+            if attempt < max_retries:
+                await asyncio.sleep(3 * (attempt + 1))
                 continue
             raise BookToAudioError(friendly_error(e))
 
@@ -448,7 +464,9 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             segments = smart_split_text(full_text)
             print(f"📚 分段完成：{len(segments)} 段")
 
-        sem = asyncio.Semaphore(4)
+        # 并发上限=2：edge-tts 子进程并发≥3 会被微软服务限流（hang/0字节），
+        # 2 并发实测稳定；失败段走串行重试兜底
+        sem = asyncio.Semaphore(2)
         run_token = f"{os.getpid()}_{uuid.uuid4().hex[:8]}"
         l2_key_locks: dict = {}
         l2_final_by_key: dict = {}
@@ -534,6 +552,20 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                 *(_render_segment(job) for job in pending_jobs),
                 return_exceptions=True
             )
+            errors = [r for r in results if isinstance(r, Exception)]
+            # 失败段串行重试兜底：并发撞限流后，逐段错峰重试（已无并发压力）
+            if errors:
+                print(f"  ⚠️ {len(errors)} 段并发失败，转为串行重试（错峰避限流）...")
+                for idx, (job, r) in enumerate(zip(pending_jobs, results)):
+                    if not isinstance(r, Exception):
+                        continue
+                    i = job["i"]
+                    try:
+                        print(f"  🔄 [{i+1}/{len(segments)}] 串行重试...")
+                        ret_i, l2_final = await _render_segment(job)
+                        results[idx] = (ret_i, l2_final)
+                    except Exception as e2:
+                        results[idx] = e2
             errors = [r for r in results if isinstance(r, Exception)]
             if errors:
                 detail = "; ".join(str(e) for e in errors)
