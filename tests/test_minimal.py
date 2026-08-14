@@ -108,6 +108,12 @@ def test_listen_parse():
     r2 = parse_request("原子习惯 跑步8分钟")
     check("书名+场景解析", r2["book"] == "原子习惯" and r2["minutes"] == 8.0,
           f"got {r2}")
+    r3 = parse_request("帮我做《活着》10分钟的")
+    check("带前缀书名解析", r3["book"] == "活着" and r3["minutes"] == 10.0,
+          f"got {r3}")
+    r4 = parse_request("小王子 睡前 5分钟")
+    check("场景词映射", r4["book"] == "小王子" and r4["minutes"] == 5.0
+          and "睡前" in r4["scene"], f"got {r4}")
 
 
 if __name__ == "__main__":

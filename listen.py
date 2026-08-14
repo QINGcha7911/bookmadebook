@@ -25,8 +25,8 @@ SCRIPTS = Path(__file__).parent / "scripts"
 VIDEO_KEYWORDS = ["视频", "短片", "配画面", "有画面", "video", "vlog"]
 # 音频关键词（明确要音频）
 AUDIO_KEYWORDS = ["音频", "听书", "播客", "audio", "podcast", "mp3", "听"]
-# 场景词（从书名后剥离）
-SCENE_WORDS = ["跑步", "通勤", "睡前", "开车", "运动", "开车时", "散步"]
+# 场景词（从请求中匹配，不参与书名截取）
+SCENE_WORDS = ["睡前", "跑步", "通勤", "深度", "开车", "运动", "开车时", "散步"]
 
 
 def parse_request(text: str) -> dict:
@@ -40,27 +40,56 @@ def parse_request(text: str) -> dict:
     elif any(k in lower for k in AUDIO_KEYWORDS):
         output_type = "audio"
 
-    # 书名：去书名号
-    t = t.replace('《', '').replace('》', '').replace('"', '').strip()
     # 时长：匹配 "X分钟" / "X 分钟" / "Xmin"
     m = re.search(r'(\d+(?:\.\d+)?)\s*(?:分钟|min)', t, re.IGNORECASE)
     minutes = float(m.group(1)) if m else 10.0
-    if m:
-        t = t[:m.start()].strip()
-    # 去输出类型词（书名里不该有"视频/音频"）
-    for kw in VIDEO_KEYWORDS + AUDIO_KEYWORDS:
-        t = t.replace(kw, "").strip()
-    # 去动词（做个/要个/来一个/生成 等，可组合：帮我生成/帮我做）
-    t = re.sub(r"(做个|要个|来一个|来段|生成|做一段|来一段|给我|帮我)\s*$", "", t).strip()
-    t = re.sub(r"^(给我|帮我)\s*(做个|要个|生成|做一段)?\s*", "", t).strip()
-    t = re.sub(r"^(做个|要个|来一个|来段|生成|做一段|来一段)\s*", "", t).strip()
-    # 书名 = 剩余部分（去场景词尾）
+
+    # 场景词：从原始请求中匹配，映射到 scene
+    scene = ""
     for word in SCENE_WORDS:
-        if t.endswith(word):
-            t = t[: -len(word)].strip()
+        if word in t:
+            scene = word
             break
-    t = t.strip("，。、 ")
-    return {"book": t, "minutes": minutes, "output_type": output_type}
+
+    # 书名：优先书名号内内容，否则取第一个中文词
+    book_match = re.search(r'《([^》]+)》', t)
+    if book_match:
+        book = book_match.group(1).strip()
+    else:
+        book_source = t
+        if m:
+            book_source = book_source[:m.start()].strip()
+        # 去输出类型词（书名里不该有"视频/音频"）
+        for kw in VIDEO_KEYWORDS + AUDIO_KEYWORDS:
+            book_source = book_source.replace(kw, "").strip()
+        # 去动词（做个/要个/来一个/生成 等，可组合：帮我生成/帮我做）
+        book_source = re.sub(
+            r"^(给我|帮我)\s*(做个|要个|生成|做一段|做)?\s*",
+            "",
+            book_source,
+        ).strip()
+        book_source = re.sub(
+            r"^(做个|要个|来一个|来段|生成|做一段|来一段)\s*",
+            "",
+            book_source,
+        ).strip()
+        cn_match = re.search(r'[\u4e00-\u9fff]+', book_source)
+        if cn_match:
+            book = cn_match.group(0)
+        else:
+            # 英文书名兜底：去掉时长/输出词/场景词尾后的剩余文本
+            for word in SCENE_WORDS:
+                if book_source.endswith(word):
+                    book_source = book_source[: -len(word)].strip()
+                    break
+            book = book_source.strip("，。、 ")
+
+    return {
+        "book": book,
+        "minutes": minutes,
+        "output_type": output_type,
+        "scene": scene,
+    }
 
 
 def main():
