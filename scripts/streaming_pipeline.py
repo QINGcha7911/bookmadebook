@@ -19,6 +19,10 @@ except ImportError:
 CACHE_DIR = Path(os.path.expanduser("~/.hermes/cache/bookmadebook"))
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
+# 《人工智能生成合成内容标识办法》2025-09-01 合规：音频开头声明
+AI_DISCLOSURE_TEXT = "本音频由 AI 生成，内容为书籍解读与观点引用，版权归原作者所有。"
+AI_DISCLOSURE_KEY = "ai_disclosure_v1"
+
 MAX_SEGMENT_CHARS = 3000
 TRUNCATION_BOUNDARIES = [600, 900, 1200, 1800]
 cache_mgr = CacheManager()
@@ -496,6 +500,27 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
 
         print(f"🔗 拼接 {len(seg_files)} 段...")
         final_path = CACHE_DIR / f"{script_hash[:10]}.mp3"
+        # AI 生成声明（合规）：放音频最开头，L2 缓存复用
+        try:
+            disc_l2 = cache_mgr.get_l2(AI_DISCLOSURE_TEXT, voice, rate,
+                                       volume="+0%", pitch=pitch)
+            if disc_l2:
+                disclosure_path = str(disc_l2)
+            else:
+                disc_out = CACHE_DIR / f"{AI_DISCLOSURE_KEY}_{voice}_{rate}.mp3"
+                await generate_segment(AI_DISCLOSURE_TEXT, voice, rate, disc_out,
+                                       volume="+0%", pitch=pitch)
+                cache_mgr.set_l2(AI_DISCLOSURE_TEXT, voice, rate, disc_out,
+                                 volume="+0%", pitch=pitch)
+                disclosure_path = str(cache_mgr.get_l2(
+                    AI_DISCLOSURE_TEXT, voice, rate, volume="+0%", pitch=pitch) or disc_out)
+            seg_files.insert(0, disclosure_path)
+            d0 = get_audio_duration(Path(disclosure_path))
+            durations.insert(0, d0)
+            total_duration += d0
+            print(f"  📢 已插入 AI 生成声明 ({d0:.1f}s)")
+        except Exception as e:
+            print(f"  ⚠️ AI 声明插入失败（不影响主音频）：{e}")
         concat_file = CACHE_DIR / "concat_list.txt"
         concat_file.write_text("\n".join(f"file '{f.replace(chr(92), chr(47))}'" for f in seg_files))  # 反斜杠→正斜杠（ffmpeg concat 要求）
 

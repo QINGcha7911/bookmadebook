@@ -11,18 +11,21 @@ from PIL import Image, ImageDraw, ImageFont
 
 W, H = 1080, 1920
 
-# 字体解析：项目字体 > 系统 Noto CJK（OFL 许可）> fc-match 兜底
+# 字体解析：系统 Noto CJK（OFL 许可）> Windows 系统字体 > fc-match 兜底
+# 注意：不再随仓库分发专有字体（微软雅黑 msyh.ttc 再分发违反许可，已移除 2026-08-14）
 _PROJ_FONTS = Path(__file__).resolve().parent.parent / "assets" / "fonts"
 FONT_CANDIDATES = {
     "bold": [
-        _PROJ_FONTS / "msyhbd.ttc",
         Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"),
         Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"),
+        Path("/mnt/c/Windows/Fonts/msyhbd.ttc"),  # Windows 系统字体（本地使用）
+        Path("C:/Windows/Fonts/msyhbd.ttc"),
     ],
     "serif": [
-        _PROJ_FONTS / "msyhbd.ttc",
         Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc"),
         Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc"),
+        Path("/mnt/c/Windows/Fonts/msyhbd.ttc"),
+        Path("C:/Windows/Fonts/msyhbd.ttc"),
     ],
 }
 
@@ -184,6 +187,22 @@ def render_watermark(text: str, font_size: int = 28) -> Image.Image:
     return img
 
 
+def render_ai_badge(font_size: int = 26) -> Image.Image:
+    """⑧ AI 生成角标层：右下角常驻（《人工智能生成合成内容标识办法》2025-09-01 合规）"""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    font = get_font("serif", font_size)
+    text = "AI 生成内容"
+    # 半透明黑底圆角标签 + 白字，右下角
+    tw = d.textlength(text, font=font)
+    pad_x, pad_y = 20, 10
+    x0, y0 = W - 60 - tw - pad_x * 2, H - 120
+    x1, y1 = x0 + tw + pad_x * 2, y0 + font_size + pad_y * 2
+    d.rounded_rectangle([x0, y0, x1, y1], radius=12, fill=(0, 0, 0, 120))
+    d.text((x0 + pad_x, y0 + pad_y), text, font=font, fill=(255, 255, 255, 200))
+    return img
+
+
 def render_all(book_title: str, quotes: list, chapters: list,
                author: str = "", watermark: str = "") -> dict:
     """一次渲染所有层，返回 {名称: PNG路径}
@@ -227,6 +246,10 @@ def render_all(book_title: str, quotes: list, chapters: list,
     if watermark:
         layers["watermark"] = tmpdir / "watermark.png"
         render_watermark(watermark).save(layers["watermark"])
+
+    # ⑧ AI 生成角标（合规标识）
+    layers["ai_badge"] = tmpdir / "ai_badge.png"
+    render_ai_badge().save(layers["ai_badge"])
 
     return layers
 

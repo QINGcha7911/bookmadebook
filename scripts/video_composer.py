@@ -139,9 +139,12 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     n = len(items)
     parts = []
     # 每张图 Ken Burns 缩放（独立时长）；scale 用 cover 模式防拉伸变形
+    # 缩放速度按段时长分配：zoom 从 1.0→1.15 铺满整段（on=输出帧号），避免"4秒后静止"
     for i, (img, dur) in enumerate(items):
         zoom_in = (i % 2 == 0)
-        zexpr = f"min(zoom+0.0015,1.15)" if zoom_in else f"max(1.15-zoom*0.0015,1.0)"
+        zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
+                 if zoom_in else
+                 f"max(1.15-0.15*on/{max(int(dur*FPS),1)},1.0)")
         parts.append(
             f"[{i}:v]scale=1080:1920:force_original_aspect_ratio=increase,"
             f"crop=1080:1920,zoompan=z='{zexpr}':"
@@ -261,7 +264,14 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     if "watermark" in png_map:
         w_idx = png_map["watermark"]
         text_parts.append(f"[{png_base+w_idx}:v]format=rgba[wm]")
-        text_parts.append(f"[{prev_v}][wm]overlay=0:0,format=yuv420p[vout]")
+        text_parts.append(f"[{prev_v}][wm]overlay=0:0[wm_out]")
+        prev_v = "wm_out"
+
+    # ⑧ AI 生成角标（合规标识，常驻最上层）
+    if "ai_badge" in png_map:
+        a_idx = png_map["ai_badge"]
+        text_parts.append(f"[{png_base+a_idx}:v]format=rgba[ab]")
+        text_parts.append(f"[{prev_v}][ab]overlay=0:0,format=yuv420p[vout]")
     else:
         text_parts.append(f"[{prev_v}]format=yuv420p[vout]")
 
