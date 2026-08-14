@@ -235,7 +235,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
                  if zoom_in else
                  f"max(1.15-0.15*on/{max(int(dur*FPS),1)},1.0)")
-        normalize = ("" if _image_is_1080x1920(img) else
+        normalize = ("" if _image_is_1080x1920(str(img)) else
                      f"scale={W}:{H}:force_original_aspect_ratio=increase,"
                      f"crop={W}:{H},")
         parts.append(
