@@ -167,6 +167,9 @@ def smart_split_text(text: str, max_chars: int = MAX_SEGMENT_CHARS) -> List[str]
         remaining = remaining[cut:].strip()
     if remaining:
         segments.append(remaining)
+    # 空输入/纯标题文本保护：避免空 segments 导致 concat 空列表报错
+    if not segments:
+        raise BookToAudioError("文本为空或无可朗读内容（全是标题/注解标记），无法生成音频。")
     return segments
 
 def detect_truncation(duration: float, text_len: int) -> bool:
@@ -190,6 +193,9 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
     for attempt in range(max_retries + 1):
         proc = None
         try:
+            # 重试前先删旧文件，防止上次被 kill 的残缺 mp3（>0 字节）被误判成功
+            if out_path.exists():
+                out_path.unlink()
             proc = await asyncio.create_subprocess_exec(
                 *args,
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
@@ -197,6 +203,21 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
             await asyncio.wait_for(proc.wait(), timeout=proc_timeout)
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise BookToAudioError("NoAudioReceived")
+            # 完整性校验：ffprobe 能读出时长才算有效音频（残缺文件会解析失败）
+            try:
+                probe = subprocess.run(
+                    ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                     "-of", "csv=p=0", str(out_path)],
+                    capture_output=True, text=True, timeout=30)
+                if not probe.stdout.strip():
+                    raise BookToAudioError("CorruptAudio")
+            except BookToAudioError:
+                raise
+            except Exception:
+                # ffprobe 本身异常（如被 kill）也视为无效
+                if out_path.exists():
+                    out_path.unlink()
+                raise BookToAudioError("CorruptAudio")
             return out_path
         except asyncio.TimeoutError:
             # hang 进程必须 kill，否则占住 Semaphore 导致 gather 永不返回
@@ -218,14 +239,18 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
             raise BookToAudioError(friendly_error(e))
 
 def get_audio_duration(path: Path) -> float:
-    probe = subprocess.run(
-        ["ffprobe", "-i", str(path), "-show_entries", "format=duration",
-         "-v", "quiet", "-of", "csv=p=0"],
-        capture_output=True, text=True
-    )
     try:
-        return float(probe.stdout.strip())
-    except ValueError:
+        probe = subprocess.run(
+            ["ffprobe", "-i", str(path), "-show_entries", "format=duration",
+             "-v", "quiet", "-of", "csv=p=0"],
+            capture_output=True, text=True, timeout=30
+        )
+        try:
+            return float(probe.stdout.strip())
+        except ValueError:
+            return 0.0
+    except subprocess.TimeoutExpired:
+        # ffprobe 卡住不能悬挂 pipeline（实测偶发），返回 0 走兜底
         return 0.0
 
 
@@ -357,8 +382,13 @@ def add_chapter_markers(mp3_path: Path, chapters: List[dict], total_duration: fl
         print(f"  📑 已写入 {len(chapters)} 个章节标记 (ffmpeg)")
 
 def extract_chapters_from_text(full_text: str, segments: List[str],
-                               durations: List[float]) -> List[dict]:
-    """根据文本标题和分段时长生成章节信息"""
+                               durations: List[float],
+                               segment_offsets: List[float] = None) -> List[dict]:
+    """根据文本标题和分段时长生成章节信息
+
+    segment_offsets: 每段在最终音频中的起始偏移（含 TED 停顿等插入时长）。
+    传 None 时退化为纯累加（无停顿场景），保持向后兼容。
+    """
     chapters = []
     cursor = 0.0
     # 用章节标题切分（第N章/回/节），没有则按段落分
@@ -366,8 +396,10 @@ def extract_chapters_from_text(full_text: str, segments: List[str],
     for i, seg in enumerate(segments):
         m = title_pattern.search(seg)
         title = m.group(1).strip() if m else f"Part {i+1}"
-        end = cursor + durations[i] if i < len(durations) else 0
-        chapters.append({"title": title, "start": cursor, "end": end})
+        # 段起始偏移：优先用真实偏移（含停顿），否则累加
+        start = segment_offsets[i] if segment_offsets and i < len(segment_offsets) else cursor
+        end = start + (durations[i] if i < len(durations) else 0)
+        chapters.append({"title": title, "start": start, "end": end})
         cursor = end
     return chapters
 
@@ -438,7 +470,8 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         except Exception:
             bgm_mode = "bgm"
         script_hash = hashlib.md5(
-            f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}|pitch:{pitch}".encode()).hexdigest()
+            f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}|pitch:{pitch}"
+            f"|user:{user_key or ''}|chapters:{int(add_chapters)}".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
@@ -579,10 +612,13 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
 
         seg_files = []
         durations = []
+        # 每段在最终音频中的起始偏移（含停顿插入，供章节时间轴使用）
+        segment_offsets = []
         total_duration = 0
         for i, rec in enumerate(seg_records):
             seg_files.append(rec["path"])
             durations.append(rec["duration"])
+            segment_offsets.append(total_duration)  # 本段真实起始位置
             total_duration += rec["duration"]
             if rec["pending"] and detect_truncation(rec["duration"], len(segments[i])):
                 print(f"  ⚠️ 第{i+1}段可能被截断（{rec['duration']:.0f}s），建议缩短该段")
@@ -631,7 +667,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         result = subprocess.run(
             ["ffmpeg", "-f", "concat", "-safe", "0", "-i", str(concat_file),
              "-codec:a", "libmp3lame", "-b:a", "128k", str(final_path)],
-            capture_output=True, text=True
+            capture_output=True, text=True, timeout=300
         )
         if result.returncode != 0:
             raise BookToAudioError(f"音频拼接失败：{result.stderr[-200:]}")
@@ -674,10 +710,14 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             except Exception as e:
                 print(f"⚠️ BGM 混音失败（跳过）：{e}")
 
-        # 章节标记
+        # 章节标记（失败不阻断主流程——音频已生成，标记是增强）
         if add_chapters:
-            chapters = extract_chapters_from_text(full_text, segments, durations)
-            add_chapter_markers(final_path, chapters, total_duration)
+            try:
+                chapters = extract_chapters_from_text(full_text, segments, durations,
+                                                      segment_offsets)
+                add_chapter_markers(final_path, chapters, total_duration)
+            except Exception as e:
+                print(f"⚠️ 章节标记写入失败（不影响主音频）：{e}")
 
         # 存 L3（set_l3 会把文件移到 l3 子目录，返回实际路径）
         cache_mgr.set_l3(script_hash, voice, speed_key, final_path)

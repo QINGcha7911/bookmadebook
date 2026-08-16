@@ -41,7 +41,7 @@ def effective_chars(text: str) -> int:
     """有效字数（去空白/注解/标点后按语言计）。"""
     clean = strip_markdown(text)
     clean = re.sub(r'【[^】]*】', '', clean)  # 去注解
-    clean = re.sub(r'[，。！？、；：""''（）\\s\\d]', '', clean)
+    clean = re.sub(r'[，。！？、；：""''（）\s\d]', '', clean)
     return len(clean)
 
 
