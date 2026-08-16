@@ -31,7 +31,7 @@ THEME_CN = {
     "rain": "雨夜城市", "library": "书房书香", "warm_home": "暖光家居",
     "snow": "雪境", "tech_city": "都市夜景", "temple": "禅意寺庙",
     "ww2": "战争史诗", "ship": "远洋巨轮", "hongkong": "香港天际线",
-    "pasture": "雪原牧场", "arctic": "北极极夜",
+    "pasture": "雪原牧场", "arctic": "北极极夜", "finance": "华尔街金融",
 }
 
 

@@ -424,7 +424,8 @@ def main():
     ap.add_argument("--theme", default="auto", choices=["auto"] + sorted(set(
         list(THEMES.keys()) + ["palace", "sunrise", "starry", "rain", "library",
                                "warm_home", "snow", "tech_city", "temple",
-                               "arctic", "ww2", "ship", "hongkong", "pasture"])),
+                               "arctic", "ww2", "ship", "hongkong", "pasture",
+                               "finance"])),
                     help="实景主题；auto=按内容自动选择（默认）；手动指定则整片使用该主题")
     ap.add_argument("--scene-from", default="auto", choices=["auto", "script", "manual"],
                     help="场景来源：auto=标记+自动检测，script=仅用标记，manual=仅用--theme")
