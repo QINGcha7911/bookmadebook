@@ -79,6 +79,34 @@ voice: auto             # auto/xiaoshuang/xiaoxiao/yunxi/yunjian/yunyang
 
 ---
 
+## 🎬 Real Outputs (Video Summaries)
+
+> All items below were **actually generated & delivered** with this project (not demo assets), including full scripts, videos & copy.
+
+| Work | Length | Voice | Visual Theme | Script |
+|------|--------|-------|--------------|--------|
+| ⚔️ [WW2 History](examples/screenshots/ww2_video.png) | 10min | Yunyang·Epic male | War epic (soldier silhouettes/snowfield/sea) | [Script](examples/scripts/二战战史_讲书稿.md) |
+| 🏔️ [Winter Pasture](examples/screenshots/dongmuchang_video.png) | 10min | Xiaoxiao·Warm female | Snow pasture/nomadic life | [Script](examples/scripts/冬牧场_讲书稿.md) |
+| 🌌 [Norwegian Polar Night](examples/screenshots/norway_video.png) | 10min | Xiaoxiao·Soft female | Arctic (aurora/snowfield/blue hour) | [Script](examples/scripts/挪威极夜_讲书稿.md) |
+| 🦈 [Billions: Hunting the Wall Street Shark](examples/screenshots/yiwan_video.png) | 10min | Yunjian·Calm male | Wall Street finance (NYSE/trading screens) | [Script](examples/scripts/亿万围剿_讲书稿.md) |
+| 🍲 [Slow Life by Wang Zengqi](examples/screenshots/zhishenshinei_video.png) | 10min | Xiaoxiao·Warm female | Warm home/life aesthetics | [Script](examples/scripts/慢煮生活_讲书稿.md) |
+
+### 🎥 Video Pipeline (v2.2.0+)
+- 1080×1920 vertical + Ken Burns motion + crossfade
+- **19 real-scene theme libraries**: arctic/finance/ww2/pasture/desert/starry/ocean/forest/warm_home…
+- Quote subtitles auto-extracted from 【金句】 markers
+- Chapter title overlays + cover frame + AI-generated content badge (compliant)
+
+### 🗓️ Changelog
+
+| Date | Version | Content |
+|------|---------|---------|
+| 2026-08-16 | v2.2.1 | 🚀 Perf fix: zoompan redundant frames eliminated (175×175→213); 7 bug fixes driven by independent AI review |
+| 2026-08-16 | v2.2.0 | ✨ 2 new themes: `arctic` & `finance`; 19 themes total |
+| 2026-08-14 | v2.2.0 | 🎬 Video composer GA: quote subtitles, chapter overlays, cover frame, AI badge |
+
+---
+
 ## 📖 Documentation
 
 - [Configuration](config.yaml)
