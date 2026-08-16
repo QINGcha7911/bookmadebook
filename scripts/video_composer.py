@@ -257,6 +257,8 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     parts = []
     # 每张图 Ken Burns 缩放（独立时长）；非 1080×1920 先归一化，再降采样给 zoompan
     # 缩放速度按段时长分配：zoom 从 1.0→1.15 铺满整段（on=输出帧号），避免"4秒后静止"
+    # 输入用单帧（不用 -loop 1 循环流），d 扩到 dur+XFADE_DUR 保证 xfade 重叠区帧数，
+    # 避免循环流输入被 zoompan 逐帧放大（N 输入帧 × d 输出帧 = 数百倍冗余计算）
     for i, (img, dur) in enumerate(items):
         zoom_in = (i % 2 == 0)
         zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
@@ -269,7 +271,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             f"[{i}:v]{normalize}scale={ZOOM_W}:{ZOOM_H},"
             f"zoompan=z='{zexpr}':"
             f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-            f"d={int(dur*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
+            f"d={int((dur+XFADE_DUR)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
             f"scale={W}:{H}:flags=lanczos,"
             f"trim=duration={dur+XFADE_DUR},setpts=PTS-STARTPTS[v{i}]"
         )
@@ -482,8 +484,11 @@ def main():
                                       args.author, script_text, args.audio)
         video_mp4 = tmpdir / "video_noaudio.mp4"
         cmd = ["ffmpeg", "-y", "-v", "error"]
+        # 图片输入用单帧（Ken Burns 由 zoompan 的 d 参数生成帧序列），
+        # 不用 -loop 1 循环流——循环流会让 zoompan 对每个输入帧都输出 d 帧，
+        # 产生 N×d 倍冗余中间帧（实测 175 输入帧 × d=175 = 30,625 帧）
         for img, dur in items:
-            cmd += ["-loop", "1", "-t", f"{dur + XFADE_DUR}", "-i", str(img)]
+            cmd += ["-i", str(img)]
         # 文字层 PNG 输入
         for png in png_inputs:
             cmd += ["-loop", "1", "-t", str(audio_dur), "-i", str(png)]
