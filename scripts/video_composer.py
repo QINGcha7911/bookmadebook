@@ -506,8 +506,13 @@ def main():
 
         # 混入音频
         print("🎵 混入音频...")
+        # -map_metadata -1：丢弃源 mp3 的 ID3 CHAP 章节，否则章节会被
+        # mux 成 text 轨带进 mp4（时长可能超出正片，播放器判定文件异常）
+        # -movflags +faststart：moov 移到文件头，提升流式播放兼容性
         cmd2 = ["ffmpeg", "-y", "-v", "error", "-i", str(video_mp4),
-                "-i", args.audio, "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
+                "-i", args.audio, "-map", "0:v:0", "-map", "1:a:0",
+                "-map_metadata", "-1", "-c:v", "copy", "-c:a", "aac",
+                "-b:a", "128k", "-movflags", "+faststart",
                 "-shortest", args.output]
         r2 = subprocess.run(cmd2, capture_output=True, text=True, timeout=120)
         if r2.returncode != 0:
