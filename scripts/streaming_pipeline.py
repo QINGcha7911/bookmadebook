@@ -185,9 +185,19 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
     max_retries = 2
     # 负 rate（如 -15%）必须用 --rate= 等号形式，否则被 argparse 误判为选项
     # pitch 用 Hz（edge-tts 不支持 pitch 的 % 格式，如 +5% 无效，须 +5Hz）
-    args = ["edge-tts", "--voice", voice, f"--rate={rate}",
-            f"--volume={volume}", f"--pitch={pitch}",
-            "--text", text, "--write-media", str(out_path)]
+    engine = os.environ.get("LISTEN_TTS_ENGINE", "edge-tts")
+    if engine == "cosyvoice":
+        # CosyVoice 引擎（m1 男声：longxiang + 低沉参数，2026-08-17 用户认可）
+        cosy_voice = os.environ.get("LISTEN_COSY_VOICE", "longxiang")
+        cosy_pitch = os.environ.get("LISTEN_COSY_PITCH", "-8Hz")
+        cosy_rate = os.environ.get("LISTEN_COSY_RATE", "-5%")
+        args = [sys.executable, str(Path(__file__).parent / "tts_cosy.py"),
+                "--voice", cosy_voice, f"--pitch={cosy_pitch}", f"--rate={cosy_rate}",
+                "--text", text, "--output", str(out_path)]
+    else:
+        args = ["edge-tts", "--voice", voice, f"--rate={rate}",
+                f"--volume={volume}", f"--pitch={pitch}",
+                "--text", text, "--write-media", str(out_path)]
     # 单段子进程超时：edge-tts 并发下可能 hang（token 竞争），必须超时 kill 释放 Semaphore
     proc_timeout = 90
     for attempt in range(max_retries + 1):
@@ -198,9 +208,18 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
                 out_path.unlink()
             proc = await asyncio.create_subprocess_exec(
                 *args,
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE
             )
             await asyncio.wait_for(proc.wait(), timeout=proc_timeout)
+            if proc.returncode != 0:
+                # 2026-08-17 捕获 stderr 保留真实错误（CosyVoice 诊断）
+                err_txt = ""
+                try:
+                    err_txt = (await proc.stderr.read()).decode("utf-8", errors="replace")[:200]
+                except Exception:
+                    pass
+                raise BookToAudioError(f"TTS退出码{proc.returncode}: {err_txt}")
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise BookToAudioError("NoAudioReceived")
             # 完整性校验：ffprobe 能读出时长才算有效音频（残缺文件会解析失败）
@@ -424,7 +443,11 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         if target_minutes:
             try:
                 from speed_probe import get_speed, calc_target_chars
-                measured_speed = get_speed(voice, rate)
+                if os.environ.get("LISTEN_TTS_ENGINE") == "cosyvoice":
+                    # CosyVoice 模式：edge-tts 探测必失败（voice 不兼容），直接用默认语速 282
+                    measured_speed = 282.0
+                else:
+                    measured_speed = get_speed(voice, rate)
                 # 去除 markdown 标记后的有效字数
                 import re as _re
                 clean_text = _re.sub(r'[#*`>|\-\n]', '', full_text)

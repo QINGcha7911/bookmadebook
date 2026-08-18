@@ -128,7 +128,7 @@ def extract_quotes(script_text: str) -> list[str]:
         q = re.split(r"[。！？]", q)[0].strip()
         if 6 <= len(q) <= 40 and q not in quotes:
             quotes.append(q)
-    return quotes[:4]  # 最多4句
+    return quotes[:6]  # 最多6句（2026-08-18：4→6，开篇提前+加密）
 
 
 from functools import lru_cache
@@ -234,7 +234,13 @@ def _quote_times(quotes: list, script_text: str,
         if idx < 0:
             out.append(fb[qi])
             continue
-        out.append(audio_dur * idx / max(n_chars, 1))
+        t = audio_dur * idx / max(n_chars, 1)
+        # 2026-08-18 用户反馈"金句出现晚且少"：第一句金句强制提前
+        # 正文前有 38s 开篇（可灵钩子），故首句金句须在正文内 ≤22s
+        # （完整视频 38+22=60s 内可见，用户留存关键区）
+        if qi == 0:
+            t = min(t, 22.0)
+        out.append(t)
     return out
 
 

@@ -89,8 +89,9 @@ def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
     return speed
 
 
-def find_duplicate_paragraphs(text: str, threshold: float = 0.75) -> list:
-    """检测重复段落：n-gram 相似度超过阈值的段落对。"""
+def find_duplicate_paragraphs(text: str, threshold: float = 0.85) -> list:
+    """检测重复段落：n-gram 相似度超过阈值的段落对。
+    2026-08-17 阈值 0.75→0.85：短标记行（【停顿】/【情绪】/【金句】）特征稀疏会被误判，放宽到 0.85 只拦真重复。"""
     clean = strip_markdown(text)
     paras = [p.strip() for p in clean.split("\n") if len(p.strip()) > 20]
     results = []

@@ -115,6 +115,7 @@ def call_deepseek(messages: list[dict], api_key: str, timeout: int = 180) -> str
         "messages": messages,
         "temperature": 0.7,
         "stream": False,
+        "max_tokens": 16384,
     }
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     request = urllib.request.Request(
@@ -147,29 +148,43 @@ def call_deepseek(messages: list[dict], api_key: str, timeout: int = 180) -> str
 
 def generate_script(book: str, minutes: float, api_key: str) -> str:
     char_budget = max(400, int(round(minutes * 282)))
+    # 分批生成：单次输出实际约2000-2500字（deepseek 8K token 中文），长讲书稿分 N 批拼接
+    batch_n = max(1, (char_budget + 1999) // 2000)
+    per_batch = (char_budget + batch_n - 1) // batch_n
     system = (
         "你是一位资深图书讲书人兼 TED 演讲导演，擅长把一本书压缩成"
         "高密度、有感染力、适合口播的讲书稿。"
     )
-    user = f"""请为《{book}》写一份约 {char_budget} 字的讲书稿，目标时长 {minutes_label(minutes)} 分钟。
-
-必须遵守：
-1. 采用 bookmadebook 4.2.1 讲书稿结构：开场悬念钩子 → 时间线分段（零重叠、同一主题只出现一次）→ 每章给出主线+细节+解读 → 结尾升华。
-2. 禁止乱序补充段落、注水和重复内容。
-3. 全稿 4-6 句【金句】，必须是书中原句，格式为【金句】原文。
-4. TED 情绪多样化：在需要处标注【情绪：开心/悲伤/紧张/温柔/坚定/疑惑/神秘/爆发/轻声】。
-5. 每章至少一个【停顿0.5】；金句前停顿并重读。
-6. 字数预算约 {char_budget} 字。
-7. 版权红线：只讲精华、不朗读全文、不逐段复制。
-8. 每个章节开头标注【场景：XX】（用于视频实景匹配），从以下选最贴合本章内容的：宫殿/古建/沙漠/星空/海洋/海边/森林/日出/山巅/银河/夜空/雨夜/书房/暖光家居/雪原/都市夜景/寺庙/香港街景/牧场/航船。不确定时用通用（沙漠/森林/海洋）。
-9. 用中文输出完整讲书稿，不要输出额外说明。"""
-    return call_deepseek(
-        [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-        api_key,
+    common_rules = (
+        "必须遵守：\n"
+        "1. 采用 bookmadebook 4.2.1 讲书稿结构：开场悬念钩子 → 时间线分段（零重叠、同一主题只出现一次）→ 每章给出主线+细节+解读 → 结尾升华。\n"
+        "2. 严格按书的真实章节/时间线推进（如人物成长阶段、历史分期、课程顺序），每章用【章节N：标题】开头，禁止泛泛而谈、凑字数、编造不存在的细节；具体人名/地点/事件必须真实来自书中。\n"
+        "3. 结尾必须是完整的升华收束段（200字以上）：总结全书核心 + 金句点题 + 留给听众的余韵。严禁戛然而止或重复前文句子。\n"
+        "4. 禁止乱序补充段落、注水和重复内容。\n"
+        "5. 全稿 4-6 句【金句】，必须是书中原句，格式为【金句】原文。\n"
+        "6. TED 情绪多样化：在需要处标注【情绪：开心/悲伤/紧张/温柔/坚定/疑惑/神秘/爆发/轻声】。\n"
+        "7. 每章至少一个【停顿0.5】；金句前停顿并重读。\n"
+        "8. 版权红线：只讲精华、不朗读全文、不逐段复制。\n"
+        "9. 每个章节开头标注【场景：XX】（用于视频实景匹配），从以下选最贴合本章内容的：宫殿/古建/沙漠/星空/海洋/海边/森林/日出/山巅/银河/夜空/雨夜/书房/暖光家居/雪原/都市夜景/寺庙/香港街景/牧场/航船。不确定时用通用（沙漠/森林/海洋）。\n"
+        "10. 用中文输出，不要输出额外说明。"
     )
+    batches = []
+    for i in range(batch_n):
+        prev_tail = batches[-1].strip()[-100:] if batches else "（全书开头）"
+        user = f"""请为《{book}》写一份约 {char_budget} 字的讲书稿，目标时长 {minutes_label(minutes)} 分钟，全书共分 {batch_n} 批输出。
+
+这是第 {i+1}/{batch_n} 批，本批约 {per_batch} 字。直接输出本批正文（不要输出"第X批"等标题或说明）。
+上一批结尾为：「{prev_tail}」——请按时间线自然衔接继续，严禁重复上一批已讲的内容。
+
+{common_rules}"""
+        batches.append(call_deepseek(
+            [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            api_key,
+        ).strip())
+    return "\n\n".join(batches)
 
 
 def generate_xhs(book: str, api_key: str, script_path: Path | None = None) -> str:
