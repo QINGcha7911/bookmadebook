@@ -60,6 +60,10 @@ THEME_PALETTES = {
 
 # 主题 → 实景图 URL（Unsplash 免费图库，同主题相近画面）
 THEMES = {
+    "gufeng": [  # 古风：苏州园林/汉服/茶道/古籍（2026-08-21 用户反馈"画面与内容严重不符"后新增）
+        "https://images.unsplash.com/photo-1558888401-5e4f3c5d9c3c?w=2160&q=80",
+        "https://images.unsplash.com/photo-1567055383923-c4e2f3c0b6a0?w=2160&q=80",
+    ],
     "desert": [  # 沙漠星空：黄昏→蓝调→夜空 昼夜渐变
         "https://images.unsplash.com/photo-1542401886-65d6c61db217?w=2160&q=80",
         "https://images.unsplash.com/photo-1509395176047-4a66953fd231?w=2160&q=80",

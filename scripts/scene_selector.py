@@ -28,6 +28,7 @@ CONTENT_THEME_MAP = {
 # 【场景：XX】中文别名 → 主题 ID（支持中文标记）
 THEME_ALIASES = {
     "宫殿": "palace", "古建": "palace", "皇宫": "palace", "历史": "palace",
+    "古风": "gufeng", "园林": "gufeng", "水墨": "gufeng", "江南": "gufeng", "庭院": "gufeng", "古籍": "gufeng", "汉服": "gufeng", "文人": "gufeng",
     "沙漠": "desert", "星空": "desert", "沙丘": "desert",
     "海洋": "ocean", "海边": "ocean", "大海": "ocean", "海": "ocean",
     "森林": "forest", "树林": "forest", "自然": "forest", "童话": "forest",
