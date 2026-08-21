@@ -65,11 +65,14 @@ LANG_VOICES = {
 }
 
 # 内容类型 → 声音映射（优化①：依据内容定声音）
+# 2026-08-21 设计音色接入：历史→hist_deep_male(百炼)、童话/儿童→design_kid(百炼)、情感/散文→husky_tender(百炼)
+# 设计音色 voice ID 以 qwen-tts-vd- 开头，generate_segment 检测到后走百炼 API（voice_design.py synth）
+# 其余类型保持 edge-tts 免费声兜底
 CONTENT_VOICES = [
     ("童话", ["童话", "睡前", "小王子", "丑小鸭", "小红帽", "格林", "安徒生", "儿童", "宝宝", "宝贝"],
-     "zh-CN-XiaoxiaoNeural", "晓晓：温柔慢速，适合儿童/童话"),
+     "qwen-tts-vd-design_kid-voice-20260821205612330-e42c", "design_kid：活泼童声(百炼设计音色)，适合儿童/童话"),
     ("儿童科普", ["十万个", "百科", "科普", "好奇", "科学实验", "恐龙", "动物世界"],
-     "zh-CN-XiaoyiNeural", "晓伊：阳光活泼，适合儿童科普"),
+     "qwen-tts-vd-design_kid-voice-20260821205612330-e42c", "design_kid：活泼童声(百炼设计音色)，适合儿童科普"),
     ("职场", ["职场", "汇报", "管理", "会议", "同事", "老板", "工作", "项目", "制度", "体制", "上班"],
      "zh-CN-YunjianNeural", "云健：沉稳专业，适合职场/干货"),
     ("悬疑", ["悬疑", "谋杀", "案件", "侦探", "推理", "秘密", "真相", "阴谋", "死亡"],
@@ -77,12 +80,12 @@ CONTENT_VOICES = [
     ("励志", ["励志", "加油", "奋斗", "梦想", "坚持", "不要放弃", "热血", "努力", "成功"],
      "zh-CN-YunxiNeural", "云希：阳光有力，适合励志/燃向"),
     ("情感", ["爱情", "恋爱", "喜欢", "分手", "想念", "心动", "告白", "婚姻", "泪", "哭"],
-     "zh-CN-XiaoxiaoNeural", "晓晓：温柔细腻，适合情感/爱情"),
+     "qwen-tts-vd-husky_tender-voice-20260821220323362-ebb0", "husky_tender：沙哑温柔(百炼设计音色)，适合情感/散文"),
     ("历史", ["历史", "朝代", "皇帝", "战争", "王朝", "古代", "明朝", "唐朝", "宋朝",
              "楚汉", "争霸", "刘邦", "项羽", "韩信", "帝王", "将相", "君主", "谋略",
              "史记", "演义", "三国", "名将", "丞相", "列传", "春秋", "战国", "诸侯",
              "起义", "江山", "宫廷", "北伐", "王位之争", "江山社稷"],
-     "zh-CN-YunjianNeural", "云健：成熟沉稳男声，适合历史/传记"),
+     "qwen-tts-vd-hist_deep_male-voice-20260821204552033-d7bc", "hist_deep_male：沉稳厚重(百炼设计音色)，适合历史/传记"),
 ]
 
 
@@ -194,6 +197,11 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
         args = [sys.executable, str(Path(__file__).parent / "tts_cosy.py"),
                 "--voice", cosy_voice, f"--pitch={cosy_pitch}", f"--rate={cosy_rate}",
                 "--text", text, "--output", str(out_path)]
+    elif voice.startswith("qwen-tts-vd-"):
+        # 阿里百炼 Qwen3-TTS 声音设计 API（2026-08-21 接入）：voice 是设计音色 ID 时走百炼
+        # 按量计费 0.8元/万字符；DASHSCOPE_API_KEY 从 ~/.hermes/.env 读取（voice_design.py 内处理）
+        args = [sys.executable, str(Path(__file__).parent / "voice_design.py"),
+                "synth", "--voice", voice, "--text", text, "--out", str(out_path)]
     else:
         args = ["edge-tts", "--voice", voice, f"--rate={rate}",
                 f"--volume={volume}", f"--pitch={pitch}",

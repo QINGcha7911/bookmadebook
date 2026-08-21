@@ -143,8 +143,18 @@ def cmd_synth(args):
     url = out.get("audio", {}).get("url", "")
     if url:
         r = requests.get(url, timeout=300)
-        with open(args.out, "wb") as f:
+        tmp = args.out + ".tmp.wav"
+        with open(tmp, "wb") as f:
             f.write(r.content)
+        # 输出后缀 .mp3 时转码（兼容 streaming_pipeline 的 .mp3 输出路径）
+        if args.out.lower().endswith(".mp3"):
+            subprocess.run(
+                ["ffmpeg", "-y", "-i", tmp, "-codec:a", "libmp3lame",
+                 "-q:a", "2", args.out, "-loglevel", "error"],
+                check=True, timeout=300)
+            os.remove(tmp)
+        else:
+            os.replace(tmp, args.out)
         print(f"✅ 音频已保存: {args.out}")
         return
     print("⚠️ 未直接返回音频，响应:", json.dumps(data, ensure_ascii=False)[:400])
