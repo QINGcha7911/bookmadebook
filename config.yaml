@@ -72,10 +72,19 @@ scene_presets:
 
 # === 【高级】TTS 引擎 ===
 tts:
-  default_engine: "edge-tts"         # edge-tts|openai|azure|elevenlabs
+  default_engine: "edge-tts"         # edge-tts|openai|azure|elevenlabs|qwen-design
   edge_tts:                          # 默认引擎，免费，无需API Key
     segment_max_chars: 500           # 每段最大字符数
     gap_between_segments_ms: 400     # 段间停顿
+  qwen_design:                       # 阿里百炼 Qwen3-TTS 声音设计 API（2026-08-21 用户验收）
+    endpoint: "https://dashscope.aliyuncs.com/api/v1/services/audio/tts/customization"
+    synth_endpoint: "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation"
+    model: "qwen3-tts-vd-2026-01-26"
+    script: "scripts/voice_design.py"
+    voices:
+      hist:     "qwen-tts-vd-hist_deep_male-voice-20260821204552033-d7bc"   # 历史传记男声 ✅用户确认
+      prose:    "qwen-tts-vd-husky_tender-voice-20260821220323362-ebb0"     # 抒情散文沙哑女声 ✅用户定稿
+      kid:      "qwen-tts-vd-design_kid-voice-20260821205612330-e42c"       # 儿童故事声 ✅用户确认
   # openai:                          # 需设置 OPENAI_API_KEY 环境变量
   #   model: tts-1-hd
   #   voice: nova
