@@ -307,6 +307,14 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 | middle_school | zh-CN-YunjianNeural | +0% |
 | high_school | zh-CN-YunyangNeural | +0% |
 | adult | zh-CN-XiaoxiaoNeural | +0% |
+
+**设计音色覆盖（2026-08-21 用户验收，Qwen3-TTS 声音设计 API）**：
+用户点名/重点内容优先用设计音色（`scripts/voice_design.py`，voice ID 见 references/voice-design.md）：
+- 历史传记 → `hist_deep_male`（沉稳厚重老年男声 ✅用户确认）
+- 抒情散文/治愈小说 → `husky_female2`（明显沙哑烟嗓女声 ✅用户选定）
+- 儿童故事 → `design_kid`（活泼童声 ✅用户确认）
+- 其他 → edge-tts 免费声兜底（上表）
+- 不满意可改 voice_prompt 重新 create 无限迭代；试听验收=用户耳朵（lark-cli --audio 发 opus 语音消息）
 ### 5.3 流水线内部处理（自动）
 
 1. smart_split_text() → 按自然断点分3000字以内段
