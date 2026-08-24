@@ -44,6 +44,7 @@ THEME_ALIASES = {
     "香港": "hongkong", "特首": "hongkong", "维多利亚港": "hongkong",
     "羊": "pasture", "羊群": "pasture", "牧场": "pasture", "牧民": "pasture", "牧羊": "pasture", "转场": "pasture", "牲畜": "pasture",
     "寺庙": "temple", "禅意": "temple", "禅": "temple",
+    "古园": "guyuan", "地坛": "guyuan", "古柏": "guyuan", "红墙": "guyuan", "祭坛": "guyuan", "古刹": "guyuan", "长廊": "guyuan", "石阶": "guyuan", "古塔": "guyuan",
 }
 
 SCENE_MARKER_RE = re.compile(r"【场景[:：]\s*([^】\n]{1,20})】")
