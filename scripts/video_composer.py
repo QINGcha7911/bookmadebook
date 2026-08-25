@@ -522,6 +522,7 @@ def main():
         cmd2 = ["ffmpeg", "-y", "-v", "error", "-i", str(video_mp4),
                 "-i", args.audio, "-map", "0:v:0", "-map", "1:a:0",
                 "-map_metadata", "-1", "-c:v", "copy", "-c:a", "aac",
+                "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-b:a", "128k", "-movflags", "+faststart",
                 "-shortest", args.output]
         r2 = subprocess.run(cmd2, capture_output=True, text=True, timeout=120)

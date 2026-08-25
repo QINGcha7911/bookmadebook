@@ -341,6 +341,7 @@ def mix_bgm(voice_path: Path, cache_dir: Path, bgm_path: str = None,
     # 直接 3 路混音：人声 + 开头音乐 + 结尾音乐（normalize=0 保留音量）
     filter_parts.append(
         "[0:a][bgm_open][bgm_close]amix=inputs=3:duration=first:normalize=0:dropout_transition=2,"
+        "loudnorm=I=-16:TP=-1.5:LRA=11,"
         "alimiter=limit=0.95[aout]"
     )
 
@@ -502,7 +503,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
             bgm_mode = "bgm"
         script_hash = hashlib.md5(
             f"{cache_text}|style:{style}|bgm:{bgm_level_key}|mode:{bgm_mode}|pitch:{pitch}"
-            f"|user:{user_key or ''}|chapters:{int(add_chapters)}".encode()).hexdigest()
+            f"|user:{user_key or ''}|chapters:{int(add_chapters)}|vol:v2".encode()).hexdigest()
         speed_key = "1.0" if rate == "+0%" else rate
         l3_hit = cache_mgr.get_l3(script_hash, voice, speed_key)
         if l3_hit:
@@ -697,6 +698,7 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
 
         result = subprocess.run(
             ["ffmpeg", "-f", "concat", "-safe", "0", "-i", str(concat_file),
+             "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
              "-codec:a", "libmp3lame", "-b:a", "128k", str(final_path)],
             capture_output=True, text=True, timeout=300
         )
