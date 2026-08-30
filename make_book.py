@@ -405,6 +405,32 @@ def main() -> None:
             "未找到 DeepSeek API Key；可用 DEEPSEEK_API_KEY 环境变量、.env 或 --api-key 提供。",
         )
 
+    # 步骤 1.5（可选）：章节索引提取——供长稿扩充按章加载，失败不阻塞主流程
+    try:
+        chapters_json = out_dir / "chapters.json"
+        if not chapters_json.exists():
+            extract_script = BASE_DIR / "scripts" / "extract_chapters.py"
+            if extract_script.exists():
+                fetch_cmd = [
+                    sys.executable, str(extract_script), book,
+                    "--cache-dir", str(Path.home() / ".hermes/cache/bookmadebook/books"),
+                    "--out-dir", str(out_dir),
+                ]
+                log("📑", f"[1.5/5] 提取章节索引: {' '.join(fetch_cmd)}")
+                subprocess.run(fetch_cmd, timeout=120)
+                if chapters_json.exists():
+                    try:
+                        ch_data = json.loads(chapters_json.read_text(encoding="utf-8"))
+                        log("✅", f"[1.5/5] 章节索引 {len(ch_data.get('chapters', []))} 章: {chapters_json}")
+                    except Exception:
+                        log("⏭️", "[1.5/5] 章节索引已生成但解析失败（忽略）")
+                else:
+                    log("⏭️", "[1.5/5] 未找到书籍源文件，跳过章节索引（不影响主流程）")
+            else:
+                log("⏭️", "[1.5/5] extract_chapters.py 不存在，跳过")
+    except Exception as exc:
+        log("⏭️", f"[1.5/5] 章节索引提取跳过: {exc}")
+
     try:
         script = generate_script(book, minutes, api_key)
         script_path.write_text(script, encoding="utf-8")
