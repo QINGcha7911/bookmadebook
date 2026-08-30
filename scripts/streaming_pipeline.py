@@ -677,7 +677,8 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
 
         print(f"🔗 拼接 {len(seg_files)} 段...")
         final_path = CACHE_DIR / f"{script_hash[:10]}_{run_token}.mp3"
-        # AI 生成声明（合规）：放音频最开头，L2 缓存复用
+        # AI 生成声明（合规）：放音频尾端（2026-08-30 用户要求：开头直接出钩子，
+        # 声明移到片尾避免打断前 3 秒留存；《标识办法》允许末尾标识）
         try:
             disc_l2 = cache_mgr.get_l2(AI_DISCLOSURE_TEXT, voice, rate,
                                        volume="+0%", pitch=pitch)
@@ -691,11 +692,11 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                                  volume="+0%", pitch=pitch)
                 disclosure_path = str(cache_mgr.get_l2(
                     AI_DISCLOSURE_TEXT, voice, rate, volume="+0%", pitch=pitch) or disc_out)
-            seg_files.insert(0, disclosure_path)
+            seg_files.append(disclosure_path)  # 片尾（原 insert(0) 在最开头）
             d0 = get_audio_duration(Path(disclosure_path))
-            durations.insert(0, d0)
+            durations.append(d0)
             total_duration += d0
-            print(f"  📢 已插入 AI 生成声明 ({d0:.1f}s)")
+            print(f"  📢 已插入 AI 生成声明（片尾 {d0:.1f}s）")
         except Exception as e:
             print(f"  ⚠️ AI 声明插入失败（不影响主音频）：{e}")
         concat_file = CACHE_DIR / f"concat_list_{run_token}.txt"

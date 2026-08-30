@@ -266,10 +266,15 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     items = plan.images_with_durations() if hasattr(plan, "images_with_durations") else \
         [(p, audio_dur / len(plan)) for p in plan]
     n = len(items)
+    # 交叉溶解时长动态化（2026-08-30 修复短版冻结 bug）：
+    # 固定 1.5s 在短版（每图 1.3-1.6s）会导致 offset=total-XFADE 为负 → xfade 冻结。
+    # 取 min(1.5, 最短图时长*0.5)，保证 offset 恒为正；长版（每图 10s+）不受影响。
+    min_dur = min(d for _, d in items) if items else audio_dur
+    xfade_dur = min(XFADE_DUR, max(0.4, min_dur * 0.5))
     parts = []
     # 每张图 Ken Burns 缩放（独立时长）；非 1080×1920 先归一化，再降采样给 zoompan
     # 缩放速度按段时长分配：zoom 从 1.0→1.15 铺满整段（on=输出帧号），避免"4秒后静止"
-    # 输入用单帧（不用 -loop 1 循环流），d 扩到 dur+XFADE_DUR 保证 xfade 重叠区帧数，
+    # 输入用单帧（不用 -loop 1 循环流），d 扩到 dur+xfade_dur 保证 xfade 重叠区帧数，
     # 避免循环流输入被 zoompan 逐帧放大（N 输入帧 × d 输出帧 = 数百倍冗余计算）
     for i, (img, dur) in enumerate(items):
         zoom_in = (i % 2 == 0)
@@ -283,19 +288,23 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             f"[{i}:v]{normalize}scale={ZOOM_W}:{ZOOM_H},"
             f"zoompan=z='{zexpr}':"
             f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-            f"d={int((dur+XFADE_DUR)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
+            f"d={int((dur+xfade_dur)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
             f"scale={W}:{H}:flags=lanczos,"
-            f"trim=duration={dur+XFADE_DUR},setpts=PTS-STARTPTS[v{i}]"
+            f"trim=duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
         )
     # xfade 交叉溶解（累计可变时长）
+    # 2026-08-30 修复：total 必须 += dur（不能 -= xfade）。
+    # xfade 输出时长 = offset + B总长，而 offset = total - xfade 已含过渡扣除，
+    # 再减 xfade 会导致累计缩水（长版每图15s缩10%不明显；短版每图1.35s错位一半，
+    # 实测 40 图总长 30.4s vs 音频 56.8s，starry 段整体前移 10s）。
     prev = "v0"
     total = items[0][1]
     for i in range(1, n):
         out = f"x{i}"
-        offset = total - XFADE_DUR
-        parts.append(f"[{prev}][v{i}]xfade=transition=fade:duration={XFADE_DUR}:offset={offset}[{out}]")
+        offset = total - xfade_dur
+        parts.append(f"[{prev}][v{i}]xfade=transition=fade:duration={xfade_dur}:offset={offset}[{out}]")
         prev = out
-        total += items[i][1] - XFADE_DUR
+        total += items[i][1]
 
     # ── 文字层（PIL 预渲染 PNG overlay，替代 drawtext）──
     import text_layers as tl
@@ -369,12 +378,15 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             is_last = (qi == len(quotes) - 1)
             # 短版（≤90s）金句显示 6s（3-4 句字卡不重叠）；长版 12s
             quote_hold = 6.0 if audio_dur <= 90 else 12.0
+            # 短版有 CTA 时末句金句不保持到结束（2026-08-30 修复重叠 bug：
+            # 末句金句 y≈980 与 CTA y≈980 同区域，双双保持到结束会叠字）
+            has_cta = "cta" in png_map and audio_dur <= 90
             # 末句金句若靠近片尾则保持到结束（升华收束），否则也限时淡出防霸屏
-            if is_last and audio_dur - ts <= 18:
+            if is_last and audio_dur - ts <= 18 and not has_cta:
                 te = audio_dur
             else:
                 te = min(audio_dur, ts + quote_hold)
-            if is_last and audio_dur - ts <= 18:
+            if is_last and audio_dur - ts <= 18 and not has_cta:
                 fade_out = ""
             elif te - ts > 0.9:
                 fade_out = f",fade=t=out:st={te-0.8}:d=0.8:alpha=1"
