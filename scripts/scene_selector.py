@@ -210,21 +210,51 @@ def build_plan_from_markers(script_text: str, marked: list, audio_dur: float,
     return ScenePlan(segments=segs, duration=audio_dur)
 
 
+# 短版视觉互补对照表（2026-08-30 引入，60s 版防素材雷同）
+# 主主题 → 备选主题（视觉差异大，交替切避免"全是蜡烛/全是宫殿"）
+SHORT_THEME_ALT = {
+    "palace": "starry", "warm_home": "library", "desert": "starry",
+    "rain": "library", "tech_city": "starry", "forest": "sunrise",
+    "snow": "warm_home", "ocean": "sunrise", "sunrise": "forest",
+    "starry": "desert", "library": "warm_home", "temple": "starry",
+    "arctic": "starry", "ww2": "arctic", "ship": "ocean",
+    "hongkong": "starry", "pasture": "sunrise", "finance": "tech_city",
+}
+# 短版阈值：音频 ≤90s（60s 钩子版/精华版）强制双主题交替
+SHORT_DUR = 90.0
+
+
+def _short_alternating(theme: str, audio_dur: float) -> ScenePlan:
+    """短版双主题交替：主→备→主（每段约 1/3 时长），视觉不雷同"""
+    alt = SHORT_THEME_ALT.get(theme, "starry")
+    t3 = audio_dur / 3.0
+    return ScenePlan(segments=[
+        SceneSegment(theme=theme, start=0.0, end=t3),
+        SceneSegment(theme=alt, start=t3, end=2 * t3),
+        SceneSegment(theme=theme, start=2 * t3, end=audio_dur),
+    ], duration=audio_dur)
+
+
 def select_scenes(script_text: str, theme_arg: str, audio_dur: float,
                   audio_path: str = "") -> ScenePlan:
-    """总入口：手动指定 > 【场景：XX】标记 > 自动检测 > 兜底"""
+    """总入口：手动指定 > 【场景：XX】标记 > 自动检测 > 兜底
+    短版（≤90s）在单一主题时自动双主题交替（2026-08-30）"""
     if theme_arg and theme_arg != "auto":
         # ① 手动指定：整片单一主题
         t = normalize_theme(theme_arg) or theme_arg
+        if audio_dur <= SHORT_DUR:
+            return _short_alternating(t, audio_dur)
         return ScenePlan(segments=[SceneSegment(theme=t, start=0.0,
                                                 end=audio_dur)],
                          duration=audio_dur)
     marked = parse_scene_markers(script_text)
     if marked:
-        # ② 显式标记
+        # ② 显式标记（已有章节标记，尊重原规划）
         return build_plan_from_markers(script_text, marked, audio_dur, audio_path)
     # ③ 自动检测
     theme = auto_theme(script_text)
+    if audio_dur <= SHORT_DUR:
+        return _short_alternating(theme, audio_dur)
     return ScenePlan(segments=[SceneSegment(theme=theme, start=0.0,
                                             end=audio_dur)],
                      duration=audio_dur)
