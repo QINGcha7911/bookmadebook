@@ -1,10 +1,12 @@
 ---
 name: bookmadebook
-version: 2.3.3
+version: 2.5.0
 description: |-
-  AI 书籍精读音频生成 — 全年龄段（3岁+），多场景、多声音、多深度。
-  用户一句话 → 推荐书籍 → 生成精读脚本 → TTS转音频 → 交付 MP3 + 笔记。
-  触发词：解读、精读、推荐书、听书、讲书、有声书、朗读、读书、语音、听、讲故事、书评、拆书。  
+  AI 书籍精读生产流水线 — 全年龄段（3岁+），多场景、多声音、多深度。
+  每日自动生成 10 分钟精读音频 + 1080×1920 竖版视频（60s 开篇 + 实景正文），
+  配套小红书文案与海报；支持选题池（plan.tsv）与飞书 cron 无人值守：
+  选题 → 讲书稿 → TTS → 素材 → 合成 → 质量门 → 小红书文案 → 飞书交付。
+  触发词：解读、精读、推荐书、听书、讲书、有声书、朗读、读书、语音、听、讲故事、书评、拆书。
 requires: python>=3.10
 
 ---
@@ -29,23 +31,43 @@ requires: python>=3.10
 > **v2.3.1 免费版默认（2026-08-18 用户定案）**：开篇+正文**全部实景素材 Ken Burns**+金句字卡+本地口播=**0 元**；**可灵仅爆款/重点书用（≤2 段，20-40 元，非必需）**。cron prompt 已更新（免费版默认，可灵失败自动退回纯实景）。
 > **⚠️ 开篇 60s 画面风格自适应（v2.3.1 补充，2026-08-18 用户定案）**：按讲书稿内容类型判定——**历史传记/战争类=黑白（灰度化）**，**惬意抒情/治愈类=彩色**。判定=讲书稿历史关键词检测（朝代/年号/皇帝/战役/战争/列传/史/起义/王朝等），出现即历史类→开篇加灰度化（hue=s=0 或 format=gray）；无=治愈类→彩色。正文画面风格与开篇一致。
 > **⚠️ 压缩命令必须带 `-movflags +faststart`（2026-08-21 早班/晚班两次踩坑）**：ffmpeg 压缩/拼接后 moov atom 默认在文件末尾，lark-cli 上传飞书会报「moov atom not found」且 ffprobe 误判损坏——agent 会陷入 65s 循环压缩但每次都"损坏"。任何 ffmpeg 输出 MP4 一律加 `-movflags +faststart`；压缩后必须 `ffprobe -v error -show_entries format=duration out.mp4` 验证可读再上传。混编码 concat（h264+hevc）禁止 `-c copy`（会损坏），必须 `-filter_complex concat` 统一重编码。
-> **⚠️ 开篇 60s 画面切换铁律（2026-08-21 用户反馈教训）**：①**禁止单主题素材**——全部 warm_home 家居素材色调相似，切换视觉不可见，用户反馈"没有画面切换"；开篇必须**≥2 个主题交替穿插**（如 warm_home↔forest），每段 4-6s，视觉差异明显。②**金句字卡必须全程显示**——禁止 20-32s 一闪而过（用户反馈"没有金句文字"）；金句 5s 淡入→52s 淡出（`alpha='if(lt(t,5),t/5,if(lt(t,52),1,if(lt(t,56),(56-t)/4,0)))'`），fontsize ≥60 白字黑边。③参考脚本 `/tmp/build_fusheng_opening_v4.py`。
+> **⚠️ 开篇 60s 画面切换铁律（2026-08-21 用户反馈教训）**：①**禁止单主题素材**——全部 warm_home 家居素材色调相似，切换视觉不可见，用户反馈"没有画面切换"；开篇必须**≥2 个主题交替穿插**（如 warm_home↔forest），每段 4-6s，视觉差异明显。②**金句字卡必须全程显示**——禁止 20-32s 一闪而过（用户反馈"没有金句文字"）；金句 5s 淡入→52s 淡出（`alpha='if(lt(t,5),t/5,if(lt(t,52),1,if(lt(t,56),(56-t)/4,0)))'`），fontsize ≥60 白字黑边。③开篇实现以 video_composer.py 开篇合成为准（旧参考脚本曾存 /tmp，已归档不可依赖）。
 > **⚠️ 素材禁真人铁律（2026-08-21 用户反馈教训）**：视频画面**禁止出现真人/人物素材**（用户明确要求"把视频中的真人画面替换成景色画面"）。选素材时逐张目检：园林/山水/竹林/古建/静物（无人物）才可用；汉服人物、人像、有人物的场景一律弃用。**同时检查远景**：山水/园林素材**远景不得有现代城市/高楼/公路/电线**（landscape_02 山脚城市被剔除教训）——Pexels 下载的高清图远景常带城市，仅看缩略图会漏，须放大远景确认。素材下载后必须拼图目检（PIL 拼 4×3 缩略图 + vision 逐张确认无真人/现代元素）再入库。gufeng 库现状：园林 6 + 山水 5 + 竹林 3 + 古籍 1（零真人零城市）。
 > **⚠️ 像素格式铁律（2026-08-21 打开出错教训）**：任何 ffmpeg 输出 MP4 必须显式 `-pix_fmt yuv420p`——否则 x264 默认可能输出 yuvj444p（High 4:4:4 Predictive），飞书/手机/多数播放器无法解码（用户反馈"打开会出错"）。手写开篇脚本（build_fusheng_opening.py）曾漏此项；video_composer.py 正常（自带 yuv420p）。**交付前必须验证**：`ffprobe -v error -select_streams v -show_entries stream=pix_fmt -of csv=p=0 out.mp4` 必须返回 `yuv420p`，非 yuv420p 即播放器不兼容。拼接时混编码用 filter_complex 重编码时同样要带 `-pix_fmt yuv420p`。
 > **⚠️ drawtext 换行铁律（2026-08-21 乱码教训）**：ffmpeg drawtext 的换行必须用**真实换行符**（Python 源码里写 `\n` 单反斜杠），**禁止写 `\\n` 字面量**（双反斜杠=反斜杠+n 两个字符，drawtext 不解释转义，会把 `n` 渲染成文字——《浮生六记》开篇金句「若为儿择妇n非淑姊不娶」乱码根因）。Agent 写脚本时易犯此错；**开篇/字卡渲染后必须抽帧 vision 验证文字无乱码再交付**（`ffmpeg -ss 25 -i out.mp4 -frames:v 1 check.jpg`）。
 > **v2.3.3 晚班恢复 10 分钟（2026-08-21 用户定案）**：晚班 18:15 与早班 6:15 同为**10 分钟精读视频**（讲书稿 ~2600-2800 字），正文=实景素材 Ken Burns 动态（video_composer.py --fast），开篇 60s 钩子不变；**不再用 45 分钟静态画面模式**（v2.3.2 已废弃，compose_static_body.py 不用于日常线）。10 分钟视频压缩用 H.264 crf36+faster（约 19MB），带 `-movflags +faststart`。
-> **⚠️ 45 分钟视频压缩铁律（保留备查，日常线不再用）**：若未来恢复长视频，38-45 分钟压 30MB 内必须 **x265 + 720p + 目标码率**：`-vf scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2 -c:v libx265 -preset medium -b:v 75k -maxrate 95k -bufsize 190k -c:a aac -b:a 40k -movflags +faststart`（~28-29MB，H.264 压 45 分钟必糊）；压缩后必须 ffprobe 验证可读再发送。
-> **⚠️ 开篇画面铁律（2026-08-18 用户否掉 v1 教训）**：①**禁止循环拼接同一段可灵视频**（v1 用 2 段×4 循环=画面重复，用户直接否掉）；②必须生成 **≥3 段不同 prompt 的可灵画面**（每段 10s，不同场景），每段只出现一次；③可灵段间**穿插实景素材** Ken Burns 做呼吸感；④xfade=1s 过渡；⑤**金句字卡首句必须 ≤60s 出现**（video_composer `_quote_times` 已修：`quotes[:6]` + 首句封顶 `audio_dur*0.06+15`）；⑥可灵生成用 `/tmp/gen_kling_video.py`（OpenMontage KlingClient，kling-v3，需先 python 加载 .env——CRLF 行尾不能 source）；⑦开篇拼接参考 `/tmp/rebuild_opening_v2.py`；**⑧可灵余额不足降级（2026-08-18 008 实测 code 1102）**：可灵失败/余额不足时自动降级为「纯实景开篇」（assets/scenes 素材 Ken Burns 交替 + xfade + 首句金句字卡照常），禁止死等或报错，不影响正文与交付。
+> **45 分钟长视频压缩铁律（仅未来长视频备查，日常线禁用）**：若未来恢复 38-45 分钟视频且需压 30MB 内，才用 **x265 + 720p + 目标码率**（`-c:v libx265 -preset medium -b:v 75k -maxrate 95k -bufsize 190k -c:a aac -b:a 40k -movflags +faststart`，~28-29MB；H.264 压 45 分钟必糊）；**日常线 10 分钟一律 H.264 1080×1920，禁止套用此命令**（2026-08-26《雅舍小品》720p 模糊教训）。
+> **⚠️⚠️ 10 分钟视频压缩红线（2026-08-26 用户反馈"画面模糊"根因）**：**禁止 scale 720p！禁止 x265！** 10 分钟视频压缩必须保持 **1080×1920**，用 `-c:v libx264 -crf 36 -preset faster -c:a aac -b:a 96k -pix_fmt yuv420p -movflags +faststart`（约 19MB）。压缩后必须验证 `ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0 out.mp4` 返回 `1080,1920`——**agent 曾误套 45 分钟 x265+720p 命令导致交付 720p@101kbps 模糊视频**（2026-08-26《雅舍小品》）。45 分钟铁律仅供长视频，日常线一律 1080p。
+> **⚠️ 开篇画面铁律（2026-08-18 用户否掉 v1 教训）**：①**禁止循环拼接同一段可灵视频**（v1 用 2 段×4 循环=画面重复，用户直接否掉）；②必须生成 **≥3 段不同 prompt 的可灵画面**（每段 10s，不同场景），每段只出现一次；③可灵段间**穿插实景素材** Ken Burns 做呼吸感；④xfade=1s 过渡；⑤**金句字卡首句必须 ≤60s 出现**（video_composer `_quote_times` 已修：`quotes[:6]` + 首句封顶 `audio_dur*0.06+15`）；⑥可灵生成用 kling-cli 技能（OpenMontage KlingClient，kling-v3，需先 python 加载 .env——CRLF 行尾不能 source）；⑦开篇拼接以 video_composer.py 为准（旧参考脚本曾存 /tmp，已归档不可依赖）；**⑧可灵余额不足降级（2026-08-18 008 实测 code 1102）**：可灵失败/余额不足时自动降级为「纯实景开篇」（assets/scenes 素材 Ken Burns 交替 + xfade + 首句金句字卡照常），禁止死等或报错，不影响正文与交付。
 
 ---
 
 ## 一、执行流程总览
 
-Step 1: 解析用户意图 → 确定参数（书/年龄/场景/深度/声音）
-Step 2: 获取书籍信息 → book_info.py（公开信息）或 book_fetcher.py（全文）
-Step 3: 生成精读脚本 → AI 生成（按年龄段选择 prompts/ 模板）
-Step 4: TTS 转音频 → streaming_pipeline.py（分段生成→拼接→章节标记）
-Step 5: 交付用户 → MP3 文件 + Markdown 文稿
+Step 1: 选题池选书 → plan.tsv 待用行 + 配额规则（惬意 80%/历史 20%）选当日书
+Step 2: 生成讲书稿 → AI 按 prompts/ 模板写稿（10 分钟约 2600-2800 字），生成前过质量门
+Step 3: TTS 配音 → streaming_pipeline.py（分段生成→拼接→章节标记→-16 LUFS）
+Step 4: 素材匹配 → scene_selector.py 选主题 + scene_fetcher.py 下载 + 目检入库
+Step 5: 视频合成 → 60s 开篇 + video_composer.py 正文（实景 Ken Burns + 金句字卡）
+Step 6: 交付质量门 → 素材/规格/文字/响度逐项打勾，任何 FAIL 禁止交付
+Step 7: 小红书文案 → 配套文案 + 海报（60s 引流钩子）
+Step 8: 飞书交付 → lark-cli 上传（MP4+音频+文稿），更新 plan.tsv 状态
+
+---
+
+## cron 无人值守端到端流程（飞书定时触发，2026-08-30 整理）
+
+> 每日早班 6:15 / 晚班 18:15 由飞书 cron 触发，全程无人值守。入口 prompt 在生产 cron 环境（不在本仓库），按「〇、视频模式工作流 + 一、执行流程总览」执行。本节约束自动化关键点：
+
+- **入口**：cron prompt → 选题（plan.tsv 待用行 + 配额）→ 讲书稿（约 2600-2800 字/10 分钟）→ 质量门 → TTS → 素材 → 合成 → 交付质量门 → 小红书文案 → lark-cli 上传飞书
+- **超时**：video_composer 主合成 timeout 已放宽至 7200s（2 小时）；TTS 单段失败重试 2 次，仍失败即停止
+- **失败策略**：任一步 fail-closed 停止（harness 退出码：2=质量门拦截 / 3=输出验证拦截 / 4=前置失败）；保留产物与日志供人工复核；**可灵失败自动降级纯实景开篇，禁止死等或报错中断**
+- **开工自检（2026-08-30 引入，双轴 fail-closed）**：生产前必跑 `python3 /root/.hermes/scripts/dual_axis_selfcheck.py`——Standards 轴（技能文档命令参数/退出码 vs 实际 `--help` 实测）＋Spec 轴（选题池描述 vs plan.tsv 实际）。退出码 0 才开工，1/2 停止告警。**禁止凭记忆跳过验证**
+- **ledger 记账（2026-08-30 引入）**：每本书在 `pipeline-ledger.md` 追加一行（日期/班次/书名/状态/链接/质量门/备注），失败记失败步骤；ledger 是断点重试与复盘依据
+- **retry 假说**：重试前必须写「若 X 是原因，则改 Y 能通过」，禁止盲目重跑（防烧钱）
+- **幂等**：选题即消费——选中后须将 plan.tsv 该行标记「已用」+ 使用日期；重复触发先 grep TSV 待用行与 pick.log 确认，防止重复生成/重复上传
+- **产物路径**：bookmadebook-output/（out.mp4 + mp3 + 讲书稿.md）；上传飞书后记录消息链接
+- **告警**：失败时 lark-cli 通知，次日人工复核产物与 TSV 状态
 
 ---
 
@@ -132,6 +154,10 @@ python scripts/book_info.py --file /path/to/book.txt
 | middle_school | prompts/teen/middle_school_mode.txt | 批判性思考 |
 | high_school | prompts/teen/high_school_mode.txt | 深度分析 |
 | adult | prompts/standard_mode.txt | 完整精读结构 |
+| adult（深度扩展） | prompts/deep_mode.txt | 深度模式（深挖论证） |
+| adult（速览） | prompts/speed_mode.txt | 快速速览 |
+| adult（TED 风格） | prompts/ted_mode.txt | TED 式演讲结构 |
+| 各阶段通用 | prompts/chapter_summary.txt | 章节小结提示词 |
 
 ### 4.2 内容质量铁律（用户亲定，必须遵守）
 
@@ -185,61 +211,28 @@ python scripts/book_info.py --file /path/to/book.txt
 - 金句位置：正文首次出现 + 结尾呼应（语境不同不算重复）
 - 金句必须是书中原句或凝练提炼，禁止编造
 
-### 4.4 视频合成（讲书音频 → 实景动态视频）
+### 4.3 内容安全过滤
 
-**设计原则（2026-08-07 用户确认，2026-08-11 升级）**：
-- 实景写实照片（Unsplash 免费图库），不用 AI 生图
-- 同主题连贯画面（如沙漠星空系列），避免场景跳跃
-- 交叉溶解过渡（xfade 1.5s），画面平滑流动
-- 文字只保留金句 + 书名，淡入淡出
-- Ken Burns 缓慢缩放（zoompan），动态不呆板
-- **文字层用 PIL 预渲染 PNG + overlay**（替代 drawtext，规避中文转义/断行/描边坑）
-- **字体用思源黑体/宋体（Noto CJK，OFL 商用合规）**，不用微软雅黑（商用侵权风险）
-- **画面 scale 必须 cover 模式**（`force_original_aspect_ratio=increase` + `crop`），防横图拉伸变形（2026-08-11 用户反馈"字体压太扁"根因）
+在生成脚本后、送入 TTS 前，必须过内容安全过滤：
 
-**用法**：
-```bash
-python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --book 书名 --output out.mp4
-```
-- `--theme auto`（默认）按内容自动选主题；也可手动指定（desert/forest/ocean/palace/sunrise/starry/rain/library/warm_home/snow/tech_city/temple）
-- `--scene-from auto|script|manual` 场景来源（标记/自动/手动）
-- `--dry-run` 只输出场景规划不合成
-- 自动提取【金句】标记 → 视频中段淡入淡出显示
-- 输出 1080×1920 竖版（小红书/抖音适配）
+from scripts.content_filter import ContentFilter
+mode = "kids" if age_group != "adult" else "adult"
+cf = ContentFilter(mode)
+result = cf.check(script_text)
 
-**场景自动选择（2026-08-11 新增）**：
-- 优先级：`--theme 手动 > 讲书稿【场景：XX】标记 > 自动检测（加权关键词统计）> 兜底 desert`
-- `scene_selector.py`：复用 streaming_pipeline 的 CONTENT_VOICES，**加权统计**各类关键词命中数取最高（不是首命中——张居正传"汇报"误判职场教训）
-- `scene_library.py`：本地素材库（assets/scenes/<theme>/ + ~/.cache/bookmadebook/scenes/），降级链 本地→缓存→下载→desert 兜底
-- 多章节：`【场景：palace】` 标记可切段换主题，≤3 场景/片
-- 素材清单：`assets/scenes/manifest.json`（11 主题 Unsplash URL，**已人工目检**：2026-08-11 清理了耳机/合影/手机等错配图）
-- **注意**：manifest 中未逐一验证的 URL 内容可能不符（盲猜 ID 教训），新主题素材需人工目检
-- **scene_fetcher.py**（2026-08-11 新增）：Pexels API 搜索下载素材（`--theme palace --download 3`），需 `PEXELS_API_KEY` 环境变量；API 返回真实图片+描述，杜绝盲猜
-- **强制无 BGM**：`LISTEN_BOOK_NOBGM=1` 环境变量（2026-08-11 用户要求商务/干货内容纯人声，配合云健男声）
-- **战争/军事题材**：关键词自动选 ww2 主题（士兵剪影图，2026-08-13）；`--rate=-10%` 注意用等号（`-10%` 会被 argparse 误解析）
-- **⚠️ 场景地域匹配铁律（2026-08-17 教训）**：palace 场景素材是**故宫/长城（中国建筑）**，只可用于中国题材（李鸿章/王阳明/万历/曾国藩等）；**欧洲/外国人物传记（拿破仑/梵高/歌德等）严禁用 palace**——拿破仑传曾误配故宫画面被用户抓包。选场景时先想"人物是哪个国家/地域"：欧洲战争人物→ww2（战争剪影）或 starry；欧洲艺术人物→starry/library；中国帝王将相→palace；自然题材→desert/forest/ocean/snow/pasture。**选题池 tsv 每本书的场景字段必须人工核对地域匹配后再入库**
-- **船王/航运题材**：ship 主题（集装箱货轮图，2026-08-13）；**香港/政坛题材**：hongkong 主题（香港天际线图）；用户偏好：商务/传记男声用云健（zh-CN-YunjianNeural）比云扬更沉稳
-- **Pexels 城市搜索坑**：搜 "hong kong skyline" 会混入里斯本/迪拜等相似城市港图，**下载后必须 vision 目检地标**（IFC/中银/摩天轮）再入库（2026-08-13 里斯本混入教训）
-- **牧场/游牧题材**：pasture 主题（雪原羊群图，2026-08-13）；**磁性女声**：晓晓 + `--pitch=-15Hz`（低沉磁性，2026-08-13 新增 CLI 参数，注意用等号）
-- **超长视频（45分钟，已废弃 2026-08-21）**：日常线已恢复 10 分钟规格；如未来临时做长视频，video_composer 主合成 timeout 已放宽到 7200s（2小时）；45 分钟≈13500字讲书稿，可 delegate_task 并行分章节写稿再合并
-- **渲染提速（2026-08-13）**：zoompan 内部渲染分辨率从 2160×3840 降到 1080×1920（原来先放大 4K 再缩回 1080p = 白算 3/4 像素），45 分钟视频合成从 80-90 分钟 → 25-30 分钟，画质无差别
-- **交付分层（2026-08-13 新增 deliver.py，仅作可选工具）**：用户想要多长就生成多长，**时长不做任何限制**。deliver.py 只是辅助工具（按时长压缩/分层），是否使用由用户决定——用户要完整视频就给完整视频，要音频就给音频，要 5 分钟精华就做 5 分钟精华
-- **小红书精华版（2026-08-13）**：小红书平台限制为参考信息（单条视频限 15 分钟、普通号最佳 5 分钟、MP4/720p+/竖版9:16），**不是技能限制**——用户要发小红书时可按此做精华版，用户要完整版就做完整版，一切以用户需求为准
-- **场景标记铁律（2026-08-13 修复）**：`【场景：XX】`必须放在章节标题**正上方**；每章一个标记；相邻章节可用同主题（解析器已修：只合并 <50 字符内重复标记，不再吞段）；音频章节数与标记数不一致时按字数比例分配
-- **ffprobe 章节排序坑（2026-08-14 实测）**：ffprobe 读 MP3 ID3 CHAP 按**字符串**排序（`"560"<"57"`，因 `'6'<'7'`），10 分钟稿章节被排成 `0→560→57→193...`，导致场景时间轴出现负区间 → 合成报 `Numerical result out of range`。**scene_selector.read_audio_chapters 已加 `chapters.sort(key=start)` 按数字重排**——改稿后必须 dry-run 验证时间轴（逐段 start<end 递增）再合成
+if not result["safe"]:
+    # 替换不适内容为安全表述，重新生成该段
+elif "warnings" in result:
+    # 提醒家长陪听
 
-**音频/视频自适应**（2026-08-07）：
-- `python listen.py "《小王子》10分钟"` → 默认音频
-- `python listen.py "《小王子》10分钟视频"` / "做个视频" / "短片" → 自动识别为视频
-- 视频模式：先生成音频（harness）→ 再合成实景视频（video_composer）
-- 输出类型可强制指定：`--output-type audio|video`
+### 4.4 脚本输出格式（两种输入模式）
 
-**视频验收要点**（用户偏好）：
-- 画面必须"活的"（星星闪/粒子动/Ken Burns），不能静态
-- 场景切换要连贯（同主题+交叉溶解），不要硬切跳跃
-- 金句是唯一文字，位置/时长要配音频节奏
+生成结构化讲书稿，送入 TTS 支持两种模式：
+- 纯文本：`-f script.txt`（见 5.1，默认用法，文本直接进 pipeline）
+- 结构化 JSON：`--batch jobs.json`（jobs 数组，segments 的 text 拼接为完整文本送 TTS）
 
-### 4.3 Harness 执行框架（质量门 + 输出验证门）
+
+### 4.5 Harness 执行框架（质量门 + 输出验证门）
 
 bookmadebook 采用 **Harness 控制循环**（不是"给AI知识后自由发挥"），生成全程强制校验：
 
@@ -260,8 +253,18 @@ bookmadebook 采用 **Harness 控制循环**（不是"给AI知识后自由发挥
 - 时长偏差：>10% 拦截
 - 音频完整性：可解码、时长>0
 
-**CLI 用法**：`--target-minutes` 触发质量门；生成后自动跑输出验证门。
-退出码：0=通过, 2=质量门拦截, 3=输出验证拦截。
+**CLI 用法（完整命令）**：
+```bash
+# 质量门（生成前）：--text 是讲书稿文件路径（不是 --script）
+python scripts/quality_gate.py --text 讲书稿.txt --target-minutes 10 --voice zh-CN-XiaoxiaoNeural [--book-title 书名 --style ted]
+
+# 输出验证门（生成后）：--audio 为生成的音频文件
+python scripts/output_verify.py --audio out.mp3 --target-minutes 10 [--title-sample 标题样本.wav]
+
+# 主控（串联全流程，推荐 cron/批量用）：
+python scripts/harness.py --file 讲书稿.txt --target-minutes 10 [--voice auto --style ted --output out.mp3]
+```
+**退出码**：`harness.py` 为 0=成功 / 2=质量门拦截 / 3=输出验证拦截 / 4=前置阶段失败（书籍获取等）；**单跑 quality_gate.py / output_verify.py 直接返回 0=通过 / 1=不通过**——判断时勿混用。
 
 ---
 
@@ -270,23 +273,59 @@ bookmadebook 采用 **Harness 控制循环**（不是"给AI知识后自由发挥
 - primary_lower/upper 支持 quick/standard/deep
 - middle_school/high_school/adult 支持全部
 
-### 4.2 内容安全过滤
+### 4.6 视频合成（讲书音频 → 实景动态视频）
 
-在生成脚本后、送入 TTS 前，必须过内容安全过滤：
+**设计原则（2026-08-07 用户确认，2026-08-11 升级）**：
+- 实景写实照片（Pexels 免费图库，scene_fetcher.py 下载），不用 AI 生图
+- 同主题连贯画面（如沙漠星空系列），避免场景跳跃
+- 交叉溶解过渡（xfade 1.5s），画面平滑流动
+- 文字只保留金句 + 书名，淡入淡出
+- Ken Burns 缓慢缩放（zoompan），动态不呆板
+- **文字层用 PIL 预渲染 PNG + overlay**（替代 drawtext，规避中文转义/断行/描边坑）
+- **字体用思源黑体/宋体（Noto CJK，OFL 商用合规）**，不用微软雅黑（商用侵权风险）
+- **画面 scale 必须 cover 模式**（`force_original_aspect_ratio=increase` + `crop`），防横图拉伸变形（2026-08-11 用户反馈"字体压太扁"根因）
 
-from scripts.content_filter import ContentFilter
-mode = "kids" if age_group != "adult" else "adult"
-cf = ContentFilter(mode)
-result = cf.check(script_text)
+**用法**：
+```bash
+python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --book 书名 --output out.mp4
+```
+- `--theme auto`（默认）按内容自动选主题；手动指定可用值见 `python scripts/video_composer.py --help`（auto + arctic/desert/finance/forest/gufeng/hongkong/library/ocean/palace/pasture/rain/ship/snow/starry/sunrise/tech_city/temple/warm_home/ww2，共 19 个；素材目录 assets/scenes/ 另含 guyuan，scene_selector 关键词可自动匹配）
+- `--scene-from auto|script|manual` 场景来源（标记/自动/手动）
+- `--dry-run` 只输出场景规划不合成
+- 自动提取【金句】标记 → 视频中段淡入淡出显示
+- 输出 1080×1920 竖版（小红书/抖音适配）
 
-if not result["safe"]:
-    # 替换不适内容为安全表述，重新生成该段
-elif "warnings" in result:
-    # 提醒家长陪听
+**场景自动选择（2026-08-11 新增）**：
+- 优先级：`--theme 手动 > 讲书稿【场景：XX】标记 > 自动检测（加权关键词统计）> 兜底 desert`
+- `scene_selector.py`：复用 streaming_pipeline 的 CONTENT_VOICES，**加权统计**各类关键词命中数取最高（不是首命中——张居正传"汇报"误判职场教训）
+- `scene_library.py`：本地素材库（assets/scenes/<theme>/ + ~/.cache/bookmadebook/scenes/），降级链 本地→缓存→下载→desert 兜底
+- 多章节：`【场景：palace】` 标记可切段换主题，≤3 场景/片
+- 素材清单：`assets/scenes/manifest.json`（各主题 Pexels URL，**已人工目检**：2026-08-11 清理了耳机/合影/手机等错配图）
+- **注意**：manifest 中未逐一验证的 URL 内容可能不符（盲猜 ID 教训），新主题素材需人工目检
+- **scene_fetcher.py**（2026-08-11 新增）：Pexels API 搜索下载素材（`--theme palace --download 3`），需 `PEXELS_API_KEY` 环境变量；API 返回真实图片+描述，杜绝盲猜
+- **BGM 默认策略（2026-08-11 用户定案）**：商务/干货/历史内容默认无 BGM（`LISTEN_BOOK_NOBGM=1`，纯人声+云健男声）；抒情散文/治愈类可配 BGM（assets/bgm_*.mp3 + bgm_config.json），混音后必须 loudnorm 且不盖人声
+- **战争/军事题材**：关键词自动选 ww2 主题（士兵剪影图，2026-08-13）；`--rate=-10%` 注意用等号（`-10%` 会被 argparse 误解析）
+- **⚠️ 场景地域匹配铁律（2026-08-17 教训）**：palace 场景素材是**故宫/长城（中国建筑）**，只可用于中国题材（李鸿章/王阳明/万历/曾国藩等）；**欧洲/外国人物传记（拿破仑/梵高/歌德等）严禁用 palace**——拿破仑传曾误配故宫画面被用户抓包。选场景时先想"人物是哪个国家/地域"：欧洲战争人物→ww2（战争剪影）或 starry；欧洲艺术人物→starry/library；中国帝王将相→palace；自然题材→desert/forest/ocean/snow/pasture。**选题池 tsv 每本书的场景字段必须人工核对地域匹配后再入库**
+- **船王/航运题材**：ship 主题（集装箱货轮图，2026-08-13）；**香港/政坛题材**：hongkong 主题（香港天际线图）；用户偏好：商务/传记男声用云健（zh-CN-YunjianNeural）比云扬更沉稳
+- **Pexels 城市搜索坑**：搜 "hong kong skyline" 会混入里斯本/迪拜等相似城市港图，**下载后必须 vision 目检地标**（IFC/中银/摩天轮）再入库（2026-08-13 里斯本混入教训）
+- **牧场/游牧题材**：pasture 主题（雪原羊群图，2026-08-13）；**磁性女声**：晓晓 + `--pitch=-15Hz`（低沉磁性，2026-08-13 新增 CLI 参数，注意用等号）
+- **超长视频（45 分钟，已废弃 2026-08-21，仅备查）**：日常线固定 10 分钟规格；如未来临时做长视频：主合成 timeout 已放宽到 7200s（2 小时），45 分钟≈13500 字讲书稿，可 delegate_task 并行分章节写稿再合并；压缩才用「45 分钟长视频压缩铁律」（〇章节备注），日常线禁止套用
+- **渲染提速（2026-08-13）**：zoompan 内部渲染分辨率从 2160×3840 降到 1080×1920（原来先放大 4K 再缩回 1080p = 白算 3/4 像素），45 分钟视频合成从 80-90 分钟 → 25-30 分钟，画质无差别
+- **交付分层（2026-08-13 新增 deliver.py，仅作可选工具）**：用户想要多长就生成多长，**时长不做任何限制**。deliver.py 只是辅助工具（按时长压缩/分层），是否使用由用户决定——用户要完整视频就给完整视频，要音频就给音频，要 5 分钟精华就做 5 分钟精华
+- **小红书精华版（2026-08-13）**：小红书平台限制为参考信息（单条视频限 15 分钟、普通号最佳 5 分钟、MP4/720p+/竖版9:16），**不是技能限制**——用户要发小红书时可按此做精华版，用户要完整版就做完整版，一切以用户需求为准
+- **场景标记铁律（2026-08-13 修复）**：`【场景：XX】`必须放在章节标题**正上方**；每章一个标记；相邻章节可用同主题（解析器已修：只合并 <50 字符内重复标记，不再吞段）；音频章节数与标记数不一致时按字数比例分配
+- **ffprobe 章节排序坑（2026-08-14 实测）**：ffprobe 读 MP3 ID3 CHAP 按**字符串**排序（`"560"<"57"`，因 `'6'<'7'`），10 分钟稿章节被排成 `0→560→57→193...`，导致场景时间轴出现负区间 → 合成报 `Numerical result out of range`。**scene_selector.read_audio_chapters 已加 `chapters.sort(key=start)` 按数字重排**——改稿后必须 dry-run 验证时间轴（逐段 start<end 递增）再合成
 
-### 4.3 脚本输出格式
+**音频/视频自适应**（2026-08-07）：
+- `python listen.py "《小王子》10分钟"` → 默认音频
+- `python listen.py "《小王子》10分钟视频"` / "做个视频" / "短片" → 自动识别为视频
+- 视频模式：先生成音频（harness）→ 再合成实景视频（video_composer）
+- 输出类型可强制指定：`--output-type audio|video`
 
-生成 JSON 格式的结构化脚本，segments 的 text 拼接为完整文本送入 TTS。
+**视频验收要点**（用户偏好）：
+- 画面必须"活的"（星星闪/粒子动/Ken Burns），不能静态
+- 场景切换要连贯（同主题+交叉溶解），不要硬切跳跃
+- 金句是唯一文字，位置/时长要配音频节奏
 
 ---
 
@@ -329,11 +368,44 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 
 ## 六、Step 5 — 交付用户
 
+## 六·补、小红书文案方法论（2026-08-30 引入，coreyhaines31/marketingskills 提炼）
+
+> 文案由 004 协作产出（或 AI 按本方法论撰写）。每条文案必须过本方法论门，不符合即重写。
+
+### 标题公式（3 个备选必须公式错开）
+1. 问题型：`{痛点}?`（例：「买了书翻三页就吃灰？」）
+2. 反常识型：`这本书颠覆了我对{主题}的认知`（例：「看完这本书，我发现以前读的《XXX》都白读了」）
+3. 价值型：`不{代价}也能{结果}`（例：「不熬夜也能读懂《XXX》」）
+- 产出前过「Now you can」测试：给标题前缀"现在你可以…"，读起来具体且为真 → 保留；模糊/吹牛 → 重写
+
+### 300 字三拍结构（Human Action Model）
+1. **开头 60 字**：用读者原话戳痛点（「你是不是也买了书翻了三页就吃灰」）——禁止平铺「今天给大家推荐一本书」
+2. **中间 180 字**：讲书给的愿景/新视角，**一本书只挑 1 个核心记忆点**，勿贪多
+3. **结尾 60 字**：行动路径（「完整精读在主页视频」+ 橱窗），文末固定抛互动问题（「评论区扣 1，发你全书金句清单」）
+
+### 第一行必须是钩子（四类选一）
+- 好奇心型：「我被{常见认知}骗了很久」
+- 故事型：「上周{意外}发生了」
+- 价值型：「如何{结果}（不踩{坑}）」
+- 反常识型：「冷知识：{大众做法}其实是错的」
+
+### 商品清单内容化
+用价值等式把 ≤100 元商品嵌进内容场景，而非硬挂——「书里提到的行动清单，橱窗帮你整理好了，均价 30 块」，低客单+互惠降决策门槛。
+
+### 心理学弹药（可选叠加）
+社会证明 / 稀缺紧迫（须真实）/ 损失厌恶 / 蔡格尼克（留悬念）——只用真实信息，禁止编造。
+
+### 标签两层
+固定支柱标签（#AI精读 #读书 #个人成长）+ 每本特色标签（按书主题）。
+
 | 文件类型 | 路径 | 说明 |
 |---------|------|------|
 | MP3 音频 | ~/bookmadebook/{书名}_{timestamp}.mp3 | 主交付物 |
 | Markdown 文稿 | 同目录 .md 后缀 | 用 templates/script_doc.md.j2 渲染 |
 | Obsidian 笔记 | Obsidian vault（如配置） | 自动存入 |
+| MP4 视频 | bookmadebook-output/{书名}_10min.mp4 | 交付质量门通过后交付 |
+| 小红书文案 + 海报 | 同输出目录 | 60s 开篇引流钩子，评论区引导听完整音频 |
+| 飞书上传 | lark-cli 上传 | 上传前必须过交付质量门，记录消息链接 |
 交付模式：
 - progressive（默认）：30秒内出第1章音频，后台继续生成后续章节
 - full：等全部生成完一次性交付
@@ -349,8 +421,104 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 | scripts/content_filter.py | 内容安全过滤 | Step 3 生成脚本后 |
 | scripts/streaming_pipeline.py | TTS 分段生成→拼接→章节标记 | Step 4 |
 | scripts/cache_manager.py | 三级缓存（被 pipeline 自动调用） | 内部依赖 |
+| scripts/quality_gate.py | 质量门（字数/重复/金句去重/markdown 残留） | Step 2 生成前 |
+| scripts/output_verify.py | 输出验证门（标题残留/时长偏差/可解码） | TTS 生成后 |
+| scripts/harness.py | 主控串联全流程（fail-closed） | cron/批量推荐入口 |
+| scripts/video_composer.py | 正文视频合成（Ken Burns+字卡+章节时间轴） | Step 5 |
+| scripts/scene_selector.py | 主题选择（标记+加权关键词） | Step 4 |
+| scripts/scene_library.py | 素材库（本地→缓存→下载→desert 兜底） | Step 4 |
+| scripts/scene_fetcher.py | Pexels API 素材下载（需 PEXELS_API_KEY） | Step 4 |
+| scripts/voice_design.py | Qwen3-TTS 设计音色（hist_deep_male 等） | Step 3 |
+| scripts/bgm_selector.py | BGM 选择/混音（loudnorm+alimiter） | 可选 |
+| scripts/text_layers.py | 金句字卡 PIL 预渲染 | Step 5 |
+| scripts/ted_director.py | TED 风格分段导演 | Step 2 |
+| scripts/speed_probe.py | 语速实测 | Step 2 |
+| scripts/deliver.py | 按时长压缩/分层（可选工具） | 交付 |
+| scripts/config_loader.py | 配置加载（被 pipeline 自动调用） | 内部依赖 |
 脚本间依赖关系：
 book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filter.py 检查 → streaming_pipeline.py → cache_manager.py → 输出 MP3 + 文稿
+
+---
+
+## 选题池（2026-08-28 规则；2026-08-30 与实际 plan.tsv 对齐）
+
+- **数据源**：`plan.tsv`（列：书名 | 主题 | 声音 | 视频场景 | 状态(待用/已用) | 使用日期）。当前池 23 本 = 惬意生活 11 + 历史传记 12；待用 9 本 = 惬意 5 + 历史 4。
+- **配额规则（2026-08-28 用户定案）**：惬意生活 80% / 历史传记 20%（解忧杂货店类反响好，调高惬意占比）；循环节奏每 5 次 = 惬意×4 + 历史×1。
+- **声音/场景映射**：惬意生活 = husky_tender（温柔沙哑）+ warm_home/library/gufeng/guyuan/pasture；历史传记 = hist_deep_male + palace/ww2。（2026-08-24 起已用行由晓晓逐步切换为 husky_tender，以 TSV 实际行为准）
+- **选书脚本 pick.py 位于生产 cron 环境，不在本仓库**（仓库与技能目录均无该文件，实际路径以 cron 部署为准）；若在 cron 环境验证选池，**注意运行即消费（测试也消费）**——直接 grep TSV 待用行或 pick.log，勿实跑。
+- 书单扩充/调整一律以 plan.tsv 实际行为准（本文不再列举书目清单，避免与 TSV 脱节）。
+
+---
+
+## 交付质量门（FAIL/PASS/验证清单，2026-08-29 ECC 拆解借鉴）
+
+> 交付前逐项打勾，任何一项 FAIL 即禁止交付（重做后再验）。结构借鉴 ECC security-review 三段式：FAIL（禁止做的事）→ PASS（必须做的事）→ 验证清单（逐项打勾）。
+
+### 1. 素材审核（禁真人/禁现代城市）
+
+#### FAIL：禁止
+- ❌ 真人/人物素材（汉服人物、人像、有人物的场景）——用户明确要求画面纯景色
+- ❌ 远景含现代城市/高楼/公路/电线（Pexels 高清图远景常带城市，仅看缩略图会漏）
+- ❌ 地域错配（欧洲人物配故宫 palace 素材——拿破仑传曾误配故宫被抓包）
+
+#### PASS：必须
+- ✅ 园林/山水/竹林/古建/静物（无人物）才可用
+- ✅ 素材下载后拼图目检（PIL 4×3 缩略图 + vision 逐张确认无真人/现代元素）再入库
+- ✅ 选场景先想人物国家/地域：中国帝王将相→palace；欧洲战争→ww2；欧洲艺术→starry/library；自然→desert/forest/ocean/snow/pasture
+
+#### 验证清单
+- [ ] 每张入库素材 vision 目检：无真人、无现代城市
+- [ ] 远景放大确认（不止看缩略图）
+- [ ] 选题池 tsv 场景字段与书目地域匹配
+
+### 2. 视频规格（1080p 红线/像素格式/faststart）
+
+#### FAIL：禁止
+- ❌ `scale=720p` 压缩（2026-08-26《雅舍小品》模糊根因——agent 误套 45 分钟 x265+720p 命令）
+- ❌ x265 编码（10 分钟日常线）
+- ❌ 输出 MP4 不带 `-movflags +faststart`（moov atom 在末尾→lark-cli 报损坏、ffprobe 误判）
+- ❌ 非 `-pix_fmt yuv420p`（默认可能 yuvj444p，飞书/手机无法解码）
+
+#### PASS：必须
+- ✅ `-c:v libx264 -crf 36 -preset faster -c:a aac -b:a 96k -pix_fmt yuv420p -movflags +faststart`
+- ✅ 超过 20MB 可 crf38，但**分辨率永远保持 1080×1920**
+
+#### 验证清单
+- [ ] `ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0` 返回 `1080,1920`
+- [ ] `ffprobe -v error -select_streams v -show_entries stream=pix_fmt -of csv=p=0` 返回 `yuv420p`
+- [ ] `ffprobe -v error -show_entries format=duration` 可读（未损坏）
+- [ ] 文件大小 <30MB（飞书限制）
+
+### 3. 金句与文字（真实原文/无乱码）
+
+#### FAIL：禁止
+- ❌ 编造金句（无出处的句子冒充书中原话——004 初稿曾犯，008 已修正机制）
+- ❌ drawtext 写 `\\n` 字面量（双反斜杠=渲染成 "n" 乱码——《浮生六记》乱码根因）
+
+#### PASS：必须
+- ✅ 金句=书中原句或凝练提炼，可查证
+- ✅ 字卡/开篇渲染后**抽帧 vision 验证**无乱码再交付（`ffmpeg -ss 25 -i out.mp4 -frames:v 1 check.jpg`）
+
+#### 验证清单
+- [ ] 金句字卡与讲书稿一致（无编造）
+- [ ] 抽帧 vision 目检文字无乱码/无缺字
+- [ ] 引文修正机制生效（004 初稿 → 008 拦截替换可查证原文）
+
+### 4. 音频响度（-16 LUFS）
+
+#### FAIL：禁止
+- ❌ loudnorm 后 I 值 < -17 LUFS 或 > -15.4（偏轻/偏炸，目标 -16±0.6）
+- ❌ BGM 混音后盖过人声（人声不清晰即重混）
+- ❌ 改音量参数不 bump 缓存指纹版本号（vol:v2 机制，否则旧缓存不失效）
+
+#### PASS：必须
+- ✅ 目标响度 -16 LUFS（EBU R128，TP≤-1.5，LRA 11）
+- ✅ 三处 loudnorm 生效（concat 输出/mix_bgm 混音后/video_composer 兜底）
+- ✅ 改音量参数必须 bump 缓存指纹版本号（vol:v2 机制）
+
+#### 验证清单
+- [ ] `ffmpeg -i file -af ebur128 -f null - 2>&1 | grep "I:"` 返回 -16±0.6
+- [ ] BGM 混音后不盖人声（人声仍清晰可辨）
 
 ---
 
@@ -363,6 +531,11 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 | TTS 连接失败 | 重试2次，仍失败则提示检查网络 |
 | 音频拼接失败 | 检查 ffmpeg 安装，提示用户 |
 | 缓存命中 | 跳过生成，直接使用缓存文件 |
+| MP4 上传报「moov atom not found」 | 重压必须带 `-movflags +faststart`，ffprobe 验证可读再传 |
+| 播放器无法解码/打开出错 | 检查 pix_fmt，重压 `-pix_fmt yuv420p` |
+| 可灵生成失败（余额不足 code 1102 等） | 自动降级纯实景开篇，不影响正文与交付 |
+| 视频 >30MB 飞书拒收 | crf 36→38 重压，分辨率保持 1080×1920 |
+| 场景时间轴报 Numerical result out of range | 确认章节按 start 数字排序（chapters.sort），dry-run 验证时间轴 |
 
 ---
 
@@ -379,13 +552,22 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 
 ## 十、文件结构
 
+```
 bookmadebook/
 ├── SKILL.md                    ← 本文件（AI执行指南）
 ├── config.yaml                 ← 全局配置（【常用】+【高级】标记）
-├── references/EXECUTION_GUIDE.md  ← 详细执行参考
-├── prompts/                    ← 精读脚```
-## 九、配置文件详见 config.yaml（带【常用】/【高级】标记），核心关注：- age_group.default — 默认年龄段- scene.default — 默认场景- delivery_mode.mode — 交付模式- tts.default_engine — TTS 引擎- content_safety.mode — 内容安全模式详细年龄段参数、场景参数见 references/EXECUTION_GUIDE.md。## 十、文件结构bookmadebook/├── SKILL.md                    ← 本文件（AI执行指南）├── config.yaml                 ← 全局配置（【常用】+【高级】标记）├── references/EXECUTION_GUIDE.md  ← 详细执行参考├── prompts/                    ← 精读脚本生成模板（按年龄段+深度）├── templates/                  ← 输出文稿模板（Jinja2）└── scripts/                    ← 工具脚本（不要修改）    ├── book_info.py            ← 书籍公开信息获取    ├── book_fetcher.py         ← 书籍全文获取（公版书）    ├── content_filter.py       ← 内容安全过滤    ├── streaming_pipeline.py   ← TTS分段→拼接→章节标记    └── cache_manager.py        ← 三级缓存（被pipeline自动调用）
----
+├── listen.py / make_book.py    ← 入口脚本（音频/视频自适应，--output-type audio|video）
+├── plan.tsv                    ← 每日选题池（待用/已用状态 + 使用日期）
+├── assets/                     ← 素材：scenes/<theme>/（20 主题目录）+ bgm_*.mp3 + manifest.json
+├── prompts/                    ← 讲书稿模板（children/teen + 深度/速览/TED/章节小结）
+├── templates/                  ← 输出文稿模板（Jinja2）
+├── references/                 ← EXECUTION_GUIDE.md / voice-design.md
+└── scripts/                    ← 工具脚本（不要修改，共 21 个）
+    ├── quality_gate.py / output_verify.py / harness.py          ← 质量门 + 验证门 + 主控
+    ├── streaming_pipeline.py / speed_probe.py / voice_design.py / bgm_selector.py  ← TTS 链
+    ├── video_composer.py / scene_selector.py / scene_library.py / scene_fetcher.py / text_layers.py / ted_director.py  ← 视频链
+    ├── book_info.py / book_fetcher.py / content_filter.py / cache_manager.py / config_loader.py / deliver.py
+    └── gen_cosy.py / tts_cosy.py                                ← 设计音色 TTS（Qwen3）
+```
 
 > **AIGC 合规声明**：本技能生成的内容由 AI 生成，请遵循相关法律法规及《人工智能生成合成内容标识办法》使用与传播。生成音频请在开头/结尾标注"本音频由AI生成"。
-
