@@ -367,11 +367,13 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             qk = f"quote_{qi}"
             ts = _clip_display_start(quote_times[qi], audio_dur)
             is_last = (qi == len(quotes) - 1)
+            # 短版（≤90s）金句显示 6s（3-4 句字卡不重叠）；长版 12s
+            quote_hold = 6.0 if audio_dur <= 90 else 12.0
             # 末句金句若靠近片尾则保持到结束（升华收束），否则也限时淡出防霸屏
             if is_last and audio_dur - ts <= 18:
                 te = audio_dur
             else:
-                te = min(audio_dur, ts + 12)
+                te = min(audio_dur, ts + quote_hold)
             if is_last and audio_dur - ts <= 18:
                 fade_out = ""
             elif te - ts > 0.9:
@@ -409,6 +411,16 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         text_parts.append(f"[{prev_v}][wm]overlay=0:0[wm_out]")
         prev_v = "wm_out"
 
+    # ⑦.5 结尾 CTA 引导帧（2026-08-30：片尾最后 4s 淡入，蔡格尼克+互动）
+    # 只对短版（≤90s）启用——长版正片末尾是金句升华，不叠加引导
+    if "cta" in png_map and audio_dur <= 90:
+        c_idx = png_map["cta"]
+        c_st = max(0.0, audio_dur - 4.0)
+        text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
+                          f"fade=t=in:st={c_st}:d=0.5:alpha=1[cta]")
+        text_parts.append(f"[{prev_v}][cta]overlay=0:0[cta_out]")
+        prev_v = "cta_out"
+
     # ⑧ AI 生成角标（合规标识，常驻最上层）
     if "ai_badge" in png_map:
         a_idx = png_map["ai_badge"]
@@ -445,6 +457,8 @@ def main():
     ap.add_argument("--book", default="", help="书名（封面文字）")
     ap.add_argument("--author", default="", help="作者")
     ap.add_argument("--fast", action="store_true", help="快速模式：crf 26（默认 preset faster；长视频/预览用）")
+    ap.add_argument("--sfx", default="none", choices=["none", "tick"],
+                    help="音效锚点（2026-08-30）：none=纯人声（默认）；tick=开场+每20s 低频柔和钟声（-36dB，听觉锚点不喧宾夺主）")
     args = ap.parse_args()
 
     def _abs(p: str) -> str:
@@ -527,6 +541,28 @@ def main():
                 "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
                 "-b:a", "128k", "-movflags", "+faststart",
                 "-shortest", args.output]
+        # 音效锚点（2026-08-30 可选，--sfx tick：开场+每20s 一个低频柔和钟声）
+        # 默认 none=纯人声红线；音量 -36dB 以下，仅作听觉锚点不喧宾夺主
+        if getattr(args, "sfx", "none") == "tick":
+            n_tick = max(1, int(audio_dur / 20))
+            sfx_parts, sfx_mix = [], []
+            for k in range(n_tick):
+                delay_ms = int(k * 20 * 1000)
+                sfx_parts.append(
+                    f"sine=frequency=65:duration=0.12,"
+                    f"volume=0.016,adelay={delay_ms}|{delay_ms}[sfx{k}]")
+                sfx_mix.append(f"[sfx{k}]")
+            sfx_filter = ";".join(sfx_parts + [
+                f"{''.join(sfx_mix)}amix=inputs={n_tick}:normalize=0,"
+                f"lowpass=f=400[sfxmix]"])
+            cmd2 = ["ffmpeg", "-y", "-v", "error", "-i", str(video_mp4),
+                    "-i", args.audio, "-filter_complex",
+                    f"{sfx_filter};[1:a]loudnorm=I=-16:TP=-1.5:LRA=11[am];"
+                    f"[am][sfxmix]amix=inputs=2:normalize=0[aout]",
+                    "-map", "0:v:0", "-map", "[aout]",
+                    "-map_metadata", "-1", "-c:v", "copy", "-c:a", "aac",
+                    "-b:a", "128k", "-movflags", "+faststart",
+                    "-shortest", args.output]
         r2 = subprocess.run(cmd2, capture_output=True, text=True, timeout=120)
         if r2.returncode != 0:
             print(f"❌ 音频混入失败: {r2.stderr[-300:]}")

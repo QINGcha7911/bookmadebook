@@ -167,6 +167,23 @@ def render_progress_track() -> Image.Image:
     return img
 
 
+def render_cta(lines: list, font_size: int = 56) -> Image.Image:
+    """⑨ 结尾 CTA 引导帧（2026-08-30 引入，蔡格尼克+互动权重×4）
+    lines: 如 ["完整版精读在主页", "评论区报书名，帮你点单"]
+    竖向排列居中，白字黑描边，y 中心 ≈980"""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    font = get_font("bold", font_size)
+    total_h = len(lines) * (font_size + 24)
+    y = 980 - total_h // 2
+    for ln in lines:
+        x = _center_x(d, ln, font)
+        d.text((x, y), ln, font=font, fill=(255, 255, 255, 255),
+               stroke_width=4, stroke_fill=(0, 0, 0, 200))
+        y += font_size + 24
+    return img
+
+
 def render_progress_fill(accent: tuple = (216, 176, 74)) -> Image.Image:
     """⑥ 进度条填充层：金色，ffmpeg 端用 crop 表达式按时间增长"""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -250,6 +267,10 @@ def render_all(book_title: str, quotes: list, chapters: list,
     # ⑧ AI 生成角标（合规标识）
     layers["ai_badge"] = tmpdir / "ai_badge.png"
     render_ai_badge().save(layers["ai_badge"])
+
+    # ⑨ 结尾 CTA 引导帧（2026-08-30：完整版预告 + 评论点单）
+    layers["cta"] = tmpdir / "cta.png"
+    render_cta(["完整版精读在主页", "评论区报书名，帮你点单"]).save(layers["cta"])
 
     return layers
 

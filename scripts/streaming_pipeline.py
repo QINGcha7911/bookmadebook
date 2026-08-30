@@ -591,6 +591,11 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     seg_rate = "-3%"
                     seg_volume = "+3%"
                     pause_before = max(pause_before, 0.6)
+                # 开场自动提速（2026-08-30：3s 判定优化——开场 15s 要紧迫感）
+                # 仅第一块、且未标任何情绪/金句/放慢时生效，避免覆盖写稿人意图
+                if (i == 0 and seg_rate == rate
+                        and not b.is_golden_line and not b.is_slow):
+                    seg_rate = "+8%"
             # L2 缓存检查（含风格指纹：volume/pitch 必须传入，否则不同情绪块互相命中）
             l2_key = f"{seg}|{seg_voice}|{seg_rate}|{seg_volume}|{seg_pitch}"
             l2_hit = cache_mgr.get_l2(seg, seg_voice, seg_rate,

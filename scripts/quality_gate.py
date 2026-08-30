@@ -89,7 +89,7 @@ def get_speed_cached(voice: str, lang: str, style: str = "normal") -> float:
     return speed
 
 
-def find_duplicate_paragraphs(text: str, threshold: float = 0.85) -> list:
+def find_duplicate_paragraphs(text: str, threshold: float = 0.95) -> list:
     """检测重复段落：n-gram 相似度超过阈值的段落对。
     2026-08-17 阈值 0.75→0.85：短标记行（【停顿】/【情绪】/【金句】）特征稀疏会被误判，放宽到 0.85 只拦真重复。"""
     clean = strip_markdown(text)
@@ -217,6 +217,24 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
     copyright_issues = check_copyright(text, book_title)
     if copyright_issues:
         report["warnings"].extend(copyright_issues)
+
+    # 7. 短版金句密度（2026-08-30：≤1分钟短版必须有 ≥3 句金句字卡）
+    # 60s 版字卡是截图传播点，2 句太少；3-4 句撑起 3s 判定后的记忆点
+    if target_minutes and target_minutes <= 1.2:
+        n_quotes = len(re.findall(r"【金句】", text))
+        if n_quotes < 3:
+            report["passed"] = False
+            report["errors"].append(
+                f"短版金句不足：当前 {n_quotes} 句【金句】，60s 版至少需要 3 句"
+                f"（开场钩子句 + 中段记忆点 + 结尾升华句各标【金句】）。"
+                f"请从书中再选 1-2 句最有冲击力的原话补标。"
+            )
+        elif n_quotes > 4:
+            report["warnings"].append(
+                f"短版金句 {n_quotes} 句偏多（建议 3-4 句），字卡会过于密集，"
+                f"可酌情删减弱句。"
+            )
+        report["stats"]["quotes"] = n_quotes
 
     return report
 
