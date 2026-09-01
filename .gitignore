@@ -3,3 +3,7 @@
 # 生成产物
 listen-book-output/
 bookmadebook-output/
+# 目检临时拼图（不入库）
+assets/scenes/*/video/verify/
+# lark-cli 缓存
+.lark-cli/

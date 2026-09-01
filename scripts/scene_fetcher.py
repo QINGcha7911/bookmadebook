@@ -34,6 +34,14 @@ THEME_KEYWORDS = {
     "snow": "snow mountain winter",
     "tech_city": "city night neon lights",
     "temple": "chinese temple ancient architecture",
+    "arctic": "arctic aurora snow landscape",
+    "ww2": "ww2 memorial tank silhouette battlefield",
+    "ship": "container ship cargo port",
+    "hongkong": "hong kong skyline victoria harbour",
+    "pasture": "pasture sheep meadow",
+    "finance": "stock market chart screen",
+    "gufeng": "chinese garden ancient architecture",
+    "guyuan": "ancient temple red wall trees",
 }
 
 
@@ -78,10 +86,12 @@ def search_photos(query: str, per_page: int = 10,
     return results
 
 
-def search_videos(query: str, per_page: int = 5) -> list:
+def search_videos(query: str, per_page: int = 5, orientation: str = "portrait") -> list:
     """搜索视频（实景动态素材），返回 [{id, url, duration}]"""
     key = get_key()
     url = f"{API_BASE}/videos/search?query={urllib.parse.quote(query)}&per_page={per_page}"
+    if orientation:
+        url += f"&orientation={orientation}"
     req = urllib.request.Request(
         url,
         headers={"Authorization": key,
@@ -112,11 +122,76 @@ def download(url: str, dst: Path) -> bool:
     """下载图片到本地（curl + UA 头，Pexels CDN 要求 UA 否则 403）"""
     dst.parent.mkdir(parents=True, exist_ok=True)
     r = subprocess.run(
-        ["curl", "-sL", "-f", "--max-time", "40",
+        ["curl", "-sL", "-f", "--max-time", "90",
          "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0",
          "-o", str(dst), url],
         capture_output=True, timeout=90)
     return r.returncode == 0 and dst.exists() and dst.stat().st_size > 30000
+
+
+def verify_video(path: Path) -> tuple:
+    """ffprobe 校验视频素材：竖版(宽<=高)、高度>=1080、时长>=3s。
+    音频轨仅作 warning（合成时 -map 0:v 不 map 视频音轨，无影响）。
+    返回 (ok, reasons, meta)。"""
+    reasons, meta = [], {}
+    r = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries",
+         "stream=codec_type,width,height:format=duration",
+         "-of", "json", str(path)],
+        capture_output=True, text=True, timeout=30)
+    if r.returncode != 0:
+        return False, ["无法解析"], meta
+    data = json.loads(r.stdout or "{}")
+    streams = data.get("streams", [])
+    v = next((s for s in streams if s.get("codec_type") == "video"), None)
+    if not v:
+        return False, ["无视频流"], meta
+    w, h = int(v.get("width", 0)), int(v.get("height", 0))
+    dur = float(data.get("format", {}).get("duration", 0) or 0)
+    meta = {"w": w, "h": h, "dur": dur}
+    if h < 1080:
+        reasons.append(f"高度不足1080({h})")
+    if w > h:
+        reasons.append(f"非竖版({w}x{h})")
+    if dur < 3:
+        reasons.append(f"时长过短({dur:.1f}s)")
+    meta["audio"] = any(s.get("codec_type") == "audio" for s in streams)
+    return (not reasons), reasons, meta
+
+
+def make_contact_sheet(video: Path, out_png: Path, cols: int = 4, rows: int = 3) -> None:
+    """ffmpeg 均匀抽 cols*rows 帧 + PIL 拼 4×3 缩略图，供 vision 目检真人/现代城市。"""
+    from PIL import Image
+    dur = 0.0
+    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                        "format=duration", "-of", "csv=p=0", str(video)],
+                       capture_output=True, text=True, timeout=30)
+    if r.stdout.strip():
+        dur = float(r.stdout.strip())
+    if dur <= 0:
+        return
+    out_png.parent.mkdir(parents=True, exist_ok=True)
+    frames, n = [], cols * rows
+    for k in range(n):
+        t = (k + 0.5) / n * dur
+        tmp = out_png.parent / f"_f{k}_{video.stem}.png"
+        subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-ss", f"{t:.2f}", "-i", str(video),
+             "-frames:v", "1", "-vf",
+             "scale=270:480:force_original_aspect_ratio=increase,crop=270:480",
+             str(tmp)], capture_output=True, timeout=30)
+        if tmp.exists():
+            frames.append(tmp)
+    if not frames:
+        return
+    imgs = [Image.open(p) for p in frames]
+    w, h = imgs[0].size
+    canvas = Image.new("RGB", (w * cols, h * rows), "black")
+    for idx, im in enumerate(imgs):
+        canvas.paste(im, ((idx % cols) * w, (idx // cols) * h))
+    canvas.save(out_png)
+    for p in frames:
+        p.unlink(missing_ok=True)
 
 
 def main():
@@ -126,6 +201,7 @@ def main():
     ap.add_argument("--orientation", default="portrait", help="portrait/landscape")
     ap.add_argument("--download", type=int, default=0, help="下载前 N 张到本地")
     ap.add_argument("--video", action="store_true", help="搜视频")
+    ap.add_argument("--verify", action="store_true", help="下载后 ffprobe 校验（竖版/≥1080/时长），不合格自动跳过补位；并抽帧拼 4×3 缩略图供 vision 目检")
     ap.add_argument("--json", action="store_true", help="输出 JSON")
     ap.add_argument("--size", default="w=2160", help="下载尺寸参数")
     ap.add_argument("--out", help="下载目录（默认 assets/scenes/<theme>）")
@@ -136,8 +212,27 @@ def main():
         print("需要 --theme 或 --search")
         sys.exit(1)
 
+    # 仅复核已有素材（不联网）：--verify 且不下载
+    if args.verify and not args.download:
+        tdir = Path(args.out) if args.out else \
+            Path(__file__).resolve().parent.parent / "assets" / "scenes" / (args.theme or "")
+        vdir = tdir / "video"
+        if not vdir.is_dir():
+            print(f"❌ 无视频目录: {vdir}")
+            sys.exit(1)
+        print(f"🔎 复核已有素材: {vdir}")
+        bad = 0
+        for v in sorted(vdir.glob("*.mp4")):
+            ok, reasons, meta = verify_video(v)
+            status = "✅" if ok else f"❌ {'/'.join(reasons)}"
+            if not ok:
+                bad += 1
+            print(f"  {status} {v.name} [{meta.get('w','?')}x{meta.get('h','?')} {meta.get('dur',0):.0f}s]")
+        print(f"✅ 复核完成: 不合格 {bad} 个")
+        return
+
     if args.video:
-        results = search_videos(query, per_page=max(args.download, 5))
+        results = search_videos(query, per_page=max(args.download, 5), orientation=args.orientation)
     else:
         results = search_photos(query, per_page=max(args.download, 10))
 
@@ -155,24 +250,51 @@ def main():
         if args.out:
             tdir = Path(args.out)
         elif args.theme:
-            tdir = Path("/root/.hermes/skills/productivity/bookmadebook/assets/scenes") / args.theme
+            tdir = Path(__file__).resolve().parent.parent / "assets" / "scenes" / args.theme
         else:
             print("下载需要 --theme 或 --out")
             sys.exit(1)
         tdir.mkdir(parents=True, exist_ok=True)
+        vdir = tdir / "video" if args.video else tdir
+        vdir.mkdir(parents=True, exist_ok=True)
         got = 0
-        for i, r in enumerate(results[:args.download]):
-            dst = tdir / f"{i+1:02d}.jpg"
-            # 高清版：替换 URL 参数（缩略图 → 2160 宽）
-            url = re.sub(r"[?&](w|h)=\d+", "", r["url"])
-            url = url + (f"?{args.size}" if "?" not in url else f"&{args.size}")
-            if download(url, dst):
-                got += 1
-                print(f"  ✅ {args.theme}/{i+1:02d}.jpg  {r.get('alt','')[:40]}")
+        idx = 0
+        for i, r in enumerate(results):
+            if got >= args.download:
+                break
+            if args.video:
+                dst = vdir / f"{idx+1:02d}.mp4"
+                url = r["url"]
+                desc = f"{r.get('duration')}s"
             else:
-                print(f"  ⚠️ {i+1} 下载失败")
-        print(f"✅ 下载完成: {got}/{args.download} → {tdir}")
-
+                dst = tdir / f"{idx+1:02d}.jpg"
+                url = re.sub(r"[?&](w|h)=\d+", "", r["url"])
+                url = url + (f"?{args.size}" if "?" not in url else f"&{args.size}")
+                desc = r.get("alt", "")[:40]
+            if not download(url, dst):
+                print(f"  ⚠️ #{i+1} 下载失败，跳过")
+                continue
+            if args.video and args.verify:
+                ok, reasons, meta = verify_video(dst)
+                if not ok:
+                    print(f"  ❌ #{i+1} {dst.name} 不合格（{'/'.join(reasons)}），自动补位")
+                    dst.unlink(missing_ok=True)
+                    continue
+                audio_note = " 带音频轨(合成不map)" if meta.get("audio") else ""
+                print(f"  ✅ #{i+1} {dst.name} [{meta['w']}x{meta['h']} {meta['dur']:.0f}s]{audio_note}")
+            else:
+                print(f"  ✅ #{i+1} {dst.name}  {desc}")
+            idx += 1
+            got += 1
+        if args.video and args.verify:
+            verify_dir = vdir / "verify"
+            print(f"🔎 生成 4×3 缩略图（vision 目检真人/现代城市）→ {verify_dir}")
+            for v in sorted(vdir.glob("*.mp4")):
+                sheet = verify_dir / f"{v.stem}_contact.png"
+                make_contact_sheet(v, sheet)
+                print(f"  🖼️ {sheet.name}  {'✅' if sheet.exists() else '❌'}")
+            print("⚠️ 目检要求：逐张确认无真人/无现代城市后再入库；不合格删除对应 mp4")
+        print(f"✅ 下载完成: {got}/{args.download} → {vdir}")
 
 if __name__ == "__main__":
     import urllib.parse  # noqa: 延迟导入避免顶层依赖

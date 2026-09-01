@@ -257,6 +257,30 @@ def _clip_display_start(start, audio_dur: float) -> float:
     return max(0.0, min(float(start), audio_dur - 1.0))
 
 
+def resolve_video_items(items: list) -> list:
+    """视频真实化：优先使用 <theme>/video/*.mp4 实拍素材。
+    输入 [(img, dur)] → 输出 [(path, dur, kind)]，kind ∈ {"image","video"}。
+    同一主题多段时按顺序轮流取用视频文件；无 video/ 目录则回退静态图。
+    """
+    _counter = {}
+    out = []
+    for item in items:
+        if len(item) >= 3:
+            out.append(item)  # 已解析，幂等
+            continue
+        img, dur = item
+        vdir = Path(img).parent / "video"
+        vids = sorted(vdir.glob("*.mp4")) if vdir.is_dir() else []
+        if vids:
+            key = str(vdir)
+            idx = _counter.get(key, 0) % len(vids)
+            _counter[key] = idx + 1
+            out.append((vids[idx], dur, "video"))
+        else:
+            out.append((img, dur, "image"))
+    return out
+
+
 def make_filter(plan, audio_dur: float, quotes: list[str],
                 book_title: str, author: str = "", script_text: str = "",
                 audio: str = ""):
@@ -265,33 +289,49 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     audio: 有 CHAP 时用于对齐章节/金句时间"""
     items = plan.images_with_durations() if hasattr(plan, "images_with_durations") else \
         [(p, audio_dur / len(plan)) for p in plan]
+    items = resolve_video_items(items)
     n = len(items)
     # 交叉溶解时长动态化（2026-08-30 修复短版冻结 bug）：
     # 固定 1.5s 在短版（每图 1.3-1.6s）会导致 offset=total-XFADE 为负 → xfade 冻结。
     # 取 min(1.5, 最短图时长*0.5)，保证 offset 恒为正；长版（每图 10s+）不受影响。
-    min_dur = min(d for _, d in items) if items else audio_dur
+    min_dur = min(d for _, d, _ in items) if items else audio_dur
     xfade_dur = min(XFADE_DUR, max(0.4, min_dur * 0.5))
     parts = []
     # 每张图 Ken Burns 缩放（独立时长）；非 1080×1920 先归一化，再降采样给 zoompan
     # 缩放速度按段时长分配：zoom 从 1.0→1.15 铺满整段（on=输出帧号），避免"4秒后静止"
     # 输入用单帧（不用 -loop 1 循环流），d 扩到 dur+xfade_dur 保证 xfade 重叠区帧数，
     # 避免循环流输入被 zoompan 逐帧放大（N 输入帧 × d 输出帧 = 数百倍冗余计算）
-    for i, (img, dur) in enumerate(items):
+    for i, item in enumerate(items):
+        img, dur, kind = item
         zoom_in = (i % 2 == 0)
-        zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
-                 if zoom_in else
-                 f"max(1.15-0.15*on/{max(int(dur*FPS),1)},1.0)")
-        normalize = ("" if _image_is_1080x1920(str(img)) else
-                     f"scale={W}:{H}:force_original_aspect_ratio=increase,"
-                     f"crop={W}:{H},")
-        parts.append(
-            f"[{i}:v]{normalize}scale={ZOOM_W}:{ZOOM_H},"
-            f"zoompan=z='{zexpr}':"
-            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
-            f"d={int((dur+xfade_dur)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
-            f"scale={W}:{H}:flags=lanczos,"
-            f"trim=duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
-        )
+        if kind == "video":
+            # 实拍视频：cover 裁切 1080×1920 + fps 对齐 + 轻微 zoom(1.0→1.05)
+            # + 段起点偏移（第 i 段从素材 i*3s 起播，配合 -stream_loop -1 循环取帧）
+            start = i * 3
+            parts.append(
+                f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H},fps={FPS},scale={ZOOM_W}:{ZOOM_H},"
+                f"zoompan=z='min(1.0+0.05*on/{max(int(dur*FPS),1)},1.05)':"
+                f"d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
+                f"s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
+                f"scale={W}:{H}:flags=lanczos,"
+                f"trim=start={start}:duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
+            )
+        else:
+            zexpr = (f"min(1.0+0.15*on/{max(int(dur*FPS),1)},1.15)"
+                     if zoom_in else
+                     f"max(1.15-0.15*on/{max(int(dur*FPS),1)},1.0)")
+            normalize = ("" if _image_is_1080x1920(str(img)) else
+                         f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+                         f"crop={W}:{H},")
+            parts.append(
+                f"[{i}:v]{normalize}scale={ZOOM_W}:{ZOOM_H},"
+                f"zoompan=z='{zexpr}':"
+                f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
+                f"d={int((dur+xfade_dur)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
+                f"scale={W}:{H}:flags=lanczos,"
+                f"trim=duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
+            )
     # xfade 交叉溶解（累计可变时长）
     # 2026-08-30 修复：total 必须 += dur（不能 -= xfade）。
     # xfade 输出时长 = offset + B总长，而 offset = total - xfade 已含过渡扣除，
@@ -514,10 +554,11 @@ def main():
         print("🖼️ 加载本地素材库...")
         import scene_library
         plan = scene_library.load_plan_images(plan)
-        items = plan.images_with_durations()
-        images = [p for p, _ in items]
-        durations = [d for _, d in items]
-        print(f"✅ 使用 {len(images)} 张素材图")
+        items = resolve_video_items(plan.images_with_durations())
+        images = [p for p, _, _ in items]
+        durations = [d for _, d, _ in items]
+        n_vid = sum(1 for _, _, k in items if k == "video")
+        print(f"✅ 使用 {len(images)} 段素材（实拍视频 {n_vid} 段 + 静态图 {len(images)-n_vid} 段）")
 
         # 视频帧流（无音频）
         flt, png_inputs = make_filter(plan, audio_dur, quotes, book_title,
@@ -527,8 +568,12 @@ def main():
         # 图片输入用单帧（Ken Burns 由 zoompan 的 d 参数生成帧序列），
         # 不用 -loop 1 循环流——循环流会让 zoompan 对每个输入帧都输出 d 帧，
         # 产生 N×d 倍冗余中间帧（实测 175 输入帧 × d=175 = 30,625 帧）
-        for img, dur in items:
-            cmd += ["-i", str(img)]
+        for path, _dur, kind in items:
+            if kind == "video":
+                # 短视频循环铺满段长（trim 截断）；图片保持单帧输入
+                cmd += ["-stream_loop", "-1", "-i", str(path)]
+            else:
+                cmd += ["-i", str(path)]
         # 文字层 PNG 输入
         for png in png_inputs:
             cmd += ["-loop", "1", "-t", str(audio_dur), "-i", str(png)]

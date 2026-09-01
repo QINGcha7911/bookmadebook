@@ -30,7 +30,7 @@ requires: python>=3.10
 > **正文画面策略（008 已确认，2026-08-18）**：正文 = **实景素材合成（默认，assets/scenes Ken Burns）** + **可灵核心场景（可选 ≤3 段，5 秒/段）** + **金句字卡（必配）**。60 秒开篇用可灵为主。
 > **v2.3.1 免费版默认（2026-08-18 用户定案）**：开篇+正文**全部实景素材 Ken Burns**+金句字卡+本地口播=**0 元**；**可灵仅爆款/重点书用（≤2 段，20-40 元，非必需）**。cron prompt 已更新（免费版默认，可灵失败自动退回纯实景）。
 > **⚠️ 开篇 60s 画面风格自适应（v2.3.1 补充，2026-08-18 用户定案）**：按讲书稿内容类型判定——**历史传记/战争类=黑白（灰度化）**，**惬意抒情/治愈类=彩色**。判定=讲书稿历史关键词检测（朝代/年号/皇帝/战役/战争/列传/史/起义/王朝等），出现即历史类→开篇加灰度化（hue=s=0 或 format=gray）；无=治愈类→彩色。正文画面风格与开篇一致。
-> **⚠️ 压缩命令必须带 `-movflags +faststart`（2026-08-21 早班/晚班两次踩坑）**：ffmpeg 压缩/拼接后 moov atom 默认在文件末尾，lark-cli 上传飞书会报「moov atom not found」且 ffprobe 误判损坏——agent 会陷入 65s 循环压缩但每次都"损坏"。任何 ffmpeg 输出 MP4 一律加 `-movflags +faststart`；压缩后必须 `ffprobe -v error -show_entries format=duration out.mp4` 验证可读再上传。混编码 concat（h264+hevc）禁止 `-c copy`（会损坏），必须 `-filter_complex concat` 统一重编码。
+> **⚠️ 压缩命令必须带 `-movflags +faststart`（2026-08-21 早班/晚班两次踩坑）**：ffmpeg 压缩/拼接后 moov atom 默认在文件末尾，lark-cli 上传飞书会报「moov atom not found」且 ffprobe 误判损坏——agent 会陷入 65s 循环压缩但每次都"损坏"。任何 ffmpeg 输出 MP4 一律加 `-movflags +faststart`；压缩后必须 `ffprobe -v error -show_entries format=duration out.mp4` 验证可读再上传。拼接禁止 `-c copy`（会损坏），必须 `-filter_complex concat` 统一重编码——**不只 h264+hevc 混编码会坏，同编码但 crf/profile 不同也会坏**（实测同 hevc 不同 crf 拼出花屏 `cu_qp_delta out of range`），开篇+正文拼接务必统一参数。（video_composer.py 已内置规避——全走 filter_complex 无 `-c copy` 路径；仅手写脚本/临时拼接注意）
 > **⚠️ 开篇 60s 画面切换铁律（2026-08-21 用户反馈教训）**：①**禁止单主题素材**——全部 warm_home 家居素材色调相似，切换视觉不可见，用户反馈"没有画面切换"；开篇必须**≥2 个主题交替穿插**（如 warm_home↔forest），每段 4-6s，视觉差异明显。②**金句字卡必须全程显示**——禁止 20-32s 一闪而过（用户反馈"没有金句文字"）；金句 5s 淡入→52s 淡出（`alpha='if(lt(t,5),t/5,if(lt(t,52),1,if(lt(t,56),(56-t)/4,0)))'`），fontsize ≥60 白字黑边。③开篇实现以 video_composer.py 开篇合成为准（旧参考脚本曾存 /tmp，已归档不可依赖）。
 > **⚠️ 素材禁真人铁律（2026-08-21 用户反馈教训）**：视频画面**禁止出现真人/人物素材**（用户明确要求"把视频中的真人画面替换成景色画面"）。选素材时逐张目检：园林/山水/竹林/古建/静物（无人物）才可用；汉服人物、人像、有人物的场景一律弃用。**同时检查远景**：山水/园林素材**远景不得有现代城市/高楼/公路/电线**（landscape_02 山脚城市被剔除教训）——Pexels 下载的高清图远景常带城市，仅看缩略图会漏，须放大远景确认。素材下载后必须拼图目检（PIL 拼 4×3 缩略图 + vision 逐张确认无真人/现代元素）再入库。gufeng 库现状：园林 6 + 山水 5 + 竹林 3 + 古籍 1（零真人零城市）。
 > **⚠️ 像素格式铁律（2026-08-21 打开出错教训）**：任何 ffmpeg 输出 MP4 必须显式 `-pix_fmt yuv420p`——否则 x264 默认可能输出 yuvj444p（High 4:4:4 Predictive），飞书/手机/多数播放器无法解码（用户反馈"打开会出错"）。手写开篇脚本（build_fusheng_opening.py）曾漏此项；video_composer.py 正常（自带 yuv420p）。**交付前必须验证**：`ffprobe -v error -select_streams v -show_entries stream=pix_fmt -of csv=p=0 out.mp4` 必须返回 `yuv420p`，非 yuv420p 即播放器不兼容。拼接时混编码用 filter_complex 重编码时同样要带 `-pix_fmt yuv420p`。
@@ -67,6 +67,7 @@ Step 8: 飞书交付 → lark-cli 上传（MP4+音频+文稿），更新 plan.ts
 - **retry 假说**：重试前必须写「若 X 是原因，则改 Y 能通过」，禁止盲目重跑（防烧钱）
 - **幂等**：选题即消费——选中后须将 plan.tsv 该行标记「已用」+ 使用日期；重复触发先 grep TSV 待用行与 pick.log 确认，防止重复生成/重复上传
 - **产物路径**：bookmadebook-output/（out.mp4 + mp3 + 讲书稿.md）；上传飞书后记录消息链接
+- **交付通道**：≤30MB → lark-cli --video 直发飞书（消息 30MB 为 API 硬限，错误码 234006，版本无关）；>30MB → **扣子云盘兜底**（禁止无限压缩降画质）：复制到 WSL 中转目录 `/mnt/c/Users/dongj/Coze/uploads/` → 通知 004（扣子 Agent）`file_upload` 桌面直传云盘（无大小限制、原画质）→ 用户扣子客户端「我的搭档004 → 文件」查看，或 `file_to_url` 生成公开链接
 - **告警**：失败时 lark-cli 通知，次日人工复核产物与 TSV 状态
 
 ---
@@ -311,6 +312,7 @@ python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --boo
 - **牧场/游牧题材**：pasture 主题（雪原羊群图，2026-08-13）；**磁性女声**：晓晓 + `--pitch=-15Hz`（低沉磁性，2026-08-13 新增 CLI 参数，注意用等号）
 - **超长视频（45 分钟，已废弃 2026-08-21，仅备查）**：日常线固定 10 分钟规格；如未来临时做长视频：主合成 timeout 已放宽到 7200s（2 小时），45 分钟≈13500 字讲书稿，可 delegate_task 并行分章节写稿再合并；压缩才用「45 分钟长视频压缩铁律」（〇章节备注），日常线禁止套用
 - **渲染提速（2026-08-13）**：zoompan 内部渲染分辨率从 2160×3840 降到 1080×1920（原来先放大 4K 再缩回 1080p = 白算 3/4 像素），45 分钟视频合成从 80-90 分钟 → 25-30 分钟，画质无差别
+- **⚠️ zoompan 时长爆炸坑（video-delivery-pipeline 实测）**：`-loop 1 -t 30 -i 图` 时 zoompan 对每个输入帧再输出 d 帧，30s 素材可膨胀成 3452s——手写运镜脚本禁止逐帧复制写法，静态长图用时间表达式 crop 平移（每输入帧只输出 1 帧，时长精确）：`scale=W*1.08:H*1.08:force_original_aspect_ratio=increase,crop=W:H:x='(iw-W)*t/dur':y='(ih-H)*(1-t/dur)'`。（video_composer.py 已内置规避——单帧输入+d 参数生成帧序列，不用 `-loop 1` 循环流；仅手写脚本注意）
 - **交付分层（2026-08-13 新增 deliver.py，仅作可选工具）**：用户想要多长就生成多长，**时长不做任何限制**。deliver.py 只是辅助工具（按时长压缩/分层），是否使用由用户决定——用户要完整视频就给完整视频，要音频就给音频，要 5 分钟精华就做 5 分钟精华
 - **小红书精华版（2026-08-13）**：小红书平台限制为参考信息（单条视频限 15 分钟、普通号最佳 5 分钟、MP4/720p+/竖版9:16），**不是技能限制**——用户要发小红书时可按此做精华版，用户要完整版就做完整版，一切以用户需求为准
 - **场景标记铁律（2026-08-13 修复）**：`【场景：XX】`必须放在章节标题**正上方**；每章一个标记；相邻章节可用同主题（解析器已修：只合并 <50 字符内重复标记，不再吞段）；音频章节数与标记数不一致时按字数比例分配
@@ -409,6 +411,7 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 交付模式：
 - progressive（默认）：30秒内出第1章音频，后台继续生成后续章节
 - full：等全部生成完一次性交付
+交付通道：≤30MB 飞书 --video 直发（30MB 为 API 硬限，错误码 234006）；>30MB 走扣子云盘兜底（uploads 中转目录 → 004 file_upload 原画质），禁止无限压缩
 
 ---
 
@@ -487,7 +490,7 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 - [ ] `ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0` 返回 `1080,1920`
 - [ ] `ffprobe -v error -select_streams v -show_entries stream=pix_fmt -of csv=p=0` 返回 `yuv420p`
 - [ ] `ffprobe -v error -show_entries format=duration` 可读（未损坏）
-- [ ] 文件大小 <30MB（飞书限制）
+- [ ] 文件大小 ≤30MB（飞书硬限 234006）；>30MB 走扣子云盘兜底而非继续压缩
 
 ### 3. 金句与文字（真实原文/无乱码）
 
@@ -497,7 +500,7 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 
 #### PASS：必须
 - ✅ 金句=书中原句或凝练提炼，可查证
-- ✅ 字卡/开篇渲染后**抽帧 vision 验证**无乱码再交付（`ffmpeg -ss 25 -i out.mp4 -frames:v 1 check.jpg`）
+- ✅ 字卡/开篇渲染后**抽帧 vision 验证**无乱码再交付（`ffmpeg -i out.mp4 -ss 25 -frames:v 1 check.jpg`——`-ss` 放 `-i` 后为精确 seek；放前面是 fast seek 会偏差数秒，漏掉短时字卡窗口）
 
 #### 验证清单
 - [ ] 金句字卡与讲书稿一致（无编造）
@@ -534,8 +537,9 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 | MP4 上传报「moov atom not found」 | 重压必须带 `-movflags +faststart`，ffprobe 验证可读再传 |
 | 播放器无法解码/打开出错 | 检查 pix_fmt，重压 `-pix_fmt yuv420p` |
 | 可灵生成失败（余额不足 code 1102 等） | 自动降级纯实景开篇，不影响正文与交付 |
-| 视频 >30MB 飞书拒收 | crf 36→38 重压，分辨率保持 1080×1920 |
+| 视频 >30MB 飞书拒收（234006） | crf 38 重压一次（保持 1080p）；仍超限走扣子云盘兜底，禁止无限压缩 |
 | 场景时间轴报 Numerical result out of range | 确认章节按 start 数字排序（chapters.sort），dry-run 验证时间轴 |
+| 用户要求换配音/换音色 | 重跑 streaming_pipeline + video_composer 全流程（字卡/场景时间轴按新音频重排），禁止只换音轨 |
 
 ---
 
