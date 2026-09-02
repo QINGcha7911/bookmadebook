@@ -88,6 +88,14 @@ CONTENT_VOICES = [
      "qwen-tts-vd-hist_deep_male-voice-20260821204552033-d7bc", "hist_deep_male：沉稳厚重(百炼设计音色)，适合历史/传记"),
 ]
 
+# 百炼设计音色短名 → 完整 voice ID（2026-09-02 用户指定 --voice husky_tender 时
+# resolve_voice 原样返回短名，generate_segment 不认 qwen-tts-vd- 前缀会误走 edge-tts）
+VOICE_ALIASES = {
+    "husky_tender": "qwen-tts-vd-husky_tender-voice-20260821220323362-ebb0",
+    "hist_deep_male": "qwen-tts-vd-hist_deep_male-voice-20260821204552033-d7bc",
+    "design_kid": "qwen-tts-vd-design_kid-voice-20260821205612330-e42c",
+}
+
 
 def detect_content_type(text: str) -> str:
     """检测内容类型：童话/职场/悬疑/励志/情感/历史/通用（加权：命中关键词最多者胜，2026-08-14改）
@@ -104,6 +112,8 @@ def detect_content_type(text: str) -> str:
 def resolve_voice(voice: str, text: str) -> str:
     """解析声音：用户显式指定则用指定的；否则按内容类型+语言自动选（优化①）"""
     if voice and voice != "auto":
+        if voice in VOICE_ALIASES:
+            return VOICE_ALIASES[voice]
         return voice
     # 先检测语言（日语/英语优先按语言选）
     lang = detect_language(text)

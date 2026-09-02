@@ -27,15 +27,15 @@ requires: python>=3.10
 >
 > **可灵配置**：KLING_API_KEY + KLING_API_BASE_URL 在 `/mnt/d/AI软件/GitHub/OpenMontage/.env`（008 已配，58 字符 key）。可灵 CLI 技能：`kling-cli`（/root/.hermes/skills/kling-cli/）。
 > **分工**：008 维护 SKILL.md（已 push commit 5d3d613）；007 同步本地技能 + 生产 cron 模板。
-> **正文画面策略（008 已确认，2026-08-18）**：正文 = **实景素材合成（默认，assets/scenes Ken Burns）** + **可灵核心场景（可选 ≤3 段，5 秒/段）** + **金句字卡（必配）**。60 秒开篇用可灵为主。
-> **v2.3.1 免费版默认（2026-08-18 用户定案）**：开篇+正文**全部实景素材 Ken Burns**+金句字卡+本地口播=**0 元**；**可灵仅爆款/重点书用（≤2 段，20-40 元，非必需）**。cron prompt 已更新（免费版默认，可灵失败自动退回纯实景）。
+> **正文画面策略（008 已确认，2026-08-18；2026-09-02 升级为纯视频）**：正文 = **纯视频实拍素材原样播放（默认，assets/scenes/<theme>/video 竖版实拍，零静态图/零 Ken Burns/零缩放，video_composer.py 默认即此，cron 无需传参）** + **金句字卡（必配）**；可灵核心场景仅爆款书可选（≤3 段）。
+> **v2.3.1 免费版默认（2026-08-18 用户定案，2026-09-02 画面升级）**：开篇+正文**全部实拍视频素材原样播放**+金句字卡+本地口播=**0 元**；**可灵仅爆款/重点书用（≤2 段，20-40 元，非必需）**。cron prompt 已更新（免费版默认，可灵失败自动退回纯实景）。
 > **⚠️ 开篇 60s 画面风格自适应（v2.3.1 补充，2026-08-18 用户定案）**：按讲书稿内容类型判定——**历史传记/战争类=黑白（灰度化）**，**惬意抒情/治愈类=彩色**。判定=讲书稿历史关键词检测（朝代/年号/皇帝/战役/战争/列传/史/起义/王朝等），出现即历史类→开篇加灰度化（hue=s=0 或 format=gray）；无=治愈类→彩色。正文画面风格与开篇一致。
 > **⚠️ 压缩命令必须带 `-movflags +faststart`（2026-08-21 早班/晚班两次踩坑）**：ffmpeg 压缩/拼接后 moov atom 默认在文件末尾，lark-cli 上传飞书会报「moov atom not found」且 ffprobe 误判损坏——agent 会陷入 65s 循环压缩但每次都"损坏"。任何 ffmpeg 输出 MP4 一律加 `-movflags +faststart`；压缩后必须 `ffprobe -v error -show_entries format=duration out.mp4` 验证可读再上传。拼接禁止 `-c copy`（会损坏），必须 `-filter_complex concat` 统一重编码——**不只 h264+hevc 混编码会坏，同编码但 crf/profile 不同也会坏**（实测同 hevc 不同 crf 拼出花屏 `cu_qp_delta out of range`），开篇+正文拼接务必统一参数。（video_composer.py 已内置规避——全走 filter_complex 无 `-c copy` 路径；仅手写脚本/临时拼接注意）
 > **⚠️ 开篇 60s 画面切换铁律（2026-08-21 用户反馈教训）**：①**禁止单主题素材**——全部 warm_home 家居素材色调相似，切换视觉不可见，用户反馈"没有画面切换"；开篇必须**≥2 个主题交替穿插**（如 warm_home↔forest），每段 4-6s，视觉差异明显。②**金句字卡必须全程显示**——禁止 20-32s 一闪而过（用户反馈"没有金句文字"）；金句 5s 淡入→52s 淡出（`alpha='if(lt(t,5),t/5,if(lt(t,52),1,if(lt(t,56),(56-t)/4,0)))'`），fontsize ≥60 白字黑边。③开篇实现以 video_composer.py 开篇合成为准（旧参考脚本曾存 /tmp，已归档不可依赖）。
 > **⚠️ 素材禁真人铁律（2026-08-21 用户反馈教训）**：视频画面**禁止出现真人/人物素材**（用户明确要求"把视频中的真人画面替换成景色画面"）。选素材时逐张目检：园林/山水/竹林/古建/静物（无人物）才可用；汉服人物、人像、有人物的场景一律弃用。**同时检查远景**：山水/园林素材**远景不得有现代城市/高楼/公路/电线**（landscape_02 山脚城市被剔除教训）——Pexels 下载的高清图远景常带城市，仅看缩略图会漏，须放大远景确认。素材下载后必须拼图目检（PIL 拼 4×3 缩略图 + vision 逐张确认无真人/现代元素）再入库。gufeng 库现状：园林 6 + 山水 5 + 竹林 3 + 古籍 1（零真人零城市）。
 > **⚠️ 像素格式铁律（2026-08-21 打开出错教训）**：任何 ffmpeg 输出 MP4 必须显式 `-pix_fmt yuv420p`——否则 x264 默认可能输出 yuvj444p（High 4:4:4 Predictive），飞书/手机/多数播放器无法解码（用户反馈"打开会出错"）。手写开篇脚本（build_fusheng_opening.py）曾漏此项；video_composer.py 正常（自带 yuv420p）。**交付前必须验证**：`ffprobe -v error -select_streams v -show_entries stream=pix_fmt -of csv=p=0 out.mp4` 必须返回 `yuv420p`，非 yuv420p 即播放器不兼容。拼接时混编码用 filter_complex 重编码时同样要带 `-pix_fmt yuv420p`。
 > **⚠️ drawtext 换行铁律（2026-08-21 乱码教训）**：ffmpeg drawtext 的换行必须用**真实换行符**（Python 源码里写 `\n` 单反斜杠），**禁止写 `\\n` 字面量**（双反斜杠=反斜杠+n 两个字符，drawtext 不解释转义，会把 `n` 渲染成文字——《浮生六记》开篇金句「若为儿择妇n非淑姊不娶」乱码根因）。Agent 写脚本时易犯此错；**开篇/字卡渲染后必须抽帧 vision 验证文字无乱码再交付**（`ffmpeg -ss 25 -i out.mp4 -frames:v 1 check.jpg`）。
-> **v2.3.3 晚班恢复 10 分钟（2026-08-21 用户定案）**：晚班 18:15 与早班 6:15 同为**10 分钟精读视频**（讲书稿 ~2600-2800 字），正文=实景素材 Ken Burns 动态（video_composer.py --fast），开篇 60s 钩子不变；**不再用 45 分钟静态画面模式**（v2.3.2 已废弃，compose_static_body.py 不用于日常线）。10 分钟视频压缩用 H.264 crf36+faster（约 19MB），带 `-movflags +faststart`。
+> **v2.3.3 晚班恢复 10 分钟（2026-08-21 用户定案；2026-09-02 画面升级为纯视频）**：晚班 18:15 与早班 6:15 同为**10 分钟精读视频**（讲书稿 ~2600-2800 字），正文=**实拍视频原样播放（纯视频模式，零静态图/零 Ken Burns）**，开篇 60s 钩子不变；**不再用 45 分钟静态画面模式**（v2.3.2 已废弃，compose_static_body.py 不用于日常线）。10 分钟视频压缩用 H.264 crf36+faster（约 19MB），带 `-movflags +faststart`。
 > **45 分钟长视频压缩铁律（仅未来长视频备查，日常线禁用）**：若未来恢复 38-45 分钟视频且需压 30MB 内，才用 **x265 + 720p + 目标码率**（`-c:v libx265 -preset medium -b:v 75k -maxrate 95k -bufsize 190k -c:a aac -b:a 40k -movflags +faststart`，~28-29MB；H.264 压 45 分钟必糊）；**日常线 10 分钟一律 H.264 1080×1920，禁止套用此命令**（2026-08-26《雅舍小品》720p 模糊教训）。
 > **⚠️⚠️ 10 分钟视频压缩红线（2026-08-26 用户反馈"画面模糊"根因）**：**禁止 scale 720p！禁止 x265！** 10 分钟视频压缩必须保持 **1080×1920**，用 `-c:v libx264 -crf 36 -preset faster -c:a aac -b:a 96k -pix_fmt yuv420p -movflags +faststart`（约 19MB）。压缩后必须验证 `ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0 out.mp4` 返回 `1080,1920`——**agent 曾误套 45 分钟 x265+720p 命令导致交付 720p@101kbps 模糊视频**（2026-08-26《雅舍小品》）。45 分钟铁律仅供长视频，日常线一律 1080p。
 > **⚠️ 开篇画面铁律（2026-08-18 用户否掉 v1 教训）**：①**禁止循环拼接同一段可灵视频**（v1 用 2 段×4 循环=画面重复，用户直接否掉）；②必须生成 **≥3 段不同 prompt 的可灵画面**（每段 10s，不同场景），每段只出现一次；③可灵段间**穿插实景素材** Ken Burns 做呼吸感；④xfade=1s 过渡；⑤**金句字卡首句必须 ≤60s 出现**（video_composer `_quote_times` 已修：`quotes[:6]` + 首句封顶 `audio_dur*0.06+15`）；⑥可灵生成用 kling-cli 技能（OpenMontage KlingClient，kling-v3，需先 python 加载 .env——CRLF 行尾不能 source）；⑦开篇拼接以 video_composer.py 为准（旧参考脚本曾存 /tmp，已归档不可依赖）；**⑧可灵余额不足降级（2026-08-18 008 实测 code 1102）**：可灵失败/余额不足时自动降级为「纯实景开篇」（assets/scenes 素材 Ken Burns 交替 + xfade + 首句金句字卡照常），禁止死等或报错，不影响正文与交付。
@@ -48,7 +48,7 @@ Step 1: 选题池选书 → plan.tsv 待用行 + 配额规则（惬意 80%/历�
 Step 2: 生成讲书稿 → AI 按 prompts/ 模板写稿（10 分钟约 2600-2800 字），生成前过质量门
 Step 3: TTS 配音 → streaming_pipeline.py（分段生成→拼接→章节标记→-16 LUFS）
 Step 4: 素材匹配 → scene_selector.py 选主题 + scene_fetcher.py 下载 + 目检入库
-Step 5: 视频合成 → 60s 开篇 + video_composer.py 正文（实景 Ken Burns + 金句字卡）
+Step 5: 视频合成 → 60s 开篇 + video_composer.py 正文（纯视频：实拍原样播放 + 金句字卡 + 章节卡）
 Step 6: 交付质量门 → 素材/规格/文字/响度逐项打勾，任何 FAIL 禁止交付
 Step 7: 小红书文案 → 配套文案 + 海报（60s 引流钩子）
 Step 8: 飞书交付 → lark-cli 上传（MP4+音频+文稿），更新 plan.tsv 状态
@@ -281,16 +281,22 @@ python scripts/harness.py --file 讲书稿.txt --target-minutes 10 [--voice auto
 - 同主题连贯画面（如沙漠星空系列），避免场景跳跃
 - 交叉溶解过渡（xfade 1.5s），画面平滑流动
 - 文字只保留金句 + 书名，淡入淡出
-- Ken Burns 缓慢缩放（zoompan），动态不呆板
+- **纯视频默认（2026-09-02 用户定案）**：实拍视频素材原样播放，**零静态图/零 Ken Burns/零缩放增强**——只做 cover 裁切 + fps 对齐；素材必须真实动态（下载前运动量预检，静止段不入库）
+- 长片（>90s）章节段自动子段化（~20s/段，video_composer.py 内置）并按运动量整池轮转选材，防"一章 100s 循环同一段素材"；短片（≤90s）不拆段，章卡-黑场严格对齐
 - **文字层用 PIL 预渲染 PNG + overlay**（替代 drawtext，规避中文转义/断行/描边坑）
 - **字体用思源黑体/宋体（Noto CJK，OFL 商用合规）**，不用微软雅黑（商用侵权风险）
 - **画面 scale 必须 cover 模式**（`force_original_aspect_ratio=increase` + `crop`），防横图拉伸变形（2026-08-11 用户反馈"字体压太扁"根因）
+- **章节卡（2026-09-02 新增）**：每章开头 1s fadeblack 黑场转场 + 全幅章节卡（序号+标题+背景虚化=章节首帧场景，text_layers.render_chapter_card）；开场章已有书名卡跳过；卡片时间取 plan 段起点（与黑场边界严格对齐，勿用标题字符位置估算——首行 `# 书名` 不是章节，章节提取只认 `##`）
+- **情绪化调色（2026-09-02 新增）**：按讲书稿【情绪】标记逐素材段就近取值——低沉/悲伤/紧张/神秘→`eq=brightness=-0.02:saturation=0.92,colorbalance=bs=0.06:bm=0.03` 冷暗；温暖/开心/激昂→暖亮；其余中性。纯 ffmpeg 滤镜，无额外开销
+- **转场轮换（2026-09-02 新增）**：段内 xfade 按 `fadeblack/smoothleft/circleopen` 轮换；章节交界强制 fadeblack（1s 黑场）
+- **素材铁律补充（2026-09-02）**：实拍视频优先 15s+ 有运动镜头（scene_fetcher `--min-dur 15`）；下载后 qwen-vl-plus 目检（无真人/无现代城市，城市/室内主题只查真人），合规才入库 assets/scenes/<theme>/video/（编号续接不覆盖旧素材）
 
 **用法**：
 ```bash
 python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --book 书名 --output out.mp4
 ```
-- `--theme auto`（默认）按内容自动选主题；手动指定可用值见 `python scripts/video_composer.py --help`（auto + arctic/desert/finance/forest/gufeng/hongkong/library/ocean/palace/pasture/rain/ship/snow/starry/sunrise/tech_city/temple/warm_home/ww2，共 19 个；素材目录 assets/scenes/ 另含 guyuan，scene_selector 关键词可自动匹配）
+- **默认已纯视频（2026-09-02 定案）**：无需传 `--pure-video`（参数仅兼容保留）；显式退回旧静态图 Ken Burns 路径才需 `--legacy-stills`（演示/特殊场景，日常禁用）
+- `--theme auto`（默认）按内容自动选主题；手动指定可用值见 `python scripts/video_composer.py --help`（auto + 20 个主题 ID，含 guyuan；scene_selector 关键词可自动匹配中文标记）
 - `--scene-from auto|script|manual` 场景来源（标记/自动/手动）
 - `--dry-run` 只输出场景规划不合成
 - 自动提取【金句】标记 → 视频中段淡入淡出显示
@@ -325,7 +331,7 @@ python scripts/video_composer.py --script 讲书稿.txt --audio 音频.mp3 --boo
 - 输出类型可强制指定：`--output-type audio|video`
 
 **视频验收要点**（用户偏好）：
-- 画面必须"活的"（星星闪/粒子动/Ken Burns），不能静态
+- 画面必须"活的"（实拍视频动态素材原样播放），不能静态——**禁静态图切换/禁 Ken Burns 缩放（2026-09-02 用户打回教训，纯视频定案）**；交付前抽帧+0.6s 帧差自检确认无静止段
 - 场景切换要连贯（同主题+交叉溶解），不要硬切跳跃
 - 金句是唯一文字，位置/时长要配音频节奏
 
@@ -427,7 +433,7 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 | scripts/quality_gate.py | 质量门（字数/重复/金句去重/markdown 残留） | Step 2 生成前 |
 | scripts/output_verify.py | 输出验证门（标题残留/时长偏差/可解码） | TTS 生成后 |
 | scripts/harness.py | 主控串联全流程（fail-closed） | cron/批量推荐入口 |
-| scripts/video_composer.py | 正文视频合成（Ken Burns+字卡+章节时间轴） | Step 5 |
+| scripts/video_composer.py | 正文视频合成（纯视频默认：实拍原样播放+字卡+章节时间轴+情绪调色；--legacy-stills 才退回 Ken Burns） | Step 5 |
 | scripts/scene_selector.py | 主题选择（标记+加权关键词） | Step 4 |
 | scripts/scene_library.py | 素材库（本地→缓存→下载→desert 兜底） | Step 4 |
 | scripts/scene_fetcher.py | Pexels API 素材下载（需 PEXELS_API_KEY） | Step 4 |
@@ -590,9 +596,9 @@ book_info.py → AI 生成精读脚本（用 prompts/ 模板）→ content_filte
 - 中文口播：edge-tts zh-CN-YunjianNeural（历史类沉稳男声）或百炼设计音色
 - **成本 0 元**（免费 key + 免费口播）
 
-### 10.5 与免费实景版（Ken Burns）的关系
+### 10.5 与免费实景版（纯视频，2026-09-02 起默认）的关系
 - **历史/年代类**（素材库无年代感）→ Agnes 纯场景 AI 动态（本工作流）
-- **通用类** → 实景 Ken Burns 免费版（assets/scenes）
+- **通用类** → 纯视频免费版（assets/scenes/<theme>/video 实拍原样播放，默认）；旧 Ken Burns 静态图路径仅 `--legacy-stills` 保留
 - 可灵（付费）仍仅爆款书使用
 
 ## 十一、文件结构

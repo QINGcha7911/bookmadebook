@@ -260,37 +260,370 @@ def _clip_display_start(start, audio_dur: float) -> float:
 def resolve_video_items(items: list) -> list:
     """视频真实化：优先使用 <theme>/video/*.mp4 实拍素材。
     输入 [(img, dur)] → 输出 [(path, dur, kind)]，kind ∈ {"image","video"}。
-    同一主题多段时按顺序轮流取用视频文件；无 video/ 目录则回退静态图。
+    视频文件充足（≥段数）按顺序轮流取用；不足时均匀间隔插入视频段，
+    其余回退静态图——避免单视频被全部段循环复用导致画面严重重复（2026-09-02 修复）。
     """
-    _counter = {}
-    out = []
-    for item in items:
+    out = [None] * len(items)
+    groups = {}
+    for i, item in enumerate(items):
         if len(item) >= 3:
-            out.append(item)  # 已解析，幂等
+            out[i] = item  # 已解析，幂等
             continue
         img, dur = item
         vdir = Path(img).parent / "video"
-        vids = sorted(vdir.glob("*.mp4")) if vdir.is_dir() else []
-        if vids:
-            key = str(vdir)
-            idx = _counter.get(key, 0) % len(vids)
-            _counter[key] = idx + 1
-            out.append((vids[idx], dur, "video"))
-        else:
-            out.append((img, dur, "image"))
+        key = str(vdir)
+        if key not in groups:
+            groups[key] = {"vids": sorted(vdir.glob("*.mp4")) if vdir.is_dir() else [],
+                           "segs": []}
+        groups[key]["segs"].append((i, img, dur))
+    for g in groups.values():
+        vids, segs = g["vids"], g["segs"]
+        n = len(segs)
+        if not vids:
+            for i, img, dur in segs:
+                out[i] = (img, dur, "image")
+            continue
+        if len(vids) >= n:
+            for k, (i, img, dur) in enumerate(segs):
+                out[i] = (vids[k % len(vids)], dur, "video")
+            continue
+        # 视频不足：均匀间隔插入（同素材间隔 ≥4 段，其余回退静态图）
+        k_video = min(n, max(len(vids), n // 5))
+        step = n / k_video
+        used = set()
+        for k in range(k_video):
+            pos = min(n - 1, int(round(k * step)))
+            i, img, dur = segs[pos]
+            out[i] = (vids[k % len(vids)], dur, "video")
+            used.add(pos)
+        for k, (i, img, dur) in enumerate(segs):
+            if k not in used:
+                out[i] = (img, dur, "image")
     return out
+
+
+# ── 情绪化调色（2026-09-02 引入）──
+# 按章节【情绪】标记占比切滤镜：低沉/紧张/神秘→冷暗；温暖/开心/激昂→暖亮；其余中性
+EMOTION_FILTERS = {
+    "cold": "eq=brightness=-0.02:saturation=0.92,colorbalance=bs=0.06:bm=0.03",
+    "warm": "eq=brightness=0.02:saturation=1.06,colorbalance=rs=0.05:gs=0.02",
+    "neutral": "",
+}
+EMOTION_KEYWORDS = {
+    "cold": ["低沉", "悲伤", "压抑", "愤怒", "紧张", "神秘", "疑惑", "低落", "阴郁", "灰暗"],
+    "warm": ["温暖", "温柔", "感动", "开心", "激昂", "坚定", "感慨", "惊喜", "明亮", "希望"],
+}
+
+# xfade 转场池（2026-09-02：按段轮换，章节交界强制 fadeblack 1s 黑场）
+XFADE_POOL = ["fadeblack", "smoothleft", "circleopen"]
+CHAPTER_XFADE_DUR = 1.0
+
+
+def _chapter_texts(script_text: str, chapters: list) -> list:
+    """按章节切分讲书稿文本：优先【场景】标记位置，其次 ## 标题，兜底整篇。"""
+    if not chapters:
+        return []
+    import scene_selector as ss
+    marked = ss.parse_scene_markers(script_text)
+    if marked:
+        segs, _ = ss.split_by_positions(script_text, marked)
+        if len(segs) == len(chapters):
+            return segs
+    texts, cur = [], []
+    for ln in script_text.splitlines():
+        if ln.lstrip().startswith("##") and cur:
+            texts.append("\n".join(cur))
+            cur = []
+        cur.append(ln)
+    if cur:
+        texts.append("\n".join(cur))
+    if len(texts) == len(chapters):
+        return texts
+    return [script_text] * len(chapters)
+
+
+def chapter_emotion_filters(script_text: str, chapters: list) -> list:
+    """每章【情绪】标记投票 → 调色滤镜（长度=len(chapters)，中性返回空串）。
+    只统计标记行（避免正文关键词误配）；cold（低沉/悲伤等强情绪）加权 1.5。"""
+    texts = _chapter_texts(script_text, chapters)
+    out = []
+    for t in texts:
+        cnt = {"cold": 0, "warm": 0}
+        for m in re.finditer(r"【情绪[:：]\s*([^】]{1,12})】", t):
+            name = m.group(1)
+            for grp, kws in EMOTION_KEYWORDS.items():
+                if any(kw in name for kw in kws):
+                    cnt[grp] += 1
+                    break
+        cnt["cold"] = int(cnt["cold"] * 1.5)
+        if cnt["cold"] > cnt["warm"]:
+            out.append(EMOTION_FILTERS["cold"])
+        elif cnt["warm"] > cnt["cold"]:
+            out.append(EMOTION_FILTERS["warm"])
+        else:
+            out.append(EMOTION_FILTERS["neutral"])
+    return out
+
+
+def _item_emotion_filters(script_text: str, chapters: list, seg_chapter: list,
+                          items_per_seg: list) -> list:
+    """逐 item 情绪滤镜：item 按章节内字符位置就近取【情绪】标记（段落级）。
+    仅段数=章节数（标记驱动）时启用，否则回退章节级。"""
+    n = len(seg_chapter)
+    if len(items_per_seg) != len(chapters) or n == 0:
+        ch_filters = chapter_emotion_filters(script_text, chapters)
+        return [ch_filters[seg_chapter[i]] if seg_chapter else ""
+                for i in range(n)]
+    texts = _chapter_texts(script_text, chapters)
+    marks = []
+    for t in texts:
+        ms = []
+        for m in re.finditer(r"【情绪[:：]\s*([^】]{1,12})】", t):
+            g = None
+            for grp, kws in EMOTION_KEYWORDS.items():
+                if any(kw in m.group(1) for kw in kws):
+                    g = grp
+                    break
+            ms.append((m.start(), g))
+        marks.append(ms)
+    counters = [0] * len(items_per_seg)
+    out = []
+    for i in range(n):
+        seg_i = seg_chapter[i]
+        t = texts[seg_i] if seg_i < len(texts) else ""
+        frac = counters[seg_i] / max(items_per_seg[seg_i], 1)
+        counters[seg_i] += 1
+        char_pos = int(frac * len(t))
+        group = None
+        for pos, grp in (marks[seg_i] if seg_i < len(marks) else []):
+            if pos <= char_pos:
+                group = grp
+            else:
+                break
+        out.append(EMOTION_FILTERS.get(group or "neutral", ""))
+    return out
+
+
+def _chapter_bg_images(plan, n_chapters: int) -> list:
+    """每章章节卡的背景图：优先章节首帧场景图；段数与章节数不符时从全部素材均取。"""
+    bgs = []
+    segs = getattr(plan, "segments", [])
+    if len(segs) == n_chapters:
+        for ci, seg in enumerate(segs):
+            imgs = getattr(seg, "images", []) or []
+            # 同主题多章时 images 列表相同，按章节号错位取图避免背景雷同
+            bgs.append(str(imgs[ci % len(imgs)]) if imgs else "")
+        return bgs
+    pool = []
+    for seg in segs:
+        pool += [str(p) for p in getattr(seg, "images", []) or []]
+    if not pool:
+        return [""] * n_chapters
+    for ci in range(n_chapters):
+        bgs.append(pool[min(ci * len(pool) // max(n_chapters, 1), len(pool) - 1)])
+    return bgs
+
+
+_VID_PROBE_CACHE = {}
+
+
+def _probe_video_dur(path) -> float:
+    """ffprobe 取视频时长（秒），失败返回 0；同素材多次探测走缓存。"""
+    key = str(path)
+    if key in _VID_PROBE_CACHE:
+        return _VID_PROBE_CACHE[key]
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=duration", "-of", "csv=p=0", str(path)],
+            capture_output=True, text=True, timeout=20)
+        dur = float(r.stdout.strip() or 0)
+    except Exception:
+        dur = 0.0
+    _VID_PROBE_CACHE[key] = dur
+    return dur
+
+
+def _clip_motion(path, samples: int = 4) -> float:
+    """快速运动量估计：1s 间隔抽 samples+1 帧，相邻帧灰度差均值。
+    用于纯视频选材——优先"有运动镜头"（2026-09-02 素材铁律），
+    避免选中近乎静止的室内/长焦段导致画面像静态图。结果按素材缓存。"""
+    key = (str(path), samples)
+    if key in _VID_PROBE_CACHE:
+        return _VID_PROBE_CACHE[key]
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix="lb_mot_") as td:
+        tmpl = str(Path(td) / "f_%02d.png")
+        try:
+            r = subprocess.run(
+                ["ffmpeg", "-y", "-v", "error", "-i", str(path),
+                 "-vf", "fps=1,scale=36:64", "-frames:v", str(samples + 1), tmpl],
+                capture_output=True, text=True, timeout=30)
+            if r.returncode != 0:
+                _VID_PROBE_CACHE[key] = 0.0
+                return 0.0
+        except Exception:
+            _VID_PROBE_CACHE[key] = 0.0
+            return 0.0
+        lums = []
+        for i in range(1, samples + 2):
+            p = Path(td) / f"f_{i:02d}.png"
+            if p.exists():
+                try:
+                    from PIL import Image
+                    im = Image.open(p).convert("L")
+                    px = list(im.getdata())
+                    lums.append(sum(px) / len(px))
+                except Exception:
+                    pass
+        if len(lums) < 2:
+            _VID_PROBE_CACHE[key] = 0.0
+            return 0.0
+        diffs = [abs(lums[i] - lums[i - 1]) for i in range(1, len(lums))]
+        _VID_PROBE_CACHE[key] = sum(diffs) / len(diffs)
+        return _VID_PROBE_CACHE[key]
+
+
+def _split_long_segments(plan, audio_dur: float, clip: float = 20.0):
+    """长段自动子段化（2026-09-02 纯视频默认后新增，仅长片 >90s 调用）：
+    长章按 ~clip 秒拆成子段，避免"一章 100s 只循环同一段素材"的画面重复。
+    子段继承原章 chapter_idx，供章卡/黑场边界/情绪滤镜正确归属。
+    clip 默认 20s（2026-09-02 实测校准）：warm_home 9 段素材里 ≥21.2s 的
+    只有 3 段（clip=30 时），降到 20s 后 5 段动态素材（04/06/07/08/09）
+    可无接缝入池轮转；画面仍远低于用户可接受的切段节奏。"""
+    import scene_selector
+    segs = list(getattr(plan, "segments", []))
+    if not segs:
+        return plan
+    new_segs = []
+    for ci, seg in enumerate(segs):
+        dur = max(0.5, float(seg.end - seg.start))
+        n = max(1, int(dur / clip + 0.999))
+        if n == 1:
+            setattr(seg, "chapter_idx", ci)
+            new_segs.append(seg)
+            continue
+        step = dur / n
+        for k in range(n):
+            sub = scene_selector.SceneSegment(
+                theme=seg.theme,
+                start=seg.start + k * step,
+                end=seg.start + (k + 1) * step if k < n - 1 else seg.end,
+                chapter_title=seg.chapter_title,
+            )
+            setattr(sub, "chapter_idx", ci)
+            new_segs.append(sub)
+    plan.segments = new_segs
+    return plan
+
+
+def _pure_video_items(plan, need_slack: float = 1.2) -> list:
+    """纯视频模式 items：每段挑 1 个时长 ≥ 段长+slack 的竖版实拍视频。
+    选材策略：时长够的候选中按运动量降序整池轮转（有运动镜头优先 + 画面不重复）：
+    一轮内不重复用素材；素材耗尽时清空计数从头轮转，仅保证不与上一段相邻同素材，
+    避免"只有 2-3 段够长素材时退化成 top-2 反复交替"（2026-09-02 长片实测）。
+    无足够长素材时选最长并警告。返回 [(视频路径, 段时长, 'video')]，零静态图。"""
+    import scene_library
+    base = scene_library.SCENES_DIR
+    out = []
+    picked = set()  # 本轮已用素材（一轮耗尽自动清空 → 整池轮转）
+    prev_pick = None
+    for seg in getattr(plan, "segments", []):
+        seg_dur = max(2.0, float(seg.end - seg.start))
+        need = seg_dur + need_slack
+        vdir = base / seg.theme / "video"
+        vids = sorted(vdir.glob("*.mp4")) if vdir.is_dir() else []
+        if not vids:
+            print(f"  ❌ 纯视频模式：主题 [{seg.theme}] 无 assets/scenes/<theme>/video/*.mp4")
+            import sys
+            sys.exit(1)
+        long_enough = [v for v in vids if _probe_video_dur(v) >= need]
+        if not long_enough:
+            ranked = sorted(vids, key=_probe_video_dur, reverse=True)
+            print(f"  ⚠️ 主题 [{seg.theme}] 无 ≥{need:.0f}s 视频，用 {ranked[0].name}（不足则截尾）")
+        else:
+            # 时长足够 → 运动量降序（真实运动优先）；已运动量缓存，不重复 ffmpeg
+            ranked = sorted(long_enough, key=_clip_motion, reverse=True)
+        rest = [v for v in ranked if v not in picked and v != prev_pick]
+        if not rest:
+            rest = [v for v in ranked if v != prev_pick]
+            picked.clear()  # 整池轮转完一轮，清空计数从头开始
+        pick = rest[0] if rest else ranked[0]
+        picked.add(pick)
+        prev_pick = pick
+        out.append((str(pick), seg_dur, "video"))
+    return out
+
+def _place_text_window(want: float, hold: float, busy: list, dur: float,
+                       min_hold: float = 2.4) -> tuple:
+    """在 busy（已排序的占用窗 [(s,e)]）的空闲缝里，为一条字卡找 [ts,te]。
+    起点尽量 ≥ want；窗口长度 ≤ hold 且 ≥ min_hold；找不到返回 None。"""
+    if not busy:
+        start = max(0.3, want)
+        if start < dur - 0.3:
+            return start, min(dur - 0.3, start + hold)
+        return None
+    cursor = 0.0
+    for a, b in busy:
+        if a > cursor + min_hold + 0.2:
+            gap_s, gap_e = cursor, a
+            # 缝隙放不下完整 hold 时起始尽量回退填满（≥ gap_s+0.3 防与上窗淡出重叠）
+            start = max(gap_s + 0.3, min(max(want, gap_s + 0.3),
+                                         gap_e - 0.3 - hold))
+            h = min(hold, gap_e - 0.3 - start)
+            if h >= min_hold:
+                return start, start + h
+        cursor = max(cursor, b)
+    if cursor < dur - 1.0:
+        start = max(cursor + 0.3, want)
+        if start < dur - 1.0:
+            h = min(hold, dur - start - 0.3)
+            if h >= min_hold:
+                return start, start + h
+    return None
 
 
 def make_filter(plan, audio_dur: float, quotes: list[str],
                 book_title: str, author: str = "", script_text: str = "",
-                audio: str = ""):
+                audio: str = "", items=None, pure_video=False,
+                no_cta=False):
     """构建 ffmpeg filter_complex：Ken Burns + xfade + 金句文字
     plan: ScenePlan（支持可变时长分段 + 多场景）
-    audio: 有 CHAP 时用于对齐章节/金句时间"""
-    items = plan.images_with_durations() if hasattr(plan, "images_with_durations") else \
-        [(p, audio_dur / len(plan)) for p in plan]
-    items = resolve_video_items(items)
+    audio: 有 CHAP 时用于对齐章节/金句时间
+    items: 外部构造好的素材列表（None=内部按静帧展平+视频替换）
+    pure_video: 纯视频模式（2026-09-02 用户定案）——素材原样播放，
+                零静态图/零 Ken Burns/零缩放增强，只做 cover 裁切+fps 对齐
+    no_cta: 不叠结尾 CTA 引导帧（演示/预览用；章节卡有尾窗时防叠）"""
+    # 章节标题提取（## 标题）——先于素材循环，供情绪调色/章节卡/转场使用
+    chapters = []
+    for line in script_text.splitlines():
+        line = line.strip()
+        if line.startswith("##"):  # 只认 ## 章节标题（首行 # 书名不算章节）
+            t = re.sub(r"^#+\s*", "", line).strip()
+            if t:
+                chapters.append(t)
+    if items is None:
+        items = plan.images_with_durations() if hasattr(plan, "images_with_durations") else \
+            [(p, audio_dur / len(plan)) for p in plan]
+        items = resolve_video_items(items)
     n = len(items)
+    # item → 章节映射（段数=章节数时逐段对齐，否则兜底全部归第 0 章）
+    seg_chapter, items_per_seg = [], []
+    for si, seg in enumerate(getattr(plan, "segments", [])):
+        cnt = 1 if pure_video else len(getattr(seg, "images", []) or [])
+        ch_idx = getattr(seg, "chapter_idx", si)  # 子段化后归原章（2026-09-02）
+        items_per_seg.append(cnt)
+        seg_chapter += [ch_idx] * cnt
+    if len(seg_chapter) != n:
+        seg_chapter = [0] * n
+    if pure_video:
+        # 纯视频每段 1 段素材=整章，段落级就近取值无意义 → 用章节级多数投票
+        ch_filters = chapter_emotion_filters(script_text, chapters)
+        item_emotions = [ch_filters[seg_chapter[i]] if seg_chapter else ""
+                         for i in range(n)]
+    else:
+        item_emotions = _item_emotion_filters(script_text, chapters, seg_chapter,
+                                              items_per_seg)
     # 交叉溶解时长动态化（2026-08-30 修复短版冻结 bug）：
     # 固定 1.5s 在短版（每图 1.3-1.6s）会导致 offset=total-XFADE 为负 → xfade 冻结。
     # 取 min(1.5, 最短图时长*0.5)，保证 offset 恒为正；长版（每图 10s+）不受影响。
@@ -304,8 +637,20 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     for i, item in enumerate(items):
         img, dur, kind = item
         zoom_in = (i % 2 == 0)
+        emo = item_emotions[i] if i < len(item_emotions) else ""
+        emo_sfx = f",{emo}" if emo else ""
         if kind == "video":
-            # 实拍视频：cover 裁切 1080×1920 + fps 对齐 + 轻微 zoom(1.0→1.05)
+            if pure_video:
+                # 纯视频模式（用户定案 2026-09-02）：素材原样播放，
+                # 只做 cover 裁切 + fps 对齐，零 zoompan/零缩放增强/零起点偏移
+                parts.append(
+                    f"[{i}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                    f"crop={W}:{H},fps={FPS},"
+                    f"scale={W}:{H}:flags=lanczos{emo_sfx},"
+                    f"trim=duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
+                )
+                continue
+            # 旧视频分支（非纯视频模式保留）：cover 裁切 + 轻微 zoom(1.0→1.05)
             # + 段起点偏移（第 i 段从素材 i*3s 起播，配合 -stream_loop -1 循环取帧）
             start = i * 3
             parts.append(
@@ -314,7 +659,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
                 f"zoompan=z='min(1.0+0.05*on/{max(int(dur*FPS),1)},1.05)':"
                 f"d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
                 f"s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
-                f"scale={W}:{H}:flags=lanczos,"
+                f"scale={W}:{H}:flags=lanczos{emo_sfx},"
                 f"trim=start={start}:duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
             )
         else:
@@ -329,7 +674,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
                 f"zoompan=z='{zexpr}':"
                 f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
                 f"d={int((dur+xfade_dur)*FPS)}:s={ZOOM_W}x{ZOOM_H}:fps={FPS},"
-                f"scale={W}:{H}:flags=lanczos,"
+                f"scale={W}:{H}:flags=lanczos{emo_sfx},"
                 f"trim=duration={dur+xfade_dur},setpts=PTS-STARTPTS[v{i}]"
             )
     # xfade 交叉溶解（累计可变时长）
@@ -339,26 +684,34 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     # 实测 40 图总长 30.4s vs 音频 56.8s，starry 段整体前移 10s）。
     prev = "v0"
     total = items[0][1]
+    pool_i = 0
     for i in range(1, n):
         out = f"x{i}"
-        offset = total - xfade_dur
-        parts.append(f"[{prev}][v{i}]xfade=transition=fade:duration={xfade_dur}:offset={offset}[{out}]")
+        # 章节交界 → fadeblack 1s 黑场；段内 → 转场池轮换（2026-09-02）
+        is_chapter_boundary = seg_chapter[i] != seg_chapter[i - 1]
+        if is_chapter_boundary:
+            trans = "fadeblack"
+            td = min(CHAPTER_XFADE_DUR, max(0.4, min_dur * 0.5))
+        else:
+            trans = XFADE_POOL[pool_i % len(XFADE_POOL)]
+            pool_i += 1
+            td = xfade_dur
+        offset = total - td
+        parts.append(f"[{prev}][v{i}]xfade=transition={trans}:duration={td}:offset={offset}[{out}]")
         prev = out
         total += items[i][1]
 
     # ── 文字层（PIL 预渲染 PNG overlay，替代 drawtext）──
     import text_layers as tl
-    # 章节标题提取（## 标题）
-    chapters = []
-    for line in script_text.splitlines():
-        line = line.strip()
-        if line.startswith("##") or line.startswith("#"):
-            t = re.sub(r"^#+\s*", "", line).strip()
-            if t:
-                chapters.append(t)
     audio_chapter_starts = read_audio_chapters(audio)
     layers = tl.render_all(book_title, quotes, chapters, author=author,
                            watermark=book_title)
+    # 章节卡（序号+标题+背景虚化）：替换旧的小章节标签，背景=章节首帧场景
+    if chapters:
+        cards = tl.render_chapter_cards(chapters, _chapter_bg_images(plan, len(chapters)))
+        layers.update(cards)
+        for ci in range(len(chapters)):
+            layers.pop(f"chapter_{ci}", None)  # 旧小标签弃用，避免死输入
     # 全部文字层作为 PNG 输入
     png_inputs = []
     png_map = {}
@@ -372,78 +725,109 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
 
     text_parts = []
     prev_v = prev
-    # ① 书名：0s 全显 → 8.5s 淡出
-    bk_idx = png_map["book"]
-    text_parts.append(f"[{png_base+bk_idx}:v]format=rgba,"
-                      f"fade=t=in:st=0:d=0.3:alpha=1,"
-                      f"fade=t=out:st=8.5:d=0.8:alpha=1[bk]")
-    text_parts.append(f"[{prev_v}][bk]overlay=0:0[o_book]")
-    prev_v = "o_book"
-
-    # ② 章节标签：每章闪现 ≤5s（优先 CHAP 起始时间，读不到按字数估算）
+    # ── 文字时间窗排程（2026-09-02 用户打回修复：任何时刻最多一组字卡）──
+    # 章节卡窗口优先固定；书名卡淡出提前避让首卡；金句只放进空闲缝隙。
+    busy = []  # [(start, end)] 已占用的字卡可见窗
+    # ② 章节卡窗口（先算，供书名/金句避让）
+    card_wins = []
     if chapters:
-        fallback_chapter_times = _fallback_chapter_times(
-            chapters, script_text, audio_dur)
-        chapter_times = [
-            audio_chapter_starts[ci] if ci < len(audio_chapter_starts)
-            else fallback_chapter_times[ci]
-            for ci in range(len(chapters))
-        ]
+        # 段数=章节数（标记驱动）时直接用 plan 段起点——与 xfade 黑场边界严格对齐
+        # （生产环境该起点即 CHAP 时间；无 CHAP 时按字数比例，与段边界同源）
+        plan_segs = getattr(plan, "segments", [])
+        if len(plan_segs) == len(chapters):
+            chapter_times = [seg.start for seg in plan_segs]
+        else:
+            fallback_chapter_times = _fallback_chapter_times(
+                chapters, script_text, audio_dur)
+            chapter_times = [
+                audio_chapter_starts[ci] if ci < len(audio_chapter_starts)
+                else fallback_chapter_times[ci]
+                for ci in range(len(chapters))
+            ]
         for ci, ch in enumerate(chapters):
-            ck = f"chapter_{ci}"
+            if ci == 0:
+                continue
+            ck = f"card_{ci}"
             if ck not in png_map:
                 continue
             st = chapter_times[ci]
+            et_limit = audio_dur - 0.5
+            if "cta" in png_map and audio_dur <= 90 and not no_cta:
+                et_limit = min(et_limit, audio_dur - 4.0 - 0.3)  # CTA 前收
             if ci < len(chapters) - 1:
-                et = min(st + 5, chapter_times[ci + 1] - 0.5)
+                et = min(st + 3.2, chapter_times[ci + 1] - 0.5, et_limit)
             else:
-                et = min(st + 5, audio_dur - 0.5)
-            if et <= st:
+                et = min(st + 3.2, et_limit)
+            if et - st < 1.2:
                 continue
-            c_idx = png_map[ck]
-            text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
-                              f"fade=t=in:st={st}:d=0.5:alpha=1,"
-                              f"fade=t=out:st={et}:d=0.5:alpha=1[ch{ci}]")
-            text_parts.append(f"[{prev_v}][ch{ci}]overlay=0:0[o_ch{ci}]")
-            prev_v = f"o_ch{ci}"
+            card_wins.append((ci, st + 0.2, et))  # (章节下标, 淡入点, 淡出完成点)
+    # ① 书名：0s 全显；淡出起点提前避让首张章节卡（短片章节早时不再叠卡）
+    bk_fade_out = 8.5
+    if card_wins:
+        # 首卡淡入前需留 ≥0.8s 淡出 + 0.2s 缓冲
+        bk_fade_out = min(bk_fade_out, card_wins[0][1] - 0.3 - 0.8 - 0.2)
+    bk_fade_out = max(0.6, bk_fade_out)
+    bk_idx = png_map["book"]
+    text_parts.append(f"[{png_base+bk_idx}:v]format=rgba,"
+                      f"fade=t=in:st=0:d=0.3:alpha=1,"
+                      f"fade=t=out:st={bk_fade_out:.2f}:d=0.8:alpha=1[bk]")
+    text_parts.append(f"[{prev_v}][bk]overlay=0:0[o_book]")
+    prev_v = "o_book"
+    busy.append((0.0, bk_fade_out + 0.8))
+    # 生成章节卡 overlay（窗口已先占位）
+    for ci, cin, cout in card_wins:
+        c_idx = png_map[f"card_{ci}"]
+        text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
+                          f"fade=t=in:st={cin}:d=0.4:alpha=1,"
+                          f"fade=t=out:st={cout-0.5}:d=0.5:alpha=1[card{ci}]")
+        text_parts.append(f"[{prev_v}][card{ci}]overlay=0:0[o_card{ci}]")
+        prev_v = f"o_card{ci}"
+        busy.append((cin, cout))
+    # CTA 帧窗也占位（防金句与结尾引导叠字）
+    if "cta" in png_map and audio_dur <= 90 and not no_cta:
+        busy.append((max(0.0, audio_dur - 4.0), audio_dur))
+    busy.sort()
 
-    # ③ 金句：按稿中位置映射 CHAP 时间轴（不能取前N个CHAP——数量不一致会全堆开头）
+    # ③ 金句：按稿中位置映射 CHAP 时间轴，但只放进 busy 的空闲缝隙
+    # （不能取前N个CHAP——数量不一致会全堆开头；2026-09-02 增加缝隙排程防叠字）
     if quotes:
         fallback_quote_times = _fallback_quote_times(quotes, audio_dur)
         quote_times = _quote_times(quotes, script_text,
                                    audio_chapter_starts, audio_dur)
+        has_cta = "cta" in png_map and audio_dur <= 90
         for qi, q in enumerate(quotes):
             qk = f"quote_{qi}"
-            ts = _clip_display_start(quote_times[qi], audio_dur)
             is_last = (qi == len(quotes) - 1)
             # 短版（≤90s）金句显示 6s（3-4 句字卡不重叠）；长版 12s
             quote_hold = 6.0 if audio_dur <= 90 else 12.0
-            # 短版有 CTA 时末句金句不保持到结束（2026-08-30 修复重叠 bug：
-            # 末句金句 y≈980 与 CTA y≈980 同区域，双双保持到结束会叠字）
-            has_cta = "cta" in png_map and audio_dur <= 90
-            # 末句金句若靠近片尾则保持到结束（升华收束），否则也限时淡出防霸屏
-            if is_last and audio_dur - ts <= 18 and not has_cta:
-                te = audio_dur
+            want = _clip_display_start(quote_times[qi], audio_dur)
+            # 末句若天然靠近片尾（无 CTA）则意图保持到结尾（升华收束）
+            if is_last and audio_dur - want <= 18 and not has_cta:
+                hold = max(2.4, audio_dur - want - 0.3)
             else:
-                te = min(audio_dur, ts + quote_hold)
-            if is_last and audio_dur - ts <= 18 and not has_cta:
-                fade_out = ""
-            elif te - ts > 0.9:
-                fade_out = f",fade=t=out:st={te-0.8}:d=0.8:alpha=1"
+                hold = quote_hold
+            placed = _place_text_window(want, hold, busy, audio_dur)
+            if placed is None:
+                continue  # 无可放缝隙 → 该句不显示（宁可缺不叠字）
+            ts, te = placed
+            if is_last and te >= audio_dur - 0.2 and not has_cta:
+                fade_out = ""  # 保持到结尾
             else:
-                fade_out = ""
+                fade_out = f",fade=t=out:st={te-0.8:.2f}:d=0.8:alpha=1"
             q_idx = png_map[qk]
             text_parts.append(f"[{png_base+q_idx}:v]format=rgba,"
-                              f"fade=t=in:st={ts+0.5}:d=0.8:alpha=1{fade_out}[q{qi}]")
+                              f"fade=t=in:st={ts+0.5:.2f}:d=0.8:alpha=1{fade_out}[q{qi}]")
             text_parts.append(f"[{prev_v}][q{qi}]overlay=0:0[p{qi}]")
             prev_v = f"p{qi}"
-            # 出处：仅最后一句
+            # 出处：仅最后一句（与金句同窗，属同一组文字）
             if is_last and "attribution" in png_map:
                 a_idx = png_map["attribution"]
                 text_parts.append(f"[{png_base+a_idx}:v]format=rgba,"
-                                  f"fade=t=in:st={ts+0.5}:d=0.8:alpha=1[attr]")
+                                  f"fade=t=in:st={ts+0.5:.2f}:d=0.8:alpha=1{fade_out}[attr]")
                 text_parts.append(f"[{prev_v}][attr]overlay=0:0[p_attr]")
                 prev_v = "p_attr"
+            busy.append((ts, te))
+            busy.sort()
 
     # ④⑤ 进度条：轨道常驻 + 填充 crop 增长
     pt_idx = png_map["progress_track"]
@@ -465,7 +849,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
 
     # ⑦.5 结尾 CTA 引导帧（2026-08-30：片尾最后 4s 淡入，蔡格尼克+互动）
     # 只对短版（≤90s）启用——长版正片末尾是金句升华，不叠加引导
-    if "cta" in png_map and audio_dur <= 90:
+    if "cta" in png_map and audio_dur <= 90 and not no_cta:
         c_idx = png_map["cta"]
         c_st = max(0.0, audio_dur - 4.0)
         text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
@@ -501,7 +885,7 @@ def main():
         list(THEMES.keys()) + ["palace", "sunrise", "starry", "rain", "library",
                                "warm_home", "snow", "tech_city", "temple",
                                "arctic", "ww2", "ship", "hongkong", "pasture",
-                               "finance"])),
+                               "finance", "guyuan"])),
                     help="实景主题；auto=按内容自动选择（默认）；手动指定则整片使用该主题")
     ap.add_argument("--scene-from", default="auto", choices=["auto", "script", "manual"],
                     help="场景来源：auto=标记+自动检测，script=仅用标记，manual=仅用--theme")
@@ -511,7 +895,16 @@ def main():
     ap.add_argument("--fast", action="store_true", help="快速模式：crf 26（默认 preset faster；长视频/预览用）")
     ap.add_argument("--sfx", default="none", choices=["none", "tick"],
                     help="音效锚点（2026-08-30）：none=纯人声（默认）；tick=开场+每20s 低频柔和钟声（-36dB，听觉锚点不喧宾夺主）")
+    ap.add_argument("--pure-video", action="store_true",
+                    help="[兼容保留] 纯视频模式已为默认（2026-09-02 用户定案），显式传此参数无额外效果")
+    ap.add_argument("--legacy-stills", action="store_true",
+                    help="显式退回旧静态图 Ken Burns 路径（默认已纯视频：实拍视频原样播放，零静态图/零缩放）")
+    ap.add_argument("--no-cta", action="store_true",
+                    help="不叠结尾 CTA 引导帧（演示/预览；短片尾章卡有窗时防叠字）")
     args = ap.parse_args()
+    if args.legacy_stills and args.pure_video:
+        ap.error("--pure-video 与 --legacy-stills 互斥（纯视频已是默认，无需传 --pure-video）")
+    pure_video = not args.legacy_stills  # 纯视频默认（2026-09-02 用户定案，cron 无需额外传参）
 
     def _abs(p: str) -> str:
         pth = Path(p)
@@ -540,7 +933,11 @@ def main():
     if args.scene_from == "manual":
         theme_arg = args.theme if args.theme != "auto" else "desert"
     plan = scene_selector.select_scenes(script_text, theme_arg, audio_dur, args.audio)
-    print(f"🎬 场景规划: {len(plan.segments)} 段")
+    if pure_video and audio_dur > 90:
+        # 长片（10 分钟正文）长段子段化（~30s/子段），防"一章 100s 只循环同一段素材"；
+        # 短片≤90s 本就多段轮换且需保持章卡-黑场严格对齐，不拆
+        plan = _split_long_segments(plan, audio_dur)
+    print(f"🎬 场景规划: {len(plan.segments)} 段" + ("（纯视频子段化）" if pure_video else ""))
     for seg in plan.segments:
         print(f"   [{seg.start:.0f}s-{seg.end:.0f}s] {seg.theme}"
               + (f" {seg.chapter_title}" if seg.chapter_title else ""))
@@ -554,7 +951,19 @@ def main():
         print("🖼️ 加载本地素材库...")
         import scene_library
         plan = scene_library.load_plan_images(plan)
-        items = resolve_video_items(plan.images_with_durations())
+        if pure_video:
+            # 纯视频模式：每段 1 个实拍视频（images 仍加载，仅作章节卡背景虚化用）
+            items = _pure_video_items(plan)
+            print(f"🎬 纯视频模式：每段 1 段实拍视频（{len(items)} 段，零静态图）")
+        else:
+            # 短片/演示限帧（2026-09-02）：BOOKMADEBOOK_IMAGES_PER_SEG=N 时每段最多用 N 张静帧，
+            # 拉长单帧停留（默认不启用，10 分钟长片/60s 钩子节奏不受影响）
+            _cap = os.environ.get("BOOKMADEBOOK_IMAGES_PER_SEG")
+            if _cap:
+                _n = max(1, int(_cap))
+                for _seg in plan.segments:
+                    _seg.images = _seg.images[:_n]
+            items = resolve_video_items(plan.images_with_durations())
         images = [p for p, _, _ in items]
         durations = [d for _, d, _ in items]
         n_vid = sum(1 for _, _, k in items if k == "video")
@@ -562,7 +971,9 @@ def main():
 
         # 视频帧流（无音频）
         flt, png_inputs = make_filter(plan, audio_dur, quotes, book_title,
-                                      args.author, script_text, args.audio)
+                                      args.author, script_text, args.audio,
+                                      items=items, pure_video=pure_video,
+                                      no_cta=args.no_cta)
         video_mp4 = tmpdir / "video_noaudio.mp4"
         cmd = ["ffmpeg", "-y", "-v", "error"]
         # 图片输入用单帧（Ken Burns 由 zoompan 的 d 参数生成帧序列），
@@ -581,7 +992,10 @@ def main():
                 "-c:v", "libx264", "-preset", "faster",
                 "-crf", "26" if args.fast else "23",
                 "-t", f"{audio_dur}", str(video_mp4)]
-        print("🎬 合成视频（Ken Burns + 交叉溶解 + 金句）...")
+        if pure_video:
+            print("🎬 合成视频（实拍视频原样播放 + 黑场转场 + 章节卡/金句字卡）...")
+        else:
+            print("🎬 合成视频（Ken Burns + 交叉溶解 + 金句）...")
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=7200)
         if r.returncode != 0:
             print(f"❌ 合成失败: {r.stderr[-500:]}")

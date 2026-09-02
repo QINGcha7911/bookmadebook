@@ -202,6 +202,7 @@ def main():
     ap.add_argument("--download", type=int, default=0, help="下载前 N 张到本地")
     ap.add_argument("--video", action="store_true", help="搜视频")
     ap.add_argument("--verify", action="store_true", help="下载后 ffprobe 校验（竖版/≥1080/时长），不合格自动跳过补位；并抽帧拼 4×3 缩略图供 vision 目检")
+    ap.add_argument("--min-dur", type=float, default=0, help="视频最短时长（秒），短于该值跳过（2026-09-02 15s+ 运动镜头规则）")
     ap.add_argument("--json", action="store_true", help="输出 JSON")
     ap.add_argument("--size", default="w=2160", help="下载尺寸参数")
     ap.add_argument("--out", help="下载目录（默认 assets/scenes/<theme>）")
@@ -244,6 +245,8 @@ def main():
         info = f"#{i+1} [{r.get('w')}x{r.get('h')}] {r.get('alt','')[:50]}"
         if args.video:
             info = f"#{i+1} [{r.get('w')}x{r.get('h')} {r.get('duration')}s]"
+            if args.min_dur and r.get("duration", 0) < args.min_dur:
+                info += " (时长不足跳过)"
         print(info)
 
     if args.download > 0:
@@ -263,6 +266,9 @@ def main():
             if got >= args.download:
                 break
             if args.video:
+                if args.min_dur and r.get("duration", 0) < args.min_dur:
+                    print(f"  ⏭️ #{i+1} {r.get('duration')}s 短于 {args.min_dur:.0f}s，跳过")
+                    continue
                 dst = vdir / f"{idx+1:02d}.mp4"
                 url = r["url"]
                 desc = f"{r.get('duration')}s"

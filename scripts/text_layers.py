@@ -7,7 +7,8 @@
 - 安全框：x 140-920 / y 220-1600（小红书 UI 遮挡约束）
 """
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
+import re
 
 W, H = 1080, 1920
 
@@ -121,6 +122,91 @@ def render_chapter_tag(title: str, font_size: int = 40) -> Image.Image:
     d.text((x, y), title, font=font, fill=(255, 255, 255, 235),
            stroke_width=3, stroke_fill=(0, 0, 0, 160))
     return img
+
+
+def _chapter_no_title(title: str, idx: int) -> tuple:
+    """从章节标题推导「序号标签 + 正文标题」：第一章：XX → (一, XX)；开场/结尾 → (序/终, XX)"""
+    m = re.match(r"^第([一二三四五六七八九十\d]+)章[：:]?\s*(.*)$", title)
+    if m:
+        return m.group(1), m.group(2) or title
+    if title.startswith("开场"):
+        return "序", re.sub(r"^开场[：:]?\s*", "", title)
+    if title.startswith("结尾"):
+        return "终", re.sub(r"^结尾[：:]?\s*", "", title)
+    return str(idx + 1), title
+
+
+def render_chapter_card(no: str, title: str, bg_path=None,
+                        accent: tuple = (201, 160, 99)) -> Image.Image:
+    """章节卡（2026-09-02 新增）：全幅 1080×1920，背景=章节首帧场景虚化压暗，
+    上：序号标签 + 主题短线；中：章节标题（衬线大字）；下：压暗渐变保证可读性。
+    输出完全不透明 RGBA（alpha 全 255），由 ffmpeg overlay + fade 控制黑场进出。"""
+    # 底图：场景首帧虚化压暗；无图则深色渐变
+    bg = None
+    if bg_path and Path(bg_path).exists():
+        try:
+            bg = Image.open(str(bg_path)).convert("RGB").resize((W, H), Image.LANCZOS)
+            bg = bg.filter(ImageFilter.GaussianBlur(22))
+            bg = ImageEnhance.Brightness(bg).enhance(0.5)
+            bg = ImageEnhance.Color(bg).enhance(0.8)
+        except Exception:
+            bg = None
+    if bg is None:
+        bg = Image.new("RGB", (W, H), (16, 15, 14))
+        for k in range(0, H, 6):
+            alpha = int(40 * (1 - k / H))
+            bg.paste((16 + k // 60, 15 + k // 90, 14 + k // 120),
+                     (0, k, W, k + 6))
+    img = bg.convert("RGBA")
+    d = ImageDraw.Draw(img)
+
+    # 上下压暗渐变（文字可读性）
+    for k in range(0, 460, 4):
+        a = int(110 * (1 - k / 460))
+        d.rectangle([0, 1920 - 460 + k, W, 1920 - 460 + k + 4], fill=(0, 0, 0, a))
+        d.rectangle([0, k, W, k + 4], fill=(0, 0, 0, int(a * 0.6)))
+
+    # 序号标签（第X章 / 序 / 终）
+    tag = f"第 {no} 章" if no not in ("序", "终") else {"序": "序 章", "终": "终 章"}.get(no, no)
+    tag_font = get_font("serif", 44)
+    tx = _center_x(d, tag, tag_font)
+    d.text((tx + 3, 930 - 6), tag, font=tag_font, fill=(0, 0, 0, 160))
+    d.text((tx, 930), tag, font=tag_font, fill=accent, stroke_width=2, stroke_fill=(0, 0, 0, 140))
+
+    # 主题短线（书签意象）
+    d.rounded_rectangle([W // 2 - 46, 1002, W // 2 + 46, 1008], radius=3,
+                        fill=(accent[0], accent[1], accent[2], 230))
+
+    # 章节标题（衬线大字，语义断行 ≤2 行）
+    title_font = get_font("serif", 76)
+    lines = wrap_by_px(title, title_font, max_width=760)[:2]
+    line_h = 100
+    y0 = 1060
+    for li, ln in enumerate(lines):
+        x = _center_x(d, ln, title_font)
+        y = y0 + li * line_h
+        d.text((x + 4, y + 5), ln, font=title_font, fill=(0, 0, 0, 200))
+        d.text((x, y), ln, font=title_font, fill=(255, 255, 255, 255),
+               stroke_width=4, stroke_fill=(0, 0, 0, 200))
+    return img
+
+
+def render_chapter_cards(chapters: list, bg_paths: list = None) -> dict:
+    """渲染全部章节卡 → {card_<i>: PNG路径}；bg_paths 为每章首帧场景图（可缺省）"""
+    import tempfile
+    td = tempfile.TemporaryDirectory(prefix="lb_cards_")
+    _KEEPALIVE.append(td)
+    tmpdir = Path(td.name)
+    out = {}
+    for i, ch in enumerate(chapters):
+        if not ch:
+            continue
+        bg = (bg_paths[i] if bg_paths and i < len(bg_paths) and bg_paths[i] else None)
+        no, title = _chapter_no_title(ch, i)
+        p = tmpdir / f"card_{i}.png"
+        render_chapter_card(no, title, bg).save(p)
+        out[f"card_{i}"] = p
+    return out
 
 
 def render_quote(quote: str, quote_no: int = 0, total: int = 1,
