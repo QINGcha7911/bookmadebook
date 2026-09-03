@@ -17,7 +17,10 @@ webapp/
 ├── worker/
 │   └── src/worker.js       # Workers 后端（单文件，无 D1 时可内存存储）
 ├── test/
-│   └── api.test.mjs        # API 自测（node:test，11 用例）
+│   ├── api.test.mjs        # API 自测（node:test，15 用例，含 admin 接口）
+│   └── frontend-payload.test.mjs  # 前端真实 payload 回归（5 用例）
+├── daemon/
+│   └── daemon.py           # 本地生成工人：30s 轮询 paid 单 → 写稿+harness 生成 mp3
 ├── schema.sql              # D1 orders 表 + 索引
 ├── wrangler.toml           # Worker 配置（MOCK_PAY=1，D1 绑定占位 ID）
 ├── .dev.vars.example       # 本地环境变量示例
@@ -58,6 +61,48 @@ npm run static
 状态机：`pending → paid → generating → done / failed`（`refunded` 兜底）。
 `generating` 之后由本地 daemon（下一轮任务 3）消费推进。
 
+## daemon 管理接口（任务 3）
+
+| 方法 | 路径 | 鉴权 | 说明 |
+| --- | --- | --- | --- |
+| GET | `/api/admin/pending-orders` | `x-daemon-token` | 拉取 `status=paid` 待生成订单 |
+| PATCH | `/api/admin/order/:id` | `x-daemon-token` | 推进 `paid→generating→done/failed` |
+
+token 校验规则：header `x-daemon-token` 必须等于 `[vars] DAEMON_TOKEN`
+（本地默认 `dev-daemon-token-001`；生产用 `wrangler secret put DAEMON_TOKEN`）。
+状态机白名单：`paid→generating`、`generating→done/failed`，终态不可逆，
+非法跳转返回 409；未配置 token 时全部 401（fail-closed）。
+
+### 本地 daemon（任务 3）
+
+仓库根新增写稿器 `scripts/write_script.py`（DeepSeek 写稿，key 读
+`~/.hermes/config.yaml model.providers.deepseek`，不硬编码）。daemon 位于
+`webapp/daemon/daemon.py`：
+
+```bash
+cd webapp
+# 终端 A：Worker（含本地 D1）
+npm run dev
+
+# 终端 B：单次拉单处理（测试）——每笔 paid 订单执行：
+#   write_script（写稿）→ harness（质量门+TTS+输出验证）→ PATCH done/failed
+python3 daemon/daemon.py --once
+# 常驻 30s 轮询：
+python3 daemon/daemon.py
+# 链路测试不烧 DeepSeek（写稿用占位稿，TTS 仍真实）：
+python3 daemon/daemon.py --once --mock-script
+```
+
+约束与保障：
+- 并发=1：写稿与生成全程串行（参考 09-01 教训：并行 TTS/渲染会资源竞争中断）。
+- 产物落 `<仓库>/webapp-output/<order_id>/`（script.txt + mp3）；
+  订单 `done` 的 `download_url` 目前为 `/api/download/:id` 占位（R2 下一轮接真实链接）。
+- 单订单超时默认 60 分钟自动 `failed`；daemon 崩溃重启后，
+  `daemon/state.json` 中滞留 `generating` 超过超时的订单会被自动补 `failed`。
+- 日志：`webapp/daemon/daemon.log`（运行态产物已 gitignore）。
+
+## 定价（MVP）
+
 ### curl 自测示例
 
 ```bash
@@ -86,7 +131,7 @@ curl -s http://127.0.0.1:8787/api/order/<ORDER_ID>
 ## 自动化自测
 
 ```bash
-npm test   # node test/api.test.mjs，11 用例全绿（含限流/幂等/白名单校验）
+npm test   # node --test，20 用例全绿（API 15 + 前端 payload 回归 5）
 ```
 
 测试原理：`worker.js` 在无 `env.DB` 时自动退回内存 Map 存储，
@@ -127,9 +172,9 @@ wrangler secret put CORS_ORIGIN        # 生产站源
 # 爱发电真实回调验签：替换 worker.js handlePayCallback 的占位实现
 ```
 
-## 下一轮 TODO（任务 3+）
+## 下一轮 TODO（任务 4+）
 
-- 本地 daemon：30s 轮询 D1 中 `paid` 订单 → 调仓库流水线（streaming_pipeline.py 等）→ 推进 `generating/done/failed`。
-- R2 存储：产物上传 + `/api/download/:id` 签名链接下发。
+- R2 存储：产物上传 + `/api/download/:id` 签名链接下发（替换占位）。
 - 爱发电真实回调验签 + 订单号打通。
 - Turnstile 前端组件、邮箱验证码、儿童次数卡余额扣减。
+- 儿童线时长模型：儿童模板语速（120-170 字/分）与质量门引擎语速（~240）对齐。

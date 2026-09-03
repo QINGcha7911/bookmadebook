@@ -8,7 +8,10 @@
 
   /* ── 配置 ─────────────────────────────────────────────── */
   var DEV_WORKER = "http://127.0.0.1:8787";
-  var IS_DEV = location.hostname === "127.0.0.1" || location.hostname === "localhost";
+  // 无 DOM 环境（node 单测 import 本文件）时按生产同源处理，不访问 location
+  var HAS_DOM = typeof document !== "undefined" && typeof location !== "undefined";
+  var IS_DEV = HAS_DOM &&
+    (location.hostname === "127.0.0.1" || location.hostname === "localhost");
   // 本地静态页 8788 与 Worker 8787 不同源 → 显式指到 Worker；
   // 其余情况（Worker 直接访问 / 生产同源 Pages+Workers）用空串
   var API_BASE = IS_DEV && location.port !== "8787" ? DEV_WORKER : "";
@@ -133,6 +136,28 @@
   }
 
   /* ── 提交订单 ─────────────────────────────────────────── */
+  /* payload 构建抽成纯函数：handler 与 node 回归测试共用同一份真实逻辑 */
+  function buildAdultPayload(title, durationMin, voice, email) {
+    return {
+      product_type: "adult",
+      book_title: title,
+      duration_min: durationMin,
+      voice: voice,
+      email: email
+    };
+  }
+
+  /* declared 由 handler 在勾选校验通过后固定传 true（后端强制家长声明） */
+  function buildChildPayload(bookId, ageBand, email, declared) {
+    return {
+      product_type: "child",
+      book_id: bookId,
+      age_band: ageBand,
+      parent_declared: declared,
+      email: email
+    };
+  }
+
   function submitOrder(payload) {
     var btn = document.activeElement;
     if (btn) { btn.disabled = true; btn.textContent = "提交中…"; }
@@ -158,13 +183,7 @@
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
       toast("请输入正确的邮箱", true); return;
     }
-    submitOrder({
-      product_type: "adult",
-      book_title: title,
-      duration_min: Number(state.adultDuration),
-      voice: $("adult-voice").value,
-      email: email
-    });
+    submitOrder(buildAdultPayload(title, Number(state.adultDuration), $("adult-voice").value, email));
   }
 
   function onSubmitChild(e) {
@@ -178,13 +197,7 @@
     if (!$("child-declare").checked) {
       toast("请勾选「本人为未成年子女点播」声明", true); return;
     }
-    submitOrder({
-      product_type: "child",
-      book_id: bookId,
-      age_band: state.childAge,
-      parent_declared: true,
-      email: email
-    });
+    submitOrder(buildChildPayload(bookId, state.childAge, email, true));
   }
 
   /* ── 订单页渲染 ───────────────────────────────────────── */
@@ -324,5 +337,16 @@
     loadBooks();
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  if (HAS_DOM) document.addEventListener("DOMContentLoaded", init);
+
+  // 暴露 payload 构建器：浏览器挂 window，node 单测挂 globalThis
+  var testable = {
+    buildAdultPayload: buildAdultPayload,
+    buildChildPayload: buildChildPayload
+  };
+  if (typeof window !== "undefined") {
+    window.bookmadebook = testable;
+  } else {
+    globalThis.bookmadebook = testable;
+  }
 })();

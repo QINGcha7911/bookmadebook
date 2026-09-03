@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 import worker from '../worker/src/worker.js';
 
 // 测试环境：MOCK_PAY=1（允许模拟支付回调）；不设 TURNSTILE_SECRET（跳过人机验证）
-const env = { MOCK_PAY: '1' };
+const env = { MOCK_PAY: '1', DAEMON_TOKEN: 'test-token' };
 
 const BASE = 'http://127.0.0.1:8787';
 function call(path, { method = 'GET', body } = {}) {
@@ -157,5 +157,84 @@ describe('bookmadebook API 自测', () => {
   test('GET /api/order/:id 不存在 → 404', async () => {
     const res = await call('/api/order/BM-NOPE000');
     assert.equal(res.status, 404);
+  });
+
+  test('GET /api/admin/pending-orders：无 token → 401', async () => {
+    const res = await call('/api/admin/pending-orders');
+    assert.equal(res.status, 401);
+    assert.equal((await res.json()).ok, false);
+  });
+
+  test('GET /api/admin/pending-orders：错误 token → 401；正确 token → 200', async () => {
+    const bad = await worker.fetch(new Request(BASE + '/api/admin/pending-orders', {
+      headers: { 'x-daemon-token': 'wrong' },
+    }), env);
+    assert.equal(bad.status, 401);
+
+    const good = await worker.fetch(new Request(BASE + '/api/admin/pending-orders', {
+      headers: { 'x-daemon-token': 'test-token' },
+    }), env);
+    assert.equal(good.status, 200);
+    const data = await good.json();
+    assert.equal(data.ok, true);
+    assert.ok(Array.isArray(data.list));
+    // 只有 status=paid 的订单（前面测试里 adultId 已 mock 支付为 paid）
+    assert.ok(data.list.some((o) => o.order_id === adultId));
+    assert.ok(data.list.every((o) => o.status === 'paid'));
+  });
+
+  test('PATCH /api/admin/order/:id 状态机：paid→generating→done 且非法跳转被拒', async () => {
+    const headers = { 'Content-Type': 'application/json', 'x-daemon-token': 'test-token' };
+
+    // 先把儿童单 mock 支付为 paid（此前一直是 pending）
+    const pay = await call('/api/pay-callback', {
+      method: 'POST',
+      body: { order_id: childId, voucher: 'mock-child-paid' },
+    });
+    assert.equal(pay.status, 200);
+
+    // paid → generating（认领）
+    const claim = await worker.fetch(new Request(BASE + '/api/admin/order/' + childId, {
+      method: 'PATCH', headers, body: JSON.stringify({ status: 'generating' }),
+    }), env);
+    assert.equal(claim.status, 200);
+    assert.equal((await claim.json()).order.status, 'generating');
+
+    // 未支付订单不可直接 done（childId 此时 generating；测试 paid 跳转 done 用 adultId）
+    const skip = await worker.fetch(new Request(BASE + '/api/admin/order/' + adultId, {
+      method: 'PATCH', headers, body: JSON.stringify({ status: 'done' }),
+    }), env);
+    assert.equal(skip.status, 409); // paid 只允许 → generating
+
+    // generating → done（完成）
+    const done = await worker.fetch(new Request(BASE + '/api/admin/order/' + childId, {
+      method: 'PATCH', headers, body: JSON.stringify({ status: 'done' }),
+    }), env);
+    assert.equal(done.status, 200);
+    const doneBody = await done.json();
+    assert.equal(doneBody.order.status, 'done');
+    assert.equal(doneBody.order.download_url, '/api/download/' + childId); // R2 轮次前的占位
+
+    // 终态不可逆：done → failed 拒绝
+    const frozen = await worker.fetch(new Request(BASE + '/api/admin/order/' + childId, {
+      method: 'PATCH', headers, body: JSON.stringify({ status: 'failed' }),
+    }), env);
+    assert.equal(frozen.status, 409);
+  });
+
+  test('PATCH /api/admin/order/:id：无 token → 401；订单不存在 → 404', async () => {
+    const noAuth = await worker.fetch(new Request(BASE + '/api/admin/order/' + adultId, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'generating' }),
+    }), env);
+    assert.equal(noAuth.status, 401);
+
+    const missing = await worker.fetch(new Request(BASE + '/api/admin/order/BM-NOPE000', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-daemon-token': 'test-token' },
+      body: JSON.stringify({ status: 'generating' }),
+    }), env);
+    assert.equal(missing.status, 404);
   });
 });

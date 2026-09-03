@@ -49,8 +49,8 @@ const corsHeaders = (env) => {
   const origin = (env && env.CORS_ORIGIN) || '*';
   return {
     'Access-Control-Allow-Origin': origin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, x-daemon-token',
     'Access-Control-Max-Age': '86400',
   };
 };
@@ -110,6 +110,9 @@ function createMemoryStore() {
   const rows = new Map();
   const todayCount = async (email, day) =>
     [...rows.values()].filter((r) => r.email === email && r.created_day === day).length;
+  const getPendingPaid = async () =>
+    [...rows.values()].filter((r) => r.status === 'paid')
+      .sort((a, b) => (a.created_at < b.created_at ? -1 : 1));
   const insert = async (row) => { rows.set(row.id, { ...row }); };
   const get = async (id) => rows.get(id) || null;
   const patch = async (id, fields) => {
@@ -118,7 +121,7 @@ function createMemoryStore() {
     Object.assign(row, fields);
     return row;
   };
-  return { kind: 'memory', todayCount, insert, get, patch };
+  return { kind: 'memory', todayCount, getPendingPaid, insert, get, patch };
 }
 
 /** D1 实现 */
@@ -143,6 +146,12 @@ function createD1Store(db) {
         row.created_day, row.created_at, row.updated_at
       ).run();
   };
+  const getPendingPaid = async () => {
+    const { results } = await db
+      .prepare("SELECT * FROM orders WHERE status = 'paid' ORDER BY created_at ASC")
+      .all();
+    return results || [];
+  };
   const get = async (id) => {
     const r = await db.prepare('SELECT * FROM orders WHERE id = ?').bind(id).first();
     return r || null;
@@ -159,7 +168,7 @@ function createD1Store(db) {
     await db.prepare(`UPDATE orders SET ${sets.join(', ')} WHERE id = ?`).bind(...binds).run();
     return get(id);
   };
-  return { kind: 'd1', todayCount, insert, get, patch };
+  return { kind: 'd1', todayCount, getPendingPaid, insert, get, patch };
 }
 
 /** 取存储：env.DB 存在用 D1，否则内存（供 node 测试/无绑定时容错） */
@@ -318,6 +327,50 @@ async function handleGetOrder(env, id) {
   return json({ ok: true, order: publicOrder(row) });
 }
 
+// ── daemon 管理接口（任务 3：本地生成工人轮询拉单）────────────────────
+/** DAEMON_TOKEN 校验：header x-daemon-token。env 未配置 token 时一律拒绝（fail-closed）。 */
+function authDaemon(env, request) {
+  const expect = env && env.DAEMON_TOKEN;
+  if (!expect) return false;
+  const got = request.headers.get('x-daemon-token');
+  return !!got && got === expect;
+}
+
+/** 状态机白名单：只允许 paid→generating→done/failed（终态不可逆） */
+const ALLOWED_TRANSITIONS = {
+  paid: ['generating'],
+  generating: ['done', 'failed'],
+};
+
+/** GET /api/admin/pending-orders：拉取 status=paid 待生成订单（按创建时间先到先出） */
+async function handleAdminPending(env) {
+  const rows = await storeFor(env).getPendingPaid();
+  return { ok: true, count: rows.length, list: rows.map(publicOrder) };
+}
+
+/** PATCH /api/admin/order/:id：推进状态（daemon 认领/完成/失败） */
+async function handleAdminPatch(env, id, body) {
+  const target = body && body.status;
+  if (!target || !['generating', 'done', 'failed'].includes(target)) {
+    return { code: 400, body: { ok: false, error: '非法目标状态（仅 generating/done/failed）' } };
+  }
+  const store = storeFor(env);
+  const row = await store.get(id);
+  if (!row) return { code: 404, body: { ok: false, error: '订单不存在' } };
+  const allowed = ALLOWED_TRANSITIONS[row.status] || [];
+  if (!allowed.includes(target)) {
+    return {
+      code: 409,
+      body: { ok: false, error: `订单状态 ${row.status} 不允许转为 ${target}（应为 ${allowed.join('/') || '终态不可变'}）` },
+    };
+  }
+  const updated = await store.patch(id, {
+    status: target,
+    updated_at: new Date().toISOString(),
+  });
+  return { code: 200, body: { ok: true, order: publicOrder(updated) } };
+}
+
 /** 对外返回的订单视图（隐藏内部字段，预留下载位） */
 function publicOrder(row) {
   return {
@@ -379,6 +432,26 @@ export default {
       const r = await handleGetOrder(env, mOrder[1]);
       Object.entries(corsHeaders(env)).forEach(([k, v]) => r.headers.set(k, v));
       return r;
+    }
+
+    // GET /api/admin/pending-orders（daemon 30s 轮询拉单）
+    if (request.method === 'GET' && path === '/api/admin/pending-orders') {
+      if (!authDaemon(env, request)) {
+        return ok(env, { ok: false, error: 'unauthorized: 缺少/错误 x-daemon-token' }, 401);
+      }
+      return ok(env, await handleAdminPending(env));
+    }
+
+    // PATCH /api/admin/order/:id（daemon 推进状态机）
+    const mAdmin = path.match(/^\/api\/admin\/order\/([A-Za-z0-9-]+)$/);
+    if (request.method === 'PATCH' && mAdmin) {
+      if (!authDaemon(env, request)) {
+        return ok(env, { ok: false, error: 'unauthorized: 缺少/错误 x-daemon-token' }, 401);
+      }
+      let body = null;
+      try { body = await request.json(); } catch (e) { /* 非 JSON → 400 */ }
+      const r = await handleAdminPatch(env, mAdmin[1], body);
+      return ok(env, r.body, r.code);
     }
 
     // 兜底：API 404（静态页面由 Cloudflare Pages / 本地 python http.server 提供）

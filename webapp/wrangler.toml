@@ -7,6 +7,7 @@ compatibility_date = "2024-11-06"
 
 [vars]
 MOCK_PAY = "1"   # 1=允许模拟支付回调（开发用）；生产置 0，只信任爱发电真实回调
+DAEMON_TOKEN = "dev-daemon-token-001"   # daemon 轮询接口鉴权（生产用 wrangler secret put 覆盖）
 
 [[d1_databases]]
 binding = "DB"
