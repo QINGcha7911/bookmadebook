@@ -112,7 +112,12 @@ class CacheManager:
             entry = self._read(path.with_suffix(".meta.json"))
             if entry is None:
                 # 无 meta 但文件存在仍可用；顺手补一个
-                self.set_l2(text, voice, rate, volume, pitch, style_fp, path)
+                # 2026-09-03 fix: 原代码把 (volume, pitch, style_fp, path) 按位置传给了
+                # set_l2(text, voice, rate, audio_path, volume, pitch, style_fp)，
+                # 导致 audio_path 收到 "+0%"、style_fp 收到 Path → json.dump 崩溃
+                # → get_l2 抛异常 → 调用方（AI 声明插入）except 吞掉 → 声明静默缺失。
+                self.set_l2(text, voice, rate, path, volume=volume,
+                            pitch=pitch, style_fp=style_fp)
                 return path
             return path
         return None
