@@ -1,0 +1,359 @@
+/* ============================================================
+   私人听书工厂 · H5 样式
+   移动端优先：基础样式按 375px 起写，>=640px 加桌面容器
+   风格：简洁温暖（奶油底 + 暖棕主色），大按钮便于触屏
+   ============================================================ */
+
+:root {
+  --bg: #faf5ec;            /* 奶油底色 */
+  --card: #ffffff;
+  --ink: #3a2e26;           /* 主文字（暖黑） */
+  --ink-soft: #8a7a6c;      /* 次要文字 */
+  --accent: #c0653f;        /* 暖橙棕主色 */
+  --accent-deep: #a34e2c;
+  --accent-soft: #f6e6da;
+  --line: #ecdfcf;
+  --ok: #2e7d4f;
+  --bad: #c0392b;
+  --radius: 16px;
+  --shadow: 0 6px 20px rgba(122, 84, 45, 0.08);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+/* ── 顶部 ─────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #e9c9a8, #f2e2cd 55%, #faf5ec);
+  padding: 34px 20px 22px;
+  text-align: center;
+}
+.hero h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: var(--accent-deep);
+}
+.hero .slogan {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 14px 16px 40px;
+}
+
+/* ── Tab 切换 ─────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.tab {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── 卡片 / 表单 ──────────────────────────────────────── */
+.panel { display: none; }
+.panel.active { display: block; }
+.hidden { display: none !important; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+}
+.card h2 { margin: 0 0 2px; font-size: 19px; }
+.hint { margin: 0 0 16px; font-size: 13px; color: var(--ink-soft); }
+
+.field { display: block; margin-bottom: 16px; }
+.label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.sub { display: block; font-size: 12px; color: var(--ink-soft); margin-top: 5px; }
+
+input[type="text"], input[type="email"], select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;            /* >=16px 防 iOS 聚焦缩放 */
+  color: var(--ink);
+  background: #fffdf9;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  outline: none;
+  appearance: none;
+}
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(192, 101, 63, 0.15);
+}
+
+/* 分段选择（时长 / 年龄） */
+.seg {
+  display: flex;
+  gap: 8px;
+}
+.seg-item {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #fffdf9;
+  color: var(--ink-soft);
+  font-size: 15px;
+  padding: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.seg-item.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.voice-fixed {
+  padding: 11px 14px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  background: #fffaf3;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* 勾选声明 */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.check input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+.check.checked span { color: var(--ink); }
+
+/* 价格行 */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+}
+.price { font-size: 22px; font-weight: 700; color: var(--accent-deep); }
+.price i { font-style: normal; font-size: 13px; font-weight: 400; color: var(--ink-soft); }
+.price-sub { font-size: 12px; color: var(--ink-soft); text-align: right; }
+
+/* 按钮 */
+.btn-primary {
+  width: 100%;
+  border: 0;
+  background: var(--accent);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 14px 0;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:active { background: var(--accent-deep); }
+.btn-primary:disabled { background: #d8c9bb; cursor: not-allowed; }
+
+.btn-outline {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  color: var(--accent-deep);
+  font-weight: 600;
+  padding: 12px 0;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.btn-ghost {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fffdf9;
+  color: var(--ink-soft);
+  font-size: 14px;
+  padding: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.link-like {
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin-top: 14px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* ── 订单页 ───────────────────────────────────────────── */
+.order-head h2 { margin-bottom: 4px; }
+.order-id { margin: 0; font-size: 14px; color: var(--ink-soft); }
+.order-id b { color: var(--accent-deep); letter-spacing: 0.5px; }
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  margin: 18px 0 6px;
+  position: relative;
+}
+.steps::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 16px;
+  height: 2px;
+  background: var(--line);
+}
+.step {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  width: 25%;
+}
+.step i {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 700;
+}
+.step.done { color: var(--ok); }
+.step.done i { background: var(--ok); border-color: var(--ok); color: #fff; }
+.step.current { color: var(--accent-deep); font-weight: 600; }
+.step.current i { border-color: var(--accent); color: var(--accent-deep); }
+
+.order-meta {
+  margin: 14px 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.order-meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+}
+.order-meta > div + div { border-top: 1px solid var(--line); }
+.order-meta dt { color: var(--ink-soft); font-size: 13px; margin: 0; }
+.order-meta dd { margin: 0; font-size: 13px; text-align: right; word-break: break-all; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+.badge.done { background: #dff0e2; color: var(--ok); }
+.badge.failed, .badge.refunded { background: #f7deda; color: var(--bad); }
+
+.pay-box {
+  background: #fff8ef;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.pay-tip { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); }
+
+.order-actions {
+  display: grid;
+  gap: 10px;
+}
+
+/* ── Toast / 页脚 ─────────────────────────────────────── */
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  z-index: 99;
+  max-width: 90vw;
+  background: #3a2e26;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.toast.err { background: var(--bad); }
+
+.foot {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 12px;
+  padding: 0 16px 28px;
+}
+.foot p { margin: 0; }
+
+/* ── 桌面适配（宽度有限，仅居中） ─────────────────────── */
+@media (min-width: 640px) {
+  .wrap { padding-top: 20px; }
+  .card { padding: 26px 28px; }
+}

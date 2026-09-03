@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>私人听书工厂 · 想听什么就生成什么</title>
+  <meta name="description" content="输入书名，AI 帮你生成一本能听的精读有声书。成人点书 / 儿童专区。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>私人听书工厂</h1>
+      <p class="slogan">想听什么，就生成什么</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="toast" class="toast hidden" role="alert"></div>
+
+    <nav class="tabs" aria-label="点书类型">
+      <button type="button" class="tab active" data-tab="adult">成人点书</button>
+      <button type="button" class="tab" data-tab="child">儿童专区</button>
+    </nav>
+
+    <section id="panel-adult" class="panel active">
+      <form id="form-adult" class="card" novalidate>
+        <h2>点一本想听的书</h2>
+        <p class="hint">AI 精读 + 人声朗读，10 分钟讲透一本书</p>
+
+        <label class="field">
+          <span class="label">书名</span>
+          <input type="text" id="adult-title" name="book_title" maxlength="60"
+                 placeholder="例如：活着、人类简史" autocomplete="off">
+        </label>
+
+        <div class="field">
+          <span class="label">时长</span>
+          <div class="seg" id="adult-duration">
+            <button type="button" class="seg-item" data-value="10">10 分钟</button>
+            <button type="button" class="seg-item active" data-value="20">20 分钟</button>
+            <button type="button" class="seg-item" data-value="30">30 分钟</button>
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="label">音色</span>
+          <select id="adult-voice">
+            <option value="husky_tender">散文温柔沙哑（低沉治愈）</option>
+            <option value="hist_deep_male">历史深男（厚重沉稳）</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="label">接收邮箱</span>
+          <input type="email" id="adult-email" placeholder="you@example.com"
+                 autocomplete="email">
+          <span class="sub">生成完成后我们会发通知到该邮箱</span>
+        </label>
+
+        <div class="price-row">
+          <span class="price">¥9.9 <i>/ 条</i></span>
+          <span class="price-sub">约 20 分钟生成 · 支持重听</span>
+        </div>
+
+        <button type="submit" class="btn-primary">提交订单</button>
+      </form>
+    </section>
+
+    <section id="panel-child" class="panel">
+      <form id="form-child" class="card" novalidate>
+        <h2>儿童听书 · 家长点播</h2>
+        <p class="hint">精选公版经典，只做白名单内容，家长可控更安心</p>
+
+        <label class="field">
+          <span class="label">选择书单</span>
+          <select id="child-book">
+            <option value="">加载中…</option>
+          </select>
+          <span class="sub" id="child-book-note"></span>
+        </label>
+
+        <div class="field">
+          <span class="label">孩子年龄</span>
+          <div class="seg" id="child-age">
+            <button type="button" class="seg-item" data-value="3-6">3-6 岁</button>
+            <button type="button" class="seg-item active" data-value="7-12">7-12 岁</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label">音色</span>
+          <div class="voice-fixed">儿童音（温暖亲切）</div>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="child-declare">
+          <span>本人为未成年子女点播，已了解内容范围</span>
+        </label>
+
+        <label class="field">
+          <span class="label">接收邮箱</span>
+          <input type="email" id="child-email" placeholder="家长邮箱，用于接收通知"
+                 autocomplete="email">
+        </label>
+
+        <div class="price-row">
+          <span class="price">¥9.9 <i>/ 条</i></span>
+          <span class="price-sub">儿童次数卡（10 次 39 / 30 次 99）下一轮上线</span>
+        </div>
+
+        <button type="submit" class="btn-primary">提交点播</button>
+      </form>
+    </section>
+
+    <section id="order-view" class="panel hidden">
+      <div class="card order-card">
+        <div class="order-head">
+          <h2 id="order-type-title">订单已创建</h2>
+          <p class="order-id">订单号：<b id="order-id">—</b></p>
+        </div>
+
+        <div class="steps" aria-label="流程进度">
+          <div class="step" data-step="1"><i>1</i><span>下单</span></div>
+          <div class="step" data-step="2"><i>2</i><span>支付</span></div>
+          <div class="step" data-step="3"><i>3</i><span>生成</span></div>
+          <div class="step" data-step="4"><i>4</i><span>下载</span></div>
+        </div>
+
+        <dl class="order-meta">
+          <div><dt>书目</dt><dd id="order-book">—</dd></div>
+          <div><dt>音色</dt><dd id="order-voice">—</dd></div>
+          <div><dt>金额</dt><dd id="order-amount">—</dd></div>
+          <div><dt>状态</dt><dd><span id="order-status" class="badge">—</span></dd></div>
+          <div><dt>预计完成</dt><dd id="order-eta">—</dd></div>
+        </dl>
+
+        <div id="pay-box" class="pay-box hidden">
+          <p class="pay-tip">订单待支付，支付后自动开始生成</p>
+          <a id="pay-link" class="btn-outline" href="#" target="_blank" rel="noopener">跳转爱发电支付</a>
+          <button id="mock-pay" type="button" class="btn-ghost">模拟支付成功（本地开发）</button>
+        </div>
+
+        <div class="order-actions">
+          <button id="refresh-status" type="button" class="btn-ghost">刷新状态</button>
+          <button id="download-btn" type="button" class="btn-primary" disabled>下载音频（R2 接入后开放）</button>
+        </div>
+
+        <button id="back-home" type="button" class="link-like">← 再点一本</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>私人听书工厂 · AI 生成内容 · 请合理使用</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

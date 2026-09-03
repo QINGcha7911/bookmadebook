@@ -1,0 +1,16 @@
+{
+  "name": "bookmadebook-webapp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "自助点书生成 Web MVP：Cloudflare Pages H5 + Workers API + D1",
+  "scripts": {
+    "dev": "wrangler dev --port 8787",
+    "db:init": "wrangler d1 execute bookmadebook_orders --local --file=./schema.sql",
+    "static": "python3 -m http.server 8788 -d public",
+    "test": "node test/api.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}
