@@ -1,0 +1,52 @@
+# bookmadebook · 阿里云函数计算 FC 3.0 部署配置（Serverless Devs）
+# 部署前提（008 控制台操作，详见 迁移方案.md「008 控制台操作清单」）：
+#   1. 开通 FC 3.0 + 表格存储 Tablestore（个人按量），创建 OTS 实例
+#   2. 建表：node fc/schema.ots.mjs（或控制台手工按 store-ots.mjs 表结构建）
+#   3. RAM 建最小权限子账号 AK（FC 部署 + OTS 读写），勿用主账号
+#   4. 配置 s 访问密钥：s config add --AccessKeyID xxx --AccessKeySecret xxx
+# 部署：s deploy -y   （region 建议 cn-hongkong：自定义域名免 ICP 备案）
+# ⚠️ 密钥一律环境变量注入（FC 控制台 → 函数 → 配置 → 环境变量），严禁写进本文件提交
+edition: 3.0.0
+name: bookmadebook
+access: "default"
+
+vars:
+  region: cn-hongkong          # 中国香港：自定义域名免备案；如需大陆地域改 cn-shanghai 等（需备案）
+  # codeUri 指向 fc/ 目录；部署时本机需能连 OTS 公网（daemon 直连同理）
+
+services:
+  bookmadebook-api:
+    component: fc3
+    props:
+      region: ${vars.region}
+      runtime: nodejs20         # FC 3.0 Node.js 20（原生支持 .mjs ESM 入口）
+      handler: index.handler    # 入口：fc/index.mjs 的具名导出 handler
+      memorySize: 256           # MVP 足够（无状态、纯计算+读 public/）
+      timeout: 30               # 单请求超时秒数（API 均为轻量操作，无需长超时）
+      codeUri: ./fc             # 上传 fc/ 目录（含 index.mjs / store-ots.mjs）
+      environmentVariables:     # 生产环境变量；AK 建议在控制台覆盖或改用 FC 角色
+        MOCK_PAY: "0"           # 生产禁止模拟支付回调（改 1 仅限本地/联调）
+        DAEMON_TOKEN: "<见 008 控制台：用控制台环境变量注入强随机串>"
+        TABLESTORE_ENDPOINT: "https://<instance>.<region>.ots.aliyuncs.com"
+        TABLESTORE_INSTANCE: "<instance>"
+        # TABLESTORE_AK_ID / TABLESTORE_AK_SECRET：控制台注入，勿写本文件
+      triggers:
+        - type: http
+          name: httpTrigger
+          qualifier: LATEST
+          config:
+            authType: anonymous  # 订单 API 面向 C 端匿名；admin 接口靠 DAEMON_TOKEN 鉴权
+            disableURLInternet: false
+            methods: ["GET", "POST", "PATCH", "OPTIONS", "HEAD"]
+      # 自定义域名（生产 H5 必需：fcapp.run 默认域名强制下载不渲染，见 迁移方案.md）
+      # 若 s 组件对 customDomains 支持不佳，可改在控制台「自定义域名」页手动创建：
+      #   域名 CNAME → FC 提供的域名；路径 / 路由到本函数；协议 HTTP/HTTPS
+      customDomains:
+        - domainName: book.example.com   # 008 替换为真实域名
+          protocol: HTTP                 # 上 HTTPS 需在控制台传证书或配免费证书
+          routeConfigs:
+            - path: /*
+              serviceName: bookmadebook-api
+              functionName: bookmadebook-api
+              qualifier: LATEST
+              methods: ["GET", "POST", "PATCH", "OPTIONS", "HEAD"]

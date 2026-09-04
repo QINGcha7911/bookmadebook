@@ -5,6 +5,10 @@
 
 > 本轮范围：前端下单全流程 + 后端 API + D1 schema（本地可跑，mock 支付）。
 > 下一轮：daemon（本地电脑 30s 轮询拉单）、R2 存储下载、爱发电真实回调、Turnstile 前端组件、真实部署。
+>
+> **平台迁移（任务 5）**：Cloudflare → 阿里云 FC 3.0 + Tablestore 已完成代码迁移，
+> 详见 [迁移方案.md](./迁移方案.md)（部署步骤/坑清单/008 控制台操作清单）。
+> CF 原路径（wrangler dev / D1）保留可用，FC 只新增 `fc/` 适配层复用 `worker.js` 的 route。
 
 ## 目录结构
 
@@ -15,10 +19,16 @@ webapp/
 │   ├── style.css           # 简洁温暖样式
 │   └── app.js              # 下单、状态轮询、模拟支付（开发）
 ├── worker/
-│   └── src/worker.js       # Workers 后端（单文件，无 D1 时可内存存储）
+│   └── src/worker.js       # Workers 后端（route 已抽出导出；无 D1 时可内存存储）
+├── fc/                     # 阿里云 FC 3.0 适配层（任务 5 新增，见 迁移方案.md）
+│   ├── index.mjs           # FC handler：event↔Request 转换 + public/ 静态同源托管
+│   ├── store-ots.mjs       # Tablestore 存储适配（worker.js 5 方法接口）
+│   ├── schema.ots.mjs      # OTS 建表脚本（幂等）
+│   └── s.yaml              # Serverless Devs 部署配置（cn-hongkong 免备案）
 ├── test/
 │   ├── api.test.mjs        # API 自测（node:test，15 用例，含 admin 接口）
-│   └── frontend-payload.test.mjs  # 前端真实 payload 回归（5 用例）
+│   ├── frontend-payload.test.mjs  # 前端真实 payload 回归（5 用例）
+│   └── fc-handler.test.mjs # FC 适配层测试（9 用例：event 转换/静态托管/全链路）
 ├── daemon/
 │   └── daemon.py           # 本地生成工人：30s 轮询 paid 单 → 写稿+harness 生成 mp3
 ├── schema.sql              # D1 orders 表 + 索引
@@ -149,7 +159,14 @@ npm test   # node --test，20 用例全绿（API 15 + 前端 payload 回归 5）
 - 成人单条 ¥9.9。
 - 儿童线当前演示价 ¥9.9/条；次数卡（10 次 ¥39 / 30 次 ¥99）下一轮接入抵扣。
 
-## 部署步骤（下一轮由 008 浏览器执行，先留档）
+## 部署步骤
+
+- **Cloudflare 路径（CF 保留可用）**：见下「CF 部署步骤（旧）」。本地开发：`npm run dev` + `npm run static`。
+- **阿里云路径（任务 5 迁移目标）**：见 [迁移方案.md](./迁移方案.md) §4 部署步骤。
+  快速入口：`fc/schema.ots.mjs` 建表 → 控制台注入环境变量 → `s deploy -y` → 自定义域名 CNAME。
+  daemon 无需改代码：`BOOKMADE_BASE_URL=<FC域名>` + `DAEMON_TOKEN` 切换即可。
+
+## CF 部署步骤（旧，008 浏览器执行，先留档）
 
 ```bash
 # 1) 创建 D1 数据库，拿真实 database_id

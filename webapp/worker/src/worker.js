@@ -171,8 +171,9 @@ function createD1Store(db) {
   return { kind: 'd1', todayCount, getPendingPaid, insert, get, patch };
 }
 
-/** 取存储：env.DB 存在用 D1，否则内存（供 node 测试/无绑定时容错） */
+/** 取存储（优先级）：env.store（平台注入，如 FC+Tablestore）→ env.DB（D1）→ 内存（node 测试容错） */
 function storeFor(env) {
+  if (env && env.store) return env.store;
   if (env && env.DB) return createD1Store(env.DB);
   if (!storeFor._mem) storeFor._mem = createMemoryStore();
   return storeFor._mem;
@@ -393,8 +394,12 @@ function publicOrder(row) {
 }
 
 // ── 入口 ──────────────────────────────────────────────────────────────
-export default {
-  async fetch(request, env) {
+/**
+ * 统一路由（可被 CF Workers 默认导出 / FC 适配层 / 测试直接复用）。
+ * 存储解耦：env.store（自定义存储对象，须含 todayCount/getPendingPaid/insert/get/patch）
+ * 或 env.DB（D1）；均缺省时退回内存 Map（纯 node 测试）。
+ */
+export async function route(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
 
@@ -454,7 +459,12 @@ export default {
       return ok(env, r.body, r.code);
     }
 
-    // 兜底：API 404（静态页面由 Cloudflare Pages / 本地 python http.server 提供）
+    // 兜底：API 404（静态页面由 CF Pages / FC 静态分支 / 本地 http.server 提供）
     return json({ ok: false, error: 'Not Found', path }, 404);
+}
+
+export default {
+  async fetch(request, env) {
+    return route(request, env);
   },
 };
