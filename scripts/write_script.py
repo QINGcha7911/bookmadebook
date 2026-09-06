@@ -101,7 +101,8 @@ def find_deepseek_config() -> dict:
 
 
 def call_deepseek(cfg: dict, messages: list, timeout: int = 240) -> str:
-    """调 chat/completions，返回纯文本内容。"""
+    """调 chat/completions，返回纯文本内容。
+    含重试：网络抖动/RemoteDisconnected 时指数退避重试（最多 3 次）。"""
     if not cfg.get("api_key"):
         raise RuntimeError(
             "未找到 DeepSeek API Key：请设置 DEEPSEEK_API_KEY 环境变量，"
@@ -121,18 +122,30 @@ def call_deepseek(cfg: dict, messages: list, timeout: int = 240) -> str:
             "Content-Type": "application/json",
             "Authorization": f"Bearer {cfg['api_key']}",
         })
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            raw = resp.read().decode("utf-8")
-    except urllib.error.HTTPError as exc:
-        detail = ""
+    # 重试：URLError（含 RemoteDisconnected）/5xx 指数退避最多 3 次
+    import time as _t
+    last_exc = None
+    for attempt in range(3):
         try:
-            detail = exc.read().decode("utf-8", errors="replace")
-        except Exception:
-            detail = str(exc)
-        raise RuntimeError(f"DeepSeek API HTTP {exc.code}: {detail[:300]}") from exc
-    except urllib.error.URLError as exc:
-        raise RuntimeError(f"DeepSeek API 请求失败: {exc.reason}") from exc
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8")
+            break
+        except urllib.error.HTTPError as exc:
+            detail = ""
+            try:
+                detail = exc.read().decode("utf-8", errors="replace")
+            except Exception:
+                detail = str(exc)
+            if exc.code < 500 or attempt == 2:
+                raise RuntimeError(f"DeepSeek API HTTP {exc.code}: {detail[:300]}") from exc
+            last_exc = exc
+        except (urllib.error.URLError, ConnectionError, TimeoutError, OSError) as exc:
+            last_exc = exc
+            if attempt == 2:
+                raise RuntimeError(f"DeepSeek API 请求失败（重试 3 次后）: {exc}") from exc
+        _t.sleep(2 * (attempt + 1))
+    else:
+        raise RuntimeError(f"DeepSeek API 请求失败（重试 3 次后）: {last_exc}") from last_exc
     try:
         data = json.loads(raw)
         return data["choices"][0]["message"]["content"].strip()
@@ -282,7 +295,7 @@ def generate_mock(book_title: str, target_minutes: float,
     # 目标字数按质量门下限拼凑（每段展开为 2-3 个变体句，段落互不相同）
     texts = []
     idx = 0
-    while char_count("\n".join(texts)) < floor and idx < 40:
+    while char_count("\n".join(texts)) < floor + 600 and idx < 120:
         base = scenes[idx % len(scenes)]
         variant = f"这是第 {idx+1} 段。{base} 具体到情节里，主人公的每一次选择都藏着作者的深意。"
         if idx % 3 == 0:
