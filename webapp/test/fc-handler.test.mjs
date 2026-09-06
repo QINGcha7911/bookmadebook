@@ -82,6 +82,31 @@ describe('FC 3.0 适配层', () => {
     assert.equal(data.list.length, 10);
   });
 
+  test('handler：FC3 nodejs 真实形态——event 为 Buffer 时先 JSON.parse 再路由', async () => {
+    // 2026-09-06 实测：FC 3.0 nodejs20 HTTP 触发器以 Buffer 传入 event（本地直调传对象不暴露）
+    const raw = Buffer.from(JSON.stringify(makeEvent('GET', '/api/books')));
+    const res = await handler(raw, {});
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).ok, true);
+  });
+
+  test('handler：event 为字符串（JSON）时兼容解析', async () => {
+    const raw = JSON.stringify(makeEvent('GET', '/api/books'));
+    const res = await handler(raw, {});
+    assert.equal(res.statusCode, 200);
+    assert.equal(JSON.parse(res.body).ok, true);
+  });
+
+  test('handler：Buffer event + POST 下单全链路（真实平台形态）', async () => {
+    const payload = { email: 'fc-buf@example.com', product_type: 'adult', book_title: '活着', duration_min: 10, voice: 'husky_tender' };
+    const raw = Buffer.from(JSON.stringify(makeEvent('POST', '/api/order', { body: JSON.stringify(payload) })));
+    const res = await handler(raw, {});
+    assert.equal(res.statusCode, 201);
+    const data = JSON.parse(res.body);
+    assert.equal(data.ok, true);
+    assert.match(data.order.order_id, /^BM-/);
+  });
+
   test('handler：POST /api/order 成人线 → 201（适配层 + 业务路由打通）', async () => {
     const payload = { email: 'fc-adult@example.com', product_type: 'adult', book_title: '沉思录', duration_min: 10, voice: 'hist_deep_male' };
     const res = await handler(makeEvent('POST', '/api/order', { body: JSON.stringify(payload) }), {});
