@@ -19,19 +19,23 @@ webapp/
 │   ├── style.css           # 简洁温暖样式
 │   └── app.js              # 下单、状态轮询、模拟支付（开发）
 ├── worker/
-│   └── src/worker.js       # Workers 后端（route 已抽出导出；无 D1 时可内存存储）
-├── fc/                     # 阿里云 FC 3.0 适配层（任务 5 新增，见 迁移方案.md）
+│   └── src/worker.js       # Workers 后端（route 已抽出导出；orderView 支持签名下载注入）
+├── fc/                     # 阿里云 FC 3.0 适配层（任务 5 迁移 + 任务 4 OSS，见 迁移方案.md）
 │   ├── index.mjs           # FC handler：event↔Request 转换 + public/ 静态同源托管
+│   ├── oss.mjs             # OSS V1 签名下载 URL（24h 临时，node:crypto 零依赖）
 │   ├── store-ots.mjs       # Tablestore 存储适配（worker.js 5 方法接口）
 │   ├── schema.ots.mjs      # OTS 建表脚本（幂等）
 │   └── s.yaml              # Serverless Devs 部署配置（cn-hongkong 免备案）
 ├── test/
 │   ├── api.test.mjs        # API 自测（node:test，15 用例，含 admin 接口）
 │   ├── frontend-payload.test.mjs  # 前端真实 payload 回归（5 用例）
-│   └── fc-handler.test.mjs # FC 适配层测试（9 用例：event 转换/静态托管/全链路）
+│   ├── fc-handler.test.mjs # FC 适配层测试（11 用例：event 转换/静态托管/OSS 签名全链路）
+│   └── oss-sign.test.mjs   # OSS 签名 URL 测试（7 用例：回归锚点/过期/env 注入）
 ├── daemon/
-│   └── daemon.py           # 本地生成工人：30s 轮询 paid 单 → 写稿+harness 生成 mp3
-├── schema.sql              # D1 orders 表 + 索引
+│   ├── daemon.py           # 本地生成工人：30s 轮询 → 写稿+harness 生成 mp3 → OSS 直传
+│   ├── oss_upload.py       # OSS 直传封装（.env/重试/mock，见文件头）
+│   └── test_oss_upload.py  # oss_upload 单测（fake oss2，8 用例）
+├── schema.sql              # D1 orders 表 + 索引（含 oss_key 列）
 ├── wrangler.toml           # Worker 配置（MOCK_PAY=1，D1 绑定占位 ID）
 ├── .dev.vars.example       # 本地环境变量示例
 └── package.json
@@ -95,12 +99,20 @@ cd webapp
 npm run dev
 
 # 终端 B：单次拉单处理（测试）——每笔 paid 订单执行：
-#   write_script（写稿）→ harness（质量门+TTS+输出验证）→ PATCH done/failed
+#   write_script（写稿）→ harness（质量门+TTS+输出验证）→ OSS 直传 → PATCH done/failed
 python3 daemon/daemon.py --once
 # 常驻 30s 轮询：
 python3 daemon/daemon.py
 # 链路测试不烧 DeepSeek（写稿用占位稿，TTS 仍真实）：
 python3 daemon/daemon.py --once --mock-script
+
+# OSS 交付（任务 4）：mp3 生成后直传 OSS orders/{order_id}.mp3，用户查单拿 24h 签名下载链接。
+# 生产配置（也可放 webapp/daemon/.env，已 gitignore）：
+export OSS_ENDPOINT="https://oss-cn-hongkong.aliyuncs.com"
+export OSS_BUCKET="bookmadebook-audio"
+export OSS_AK_ID="<daemon 上传 AK>"; export OSS_AK_SECRET="<secret>"
+# 本地无真实 OSS 联调：BOOKMADE_OSS_MOCK=1 模拟上传（订单仍 done，仅无真实链接）
+# 上传失败自动重试 3 次，仍失败 → 订单 failed（不静默丢单）。详见 迁移方案.md §5.1。
 ```
 
 约束与保障：

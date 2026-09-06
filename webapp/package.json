@@ -8,7 +8,7 @@
     "dev": "wrangler dev --port 8787",
     "db:init": "wrangler d1 execute bookmadebook_orders --local --file=./schema.sql",
     "static": "python3 -m http.server 8788 -d public",
-    "test": "node --test test/api.test.mjs test/frontend-payload.test.mjs test/fc-handler.test.mjs"
+    "test": "node --test test/api.test.mjs test/frontend-payload.test.mjs test/fc-handler.test.mjs test/oss-sign.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^3.90.0"

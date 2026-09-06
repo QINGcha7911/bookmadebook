@@ -36,7 +36,7 @@ const ORDER_FIELDS = [
   'id', 'email', 'product_type', 'book_title', 'book_id',
   'duration_min', 'voice', 'age_band', 'parent_declared',
   'amount_fen', 'status', 'provider', 'voucher', 'eta_min',
-  'created_day', 'created_at', 'updated_at',
+  'oss_key', 'created_day', 'created_at', 'updated_at',
 ];
 
 /** 整数属性列：写入须用 Long 包装，读回是 Long 对象 */

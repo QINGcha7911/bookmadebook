@@ -307,7 +307,7 @@ async function handlePayCallback(env, body) {
 
   if (row.status === 'paid' || row.status === 'generating' || row.status === 'done') {
     // 幂等：已支付的回调直接成功返回，避免前端重试报错
-    return json({ ok: true, order: publicOrder(row) });
+    return json({ ok: true, order: await orderView(env, row) });
   }
   if (row.status === 'failed' || row.status === 'refunded') {
     return json({ ok: false, error: `订单当前状态 ${row.status}，无法支付` }, 409);
@@ -325,7 +325,7 @@ async function handleGetOrder(env, id) {
   const store = storeFor(env);
   const row = await store.get(id);
   if (!row) return json({ ok: false, error: '订单不存在' }, 404);
-  return json({ ok: true, order: publicOrder(row) });
+  return json({ ok: true, order: await orderView(env, row) });
 }
 
 // ── daemon 管理接口（任务 3：本地生成工人轮询拉单）────────────────────
@@ -365,11 +365,13 @@ async function handleAdminPatch(env, id, body) {
       body: { ok: false, error: `订单状态 ${row.status} 不允许转为 ${target}（应为 ${allowed.join('/') || '终态不可变'}）` },
     };
   }
-  const updated = await store.patch(id, {
-    status: target,
-    updated_at: new Date().toISOString(),
-  });
-  return { code: 200, body: { ok: true, order: publicOrder(updated) } };
+  // done 时透传 daemon 的 OSS 对象 key（orders/{order_id}.mp3），供查询时现场签名
+  const fields = { status: target, updated_at: new Date().toISOString() };
+  if (target === 'done' && typeof body.oss_key === 'string' && /^orders\/[A-Za-z0-9-]+\.mp3$/.test(body.oss_key)) {
+    fields.oss_key = body.oss_key;
+  }
+  const updated = await store.patch(id, fields);
+  return { code: 200, body: { ok: true, order: await orderView(env, updated) } };
 }
 
 /** 对外返回的订单视图（隐藏内部字段，预留下载位） */
@@ -388,9 +390,23 @@ function publicOrder(row) {
     eta_min: row.eta_min,
     created_at: row.created_at,
     updated_at: row.updated_at,
-    // 下载地址：daemon + R2（下一轮任务）就绪后，done 状态返回真实签名链接
+    // 下载地址占位：无 OSS 注入（CF/本地测试）时保持 /api/download/:id；
+    // FC 生产由 orderView 现场替换为 OSS 签名 URL（24h 临时有效）
     download_url: row.status === 'done' ? `/api/download/${row.id}` : null,
   };
+}
+
+/**
+ * 对外订单视图（含真实下载链接）：status=done 且平台注入 env.signDownloadUrl
+ * （FC 侧 OSS 签名器）时，把占位下载地址替换为临时签名 URL。
+ * 存储/签名均为注入接口，worker.js 保持平台无关（CF Workers / FC / 测试通用）。
+ */
+async function orderView(env, row) {
+  const view = publicOrder(row);
+  if (row.status === 'done' && env && typeof env.signDownloadUrl === 'function') {
+    view.download_url = (await env.signDownloadUrl(row)) || null;
+  }
+  return view;
 }
 
 // ── 入口 ──────────────────────────────────────────────────────────────

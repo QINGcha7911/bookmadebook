@@ -24,6 +24,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { route } from '../worker/src/worker.js';
 import { createOtsStoreFromEnv } from './store-ots.mjs';
+import { buildSignDownloadUrl } from './oss.mjs';
 
 // normalize 会保留结尾分隔符，去掉它以便 startsWith 前缀判界（防目录穿越）
 const PUBLIC_DIR = path.normalize(fileURLToPath(new URL('../public/', import.meta.url))).replace(/[\\/]+$/, '');
@@ -67,6 +68,14 @@ function buildEnv() {
     throw new Error('TABLESTORE_ENDPOINT 已配置但 store 创建失败：请检查 TABLESTORE_INSTANCE / TABLESTORE_AK_ID / TABLESTORE_AK_SECRET');
   }
   if (otsStoreCache) env.store = otsStoreCache; // 平台注入优先于 D1/内存
+
+  // OSS 签名下载：daemon 上传完成后订单查询现场签名（done → 真实下载链接）。
+  // 配了 OSS_BUCKET 却建不出签名器（缺 AK/region）→ fail-fast，避免生产静默发占位链接。
+  const signDownloadUrl = buildSignDownloadUrl(process.env);
+  if (process.env.OSS_BUCKET && !signDownloadUrl) {
+    throw new Error('OSS_BUCKET 已配置但签名器创建失败：请检查 OSS_REGION / OSS_AK_ID / OSS_AK_SECRET');
+  }
+  if (signDownloadUrl) env.signDownloadUrl = signDownloadUrl; // worker route 注入点
   return env;
 }
 

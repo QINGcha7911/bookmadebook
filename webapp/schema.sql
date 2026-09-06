@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS orders (
   status         TEXT NOT NULL DEFAULT 'pending', -- 状态机：pending→paid→generating→done/failed；refunded
   provider       TEXT,                            -- 支付渠道（mock=aifadian_mock / 正式=aifadian）
   voucher        TEXT,                            -- 支付凭证号（爱发电回调）
+  oss_key        TEXT,                            -- OSS 对象 key：orders/{order_id}.mp3（daemon 直传后写入，任务 4）
   eta_min        INTEGER,                         -- 预计完成所需分钟（占位估算，daemon 轮次细化）
   created_day    TEXT NOT NULL,                   -- 下单日（Asia/Shanghai YYYY-MM-DD，限流用）
   created_at     TEXT NOT NULL,                   -- 创建时间 ISO8601
@@ -24,3 +25,6 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE INDEX IF NOT EXISTS idx_orders_email_day ON orders(email, created_day);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+
+-- 已存在的旧库执行以下迁移（CREATE TABLE 不会自动加列）：
+-- ALTER TABLE orders ADD COLUMN oss_key TEXT;

@@ -256,13 +256,18 @@
       "https://afdian.com/order/" + order.order_id + "?from=bookmadebook-mvp"); // 占位链接
     $("mock-pay").classList.toggle("hidden", !IS_DEV);
 
-    // 下载按钮：R2 + daemon（下一轮）就绪前恒为占位
+    // 下载按钮：done 且后端返回 OSS 签名 URL → 新标签下载；占位路径（OSS 未配）→ 提示
     var dl = $("download-btn");
-    if (order.status === "done") {
+    var dlUrl = (order.status === "done" && order.download_url) || "";
+    if (dlUrl && dlUrl.indexOf("/api/download/") !== 0) {
+      dl.disabled = false;
+      dl.textContent = "下载音频";
+      dl.onclick = function () { window.open(dlUrl, "_blank"); };
+    } else if (order.status === "done") {
       dl.disabled = false;
       dl.textContent = "下载音频";
       dl.onclick = function () {
-        toast("下载通道（R2 存储）下一轮接入，敬请期待");
+        toast(order.download_url ? "下载通道（OSS）未就绪，请稍后刷新" : "下载链接生成中，请稍后刷新");
       };
     } else {
       dl.disabled = true;

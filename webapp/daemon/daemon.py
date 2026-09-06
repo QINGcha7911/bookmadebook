@@ -5,12 +5,16 @@
   A 段 写稿  scripts/write_script.py（DeepSeek 讲书稿，可选 --mock 占位稿）
   B 段 生成  scripts/harness.py --file 稿 --target-minutes N --voice V
        （内部含 质量门 → streaming_pipeline TTS → 输出验证，fail-closed）
-  完成 → PATCH done；失败/超时 → PATCH failed。
+  完成 → 直传 OSS → PATCH done（带 oss_key）；失败/超时 → PATCH failed。
 
 约束（09-01 教训固化）：
   - 并发 = 1：写稿与生成全程串行，禁止并行（并行 TTS/渲染会资源竞争中断）
-  - 产物落本地 webapp-output/<order_id>/，下载走 R2 是下一轮任务
+  - 产物落本地 webapp-output/<order_id>/；mp3 由本进程直传 OSS（orders/{id}.mp3，
+    不经 FC 中转，见 daemon/oss_upload.py；上传失败重试后仍失败 → 订单 failed）
   - daemon 崩溃后重启：state.json 中滞留 generating 超过超时的订单自动补 failed
+
+OSS 配置（可选，生产必需）：见 daemon/oss_upload.py 文件头（.env 或环境变量）。
+本地联调无真实 OSS：设 BOOKMADE_OSS_MOCK=1 模拟上传；不配则跳过上传（仅 done+本地路径）。
 
 用法:
     python daemon.py --once                 # 拉一次并处理完退出（测试用）
@@ -31,6 +35,13 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
+
+# 同目录模块：OSS 直传（含 .env 加载，见 oss_upload.py 文件头）
+try:
+    import oss_upload
+except ImportError:  # 以模块方式被 import（测试等）时把 daemon/ 加入搜索路径
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import oss_upload
 
 # ── 路径与配置 ──────────────────────────────────────────────────────────
 DAEMON_DIR = Path(__file__).resolve().parent
@@ -175,17 +186,25 @@ def process_order(order: dict, args, state: dict) -> None:
         mark_failed(order_id, state, f"生成失败: {exc}", args)
         return
 
-    # ── 完成：PATCH done（download_url 占位由后端派生；R2 下一轮接真实链接）──
-    code, resp = http_json(args.base_url, "PATCH", f"/api/admin/order/{order_id}",
-                           args.token, {"status": "done"})
-    if code != 200:
-        mark_failed(order_id, state, f"PATCH done 失败 HTTP {code}: {resp.get('error')}", args)
+    # ── 完成：直传 OSS → PATCH done（带 oss_key，后端查询时签发 24h 签名下载链接）──
+    try:
+        uploader = oss_upload.get_uploader()   # None = OSS 未配置（本地联调降级）
+        patch_body = {"status": "done"}
+        if uploader is not None:
+            patch_body["oss_key"] = uploader(order_id, str(audio_path))
+        code, resp = http_json(args.base_url, "PATCH", f"/api/admin/order/{order_id}",
+                               args.token, patch_body)
+        if code != 200:
+            raise RuntimeError(f"HTTP {code}: {resp.get('error')}")
+    except Exception as exc:   # noqa: BLE001 —— 上传/回执失败都不静默丢单
+        mark_failed(order_id, state, f"OSS 上传/PATCH done 失败: {exc}", args)
         return
     state[order_id].update({"status": "done", "audio": str(audio_path),
                             "script": str(script_path), "done_at": time.time()})
     save_state(state)
-    log.info("🎉 订单 %s 完成: %s → done（本地产物 %s）",
-             order_id, book_title, audio_path)
+    log.info("🎉 订单 %s 完成: %s → done（本地产物 %s%s）",
+             order_id, book_title, audio_path,
+             f"，OSS key={patch_body.get('oss_key')}" if patch_body.get("oss_key") else "，未配 OSS 跳过上传")
 
 
 def mark_failed(order_id: str, state: dict, reason: str, args) -> None:

@@ -27,6 +27,11 @@ describe('FC 3.0 适配层', () => {
     process.env.DAEMON_TOKEN = 'fc-test-token';
     delete process.env.TABLESTORE_ENDPOINT; // 确保走内存 store，不连真库
     delete process.env.TABLESTORE_INSTANCE;
+    // OSS 签名（任务 4）：配齐 → buildEnv 注入 signDownloadUrl，done 订单返回真实链接
+    process.env.OSS_BUCKET = 'bookmadebook-audio';
+    process.env.OSS_REGION = 'cn-hongkong';
+    process.env.OSS_AK_ID = 'FCTESTAK';
+    process.env.OSS_AK_SECRET = 'FCTESTSECRET';
   });
 
   test('toRequest：GET + query + headers 转换正确', () => {
@@ -100,6 +105,52 @@ describe('FC 3.0 适配层', () => {
   test('handler：admin 接口无 token → 401（FC 环境变量 DAEMON_TOKEN 注入）', async () => {
     const res = await handler(makeEvent('GET', '/api/admin/pending-orders'), {});
     assert.equal(res.statusCode, 401);
+  });
+
+  test('handler：done 订单带 oss_key → GET /api/order/:id 返回 OSS 签名下载 URL', async () => {
+    // 下单 → 模拟支付 → daemon 认领 → daemon 上传后 PATCH done（带 oss_key）
+    const order = JSON.parse((await handler(makeEvent('POST', '/api/order', {
+      body: JSON.stringify({ email: 'oss@example.com', product_type: 'adult', book_title: '活着', duration_min: 10, voice: 'husky_tender' }),
+    }), {})).body).order;
+    const id = order.order_id;
+    const pay = await handler(makeEvent('POST', '/api/pay-callback', {
+      body: JSON.stringify({ order_id: id, voucher: 'v-oss' }),
+    }), {});
+    assert.equal(pay.statusCode, 200);
+    const auth = (method, path, body) => makeEvent(method, path, {
+      headers: { 'x-daemon-token': 'fc-test-token' }, body: JSON.stringify(body),
+    });
+    assert.equal((await handler(auth('PATCH', '/api/admin/order/' + id, { status: 'generating' }), {})).statusCode, 200);
+    const done = await handler(auth('PATCH', '/api/admin/order/' + id, { status: 'done', oss_key: `orders/${id}.mp3` }), {});
+    assert.equal(done.statusCode, 200);
+
+    // 用户查询：download_url 是 24h OSS 签名 URL（不再是 /api/download/ 占位）
+    const view = JSON.parse((await handler(makeEvent('GET', '/api/order/' + id), {})).body).order;
+    assert.equal(view.status, 'done');
+    assert.match(view.download_url, new RegExp(`^https://bookmadebook-audio\.cn-hongkong\.aliyuncs\.com/orders/${id}\.mp3\?`));
+    const u = new URL(view.download_url);
+    assert.equal(u.searchParams.get('OSSAccessKeyId'), 'FCTESTAK');
+    assert.ok(u.searchParams.get('Signature'));
+    const expires = Number(u.searchParams.get('Expires'));
+    assert.ok(expires > Math.floor(Date.now() / 1000));          // 未过期
+    assert.ok(expires <= Math.floor(Date.now() / 1000) + 24 * 3600 + 5); // 24h 内
+    assert.ok(!view.download_url.includes('/api/download/'));
+  });
+
+  test('handler：done 但无 oss_key（历史/未上传）→ download_url 为 null', async () => {
+    const order = JSON.parse((await handler(makeEvent('POST', '/api/order', {
+      body: JSON.stringify({ email: 'oss2@example.com', product_type: 'adult', book_title: '沉思录', duration_min: 10, voice: 'hist_deep_male' }),
+    }), {})).body).order;
+    const id = order.order_id;
+    await handler(makeEvent('POST', '/api/pay-callback', { body: JSON.stringify({ order_id: id }) }), {});
+    const auth = (method, path, body) => makeEvent(method, path, {
+      headers: { 'x-daemon-token': 'fc-test-token' }, body: JSON.stringify(body),
+    });
+    await handler(auth('PATCH', '/api/admin/order/' + id, { status: 'generating' }), {});
+    await handler(auth('PATCH', '/api/admin/order/' + id, { status: 'done' }), {}); // 无 oss_key
+    const view = JSON.parse((await handler(makeEvent('GET', '/api/order/' + id), {})).body).order;
+    assert.equal(view.status, 'done');
+    assert.equal(view.download_url, null);
   });
 
   test('toFcResponse：二进制 body 走 base64（isBase64Encoded=true）', async () => {

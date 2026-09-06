@@ -4,3 +4,5 @@ node_modules/
 daemon/output/
 daemon/daemon.log
 daemon/state.json
+daemon/.env
+fc/.env
