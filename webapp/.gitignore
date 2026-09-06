@@ -6,3 +6,4 @@ daemon/daemon.log
 daemon/state.json
 daemon/.env
 fc/.env
+deploy/

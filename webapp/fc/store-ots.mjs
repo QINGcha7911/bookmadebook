@@ -77,6 +77,7 @@ function otsRowToRow(row) {
 
 // ── 单列 STRING 主键的辅助参数 ─────────────────────────────────────────
 const pkOf = (id) => [{ id: String(id) }];
+const pkOfKey = (key) => [{ key: String(key) }]; // rate_limits 表主键列名是 key
 const rangeAll = () => ({
   inclusiveStartPrimaryKey: [{ id: TableStore.INF_MIN }],
   exclusiveEndPrimaryKey: [{ id: TableStore.INF_MAX }],
@@ -107,7 +108,7 @@ export function createOtsStoreFromEnv(env = process.env) {
     async todayCount(email, day) {
       const data = await client.getRow({
         tableName: RATE_TABLE,
-        primaryKey: pkOf(`${email}#${day}`),
+        primaryKey: pkOfKey(`${email}#${day}`),
         maxVersions: 1,
       });
       const row = data && data.row && data.row.attributes ? data.row.attributes : [];
@@ -158,7 +159,7 @@ export function createOtsStoreFromEnv(env = process.env) {
         await client.putRow({
           tableName: RATE_TABLE,
           condition: new TableStore.Condition(TableStore.RowExistenceExpectation.EXPECT_NOT_EXIST, null),
-          primaryKey: pkOf(key),
+          primaryKey: pkOfKey(key),
           attributeColumns: [{ count: TableStore.Long.fromNumber(1) }],
         });
       } catch (putErr) {
@@ -166,7 +167,7 @@ export function createOtsStoreFromEnv(env = process.env) {
         await client.updateRow({
           tableName: RATE_TABLE,
           condition: new TableStore.Condition(TableStore.RowExistenceExpectation.IGNORE, null),
-          primaryKey: pkOf(key),
+          primaryKey: pkOfKey(key),
           updateOfAttributeColumns: [{ INCREMENT: [{ count: TableStore.Long.fromNumber(1) }] }],
         });
       }

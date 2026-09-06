@@ -155,7 +155,14 @@ export async function toFcResponse(res) {
 }
 
 /** FC 3.0 入口（s.yaml handler: index.handler） */
-export async function handler(event, context) {
+export async function handler(rawEvent, context) {
+  // FC 3.0 nodejs 运行时以 Buffer 传入 event（HTTP 触发器）；先解析为对象
+  let event = rawEvent;
+  if (Buffer.isBuffer(rawEvent)) {
+    event = JSON.parse(rawEvent.toString('utf8'));
+  } else if (typeof rawEvent === 'string') {
+    event = JSON.parse(rawEvent);
+  }
   const req = toRequest(event);
   const url = new URL(req.url);
 
