@@ -562,24 +562,33 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
     return out
 
 def _place_text_window(want: float, hold: float, busy: list, dur: float,
-                       min_hold: float = 2.4) -> tuple:
+                       min_hold: float = 2.4, early_tol: float = 1.0) -> tuple:
     """在 busy（已排序的占用窗 [(s,e)]）的空闲缝里，为一条字卡找 [ts,te]。
-    起点尽量 ≥ want；窗口长度 ≤ hold 且 ≥ min_hold；找不到返回 None。"""
+    起点尽量贴近 want；窗口长度 ≤ hold 且 ≥ min_hold；找不到返回 None。
+
+    2026-09-07 修复：禁止把字卡倒填进 want 之前的大空隙（曾导致金句卡
+    倒序堆在开场：want≈362s 的卡被塞进 24-30s）。只接受起点 ≥ want-early_tol
+    的缝隙；want 落在忙窗内时顺延到其后的缝；放不下则返回 None（宁可缺，
+    不早出、不错位）。"""
     if not busy:
         start = max(0.3, want)
         if start < dur - 0.3:
             return start, min(dur - 0.3, start + hold)
         return None
+    floor = max(0.0, want - early_tol)
     cursor = 0.0
     for a, b in busy:
         if a > cursor + min_hold + 0.2:
             gap_s, gap_e = cursor, a
-            # 缝隙放不下完整 hold 时起始尽量回退填满（≥ gap_s+0.3 防与上窗淡出重叠）
-            start = max(gap_s + 0.3, min(max(want, gap_s + 0.3),
-                                         gap_e - 0.3 - hold))
-            h = min(hold, gap_e - 0.3 - start)
-            if h >= min_hold:
-                return start, start + h
+            # 缝隙整体早于可用下限 → 不可倒填，跳过找后面的缝
+            usable_s = max(gap_s + 0.3, floor)
+            max_start = gap_e - 0.3 - min_hold
+            if usable_s <= max_start:
+                # 起点尽量贴近 want（缝内 clamp，且不早于 floor）
+                start = min(max(want, usable_s), max_start)
+                h = min(hold, gap_e - 0.3 - start)
+                if h >= min_hold:
+                    return start, start + h
         cursor = max(cursor, b)
     if cursor < dur - 1.0:
         start = max(cursor + 0.3, want)
@@ -747,18 +756,16 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     card_wins = []
     if chapters:
         # 段数=章节数（标记驱动）时直接用 plan 段起点——与 xfade 黑场边界严格对齐
-        # （生产环境该起点即 CHAP 时间；无 CHAP 时按字数比例，与段边界同源）
         plan_segs = getattr(plan, "segments", [])
         if len(plan_segs) == len(chapters):
             chapter_times = [seg.start for seg in plan_segs]
         else:
-            fallback_chapter_times = _fallback_chapter_times(
+            # 段数≠章节数（TTS 子段化/长片）时禁止拿音频 CHAP 起点当章节起点：
+            # MP3 CHAP 是 TTS 分段标记（Part N，数量≈TTS 表演块），与讲书稿
+            # 「## 章节」无关，硬取会把章节卡全压到开场（2026-09-07 芒果街
+            # 验收打回）。一律按 ## 标题在稿中的字符位置比例映射到音频时间轴。
+            chapter_times = _fallback_chapter_times(
                 chapters, script_text, audio_dur)
-            chapter_times = [
-                audio_chapter_starts[ci] if ci < len(audio_chapter_starts)
-                else fallback_chapter_times[ci]
-                for ci in range(len(chapters))
-            ]
         for ci, ch in enumerate(chapters):
             if ci == 0:
                 continue
@@ -818,6 +825,11 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             # 短版（≤90s）金句显示 6s（3-4 句字卡不重叠）；长版 12s
             quote_hold = 6.0 if audio_dur <= 90 else 12.0
             want = _clip_display_start(quote_times[qi], audio_dur)
+            # 末句升华金句：线性映射按全长(含片尾 AI 声明 ~6.8s)会把稿末
+            # 内容整体后移最多 ~7s，若落在最后 9s 内则拉回声明起点前，
+            # 让字卡盖住旁白尾句并保持到结尾（2026-09-07 芒果街修复）
+            if is_last and audio_dur - want <= 9.0 and not has_cta:
+                want = max(0.0, audio_dur - 9.0)
             # 末句若天然靠近片尾（无 CTA）则意图保持到结尾（升华收束）
             if is_last and audio_dur - want <= 18 and not has_cta:
                 hold = max(2.4, audio_dur - want - 0.3)
