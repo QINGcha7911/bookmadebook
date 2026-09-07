@@ -41,7 +41,7 @@ def to_windows_path(p: str) -> str:
     return r.stdout.strip() if r.returncode == 0 else p
 
 
-def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 18,
+def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 26,
                ffmpeg_exe: str | None = None) -> bool:
     """用 Windows ffmpeg.exe + hevc_qsv 编码。成功返回 True。"""
     exe = ffmpeg_exe or find_windows_ffmpeg()
@@ -50,12 +50,19 @@ def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 18,
         return False
     src_w = to_windows_path(os.path.abspath(src))
     dst_w = to_windows_path(os.path.abspath(dst))
-    # ICQ 质量模式（实测 q18≈2.1Mbps 与 x265 2M 画质持平）；
-    # VBR/ABR 定码率在部分驱动下码率参数失效，ICQ 最稳
+    # ICQ 质量模式。quality 26≈2Mbps≈164MB/10min（2026-09-07 真实 10min 视频标定，
+    # 与交付规格 x265 2Mbps ≈160MB 对齐；测试片简单场景 q18≈2.1M 会低估真实码率）
+    # -c:a copy：保留原音频流，勿重编码（门禁响度/时长检查依赖原音频）
+    # -map_metadata -1 -map_chapters -1：丢弃源 mp4 的 encd/chapter 元数据引用，
+    #   否则 Windows muxer 会打成一条超长 bin_data 伪轨（实测 668s vs 正片 619s），
+    #   播放器 seek 拖动时时间轴被干扰 → 音画不同步（2026-09-07 用户实测反馈）
     cmd = [exe, "-y", "-v", "error", "-i", src_w,
+           "-map", "0:v:0", "-map", "0:a:0",
+           "-map_metadata", "-1", "-map_chapters", "-1",
            "-c:v", "hevc_qsv", "-global_quality", str(quality),
-           "-preset", "medium", "-movflags", "+faststart", dst_w]
-    print(f"  ⚡ QSV 硬编: {' '.join(cmd[:6])} ... -global_quality {quality}")
+           "-c:a", "copy", "-preset", "medium",
+           "-movflags", "+faststart", dst_w]
+    print(f"  ⚡ QSV 硬编: ... -global_quality {quality} (≈2Mbps/10min 规格)")
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
     except Exception as exc:
@@ -87,7 +94,7 @@ def main():
     ap.add_argument("input", help="输入视频（中间档）")
     ap.add_argument("output", help="输出视频（高清交付档）")
     ap.add_argument("--bitrate", default="2M", help="码率（回退软编用）")
-    ap.add_argument("--quality", type=int, default=18, help="QSV ICQ 质量（18≈2.1Mbps）")
+    ap.add_argument("--quality", type=int, default=26, help="QSV ICQ 质量（26≈2Mbps/10min 交付规格）")
     args = ap.parse_args()
 
     exe = find_windows_ffmpeg()
