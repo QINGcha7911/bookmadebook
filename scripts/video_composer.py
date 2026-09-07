@@ -849,21 +849,39 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             busy.sort()
 
     # ④⑤ 进度条：轨道常驻 + 填充 crop 增长
+    # 2026-09-07 提速②：常驻层先 crop 内容 bbox 再定位 overlay——混合面积
+    # 从全屏 1080×1920 降到内容区（track 781×7/wm 112×28/badge 182×47），
+    # 4 常驻层实测 66.7s→33.6s（120s 样本）。fill 只裁高度(1080×15)保留
+    # 动态宽度 crop（iw=1080 不变，进度表达式语义不变），overlay 落到 y=1523。
     pt_idx = png_map["progress_track"]
-    text_parts.append(f"[{png_base+pt_idx}:v]format=rgba[pt]")
-    text_parts.append(f"[{prev_v}][pt]overlay=0:0[t_pt]")
+    text_parts.append(f"[{png_base+pt_idx}:v]format=rgba,"
+                      f"crop=781:7:120:1530,"
+                      f"pad=781:7:0:0:black@0[pt]")
+    text_parts.append(f"[{prev_v}][pt]overlay=120:1530[t_pt]")
     prev_v = "t_pt"
     pf_idx = png_map["progress_fill"]
     text_parts.append(f"[{png_base+pf_idx}:v]format=rgba,"
-                      f"crop=w=max(2\\,iw*min(t/{audio_dur}\\,1)):h=ih[pf]")
-    text_parts.append(f"[{prev_v}][pf]overlay=0:0[t_pf]")
+                      f"crop=1080:15:0:1523,"
+                      f"crop=w=max(2\\,iw*min(t/{audio_dur}\\,1)):h=15[pf]")
+    text_parts.append(f"[{prev_v}][pf]overlay=0:1523[t_pf]")
     prev_v = "t_pf"
 
-    # ⑥ 水印
+    # ⑥ 水印（crop 区域动态取 PNG 实际内容 bbox——文字长度可变，写死会截断）
     if "watermark" in png_map:
         w_idx = png_map["watermark"]
-        text_parts.append(f"[{png_base+w_idx}:v]format=rgba[wm]")
-        text_parts.append(f"[{prev_v}][wm]overlay=0:0[wm_out]")
+        wm_path = png_inputs[w_idx]
+        wx, wy, wx2, wy2 = 0, 0, 1, 1
+        if HAS_PIL:
+            try:
+                with Image.open(wm_path) as _im:
+                    _bb = _im.getbbox()
+                if _bb:
+                    wx, wy, wx2, wy2 = _bb
+            except Exception:
+                pass
+        text_parts.append(f"[{png_base+w_idx}:v]format=rgba,"
+                          f"crop={wx2-wx}:{wy2-wy}:{wx}:{wy}[wm]")
+        text_parts.append(f"[{prev_v}][wm]overlay={wx}:{wy}[wm_out]")
         prev_v = "wm_out"
 
     # ⑦.5 结尾 CTA 引导帧（2026-08-30：片尾最后 4s 淡入，蔡格尼克+互动）
@@ -877,11 +895,12 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         text_parts.append(f"[{prev_v}][cta]overlay=0:0[cta_out]")
         prev_v = "cta_out"
 
-    # ⑧ AI 生成角标（合规标识，常驻最上层）
+    # ⑧ AI 生成角标（合规标识，常驻最上层）——crop 内容区(182×47@839,1800)再定位
     if "ai_badge" in png_map:
         a_idx = png_map["ai_badge"]
-        text_parts.append(f"[{png_base+a_idx}:v]format=rgba[ab]")
-        text_parts.append(f"[{prev_v}][ab]overlay=0:0,format=yuv420p[vout]")
+        text_parts.append(f"[{png_base+a_idx}:v]format=rgba,"
+                          f"crop=182:47:839:1800[ab]")
+        text_parts.append(f"[{prev_v}][ab]overlay=839:1800,format=yuv420p[vout]")
     else:
         text_parts.append(f"[{prev_v}]format=yuv420p[vout]")
 
