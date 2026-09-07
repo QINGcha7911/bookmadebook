@@ -600,7 +600,16 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     items: 外部构造好的素材列表（None=内部按静帧展平+视频替换）
     pure_video: 纯视频模式（2026-09-02 用户定案）——素材原样播放，
                 零静态图/零 Ken Burns/零缩放增强，只做 cover 裁切+fps 对齐
-    no_cta: 不叠结尾 CTA 引导帧（演示/预览用；章节卡有尾窗时防叠）"""
+    no_cta: 不叠结尾 CTA 引导帧（演示/预览用；章节卡有尾窗时防叠）
+    返回 (flt, png_inputs, png_windows)：png_windows[i]=(start,end) 为该 PNG
+    的显示窗口（None=全程常驻），供 main 用 -itsoffset 延迟输入缩短每层
+    实际参与 overlay 的时长——2026-09-07 提速：17 层 PNG 原全部全程
+    -loop 1 -t audio_dur 输入，实测每层全程 overlay ~0.13s/输出秒，
+    10min 片仅文字层就吃掉 ~20min（22min 合成里的大头）；
+    时窗层改短输入后几乎免费（窗口外无帧 → overlay 透传）。"""
+    # 收集每层 PNG 显示窗口 [start,end]（None=全程）——key=层名，末尾按输入序对齐
+    # 默认 (0,0)=层已生成但 filter 未引用（幽灵层如长片 CTA/首章卡），给极短输入即止
+    win_by_name: dict = {}
     # 章节标题提取（## 标题）——先于素材循环，供情绪调色/章节卡/转场使用
     chapters = []
     for line in script_text.splitlines():
@@ -729,7 +738,6 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         png_map[k] = len(png_inputs) - 1
     n_png = len(png_inputs)
     png_base = n  # PNG 输入基础偏移 = 图片输入数
-
     text_parts = []
     prev_v = prev
     # ── 文字时间窗排程（2026-09-02 用户打回修复：任何时刻最多一组字卡）──
@@ -775,6 +783,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         bk_fade_out = min(bk_fade_out, card_wins[0][1] - 0.3 - 0.8 - 0.2)
     bk_fade_out = max(0.6, bk_fade_out)
     bk_idx = png_map["book"]
+    win_by_name["book"] = (0.0, min(audio_dur, bk_fade_out + 0.8 + 0.2))
     text_parts.append(f"[{png_base+bk_idx}:v]format=rgba,"
                       f"fade=t=in:st=0:d=0.3:alpha=1,"
                       f"fade=t=out:st={bk_fade_out:.2f}:d=0.8:alpha=1[bk]")
@@ -784,6 +793,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     # 生成章节卡 overlay（窗口已先占位）
     for ci, cin, cout in card_wins:
         c_idx = png_map[f"card_{ci}"]
+        win_by_name[f"card_{ci}"] = (max(0.0, cin - 0.2), min(audio_dur, cout + 0.2))
         text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
                           f"fade=t=in:st={cin}:d=0.4:alpha=1,"
                           f"fade=t=out:st={cout-0.5}:d=0.5:alpha=1[card{ci}]")
@@ -822,6 +832,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             else:
                 fade_out = f",fade=t=out:st={te-0.8:.2f}:d=0.8:alpha=1"
             q_idx = png_map[qk]
+            win_by_name[qk] = (max(0.0, ts - 0.2), min(audio_dur, te + 0.2))
             text_parts.append(f"[{png_base+q_idx}:v]format=rgba,"
                               f"fade=t=in:st={ts+0.5:.2f}:d=0.8:alpha=1{fade_out}[q{qi}]")
             text_parts.append(f"[{prev_v}][q{qi}]overlay=0:0[p{qi}]")
@@ -829,6 +840,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             # 出处：仅最后一句（与金句同窗，属同一组文字）
             if is_last and "attribution" in png_map:
                 a_idx = png_map["attribution"]
+                win_by_name["attribution"] = (max(0.0, ts - 0.2), min(audio_dur, te + 0.2))
                 text_parts.append(f"[{png_base+a_idx}:v]format=rgba,"
                                   f"fade=t=in:st={ts+0.5:.2f}:d=0.8:alpha=1{fade_out}[attr]")
                 text_parts.append(f"[{prev_v}][attr]overlay=0:0[p_attr]")
@@ -859,6 +871,7 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     if "cta" in png_map and audio_dur <= 90 and not no_cta:
         c_idx = png_map["cta"]
         c_st = max(0.0, audio_dur - 4.0)
+        win_by_name["cta"] = (c_st, audio_dur)
         text_parts.append(f"[{png_base+c_idx}:v]format=rgba,"
                           f"fade=t=in:st={c_st}:d=0.5:alpha=1[cta]")
         text_parts.append(f"[{prev_v}][cta]overlay=0:0[cta_out]")
@@ -873,7 +886,18 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         text_parts.append(f"[{prev_v}]format=yuv420p[vout]")
 
     parts.extend(text_parts)
-    return ";".join(parts), png_inputs
+    # 按 png_inputs 顺序输出窗口（reverse png_map: idx→name）
+    # 常驻层（全程参与 overlay）显式 None；已记录窗口的层用窗口；其余幽灵层 (0,0)
+    PERMANENT = {"progress_track", "progress_fill", "watermark", "ai_badge"}
+    idx_to_name = {v: k for k, v in png_map.items()}
+    png_windows = []
+    for i in range(len(png_inputs)):
+        name = idx_to_name[i]
+        if name in PERMANENT:
+            png_windows.append(None)
+        else:
+            png_windows.append(win_by_name.get(name, (0.0, 0.0)))
+    return ";".join(parts), png_inputs, png_windows
 
 
 def get_duration(audio: str) -> float:
@@ -977,7 +1001,7 @@ def main():
         print(f"✅ 使用 {len(images)} 段素材（实拍视频 {n_vid} 段 + 静态图 {len(images)-n_vid} 段）")
 
         # 视频帧流（无音频）
-        flt, png_inputs = make_filter(plan, audio_dur, quotes, book_title,
+        flt, png_inputs, png_windows = make_filter(plan, audio_dur, quotes, book_title,
                                       args.author, script_text, args.audio,
                                       items=items, pure_video=pure_video,
                                       no_cta=args.no_cta)
@@ -992,9 +1016,16 @@ def main():
                 cmd += ["-stream_loop", "-1", "-i", str(path)]
             else:
                 cmd += ["-i", str(path)]
-        # 文字层 PNG 输入
-        for png in png_inputs:
-            cmd += ["-loop", "1", "-t", str(audio_dur), "-i", str(png)]
+        # 文字层 PNG 输入（2026-09-07 提速：时窗层按显示窗口延迟+限时输入，
+        # 窗口外无帧 → overlay 透传零成本；仅常驻层全程输入）
+        for png, win in zip(png_inputs, png_windows):
+            if win is None:
+                cmd += ["-loop", "1", "-t", str(audio_dur), "-i", str(png)]
+            else:
+                st, et = win
+                dur = max(0.5, et - st)
+                cmd += ["-itsoffset", f"{st:.3f}", "-loop", "1",
+                        "-t", f"{dur:.3f}", "-i", str(png)]
         cmd += ["-filter_complex", flt, "-map", "[vout]",
                 "-c:v", "libx264", "-preset", "faster",
                 "-crf", "26" if args.fast else "23",
