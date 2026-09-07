@@ -28,6 +28,7 @@ os.chdir(Path(__file__).parent)
 import sys
 import tempfile
 from pathlib import Path
+import numpy as np
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -445,9 +446,17 @@ def _probe_video_dur(path) -> float:
 
 
 def _clip_motion(path, samples: int = 4) -> float:
-    """快速运动量估计：1s 间隔抽 samples+1 帧，相邻帧灰度差均值。
+    """快速运动量估计：1s 间隔抽 samples+1 帧，相邻帧**逐像素灰度差均值**。
+
     用于纯视频选材——优先"有运动镜头"（2026-09-02 素材铁律），
-    避免选中近乎静止的室内/长焦段导致画面像静态图。结果按素材缓存。"""
+    避免选中近乎静止的室内/长焦段导致画面像静态图。结果按素材缓存。
+
+    2026-09-07 修复：原实现用整体亮度均值差（sum(px)/len），对暖色调画面
+    明暗微变（烛火闪烁）误报高运动，对内容真实平移（镜头横移/走动）漏报——
+    实测 04.mp4(像素差13.6%最动感) 仅 0.71 分、07.mp4(3.6%近乎静止) 反得 3.94 最高分，
+    导致选材优先选中静止素材（用户反馈"画面太慢"）。改为 36×64 逐像素差均值，
+    与人工目检/帧差实测一致（动感 04/15 高分、静止 07/11/14 低分）。
+    """
     key = (str(path), samples)
     if key in _VID_PROBE_CACHE:
         return _VID_PROBE_CACHE[key]
@@ -465,21 +474,19 @@ def _clip_motion(path, samples: int = 4) -> float:
         except Exception:
             _VID_PROBE_CACHE[key] = 0.0
             return 0.0
-        lums = []
+        grays = []
         for i in range(1, samples + 2):
             p = Path(td) / f"f_{i:02d}.png"
             if p.exists():
                 try:
-                    from PIL import Image
                     im = Image.open(p).convert("L")
-                    px = list(im.getdata())
-                    lums.append(sum(px) / len(px))
+                    grays.append(np.asarray(im, dtype=np.float32))
                 except Exception:
                     pass
-        if len(lums) < 2:
+        if len(grays) < 2:
             _VID_PROBE_CACHE[key] = 0.0
             return 0.0
-        diffs = [abs(lums[i] - lums[i - 1]) for i in range(1, len(lums))]
+        diffs = [float(np.abs(grays[i] - grays[i - 1]).mean()) for i in range(1, len(grays))]
         _VID_PROBE_CACHE[key] = sum(diffs) / len(diffs)
         return _VID_PROBE_CACHE[key]
 
