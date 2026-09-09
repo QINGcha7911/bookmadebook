@@ -23,24 +23,29 @@ PAUSE_PATTERN = re.compile(r'停顿([\d.]+)?|停([\d.]+)?')
 
 # 情绪标记（pitch 用 Hz，edge-tts 不支持 %）
 # 注意：幅度要克制！差异太大听感像"换人"，微调才有"情绪变化"
+# pause: 该情绪块的段间自然停顿（秒）——块切换时自动插入，模拟人换气呼吸，
+#        解决多块硬拼接导致的"衔接急促"（2026-09-09 用户反馈优化）
 EMOTION_MAP = {
     # 2026-08-17 收窄波动（rate±3% vol±3% pitch±6Hz）：避免听感像"不同人"，保持男声一致性
-    '激动': {'rate': '+3%', 'volume': '+3%', 'pitch': '+5Hz'},
-    '平静': {'rate': '+0%', 'volume': '+0%', 'pitch': '+0Hz'},
-    '低沉': {'rate': '-3%', 'volume': '-2%', 'pitch': '-6Hz'},
-    '温暖': {'rate': '-2%', 'volume': '+2%', 'pitch': '+3Hz'},
-    '激昂': {'rate': '+3%', 'volume': '+3%', 'pitch': '+6Hz'},
+    '激动': {'rate': '+3%', 'volume': '+3%', 'pitch': '+5Hz', 'pause': 0.28},
+    '平静': {'rate': '+0%', 'volume': '+0%', 'pitch': '+0Hz', 'pause': 0.42},
+    '低沉': {'rate': '-3%', 'volume': '-2%', 'pitch': '-6Hz', 'pause': 0.55},
+    '温暖': {'rate': '-2%', 'volume': '+2%', 'pitch': '+3Hz', 'pause': 0.45},
+    '激昂': {'rate': '+3%', 'volume': '+3%', 'pitch': '+6Hz', 'pause': 0.25},
     # 优化②：更多情绪维度（抑扬顿挫）
-    '开心': {'rate': '+3%', 'volume': '+2%', 'pitch': '+4Hz'},   # 轻快上扬
-    '悲伤': {'rate': '-3%', 'volume': '-3%', 'pitch': '-6Hz'},  # 缓慢低沉
-    '紧张': {'rate': '+3%', 'volume': '+2%', 'pitch': '+3Hz'},   # 急促
-    '温柔': {'rate': '-2%', 'volume': '-2%', 'pitch': '+2Hz'},   # 柔和
-    '坚定': {'rate': '-1%', 'volume': '+3%', 'pitch': '+4Hz'},   # 有力
-    '疑惑': {'rate': '+2%', 'volume': '+1%', 'pitch': '+6Hz'},  # 上扬疑问
-    '神秘': {'rate': '-3%', 'volume': '-3%', 'pitch': '-6Hz'},  # 低沉缓慢
-    '爆发': {'rate': '+3%', 'volume': '+4%', 'pitch': '+6Hz'},  # 强烈（少见，用于高潮）
-    '轻声': {'rate': '-3%', 'volume': '-4%', 'pitch': '-3Hz'},   # 耳语/私语
+    '开心': {'rate': '+3%', 'volume': '+2%', 'pitch': '+4Hz', 'pause': 0.3},   # 轻快上扬
+    '悲伤': {'rate': '-3%', 'volume': '-3%', 'pitch': '-6Hz', 'pause': 0.6},  # 缓慢低沉
+    '紧张': {'rate': '+3%', 'volume': '+2%', 'pitch': '+3Hz', 'pause': 0.22},   # 急促
+    '温柔': {'rate': '-2%', 'volume': '-2%', 'pitch': '+2Hz', 'pause': 0.45},   # 柔和
+    '坚定': {'rate': '-1%', 'volume': '+3%', 'pitch': '+4Hz', 'pause': 0.35},   # 有力
+    '疑惑': {'rate': '+2%', 'volume': '+1%', 'pitch': '+6Hz', 'pause': 0.3},  # 上扬疑问
+    '神秘': {'rate': '-3%', 'volume': '-3%', 'pitch': '-6Hz', 'pause': 0.5},  # 低沉缓慢
+    '爆发': {'rate': '+3%', 'volume': '+4%', 'pitch': '+6Hz', 'pause': 0.2},  # 强烈（少见，用于高潮）
+    '轻声': {'rate': '-3%', 'volume': '-4%', 'pitch': '-3Hz', 'pause': 0.5},   # 耳语/私语
 }
+
+# 无情绪标注的普通块间自然停顿（句号后换气，2026-09-09 优化）
+DEFAULT_BLOCK_PAUSE = 0.35
 
 
 @dataclass
@@ -170,12 +175,23 @@ def parse_annotations(text: str, default_voice: str = "zh-CN-YunjianNeural") -> 
     if current.text:
         blocks.append(current)
 
-    # 合并相邻无特殊属性的块
-    merged = []
-    for b in blocks:
-        if b.text:
-            merged.append(b)
-    return merged
+    # 2026-09-09 块间自动自然停顿（修复"衔接急促"听感）：
+    # 所有块若未显式指定 pause_after（无【停顿x.x】标注），且不是最后一块，
+    # 自动补一个自然换气停顿——避免几十个情绪块 0 间隔硬拼接。
+    # 停顿时长按块自身的情绪参数反查 EMOTION_MAP（温暖/平静偏长、开心/激昂偏短），
+    # 查不到用默认值。金句块（pause_before=0.6）已有前置停顿，此处仅补块后停顿。
+    def _emotion_pause(b: TTSBlock) -> float:
+        for cfg in EMOTION_MAP.values():
+            if (cfg['rate'] == b.rate and cfg['volume'] == b.volume
+                    and cfg['pitch'] == b.pitch):
+                return cfg.get('pause', DEFAULT_BLOCK_PAUSE)
+        return DEFAULT_BLOCK_PAUSE
+
+    for i, b in enumerate(blocks[:-1]):
+        if b.pause_after <= 0:
+            b.pause_after = _emotion_pause(b)
+
+    return blocks
 
 
 def extract_ted_chapters(blocks: List[TTSBlock]) -> List[dict]:
