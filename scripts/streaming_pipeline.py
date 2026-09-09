@@ -217,7 +217,8 @@ async def generate_segment(text: str, voice: str, rate: str, out_path: Path,
                 f"--volume={volume}", f"--pitch={pitch}",
                 "--text", text, "--write-media", str(out_path)]
     # 单段子进程超时：edge-tts 并发下可能 hang（token 竞争），必须超时 kill 释放 Semaphore
-    proc_timeout = 90
+    # 2026-09-09 90s→240s：3000 字段在慢网络下合成可超 90s（误杀导致固定段反复失败）
+    proc_timeout = 240
     for attempt in range(max_retries + 1):
         proc = None
         try:
