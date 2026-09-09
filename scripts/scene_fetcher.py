@@ -131,14 +131,20 @@ def search_videos(query: str, per_page: int = 5, orientation: str = "portrait") 
 
 
 def download(url: str, dst: Path) -> bool:
-    """下载图片到本地（curl + UA 头，Pexels CDN 要求 UA 否则 403）"""
+    """下载图片/视频到本地（curl + UA 头，Pexels CDN 要求 UA 否则 403）。
+    2026-09-10: 超时 240→600s + 断点续传(-C -) —— Pexels 视频文件大(10-50MB),
+    慢网下 240s 常超时中止整批下载(实测 pasture/forest 各中止于第4/6段)。"""
     dst.parent.mkdir(parents=True, exist_ok=True)
-    r = subprocess.run(
-        ["curl", "-sL", "-f", "--max-time", "240",
-         "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0",
-         "-o", str(dst), url],
-        capture_output=True, timeout=240)
-    return r.returncode == 0 and dst.exists() and dst.stat().st_size > 30000
+    for attempt in range(3):
+        r = subprocess.run(
+            ["curl", "-sL", "-f", "-C", "-", "--max-time", "600",
+             "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0",
+             "-o", str(dst), url],
+            capture_output=True, timeout=620)
+        if r.returncode == 0 and dst.exists() and dst.stat().st_size > 30000:
+            return True
+        # 续传失败(如 416 已完整)则重试；curl -C - 对已完整文件返回 0 但 size 检查通过
+    return False
 
 
 def verify_video(path: Path) -> tuple:
