@@ -616,8 +616,13 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
         ranked = sorted(vids, key=_clip_motion, reverse=True)
         rest = [v for v in ranked if v not in picked and v != prev_pick]
         if not rest:
+            # 整池轮转完一轮：打乱顺序再从头轮（2026-09-09：固定按运动量降序
+            # 重放会让第 2 轮画面顺序与第 1 轮相同，观众感觉"后半段又把前半段
+            # 播了一遍"——shuffle 后第 2 轮顺序不同，重复感消失）
+            import random
+            ranked = sorted(ranked, key=lambda v: random.random())
             rest = [v for v in ranked if v != prev_pick]
-            picked.clear()  # 整池轮转完一轮，清空计数从头开始
+            picked.clear()
         pick = rest[0] if rest else ranked[0]
         picked.add(pick)
         prev_pick = pick
