@@ -366,6 +366,67 @@ def chapter_emotion_filters(script_text: str, chapters: list) -> list:
     return out
 
 
+def _emotion_vote(text: str) -> str:
+    """单文本块【情绪】标记投票 → 调色滤镜（与 chapter_emotion_filters 同规则）。"""
+    if not text:
+        return EMOTION_FILTERS["neutral"]
+    cnt = {"cold": 0, "warm": 0}
+    for m in re.finditer(r"【情绪[:：]\s*([^】]{1,12})】", text):
+        name = m.group(1)
+        for grp, kws in EMOTION_KEYWORDS.items():
+            if any(kw in name for kw in kws):
+                cnt[grp] += 1
+                break
+    cnt["cold"] = int(cnt["cold"] * 1.5)
+    if cnt["cold"] > cnt["warm"]:
+        return EMOTION_FILTERS["cold"]
+    if cnt["warm"] > cnt["cold"]:
+        return EMOTION_FILTERS["warm"]
+    return EMOTION_FILTERS["neutral"]
+
+
+def _group_emotion_filters(script_text: str, chapters: list,
+                           segs: list, n_groups: int) -> list:
+    """纯视频逐分组情绪滤镜（长度=n_groups，按分组 chapter_idx 索引）。
+
+    常规稿（场景分组数=## 章节数）直接复用 chapter_emotion_filters；
+    稿首有 ## 前的序章段（如《岳飞传》开场 palace 死牢 53s）时 plan 分组
+    比 ## 章节多 1，chapter_idx 不能当 chapters 下标用——按 ## 标题把文本
+    切成块（含稿首前缀块），用分组标题对齐取该块的情绪投票，避免越界与
+    错配（2026-09-08 岳飞传合成 IndexError 修复）。"""
+    base = chapter_emotion_filters(script_text, chapters)
+    if n_groups <= len(base):
+        return base
+    blocks, cur = [], []
+    for ln in script_text.splitlines():
+        if ln.lstrip().startswith("##") and cur:
+            blocks.append("\n".join(cur))
+            cur = []
+        cur.append(ln)
+    if cur:
+        blocks.append("\n".join(cur))
+    title_of = []
+    for b in blocks:
+        t = ""
+        for ln in b.splitlines():
+            if ln.lstrip().startswith("##"):
+                t = re.sub(r"^#+\s*", "", ln).strip()
+                break
+        title_of.append(t)
+    f_by_title = {t: _emotion_vote(b) for t, b in zip(title_of, blocks) if t}
+    by_idx = {}
+    for g in range(n_groups):
+        seg = next((s for s in segs if getattr(s, "chapter_idx", -1) == g), None)
+        title = (getattr(seg, "chapter_title", "") or "").strip()
+        if not title or title.startswith("第") and "部分" in title:
+            # 序章/无标题分组 → 落在首个无 ## 前缀块（或最近前置块）
+            f = by_idx.get(g) or _emotion_vote(blocks[0] if blocks else "")
+        else:
+            f = f_by_title.get(title) or (base[g] if g < len(base) else "")
+        by_idx[g] = f
+    return [by_idx.get(g, "") for g in range(n_groups)]
+
+
 def _item_emotion_filters(script_text: str, chapters: list, seg_chapter: list,
                           items_per_seg: list) -> list:
     """逐 item 情绪滤镜：item 按章节内字符位置就近取【情绪】标记（段落级）。
@@ -373,7 +434,8 @@ def _item_emotion_filters(script_text: str, chapters: list, seg_chapter: list,
     n = len(seg_chapter)
     if len(items_per_seg) != len(chapters) or n == 0:
         ch_filters = chapter_emotion_filters(script_text, chapters)
-        return [ch_filters[seg_chapter[i]] if seg_chapter else ""
+        return [ch_filters[seg_chapter[i]] if seg_chapter
+                and seg_chapter[i] < len(ch_filters) else ""
                 for i in range(n)]
     texts = _chapter_texts(script_text, chapters)
     marks = []
@@ -491,13 +553,15 @@ def _clip_motion(path, samples: int = 4) -> float:
         return _VID_PROBE_CACHE[key]
 
 
-def _split_long_segments(plan, audio_dur: float, clip: float = 20.0):
+def _split_long_segments(plan, audio_dur: float, clip: float = 10.0):
     """长段自动子段化（2026-09-02 纯视频默认后新增，仅长片 >90s 调用）：
     长章按 ~clip 秒拆成子段，避免"一章 100s 只循环同一段素材"的画面重复。
     子段继承原章 chapter_idx，供章卡/黑场边界/情绪滤镜正确归属。
-    clip 默认 20s（2026-09-02 实测校准）：warm_home 9 段素材里 ≥21.2s 的
-    只有 3 段（clip=30 时），降到 20s 后 5 段动态素材（04/06/07/08/09）
-    可无接缝入池轮转；画面仍远低于用户可接受的切段节奏。"""
+    clip 默认 10s（2026-09-09 校准）：真实视频镜头节奏 5-12s；配合
+    _pure_video_items 放开 dur≥段长过滤后，素材池内 6-20s 短视频全部入池
+    轮转，10min 片 ~70 镜头 × 33 段素材 → 每段约用 2 次，画面接近
+    "纪录片镜头拼接"而非"单视频循环铺满"（旧 clip=20 时素材需 ≥21.2s，
+    33 段里仅 3 段够长，成片退化成 3-4 画面轮播）。"""
     import scene_selector
     segs = list(getattr(plan, "segments", []))
     if not segs:
@@ -525,11 +589,16 @@ def _split_long_segments(plan, audio_dur: float, clip: float = 20.0):
 
 
 def _pure_video_items(plan, need_slack: float = 1.2) -> list:
-    """纯视频模式 items：每段挑 1 个时长 ≥ 段长+slack 的竖版实拍视频。
-    选材策略：时长够的候选中按运动量降序整池轮转（有运动镜头优先 + 画面不重复）：
-    一轮内不重复用素材；素材耗尽时清空计数从头轮转，仅保证不与上一段相邻同素材，
-    避免"只有 2-3 段够长素材时退化成 top-2 反复交替"（2026-09-02 长片实测）。
-    无足够长素材时选最长并警告。返回 [(视频路径, 段时长, 'video')]，零静态图。"""
+    """纯视频模式 items：每段挑 1 个竖版实拍视频。
+
+    选材策略（2026-09-09 重构）：
+    - 素材池充足（≥段数×2）时整池按运动量轮转，每段不同素材 → 画面多样不重复；
+    - 素材池不足时仍整池轮转（允许循环），仅保证不与上一段相邻同素材；
+    - 不再要求 dur ≥ 段长（合成端 -stream_loop -1 本就循环铺满），短视频素材
+      全部可入池，避免"只有 3-5 段够长素材时退化成 top-N 反复交替"（2026-09-09
+      晚班实测：33 段新素材仅 3 段 ≥21s 够长，其余 30 段短素材全被旧过滤逻辑
+      排除 → 成片只剩 3-4 个画面轮播，用户判定"不像真实视频"）。
+    返回 [(视频路径, 段时长, 'video')]，零静态图。"""
     import scene_library
     base = scene_library.SCENES_DIR
     out = []
@@ -537,20 +606,14 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
     prev_pick = None
     for seg in getattr(plan, "segments", []):
         seg_dur = max(2.0, float(seg.end - seg.start))
-        need = seg_dur + need_slack
         vdir = base / seg.theme / "video"
         vids = sorted(vdir.glob("*.mp4")) if vdir.is_dir() else []
         if not vids:
             print(f"  ❌ 纯视频模式：主题 [{seg.theme}] 无 assets/scenes/<theme>/video/*.mp4")
             import sys
             sys.exit(1)
-        long_enough = [v for v in vids if _probe_video_dur(v) >= need]
-        if not long_enough:
-            ranked = sorted(vids, key=_probe_video_dur, reverse=True)
-            print(f"  ⚠️ 主题 [{seg.theme}] 无 ≥{need:.0f}s 视频，用 {ranked[0].name}（不足则截尾）")
-        else:
-            # 时长足够 → 运动量降序（真实运动优先）；已运动量缓存，不重复 ffmpeg
-            ranked = sorted(long_enough, key=_clip_motion, reverse=True)
+        # 全池按运动量降序（真实运动优先）；已运动量缓存，不重复 ffmpeg
+        ranked = sorted(vids, key=_clip_motion, reverse=True)
         rest = [v for v in ranked if v not in picked and v != prev_pick]
         if not rest:
             rest = [v for v in ranked if v != prev_pick]
@@ -643,9 +706,13 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         seg_chapter = [0] * n
     if pure_video:
         # 纯视频每段 1 段素材=整章，段落级就近取值无意义 → 用章节级多数投票
-        ch_filters = chapter_emotion_filters(script_text, chapters)
-        item_emotions = [ch_filters[seg_chapter[i]] if seg_chapter else ""
-                         for i in range(n)]
+        n_groups = max(seg_chapter) + 1 if seg_chapter else 0
+        ch_filters = _group_emotion_filters(
+            script_text, chapters, list(getattr(plan, "segments", [])), n_groups)
+        item_emotions = [
+            ch_filters[seg_chapter[i]] if seg_chapter
+            and seg_chapter[i] < len(ch_filters) else ""
+            for i in range(n)]
     else:
         item_emotions = _item_emotion_filters(script_text, chapters, seg_chapter,
                                               items_per_seg)
