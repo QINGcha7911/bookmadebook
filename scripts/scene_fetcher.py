@@ -101,13 +101,25 @@ def search_videos(query: str, per_page: int = 5, orientation: str = "portrait") 
     results = []
     for v in data.get("videos", []):
         # 选 HD 竖版文件（有的话）
+        # ⚠️ 2026-09-09 修复: 竖版素材清晰度看窄边 width(720x1280 的 height=1280 会误判高清)。
+        # 必须 width>=1080(窄边达标) 且竖版(w<=h)。
+        # 有多个高清档时优先选最小达标档(1080x1920)而非最高——2160p 原片 80-100MB
+        # 下载慢 4-8 倍且入库后也要降到 1080，纯浪费带宽与库空间。
         best = None
-        for f in v.get("video_files", []):
-            if f.get("height", 0) >= 1080 and f.get("width", 0) <= f.get("height", 0):
+        for f in sorted(v.get("video_files", []),
+                        key=lambda x: x.get("width", 0)):  # 升序: 先看最小档
+            if f.get("width", 0) >= 1080 and f.get("width", 0) <= f.get("height", 0):
                 best = f
                 break
         if not best and v.get("video_files"):
-            best = v["video_files"][0]
+            # 无高清竖版档：取所有档里最高分辨率竖版（宁缺毋滥，verify 会拦 720）
+            for f in sorted(v.get("video_files", []),
+                            key=lambda x: x.get("width", 0), reverse=True):
+                if f.get("width", 0) <= f.get("height", 0):
+                    best = f
+                    break
+            if not best:
+                best = v["video_files"][0]
         results.append({
             "id": v["id"],
             "url": best["link"] if best else "",
@@ -122,10 +134,10 @@ def download(url: str, dst: Path) -> bool:
     """下载图片到本地（curl + UA 头，Pexels CDN 要求 UA 否则 403）"""
     dst.parent.mkdir(parents=True, exist_ok=True)
     r = subprocess.run(
-        ["curl", "-sL", "-f", "--max-time", "90",
+        ["curl", "-sL", "-f", "--max-time", "240",
          "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0",
          "-o", str(dst), url],
-        capture_output=True, timeout=90)
+        capture_output=True, timeout=240)
     return r.returncode == 0 and dst.exists() and dst.stat().st_size > 30000
 
 
@@ -149,8 +161,11 @@ def verify_video(path: Path) -> tuple:
     w, h = int(v.get("width", 0)), int(v.get("height", 0))
     dur = float(data.get("format", {}).get("duration", 0) or 0)
     meta = {"w": w, "h": h, "dur": dur}
-    if h < 1080:
-        reasons.append(f"高度不足1080({h})")
+    # ⚠️ 2026-09-09: 竖版素材窄边=width。720x1280 的 height=1280 但窄边 720 <1080，
+    # 放大到 1080×1920 输出会发虚。必须窄边(竖版取w,横版取h)>=1080 才算高清。
+    short_edge = w if w <= h else h
+    if short_edge < 1080:
+        reasons.append(f"窄边不足1080({w}x{h})")
     if w > h:
         reasons.append(f"非竖版({w}x{h})")
     if dur < 3:
