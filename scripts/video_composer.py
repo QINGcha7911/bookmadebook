@@ -681,8 +681,8 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
     import scene_library
     base = scene_library.SCENES_DIR
     out = []
-    picked = set()  # 本轮已用素材（一轮耗尽自动清空 → 整池轮转）
-    prev_pick = None
+    picked_by_theme = {}  # theme -> 本轮已用素材集合（按主题隔离）
+    prev_by_theme = {}    # theme -> 上一段用的素材（防相邻同素材）
     for seg in getattr(plan, "segments", []):
         seg_dur = max(2.0, float(seg.end - seg.start))
         vdir = base / seg.theme / "video"
@@ -693,6 +693,11 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
             sys.exit(1)
         # 全池按运动量降序（真实运动优先）；已运动量缓存，不重复 ffmpeg
         ranked = sorted(vids, key=_clip_motion, reverse=True)
+        # 2026-09-10 修复：picked/prev 必须按主题隔离。原全局 picked 在 alt-theme
+        # 多主题场景下，主池先耗尽时 clear() 会连带清空备主题已用记录 →
+        # 备主题提前回绕复用（撒哈拉实测：desert 21 块仅用 11 段，每 11 块重复）。
+        picked = picked_by_theme.setdefault(seg.theme, set())
+        prev_pick = prev_by_theme.get(seg.theme)
         rest = [v for v in ranked if v not in picked and v != prev_pick]
         if not rest:
             # 整池轮转完一轮：打乱顺序再从头轮（2026-09-09：固定按运动量降序
@@ -704,7 +709,7 @@ def _pure_video_items(plan, need_slack: float = 1.2) -> list:
             picked.clear()
         pick = rest[0] if rest else ranked[0]
         picked.add(pick)
-        prev_pick = pick
+        prev_by_theme[seg.theme] = pick
         out.append((str(pick), seg_dur, "video"))
     return out
 
