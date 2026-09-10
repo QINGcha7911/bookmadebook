@@ -41,6 +41,41 @@ def to_windows_path(p: str) -> str:
     return r.stdout.strip() if r.returncode == 0 else p
 
 
+def probe_stream_durations(src: str) -> tuple[float, float]:
+    """返回 (视频流时长, 音频流时长)；探测失败返回 (0.0, 0.0)。
+
+    2026-09-11 新增：成片交付铁律「视频流时长 ≥ 音频流时长」。
+    composer 合成用 -shortest，若视频帧尾比音频早 3 帧（实测 639.88s vs 640.00s）
+    就会出现 0.12s 缺口。转码时用 tpad 冻结末帧补齐 + -t 兜底，
+    保证播放器不会在片尾 AI 声明结束前停画面。
+    """
+    v = a = 0.0
+    for stream, key in (("v:0", "v"), ("a:0", "a")):
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", stream,
+             "-show_entries", "stream=duration", "-of", "csv=p=0", src],
+            capture_output=True, text=True, timeout=60)
+        try:
+            d = float(r.stdout.strip().split(",")[0])
+        except Exception:
+            d = 0.0
+        if key == "v":
+            v = d
+        else:
+            a = d
+    if v <= 0 or a <= 0:  # 流时长缺失时退回容器时长
+        r = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                            "format=duration", "-of", "csv=p=0", src],
+                           capture_output=True, text=True, timeout=60)
+        try:
+            total = float(r.stdout.strip())
+        except Exception:
+            total = 0.0
+        v = v or total
+        a = a or total
+    return v, a
+
+
 def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 26,
                ffmpeg_exe: str | None = None) -> bool:
     """用 Windows ffmpeg.exe + hevc_qsv 编码。成功返回 True。"""
@@ -56,8 +91,16 @@ def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 26,
     # -map_metadata -1 -map_chapters -1：丢弃源 mp4 的 encd/chapter 元数据引用，
     #   否则 Windows muxer 会打成一条超长 bin_data 伪轨（实测 668s vs 正片 619s），
     #   播放器 seek 拖动时时间轴被干扰 → 音画不同步（2026-09-07 用户实测反馈）
+    # 视频流时长 ≥ 音频流时长兜底（2026-09-11 铁律）：缺口时 tpad 冻结末帧补齐
+    v_dur, a_dur = probe_stream_durations(src)
+    vf_args = []
+    if a_dur and v_dur and v_dur < a_dur + 0.05:
+        pad = round(a_dur - v_dur + 0.25, 2)
+        vf_args = ["-vf", f"tpad=stop_mode=clone:stop_duration={pad}",
+                   "-t", f"{a_dur + 0.15:.2f}"]
+        print(f"  🩹 视频流 {v_dur:.2f}s < 音频流 {a_dur:.2f}s → tpad 补 {pad}s 冻结末帧")
     cmd = [exe, "-y", "-v", "error", "-i", src_w,
-           "-map", "0:v:0", "-map", "0:a:0",
+           "-map", "0:v:0", "-map", "0:a:0", *vf_args,
            "-map_metadata", "-1", "-map_chapters", "-1",
            "-c:v", "hevc_qsv", "-global_quality", str(quality),
            "-c:a", "copy", "-preset", "medium",
@@ -75,8 +118,19 @@ def qsv_encode(src: str, dst: str, bitrate: str = "2M", quality: int = 26,
 
 
 def soft_encode(src: str, dst: str, bitrate: str = "2M") -> bool:
-    """回退：本机 libx265 软编（等价旧流程 x265 2Mbps）"""
-    cmd = ["ffmpeg", "-y", "-v", "error", "-i", src,
+    """回退：本机 libx265 软编（等价旧流程 x265 2Mbps）
+
+    与 qsv_encode 保持一致：视频流时长 < 音频流时 tpad 冻结末帧补齐，
+    保证「视频流 ≥ 音频流」铁律在回退路径同样成立（2026-09-11）。
+    """
+    v_dur, a_dur = probe_stream_durations(src)
+    vf_args = []
+    if a_dur and v_dur and v_dur < a_dur + 0.05:
+        pad = round(a_dur - v_dur + 0.25, 2)
+        vf_args = ["-vf", f"tpad=stop_mode=clone:stop_duration={pad}",
+                   "-t", f"{a_dur + 0.15:.2f}"]
+        print(f"  🩹 视频流 {v_dur:.2f}s < 音频流 {a_dur:.2f}s → tpad 补 {pad}s 冻结末帧")
+    cmd = ["ffmpeg", "-y", "-v", "error", "-i", src, *vf_args,
            "-c:v", "libx265", "-preset", "medium",
            "-b:v", bitrate, "-maxrate", bitrate,
            "-bufsize", f"{int(float(bitrate[:-1]) * 1000) * 2}k",

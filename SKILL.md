@@ -442,6 +442,9 @@ python scripts/streaming_pipeline.py -f script.txt --voice {voice} --rate {rate}
 | scripts/text_layers.py | 金句字卡 PIL 预渲染 | Step 5 |
 | scripts/ted_director.py | TED 风格分段导演 | Step 2 |
 | scripts/speed_probe.py | 语速实测 | Step 2 |
+| scripts/qsv_encode.py | 高清交付 x265 转码（Intel QSV 硬编→软编回退；内含「视频流≥音频流」tpad 兜底） | 交付 |
+| scripts/tempo_normalize.py | TTS 时长归一（atempo）+ 响度对齐（loudnorm -16，与 MP4 音轨同标尺） | Step 3 后 |
+| scripts/check_ai_disclosure.py | AI 声明门禁 4 项（片尾有语音/视频流≥音频流/声明响度差≤1.5dB/含关键词） | 交付前必跑 |
 | scripts/deliver.py | 按时长压缩/分层（可选工具） | 交付 |
 | scripts/config_loader.py | 配置加载（被 pipeline 自动调用） | 内部依赖 |
 脚本间依赖关系：
