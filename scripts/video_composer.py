@@ -315,6 +315,14 @@ EMOTION_KEYWORDS = {
     "warm": ["温暖", "温柔", "感动", "开心", "激昂", "坚定", "感慨", "惊喜", "明亮", "希望"],
 }
 
+# 备主题池安全下限（2026-09-10 撒哈拉验收打回）：备主题池过小时，--alt-theme
+# 每个周期都从同一小池取段 → 成片出现可见重复周期（重复周期 ≈ 池段数 × 备主题出现间隔）。
+# 4 段池 + 每 30s 出现一次 = 120s 周期（调度实测 240/360/480/600s 四帧像素级相同）。
+# 低于该值只 WARN 不阻断（用户可能故意用小池），并给出 --alt-theme none 的替代建议。
+ALT_POOL_MIN = 10
+ALT_OPEN_CHUNKS = 4   # 开篇 window 等分块数（主/备交替）
+ALT_TAIL_CHUNKS = 4   # window 之后每 4 块插 1 块备主题（备主题占比 1/4）
+
 # xfade 转场池（2026-09-02：按段轮换，章节交界强制 fadeblack 1s 黑场）
 XFADE_POOL = ["fadeblack", "smoothleft", "circleopen"]
 CHAPTER_XFADE_DUR = 1.0
@@ -590,7 +598,8 @@ def _split_long_segments(plan, audio_dur: float, clip: float = 10.0):
 
 
 def _apply_alt_theme(plan, main_theme: str, alt_theme: str, window: float = 60.0,
-                     open_chunks: int = 4, tail_chunks: int = 4,
+                     open_chunks: int = ALT_OPEN_CHUNKS,
+                     tail_chunks: int = ALT_TAIL_CHUNKS,
                      chapter_times: list | None = None):
     """开篇双主题交替（2026-09-10 新增，--alt-theme 启用）：
 
@@ -1142,6 +1151,17 @@ def main():
         theme_arg = args.theme if args.theme != "auto" else "desert"
     plan = scene_selector.select_scenes(script_text, theme_arg, audio_dur, args.audio)
     if args.alt_theme and args.alt_theme != "none":
+        import scene_library as _sl
+        _alt_id = scene_selector.normalize_theme(args.alt_theme) or args.alt_theme
+        _alt_dir = _sl.SCENES_DIR / _alt_id / "video"
+        _alt_pool = sorted(_alt_dir.glob("*.mp4")) if _alt_dir.is_dir() else []
+        if len(_alt_pool) < ALT_POOL_MIN:
+            # 备主题出现间隔 = 块长 × ALT_TAIL_CHUNKS（默认 7.5s×4 = 30s）→ 重复周期 = 池段数 × 该间隔
+            _slot = max(6.0, (max(8.0, args.alt_window) / 2.0) / ALT_TAIL_CHUNKS) * ALT_TAIL_CHUNKS
+            print(f"⚠️ 备主题池偏小：{_alt_id} 仅 {len(_alt_pool)} 段（建议 ≥{ALT_POOL_MIN}）"
+                  f"→ 备主题每 {_slot:.0f}s 出现一次，预计重复周期 ≈ {len(_alt_pool) * _slot:.0f}s，"
+                  f"成片会出现可见的画面重复（调度实测 4 段池 = 120s 周期）。"
+                  f"建议先扩库，或改用 --alt-theme none（整片单主题）")
         _main_theme = scene_selector.normalize_theme(args.theme) or theme_arg
         _chs = [re.sub(r"^#+\s*", "", ln).strip()
                 for ln in script_text.splitlines() if ln.strip().startswith("##")]
