@@ -588,6 +588,76 @@ def _split_long_segments(plan, audio_dur: float, clip: float = 10.0):
     return plan
 
 
+
+def _apply_alt_theme(plan, main_theme: str, alt_theme: str, window: float = 60.0,
+                     open_chunks: int = 4, tail_chunks: int = 4,
+                     chapter_times: list | None = None):
+    """开篇双主题交替（2026-09-10 新增，--alt-theme 启用）：
+
+    - 开篇 window 秒按 open_chunks 等分，主/备主题交替（保证前 60s ≥2 次切换）；
+    - window 之后每 window/2 秒一块，每 tail_chunks 块插入 1 块备主题
+      （约 1/tail_chunks 占比，避免整片单一主题"画面无切换"）。
+    按主题时间轴切分既有 plan 段，继承 chapter_idx/chapter_title，
+    不影响章节卡、情绪调色与金句排程。
+    """
+    import scene_selector as ss
+    segs = list(getattr(plan, "segments", []))
+    if not segs or not alt_theme or alt_theme == main_theme:
+        return plan
+    total = max(float(s.end) for s in segs)
+    w = max(8.0, float(window))
+    tl = []  # [(start, end, theme)]
+    ch = w / max(2, open_chunks)
+    for k in range(max(2, open_chunks)):
+        tl.append((k * ch, (k + 1) * ch,
+                   main_theme if k % 2 == 0 else alt_theme))
+    if total > w:
+        slot = max(6.0, (w / 2.0) / max(1, tail_chunks))
+        t, k = w, 0
+        while t < total - 1e-6:
+            th = alt_theme if (k % max(2, tail_chunks) == max(2, tail_chunks) - 1) else main_theme
+            tl.append((t, min(total, t + slot), th))
+            t += slot
+            k += 1
+    # 章节归属：单主题 manual 模式的 plan 只有 1 段，chapter_idx 全 0 →
+    # 章节黑场（fadeblack）与逐章情绪调色会失效。这里按 ## 标题字符比例算出
+    # 章节时间轴，把每个子段归属到所在章节（与章节卡排程同一时间源，边界一致）。
+    ch_times = []
+    if chapter_times:
+        ch_times = list(chapter_times)
+    new = []
+    for s in segs:
+        for a, b, th in tl:
+            st, en = max(a, s.start), min(b, s.end)
+            if en - st < 0.05:
+                continue
+            sub = ss.SceneSegment(theme=th, start=st, end=en,
+                                  chapter_title=s.chapter_title)
+            setattr(sub, "chapter_idx", getattr(s, "chapter_idx", 0))
+            new.append(sub)
+    new.sort(key=lambda x: x.start)
+    plan.segments = new
+    return plan
+
+
+
+def _assign_chapter_idx_by_time(plan, chapter_times: list) -> None:
+    """按章节时间轴给子段重新归属 chapter_idx（子段化之后调用）。
+
+    manual/alt-theme 单主题模式的 plan 只有 1 段，_split_long_segments 会把
+    chapter_idx 全写成父段下标（=0..n 递增），导致章节黑场（fadeblack 边界）
+    与逐章情绪调色失效。这里用与章节卡排程同一时间源
+    （_fallback_chapter_times 的 ## 标题字符比例）重新归属，边界与章卡一致。
+    """
+    if not chapter_times:
+        return
+    for seg in getattr(plan, "segments", []):
+        ci = 0
+        for k, ct in enumerate(chapter_times):
+            if seg.start >= ct - 1e-6:
+                ci = k
+        setattr(seg, "chapter_idx", ci)
+
 def _pure_video_items(plan, need_slack: float = 1.2) -> list:
     """纯视频模式 items：每段挑 1 个竖版实拍视频。
 
@@ -1023,6 +1093,10 @@ def main():
                     help="实景主题；auto=按内容自动选择（默认）；手动指定则整片使用该主题")
     ap.add_argument("--scene-from", default="auto", choices=["auto", "script", "manual"],
                     help="场景来源：auto=标记+自动检测，script=仅用标记，manual=仅用--theme")
+    ap.add_argument("--alt-theme", default="none",
+                    help="开篇交替的备用主题（如 desert）；none=不交替（默认）")
+    ap.add_argument("--alt-window", type=float, default=60.0,
+                    help="开篇双主题交替窗口秒数（默认 60s，按 4 块主/备交替）")
     ap.add_argument("--dry-run", action="store_true", help="只输出场景规划不合成")
     ap.add_argument("--book", default="", help="书名（封面文字）")
     ap.add_argument("--author", default="", help="作者")
@@ -1067,10 +1141,27 @@ def main():
     if args.scene_from == "manual":
         theme_arg = args.theme if args.theme != "auto" else "desert"
     plan = scene_selector.select_scenes(script_text, theme_arg, audio_dur, args.audio)
+    if args.alt_theme and args.alt_theme != "none":
+        _main_theme = scene_selector.normalize_theme(args.theme) or theme_arg
+        _chs = [re.sub(r"^#+\s*", "", ln).strip()
+                for ln in script_text.splitlines() if ln.strip().startswith("##")]
+        _chs = [c for c in _chs if c]
+        _ct = _fallback_chapter_times(_chs, script_text, audio_dur) if _chs else []
+        plan = _apply_alt_theme(plan, _main_theme,
+                                scene_selector.normalize_theme(args.alt_theme) or args.alt_theme,
+                                window=args.alt_window, chapter_times=_ct)
+        print(f"🔀 开篇双主题交替：{_main_theme} ↔ {args.alt_theme}（前 {args.alt_window:.0f}s 4 块交替）")
     if pure_video and audio_dur > 90:
         # 长片（10 分钟正文）长段子段化（~30s/子段），防"一章 100s 只循环同一段素材"；
         # 短片≤90s 本就多段轮换且需保持章卡-黑场严格对齐，不拆
         plan = _split_long_segments(plan, audio_dur)
+    _ct = []
+    if args.alt_theme and args.alt_theme != "none":
+        _chs = [re.sub(r"^#+\s*", "", ln).strip()
+                for ln in script_text.splitlines() if ln.strip().startswith("##")]
+        _chs = [c for c in _chs if c]
+        _ct = _fallback_chapter_times(_chs, script_text, audio_dur) if _chs else []
+        _assign_chapter_idx_by_time(plan, _ct)
     print(f"🎬 场景规划: {len(plan.segments)} 段" + ("（纯视频子段化）" if pure_video else ""))
     for seg in plan.segments:
         print(f"   [{seg.start:.0f}s-{seg.end:.0f}s] {seg.theme}"
