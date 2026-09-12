@@ -7,3 +7,43 @@ bookmadebook-output/
 assets/scenes/*/video/verify/
 # lark-cli 缓存
 .lark-cli/
+
+# 隔离的违规素材（0真人铁律，审计留痕在 ledger 不入库）
+assets/scenes/arctic/video/_excluded_lowres/
+assets/scenes/desert/video/_excluded_dup/
+assets/scenes/desert/video/_excluded_lowres/
+assets/scenes/desert/video/_excluded_offtopic/
+assets/scenes/desert/video/_excluded_people/
+assets/scenes/forest/video/_excluded_lowres/
+assets/scenes/gufeng/video/_excluded_lowres/
+assets/scenes/guyuan/_excluded_people/
+assets/scenes/guyuan/video/_excluded_lowres/
+assets/scenes/hongkong/video/_excluded_lowres/
+assets/scenes/library/_excluded_lowres/
+assets/scenes/library/video/_excluded_lowres/
+assets/scenes/library/video/_excluded_people/
+assets/scenes/ocean/video/_excluded_lowres/
+assets/scenes/palace/video/_excluded_lowres/
+assets/scenes/palace/video/_excluded_modern_people/
+assets/scenes/pasture/video/_excluded_dup/
+assets/scenes/pasture/video/_excluded_lowres/
+assets/scenes/pasture/video/_excluded_people/
+assets/scenes/rain/video/_excluded_lowres/
+assets/scenes/ship/video/_excluded_lowres/
+assets/scenes/snow/video/_excluded_lowres/
+assets/scenes/starry/video/_excluded_lowres/
+assets/scenes/sunrise/video/_excluded_lowres/
+assets/scenes/tech_city/video/_excluded_lowres/
+assets/scenes/temple/video/_excluded_lowres/
+assets/scenes/temple/video/_excluded_modern_people/
+assets/scenes/warm_home/video/_excluded_candle/
+assets/scenes/warm_home/video/_excluded_lowres/
+assets/scenes/warm_home/video/_excluded_modern/
+assets/scenes/warm_home/video/_excluded_people/
+assets/scenes/warm_home/video/_excluded_slow/
+# 超 GitHub 单文件 100MB 上限（本地留存，不入库）
+assets/scenes/pasture/video/09.mp4
+assets/scenes/ocean/video/05_02.mp4
+assets/scenes/forest/video/27.mp4
+assets/scenes/forest/video/18.mp4
+assets/scenes/rain/video/03.mp4

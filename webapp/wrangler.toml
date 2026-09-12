@@ -4,12 +4,19 @@
 name = "bookmadebook-webapp"
 main = "worker/src/worker.js"
 compatibility_date = "2024-11-06"
+workers_dev = true
 
 [vars]
 MOCK_PAY = "1"   # 1=允许模拟支付回调（开发用）；生产置 0，只信任爱发电真实回调
 DAEMON_TOKEN = "dev-daemon-token-001"   # daemon 轮询接口鉴权（生产用 wrangler secret put 覆盖）
 
+# Workers Static Assets：public/ 的 H5 静态页与 API 同源部署
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "none"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "bookmadebook_orders"
-database_id = "00000000-0000-0000-0000-000000000000"  # 占位；部署前替换为真实 ID
+database_id = "75f2be8f-3fbd-4de3-b416-dbd6832e0c85"  # 真实 D1 ID（2026-09-04 创建）
