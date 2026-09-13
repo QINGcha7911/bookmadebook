@@ -126,7 +126,17 @@ def pick_items_dedup(root, chapters, times, lines, scene_map, motion, total, n_c
     的 md5 去重实际只按 (目录,文件名) 去重 → 成片出现同源重复（本片实测 9 组）。
     这里对每轮 picks 做 md5 分组，除保留首个外其余加进排除集重挑，直到无重复。"""
     excl = set(exclude or set())
-    for it in range(12):
+    # ⚠️ 收敛护栏（2026-09-13 007 备稿班加）：
+    #   原实现最多迭代 12 轮、每轮把"复用同一素材"的镜头全部加入**全局**排除集。
+    #   当各章映射目录有交集时，一次排除会同时抽干多个章的池 → 复用更多 → 排除更多，
+    #   形成**发散**（实测《大医》第 1..7 轮：6→12→20→24→30→26→10 组，池被抽空，
+    #   最终 exit 3「章节无可运动量达标素材」）。
+    #   实测该池全量比对的感知相似对只有 1 组（<=5.0），说明 sig 分组在此池里
+    #   抓的是"同一素材被复用"而非"不同素材长得像"；而成片里跨章复用同一素材
+    #   是既有惯例（历史验收通过：《深夜食堂》16 对、《撒哈拉》等），
+    #   所以这里加两道护栏：最多 3 轮；任一章剩余池 < 该章镜数就立刻停手。
+    added_total = 0
+    for it in range(3):
         segs, items, titles = C.pick_items(root, chapters, times, lines, scene_map, motion,
                                            total, n_ch, poster_dir, avail, excl, allow_static)
         groups = {}
@@ -150,13 +160,23 @@ def pick_items_dedup(root, chapters, times, lines, scene_map, motion, total, n_c
             if it:
                 print(f"  🧹 内容去重完成：迭代 {it} 轮后无同源重复")
             return segs, items, titles
+        # 停止条件（护栏②）：**本轮准备追加的**排除量若把「循环内累计」推过全池 20%，
+        # 就不排除、直接保留当前选材——实测《大医》第 4 轮累计 26% 后开始「章池 < 镜数」。
+        # 只统计循环内追加量；调用方传入的 --exclude 不计入（否则一开轮就触发）。
+        pool_n = sum(len(v) for v in (avail or {}).values()) or len(items)
+        plan = [f"{items[gi][3]}/{Path(items[gi][0]).name}"
+                for g in dups.values() for gi in g[1:]]
+        plan = [r for r in plan if r not in excl]
+        if added_total + len(plan) > 0.2 * pool_n:
+            print(f"  ⚠️ 内容去重本轮拟排除 {len(plan)} 段（累计 {added_total + len(plan)}/{pool_n} > 20%）"
+                  f"→ 停止去重，保留当前选材（避免把章节池抽干）")
+            return segs, items, titles
         added = 0
-        for h, g in dups.items():
-            for gi in g[1:]:                      # 保留首个，其余排除
-                rel = f"{items[gi][3]}/{Path(items[gi][0]).name}"
-                if rel not in excl:
-                    excl.add(rel); added += 1
+        for rel in plan:
+            if rel not in excl:
+                excl.add(rel); added += 1
         print(f"  🧹 第 {it+1} 轮发现 {len(dups)} 组同源重复 → 追加排除 {added} 段后重挑")
+        added_total += added
     return segs, items, titles
 
 
