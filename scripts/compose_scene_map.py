@@ -231,6 +231,15 @@ def pick_items(root: Path, chapters: list, times: list, lines: list,
         if not pools:
             print(f"❌ 章节「{label}」无可运动量达标素材（映射目录：{dirs}）")
             sys.exit(3)
+        # 镜头数自适应：若本章可用素材段数撑不起 SHOT_LEN 的节奏，就拉长单镜
+        # （宁可镜头长一点，也不要让一个小池子循环出「肉眼可见的重复周期」——
+        #  2026-09-12 实测 Ch2 池 8 段却排 13 镜，成片 6 镜一循环）。
+        pool_total = sum(len(v) for v in pools.values())
+        if pool_total < n_shots:
+            print(f"  ℹ️ Ch{k+1} 池仅 {pool_total} 段 < 计划 {n_shots} 镜 → 单镜拉长至 "
+                  f"{span/pool_total:.1f}s，避免池内循环复用")
+            n_shots = max(2, pool_total)
+            shot = span / n_shots
         order = [d for d in dirs if d in pools]
         # 选材分两步，兼顾「场景覆盖」与「不出现可见重复」：
         # ① 公平配额：每轮把出镜名额给「配额最少」的目录 → 稀缺池（居酒屋 2 段）
@@ -247,9 +256,18 @@ def pick_items(root: Path, chapters: list, times: list, lines: list,
                 break
             cands = [d for d in avail if d != last_dir] or avail
             best = min(cands, key=lambda d: (quota[d], order.index(d)))
-            while (cursor[best] < len(pools[best])
-                   and str(pools[best][cursor[best]][1]) in used_global):
-                cursor[best] += 1                     # 跳过往章已用过的素材
+            # 「全书不重复」是偏好而非硬约束：只有当本池**未用过的素材仍够填满本章**
+            # 时才跳过已用素材，否则尾部章节会被前面章节抽干（曾出现 Ch10 只出 1 镜、
+            # fit_shot_durations 把 59s 全塞给单镜）。素材不够时必须放开复用。
+            fresh_left = sum(1 for d in order for _m, f in pools[d]
+                             if str(f) not in used_global)
+            skip_used = (n_shots - assigned) <= fresh_left
+            while cursor[best] < len(pools[best]):
+                f = pools[best][cursor[best]][1]
+                if (skip_used and str(f) in used_global) or str(f) == prev_path:
+                    cursor[best] += 1
+                    continue
+                break
             if cursor[best] >= len(pools[best]):
                 continue
             selected[best].append(pools[best][cursor[best]][1])
@@ -257,6 +275,24 @@ def pick_items(root: Path, chapters: list, times: list, lines: list,
             cursor[best] += 1
             assigned += 1
             last_dir = best
+        if assigned < n_shots:
+            # 复用兜底（本章池被抽干）：按池轮转复用，只保证「相邻镜头不同素材」，
+            # 宁可复用也不让单镜吃掉整章时长（2026-09-12 实测 Ch10 单镜 59s 缺陷）。
+            order2 = [d for d in order if pools[d]]
+            curs2 = {d: 0 for d in order2}
+            guard = 0
+            while assigned < n_shots and order2 and guard < 20000:
+                guard += 1
+                cands2 = [d for d in order2 if d != last_dir] or order2
+                best2 = max(cands2, key=lambda d: (len(pools[d]) - curs2[d], -order.index(d)))
+                f2 = pools[best2][curs2[best2] % len(pools[best2])][1]
+                curs2[best2] += 1
+                if str(f2) == prev_path and len(pools[best2]) > 1:
+                    continue
+                selected[best2].append(f2)
+                quota[best2] += 1
+                assigned += 1
+                last_dir = best2
         buckets = {d: list(selected[d]) for d in order}
         remaining = {d: len(selected[d]) for d in order}
         picks, last_dir = [], None
