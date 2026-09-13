@@ -6,7 +6,7 @@
    → 直接退出。本稿 8 个 `#` 标题与 scene_map 8 章严格一一对应，改按标题切章。
 2) compose_scene_map 的章节卡标题由 scene_map 标签派生（"第{k+1}章 + name"），
    本稿标签本身已是「第一章 红香肠与玉子烧」，会派生出「第二章 第一章 …」重名
-   → 这里直接用标签，第 0 章（书名章）给「开场：深夜食堂」→ 渲染成「序章 / 深夜食堂」。
+   → 这里直接用标签，第 0 章（书名章）给「开场：<书名>」→ 渲染成「序章 / 书名」。
 3) video_composer._fallback_chapter_times 按「含标记的全文字符比例」估算章节卡时间，
    本稿标记行占比高，实测比真实朗读位置早最多 18.5s（芒果街同类错位）
    → 补丁为「朗读字符比例」，与 pick_items 的章节时间窗同源。
@@ -30,6 +30,21 @@ import video_composer as VC             # noqa: E402
 import scene_selector                   # noqa: E402
 
 MARKER_LINE = re.compile(r"^\s*【[^】]+】\s*$")
+
+
+def _excl_key(s) -> str:
+    """排除清单键归一化：`<目录>/video/<文件>` 与 `<目录>/<文件>` 视为同一段 → 统一成 `<目录>/<文件>`。
+
+    ⚠️ 2026-09-14《大医》事故根因：`qc_clip_scan.py` 用 `relative_to(ROOT)` 输出
+    `<目录>/video/<文件>`（长格式），而本文件按 `<目录>/<文件>`（短格式）匹配
+    → 130 条排除**全部匹配不上、长期空转**，dry-run 报「命中排除清单 0 段」= **假通过**，
+    三段脏素材（真人手 / 手指 / 现代汽车）因此进了正片。
+    教训：**排除清单"命中 0 段"不等于"干净"**，必须同时报告"有多少条匹配不上任何素材"。
+    """
+    parts = [p for p in str(s).replace("\\", "/").split("/") if p]
+    if len(parts) >= 2 and parts[-2] == "video":
+        parts = parts[:-2] + [parts[-1]]      # 去掉中间的 video/ 层
+    return "/".join(parts[-2:]) if len(parts) >= 2 else (parts[0] if parts else "")
 
 
 def extract_quotes_full(script_text: str) -> list:
@@ -206,10 +221,15 @@ def spoken_prefix_counts(lines: list) -> list:
     return pre
 
 
-def chapter_card_title(label: str, k: int) -> str:
-    """章节卡标题：首章=开场（渲染成「序章 / 书名」），其余标签本身已合规。"""
+def chapter_card_title(label: str, k: int, book: str = "") -> str:
+    """章节卡标题：首章=开场（渲染成「序章 / 书名」），其余标签本身已合规。
+
+    2026-09-14 修：首章卡标题原先硬编码「开场：深夜食堂」，任何非《深夜食堂》
+    的书（如《大医》）首章卡都会被印成「序 深夜食堂」。改为按 --book 生成
+    「开场：<书名>」；book 为空时回退到 scene_map 的标签，绝不印错书。
+    """
     if k == 0:
-        return "开场：深夜食堂"
+        return f"开场：{book}" if book else label
     return label
 
 
@@ -223,6 +243,8 @@ def main():
     ap.add_argument("--author", default="")
     ap.add_argument("--motion-cache", default=None)
     ap.add_argument("--exclude", default=None)
+    ap.add_argument("--allow-dead-exclude", action="store_true",
+                    help="排除清单死条目过半时仍继续（默认拒绝——防脏素材入片，2026-09-14 事故护栏）")
     ap.add_argument("--allow-static", default=None)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -296,17 +318,49 @@ def main():
     print("🎛️ 镜头时长分配：注水式（避免单镜过长）")
 
 
-    card_titles = [chapter_card_title(lb, k) for k, (lb, _, _) in enumerate(chapters)]
-    composer_text = C.build_text_with_chapters(lines, chapters, card_titles)
+    card_titles = [chapter_card_title(lb, k, args.book) for k, (lb, _, _) in enumerate(chapters)]
+    # 2026-09-14 修：《大医》等稿用「# + ##」双标记（# 供本包装器切章、## 供审稿门
+    # check_script_quality）。build_text_with_chapters 会给每章再插一行 `## 卡标题`，
+    # 于是 composer_text 里 ## 行 = 原稿 7 + 注入 7 = 14，而 video_composer.make_filter
+    # 数 ## 得到 14 章、章节时间轴只有 7 条 → chapter_times[ci+1] IndexError（正式合成崩，
+    # dry-run 因不经过 make_filter 漏检）。这里把原稿自带的 ## 行**原地置空**（保留行号，
+    # 否则 build_text_with_chapters 按章节起始行号 insert 会错位；标题行本就不朗读，
+    # 置空不影响朗读字符比例/金句时间轴），保证注入后 ## 数 == 章节数。
+    lines_no_dup = ["" if l.lstrip().startswith("##") else l for l in lines]
+    composer_text = C.build_text_with_chapters(lines_no_dup, chapters, card_titles)
+    n_h = sum(1 for l in composer_text.splitlines() if l.strip().startswith("##"))
+    if n_h != len(chapters):
+        print(f"⚠️ composer_text ## 行 {n_h} ≠ 章节 {len(chapters)}，章节卡时间轴可能错位")
     quotes = extract_quotes_full(composer_text)
     print('💬 金句字卡(完整引文): ' + ' | '.join(quotes))
     print(f"💬 金句字卡: {len(quotes)} 句 → {quotes}")
 
     poster_dir = Path(tempfile.mkdtemp(prefix="lb_posters_"))
-    exclude = set(json.load(open(args.exclude, encoding="utf-8"))) if args.exclude else set()
+    raw_exclude = set(json.load(open(args.exclude, encoding="utf-8"))) if args.exclude else set()
     allow_static = set(json.load(open(args.allow_static, encoding="utf-8"))) if args.allow_static else set()
-    if exclude:
-        print(f"🚫 人工复核排除 {len(exclude)} 段（来自 {Path(args.exclude).name}）")
+    # 归一化：兼容 <目录>/video/<文件>（门禁工具输出）与 <目录>/<文件>（历史清单）两种写法
+    exclude = {_excl_key(x) for x in raw_exclude}
+    if raw_exclude:
+        print(f"🚫 人工复核排除 {len(raw_exclude)} 条 → 归一化 {len(exclude)} 条"
+              f"（来自 {Path(args.exclude).name}）")
+        # 护栏③·死条目检测：每条排除键必须能对上磁盘上真实存在的素材，
+        # 否则 = 格式不匹配 → 整份清单空转（2026-09-14《大医》130 条假通过事故）
+        disk_keys = set()
+        for p in root.rglob("*.mp4"):
+            try:
+                disk_keys.add(_excl_key(str(p.relative_to(root))))
+            except ValueError:
+                disk_keys.add(_excl_key(p.name))
+        dead = sorted(x for x in raw_exclude if _excl_key(x) not in disk_keys)
+        if dead:
+            pct = 100.0 * len(dead) / len(raw_exclude)
+            lvl = "❌" if pct > 50 else "⚠️"
+            print(f"{lvl} 排除清单死条目 {len(dead)}/{len(raw_exclude)} 条（{pct:.0f}%）"
+                  f"匹配不到任何素材（格式可能不对）｜例：{dead[:3]}")
+            if pct > 50 and not args.allow_dead_exclude:
+                print("❌ 排除清单过半失效 → 拒绝合成（否则脏素材会入片）。"
+                      "确认无误可加 --allow-dead-exclude 强制继续。")
+                sys.exit(2)
 
     segs, items, _ = pick_items_dedup(root, chapters, times, lines, scene_map, motion,
                                       full_dur, n_ch, poster_dir, avail, exclude, allow_static)
