@@ -163,6 +163,15 @@ def tts_vo(text, voice, out_wav):
     log(f'   🎙️  生成旁白（{voice}）: {text}')
     subprocess.run(['python3', str(script), 'synth', '--voice', vid,
                     '--text', text, '--out', out_wav], check=True, timeout=600)
+    # 响度对齐（2026-09-14 实测补）：正文经 loudnorm -16LUFS，而 TTS 直出约 -25dB mean
+    # → 开场报书名明显偏轻（实测差 8dB）。这里把旁白也拉到 -16LUFS，与正文同响度。
+    norm = str(Path(out_wav).with_suffix('')) + '_norm.wav'
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', out_wav,
+                    '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11',
+                    '-ar', str(HEADER_AUDIO_RATE), '-ac', '1', norm],
+                   check=True, timeout=300)
+    os.replace(norm, out_wav)
+    log('   🔊 旁白响度对齐 -16LUFS（与正文一致）')
     return out_wav
 
 
