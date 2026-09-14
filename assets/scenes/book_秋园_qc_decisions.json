@@ -1,0 +1,70 @@
+{
+ "chinese_tea_cup_rustic_table/02.mp4": {
+  "verdict": "accept",
+  "why": "逐格复核：粗瓷茶碗+木桌+旧纸卷，无人物、无现代物件，地域中性 → 可用（china_republic 误报）（轴：china_republic）"
+ },
+ "chinese_tea_cup_rustic_table/04.mp4": {
+  "verdict": "accept",
+  "why": "逐格复核：中式茶具静物（弥勒小像+陶碗），无人物 → 可用（china_republic 误报）（轴：person_part）"
+ },
+ "chinese_old_street_alley_day": {
+  "verdict": "exclude",
+  "why": "格 01-09 全是土耳其老城街巷（土耳其旗幡/奥斯曼石屋/西文招牌/PAMUKKALE 店招），09 有真人 → 整目录非中国"
+ },
+ "chinese_old_railway_station": {
+  "verdict": "exclude",
+  "why": "格 01-10 全是英国蒸汽机车（Tornado 60163 @ Whitby 站、英文站牌、成群游客）→ 整目录非中国"
+ },
+ "old_manuscript_paper_stack": {
+  "verdict": "exclude",
+  "why": "格 02-10 全部出现真人手/手指，且 05/10 纸上是阿拉伯文 → 整目录不可用"
+ },
+ "chinese_clay_roof_tiles": {
+  "verdict": "exclude",
+  "why": "格 04 青瓦航拍但巷中满是人；06/10 是工厂石膏堆；07 北欧铝顶+阿尔卑斯村落；09 白人男性+手 → 整目录不可信"
+ },
+ "chinese_rural_house_old": {
+  "verdict": "exclude",
+  "why": "格 04 木屋+真人、05 欧洲石板路红顶、07/09 现代别墅、03 蓝铁皮顶+卫星锅+电线 → 整目录不可信"
+ },
+ "chinese_village_rice_paddy": {
+  "verdict": "exclude",
+  "why": "格 02/03/05/09/10 均含真人（远小人影/收割人），04 高压铁塔，06 棕榈+现代路 → 整目录不可信"
+ },
+ "chinese_old_wooden_door": {
+  "verdict": "exclude",
+  "why": "命中 8/10（80%），含真人部位与现代墙面 → 整目录不可信"
+ },
+ "chinese_bamboo_forest_mist": {
+  "verdict": "exclude",
+  "why": "命中 8/10（80%），含真人部位/非中国竹林观感 → 整目录不可信"
+ },
+ "empty_old_room_wooden_china": {
+  "verdict": "exclude",
+  "why": "命中 7/7（100%），china_republic+person_part 双轴全中 → 整目录不可信"
+ },
+ "chinese_river_boat_mist": {
+  "verdict": "exclude",
+  "why": "格 01/02/03/11 船上有真人、10 现代脚踏船、07 地中海海岸、12 现代游船 → 整目录不可信"
+ },
+ "chinese_stone_bridge_water": {
+  "verdict": "exclude",
+  "why": "命中 7/10（70%），含真人/现代元素 → 整目录不可信"
+ },
+ "chinese_vegetable_garden": {
+  "verdict": "exclude",
+  "why": "命中 7/10（70%），含真人部位（种菜的人） → 整目录不可信"
+ },
+ "laundry_clothesline_old_house": {
+  "verdict": "exclude",
+  "why": "命中 7/10（70%），含真人部位 → 整目录不可信"
+ },
+ "chinese_temple_wooden_hall": {
+  "verdict": "exclude",
+  "why": "命中 6/9（67%），含真人部位/现代元素 → 整目录不可信"
+ },
+ "bamboo_basket_woven_still": {
+  "verdict": "exclude",
+  "why": "命中 5/10（50%），含真人手 → 整目录不可信"
+ }
+}

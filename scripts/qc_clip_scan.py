@@ -14,6 +14,14 @@ import sys, os, json, subprocess, time
 from pathlib import Path
 import numpy as np, cv2
 
+# 2026-09-14: 多进程扫描时 OpenCV 默认每进程开满核线程 → 8 进程 × 14 线程
+# 造成严重超额订阅（实测 load 112，扫描慢 3-5 倍）。限定为 1 线程，
+# 并行度交给进程数控制。可用 CV_THREADS 覆盖。
+try:
+    cv2.setNumThreads(int(os.environ.get("CV_THREADS", "1")))
+except Exception:
+    pass
+
 ROOT = Path(sys.argv[1]).resolve()
 FPS  = float(sys.argv[2]) if len(sys.argv) > 2 else 1.5
 TH   = float(sys.argv[3]) if len(sys.argv) > 3 else 0.28
