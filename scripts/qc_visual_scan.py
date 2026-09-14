@@ -24,6 +24,12 @@ qc_visual_scan.py — 通用「画面内容」VL 机器门禁（2026-09-14 新�
 
 产物：<素材根>/_qc_<目标>_report.json + _qc_<目标>_sheets/*.jpg
 ⚠️ 只判「可疑」不当裁决 —— 可疑项必须逐格放大人工确认（VL 也会误判）。
+
+⚠️ **抽样密度铁律（2026-09-14 实测）**：默认 3 帧**不够**！实测 `snow_landscape/04`（雪地公路
+   上的汽车）—— 8 帧里只有 1 帧能看到车（车只在片段的某 1-2 秒出现），3 帧全错过 → **漏报**。
+   源素材门禁必须 **≥8 帧/片**（`person_part 8 16` / `modern 8 16`）。
+   注意：合成器只取源片段的**一个子窗口**，所以源级门禁必须扫满整片；
+   而「成片实际用了什么」只有**对成片密采样**（每 2.5s 一帧）才能确认。
 """
 import sys, json, os, base64, subprocess, hashlib
 from pathlib import Path
@@ -44,10 +50,13 @@ QUESTIONS = {
                     "yes = 有：人脸、手、手指、手臂、腿、脚、背影、身体任何部分、明显人影；\\n"
                     "no = 完全没有（纯器物/风景/建筑/食物/布料/光影特写，一个人也没有）。\\n"
                     "只回一个词：yes 或 no。"),
-    "modern": ("这张图里是否出现了**现代物件**？\\n"
-               "yes = 有：汽车/卡车/摩托车/自行车、现代柏油马路与交通标线、电线杆与电线、"
-               "现代建筑与玻璃幕墙、塑料制品、现代商品包装与印刷标签、现代服装与球鞋、手机电脑；\\n"
-               "no = 完全没有（自然风景、山水雪原、木石建筑、老式器物、食物、光影）。\\n"
+    "modern": ("这张图里是否出现了**明确属于现代工业/现代交通的东西**？\\n"
+               "yes = 画面里能看清有：汽车/轿车/卡车/公交车/摩托车/自行车、柏油马路上的白色交通标线、"
+               "高压电线杆或成排电线、玻璃幕墙写字楼、现代高层住宅楼、塑料瓶/塑料袋/塑料制品、"
+               "现代印刷标签或广告牌、现代运动鞋或现代时装；\\n"
+               "no = 没有上述任何一样。**以下都算 no，不要判 yes**：老式器物与古董、木石建筑与老宅、"
+               "山水雪原森林、食物与食材、书本纸张与卷轴、金属医疗器械与老式仪器、"
+               "老式火车/老式车站/老式汽车（蒸汽时代与民国样式的都算 no）、水墨画与书法。\\n"
                "只回一个词：yes 或 no。"),
     "japan": ("这张图如果要用在一部讲日本故事的视频里，画面是否**明显不属于日本**？\\n"
               "yes = 能明确看出是西欧/北美/澳洲等的场景或人物；\\n"
@@ -160,18 +169,22 @@ def main():
           f"并发 {WORKERS} | 模型 {MODEL}", flush=True)
 
     prep = []
-    for c in cs:
+    # 并发抽帧（2026-09-14：串行时 249 段要 5 分钟，是整条门禁的瓶颈）
+    def prep_one(c):
         d = dur(c)
         if d <= 0:
-            continue
+            return None
         fs = []
         for k in range(NFRAME):
             t = d * (k + 1) / (NFRAME + 1)
             o = TMP / f"{hashlib.md5(str(c).encode()).hexdigest()[:10]}_{k}.jpg"
             if grab(c, t, o):
                 fs.append(o)
-        if fs:
-            prep.append((c, fs))
+        return (c, fs) if fs else None
+    with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+        for r in ex.map(prep_one, cs):
+            if r:
+                prep.append(r)
     print(f"抽帧完成 {len(prep)} 段（{sum(len(f) for _, f in prep)} 次 VL 调用）", flush=True)
 
     def one(item):
