@@ -1,0 +1,50 @@
+{
+ "old_alley_china": {
+  "verdict": "exclude",
+  "why": "整目录欧式石阶老巷（意大利风格），地域不符；v4 成片 300s/435s 各出现一次"
+ },
+ "snow_landscape": {
+  "verdict": "exclude",
+  "why": "整目录雪地公路+汽车（现代交通工具）"
+ },
+ "winter_village_china": {
+  "verdict": "exclude",
+  "why": "整目录阿尔卑斯式红顶村落/现代多层楼房，地域不符"
+ },
+ "river_boat_mist": {
+  "verdict": "exclude",
+  "why": "整目录现代白色塑料小艇+栈桥+橙色浮球"
+ },
+ "mortar_pestle": {
+  "verdict": "exclude",
+  "why": "整目录真人手捣药（03 已进 v2 成片，逐帧确认）"
+ },
+ "apothecary_drawers": {
+  "verdict": "exclude",
+  "why": "02 白大褂真人+手（逐帧确认）；07 西式静物冒充中药柜"
+ },
+ "tcm_herbs": {
+  "verdict": "exclude",
+  "why": "现代商品静物照观感（黄底+精油滴管瓶），按 09-14 用户指示规避此类"
+ },
+ "vintage_telegraph": {
+  "verdict": "exclude",
+  "why": "02 真人手指触碰设备（逐帧确认）"
+ },
+ "calligraphy_ink": {
+  "verdict": "exclude",
+  "why": "03 真人双手握毛笔+露出半个头（逐帧确认）"
+ },
+ "steam_train": {
+  "verdict": "accept",
+  "why": "民国蒸汽机车+铁路线，时代相符（v4 成片逐格核过，非现代）"
+ },
+ "old_station": {
+  "verdict": "accept",
+  "why": "老式钢架月台，民国车站相符（v4 成片逐格核过）"
+ },
+ "oil_lamp": {
+  "verdict": "exclude",
+  "why": "04 背景桥上有一排行人在走（逐帧确认）"
+ }
+}
