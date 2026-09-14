@@ -1,0 +1,86 @@
+{
+ "cherry_blossom_japan_park": {
+  "verdict": "exclude",
+  "why": "命中 4/4=100%；放大复核 16 格全是戴口罩游客/骑车人 → 整目录不可信"
+ },
+ "izakaya_interior_night": {
+  "verdict": "exclude",
+  "why": "命中 8/8=100%；放大复核 16 格全是店内食客/厨师背影 → 整目录不可信"
+ },
+ "japanese_small_town_street_night": {
+  "verdict": "exclude",
+  "why": "命中 8/8=100%；放大复核 24 格全是夜街人群/自行车/汽车 → 整目录不可信"
+ },
+ "izakaya_counter_sake": {
+  "verdict": "exclude",
+  "why": "命中 8/9=89%；同源居酒屋素材，与 izakaya_interior_night 同批 → 整目录不可信"
+ },
+ "japanese_apartment_interior": {
+  "verdict": "exclude",
+  "why": "命中 8/9=89%；放大复核 16 格为和服女子/茶道真人 → 整目录不可信"
+ },
+ "japanese_bar_counter_night": {
+  "verdict": "exclude",
+  "why": "命中 8/9=89%；放大复核 16 格为**欧美酒吧（BAR 霓虹招牌+欧美吧台客与酒保）** → 真人+地域双违，整目录排除"
+ },
+ "japanese_kitchen_cooking": {
+  "verdict": "exclude",
+  "why": "命中 7/8=88%；放大复核到戴黑手套的真人手切菜 → 整目录不可信"
+ },
+ "japanese_train_station_platform": {
+  "verdict": "exclude",
+  "why": "命中 7/9=78%；放大复核 16 格全为月台乘客（含戴口罩通勤者）→ 整目录不可信"
+ },
+ "japanese_train_window_view": {
+  "verdict": "exclude",
+  "why": "命中 6/10=60%；放大复核 18 格全为车厢内乘客 → 整目录不可信"
+ },
+ "japanese_temple_garden": {
+  "verdict": "exclude",
+  "why": "命中 3/5=60%；放大复核 12 格为白袍神职男子行礼、推助行器的老人、人影 → 整目录不可信"
+ },
+ "rainy_night_japan_street": {
+  "verdict": "exclude",
+  "why": "命中 1/1=100%（雨夜街真人）→ 整目录不可信"
+ },
+ "japanese_cemetery_stone": {
+  "verdict": "exclude",
+  "why": "命中 5/9=56%，且放大复核为**欧美墓地+欧美男子手捧白花** → 真人+地域双违，整目录排除"
+ },
+ "crescent_moon_night_sky": {
+  "verdict": "accept",
+  "why": "YOLO 0/4 命中；纯月空镜头，无人物风险"
+ },
+ "sake_pour_cup": {
+  "verdict": "accept",
+  "why": "YOLO 2/10；命中 2 段已排除，余 8 段为酒器特写（再经 VL person_part/modern/地域 复核）"
+ },
+ "japanese_earthen_pot_cooking": {
+  "verdict": "accept",
+  "why": "定向补扫目录，YOLO 结果见报告；土锅炖煮特写，无人物风险"
+ },
+ "japanese_shoji_window_light": {
+  "verdict": "accept",
+  "why": "定向补扫目录，障子窗光室内空景"
+ },
+ "japanese_river_walk_evening": {
+  "verdict": "accept",
+  "why": "定向补扫目录，傍晚河堤空景"
+ },
+ "japanese_sea_coast_evening": {
+  "verdict": "accept",
+  "why": "定向补扫目录，海岸黄昏空景"
+ },
+ "japanese_island_ferry_sea": {
+  "verdict": "accept",
+  "why": "定向补扫目录，海面渡船空景"
+ },
+ "japanese_lantern_warm_light": {
+  "verdict": "accept",
+  "why": "定向补扫目录，纸灯笼暖光静物"
+ },
+ "old_leather_bag_closeup": {
+  "verdict": "accept",
+  "why": "定向补扫目录，旧皮包特写静物"
+ }
+}

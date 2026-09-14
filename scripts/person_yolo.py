@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """YOLOv11 单人检测器（deepghs/real_person_detection l_yv11）——用于素材/成片'禁真人'审计。
 输入动态尺寸，输出 [1,5,N] = cx,cy,w,h,score（单类 person）。"""
-import onnxruntime as ort, numpy as np, cv2, subprocess, sys, json
+import onnxruntime as ort, numpy as np, cv2, subprocess, sys, json, os
 from pathlib import Path
 
 MODEL = (str(Path(__file__).resolve().parent.parent / "models/person_l.onnx")
@@ -11,7 +11,7 @@ _sess = None
 def sess():
     global _sess
     if _sess is None:
-        so = ort.SessionOptions(); so.intra_op_num_threads = 4; so.log_severity_level = 3
+        so = ort.SessionOptions(); so.intra_op_num_threads = int(os.environ.get("YOLO_THREADS", "4")); so.log_severity_level = 3
         _sess = ort.InferenceSession(MODEL, so, providers=["CPUExecutionProvider"])
     return _sess
 
