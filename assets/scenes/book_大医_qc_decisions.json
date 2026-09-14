@@ -46,5 +46,21 @@
  "oil_lamp": {
   "verdict": "exclude",
   "why": "04 背景桥上有一排行人在走（逐帧确认）"
+ },
+ "surgical_tools": {
+  "verdict": "exclude",
+  "why": "真人手风险：02 是白手套真人手（比对时亲眼确认）；person_part 4/4 全票"
+ },
+ "medical_kit_vintage": {
+  "verdict": "exclude",
+  "why": "真人手风险：01 是徒手拿注射器（亲眼确认）；person_part 6/6 全票"
+ },
+ "vintage_lab_glass": {
+  "verdict": "exclude",
+  "why": "真人手风险：02 是真人手倒液体（亲眼确认）；person_part 7/7 全票"
+ },
+ "vintage_instruments": {
+  "verdict": "exclude",
+  "why": "真人手风险：person_part 7/7 全票，与 surgical_tools 同源同拍"
  }
 }
