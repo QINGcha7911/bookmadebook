@@ -105,6 +105,9 @@ ROOT = Path(".") if LIST_MODE else ARG1_P           # 清单模式下产物落�
 
 def clips():
     if LIST_MODE:
+        # 直接传单个视频文件（如片头 5s mp4）→ 只扫这一个
+        if ARG1_P.suffix.lower() in (".mp4", ".mov", ".mkv", ".webm"):
+            return [ARG1_P]
         t = ARG1_P.read_text(encoding="utf-8", errors="ignore").strip()
         items = json.loads(t) if t.startswith("[") else [x.strip() for x in t.splitlines() if x.strip()]
         out = []
@@ -181,6 +184,11 @@ def main():
     if not KEY:
         sys.exit("❌ 找不到 DASHSCOPE_API_KEY")
     cs = clips()
+    if not cs:
+        print(f"❌ 待检素材 0 段 —— 对象不存在/路径写错/清单为空。")
+        print(f"   入参: {ARG1}（{'文件' if LIST_MODE else '目录'}）")
+        print(f"   ⚠️ 0 段 ≠ 干净！这是「静默假通过」，绝不许当成通过。")
+        sys.exit(3)
     mode = f"清单 {ARG1}" if LIST_MODE else f"全池 {ARG1}"
     print(f"{mode} | 素材 {len(cs)} 段 | 目标 {TARGET} | 每片 {NFRAME} 帧独立投票 | "
           f"并发 {WORKERS} | 模型 {MODEL}", flush=True)
