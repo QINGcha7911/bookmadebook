@@ -56,13 +56,17 @@ def extract_quotes_full(script_text: str) -> list:
     字卡会看得莫名其妙。这里保留完整引文（长度仍限 6-40 字，与既有规格一致）。
     """
     out = []
-    for m in re.finditer(r"【金句】\s*([^【】\n]{8,120})", script_text):
+    # 2026-09-14：外层量词 {8,120} 也会把「禁止期待」（含引号 6 字符）整条挡掉 → 放宽到 4
+    for m in re.finditer(r"【金句】\s*([^【】\n]{4,120})", script_text):
         q = m.group(1).strip()
         inner = re.findall(r"「([^「」]{4,80})」", q)
         if inner:
             q = inner[-1]
         q = q.strip().strip("「」\"")
-        if 6 <= len(q) <= 40 and q not in out:
+        # 2026-09-14 修：《老师的提包》「禁止期待」是 4 字金句（正文还专门点明
+        # 「反复提醒自己四个字：禁止期待」），原下限 6 会把它静默丢弃 → 5 金句只出 4 张卡。
+        # 放宽到 4 字（作者已用【金句】标记，短句更该出卡）。
+        if 4 <= len(q) <= 40 and q not in out:
             out.append(q)
     return out[:6]
 

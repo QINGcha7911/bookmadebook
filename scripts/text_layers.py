@@ -85,7 +85,32 @@ def wrap_by_px(text: str, font, max_width: int = 640) -> list:
             line = unit
     if line:
         lines.append(line)
-    return lines or [text]
+    # 2026-09-14 修：《老师的提包》「也许我至今还没有成长为一个真正的大人」无标点，
+    # 语义单元整体 18 字超宽，上面的按「单元」断行不会拆它 → 整条铺成一行，
+    # _center_x 算出负 x → 左右都被画布裁掉。
+    # 这里做**两级**兜底：语义断行仍按 max_width(640) 偏好，但只有当某行真的
+    # 超出画布安全宽（HARD_MAX=960，1080 留 60px 边距）时才均衡硬切，
+    # 避免把本来 704px 能放下的句子（如「月子小姐，我们去约会吧」）也拆碎。
+    HARD_MAX = 960
+    fixed = []
+    for ln in (lines or [text]):
+        lnw = font.getlength(ln)
+        if len(ln) > 1 and lnw > HARD_MAX:
+            n = int(lnw // HARD_MAX) + 1          # 需要几行
+            target = lnw / n                      # 每行目标宽度（均衡切）
+            # 按像素均衡切：逐字累加，超过目标宽度就断行
+            cur, cnt = "", 0
+            for ch in ln:
+                cur += ch
+                cnt += 1
+                if font.getlength(cur) >= target and (len(ln) - cnt) > 0:
+                    fixed.append(cur)
+                    cur = ""
+            if cur:
+                fixed.append(cur)
+        else:
+            fixed.append(ln)
+    return fixed
 
 
 def _center_x(draw, text, font) -> int:
