@@ -4,6 +4,7 @@
 用法: python3 qc_person_scan_par.py <视频> [fps] [阈值] [进程数] [输入尺寸]
 输出: /tmp/qcperson/<名>_hits.json + 命中拼图 <名>_hits.jpg
 """
+import os
 import sys, os, json, subprocess, time
 from pathlib import Path
 import numpy as np, cv2
@@ -11,7 +12,7 @@ import numpy as np, cv2
 VID  = sys.argv[1]
 FPS  = float(sys.argv[2]) if len(sys.argv) > 2 else 1.0
 TH   = float(sys.argv[3]) if len(sys.argv) > 3 else 0.26
-NW   = int(sys.argv[4])   if len(sys.argv) > 4 else 6
+NW = int(os.environ.get("QC_PROCS") or (sys.argv[4] if len(sys.argv) > 4 else 3))  # 2026-09-16：默认 3 路，14 核机器上防止与 VL/ffmpeg 互抢
 SIZE = int(sys.argv[5])   if len(sys.argv) > 5 else 640
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
