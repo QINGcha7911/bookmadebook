@@ -28,6 +28,7 @@ qc_region_scan.py — 素材池「地域」机器门禁（第三道，2026-09-13
   ③ 素材路径结构是 <场景>/video/*.mp4，别漏 video 那层。
   ④ 本工具只做「判可疑」，**不做最终裁决**：可疑项必须逐格放大人工确认（VL 也会误判）。
 """
+import os
 import sys, json, os, base64, subprocess, hashlib
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -36,7 +37,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 TARGET = (sys.argv[2] if len(sys.argv) > 2 else "japan").lower()
 NFRAME = int(sys.argv[3]) if len(sys.argv) > 3 else 3
-WORKERS = int(sys.argv[4]) if len(sys.argv) > 4 else 8
+WORKERS = int(os.environ.get("QC_WORKERS") or (sys.argv[4] if len(sys.argv) > 4 else 4))  # 2026-09-16：8→4，同上
 MODEL = os.environ.get("QC_VL_MODEL", "qwen-vl-max")
 API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 TMP = Path("/tmp/qc_region"); TMP.mkdir(exist_ok=True)
@@ -72,6 +73,18 @@ QUESTIONS = {
                "积雪街道与松林、旧式室内与旧木家具、烛光与暖黄灯），"
                "或者画面是中性的（食器/器物/桌面/光影/天空/水面/花叶/酒瓶/书页特写，看不出是哪个国家）。\n"
                "只回一个词：yes 或 no。"),
+    # 2026-09-16 新增：西班牙/地中海海岛题材（《温柔的夜》三毛·加那利群岛）
+    # 二元问法，勿改多分类
+    "spain": ("这张图如果要用在一部讲**西班牙加那利群岛**故事的视频里，画面是否**明显不属于西班牙／南欧地中海**？\n"
+              "yes = 能明确看出是**东亚**（中式日式室内、汉字日文招牌、榻榻米障子暖帘、东亚面孔）、\n"
+              "**北欧/寒冷地区**（厚积雪、成排冷杉、深色木屋、极地影调）、**中东/非洲/南亚**、\n"
+              "**北美**（摩天楼天际线、黄色校车、典型美国公路与加油站、白宫式建筑）、\n"
+              "**英国/爱尔兰**（英式村舍、红砖排屋、双层巴士、红色电话亭），\n"
+              "或**现代玻璃幕墙写字楼／现代钢构商场**等明显与加那利群岛无关的场景；\n"
+              "no = 看得出是西班牙或南欧地中海（白墙小镇、赤陶瓦顶、火山黑礁海岸、棕榈、\n"
+              "带铁艺栏杆的阳台、石铺老街、欧式老教堂），或者画面是中性的（器物/食物/桌面/\n"
+              "光影/天空/水面/石头/花叶特写，看不出是哪个国家）。\n"
+              "只回一个词：yes 或 no。"),
 }
 Q = QUESTIONS.get(TARGET, QUESTIONS["japan"])
 

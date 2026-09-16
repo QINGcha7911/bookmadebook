@@ -35,6 +35,7 @@ qc_visual_scan.py — 通用「画面内容」VL 机器门禁（2026-09-14 新�
    注意：合成器只取源片段的**一个子窗口**，所以源级门禁必须扫满整片；
    而「成片实际用了什么」只有**对成片密采样**（每 2.5s 一帧）才能确认。
 """
+import os
 import sys, json, os, base64, subprocess, hashlib
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -43,7 +44,7 @@ from PIL import Image, ImageDraw, ImageFont
 ARG1 = sys.argv[1] if len(sys.argv) > 1 else "."
 TARGET = (sys.argv[2] if len(sys.argv) > 2 else "person_part").lower()
 NFRAME = int(sys.argv[3]) if len(sys.argv) > 3 else 3
-WORKERS = int(sys.argv[4]) if len(sys.argv) > 4 else 8
+WORKERS = int(os.environ.get("QC_WORKERS") or (sys.argv[4] if len(sys.argv) > 4 else 4))  # 2026-09-16：8→4，14 核机器上 8 路 VL+8 路 ffmpeg 会把 load 推到 135
 MODEL = os.environ.get("QC_VL_MODEL", "qwen-vl-max")
 API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 TMP = Path("/tmp/qc_visual"); TMP.mkdir(exist_ok=True)
@@ -93,6 +94,18 @@ QUESTIONS = {
                      "（精油瓶/滴管瓶/胶囊瓶/标准化包装、标签印刷精美、道具刻意摆放、色彩鲜艳统一）；\\n"
                      "no = 自然记录感、实拍场景、老照片质感、文物与器物记录照、食材原样摆放。\\n"
                      "只回一个词：yes 或 no。"),
+    # 2026-09-16 新增：《温柔的夜》三毛·西班牙加那利群岛（当代西班牙海岛题材）
+    # 二元问法，勿改多分类
+    "spain": ("这张图如果要用在一部讲**西班牙加那利群岛**故事的视频里，画面是否**明显不属于西班牙／南欧地中海**？\\n"
+              "yes = 能明确看出是**东亚**（中式日式室内、汉字日文招牌、榻榻米障子暖帘、东亚面孔与服饰）、\\n"
+              "**北欧/寒冷地区**（厚积雪、成排冷杉、深色木屋）、**中东/非洲/南亚**、\\n"
+              "**北美**（摩天楼天际线、黄色校车、典型美国公路与加油站）、\\n"
+              "**英国/爱尔兰**（英式村舍、红砖排屋、双层巴士、红色电话亭），\\n"
+              "或**现代玻璃幕墙写字楼／现代钢构商场**；\\n"
+              "no = 看得出是西班牙或南欧地中海（白墙小镇、赤陶瓦顶、火山黑礁海岸、棕榈、\\n"
+              "铁艺栏杆阳台、石铺老街、欧式老教堂），或者画面是中性的（器物/食物/桌面/\\n"
+              "光影/天空/水面/石头/花叶特写，看不出是哪个国家）。\\n"
+              "只回一个词：yes 或 no。"),
 }
 Q = QUESTIONS.get(TARGET, QUESTIONS["person_part"])
 
