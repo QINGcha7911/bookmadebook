@@ -38,8 +38,8 @@ ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 TARGET = (sys.argv[2] if len(sys.argv) > 2 else "japan").lower()
 NFRAME = int(sys.argv[3]) if len(sys.argv) > 3 else 3
 WORKERS = int(os.environ.get("QC_WORKERS") or (sys.argv[4] if len(sys.argv) > 4 else 4))  # 2026-09-16：8→4，同上
-MODEL = os.environ.get("QC_VL_MODEL", "qwen-vl-max")
-API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+MODEL = os.environ.get("QC_VL_MODEL", "Qwen/Qwen3-VL-32B-Instruct")  # 2026-09-17 百炼停用→SiliconFlow
+API = os.environ.get("QC_VL_API", "https://api.siliconflow.cn/v1/chat/completions")  # 2026-09-17 百炼停用→SiliconFlow
 TMP = Path("/tmp/qc_region"); TMP.mkdir(exist_ok=True)
 
 QUESTIONS = {
@@ -100,14 +100,25 @@ Q = QUESTIONS.get(TARGET, QUESTIONS["japan"])
 
 
 def api_key():
+    """取 VL API key（2026-09-17 百炼停用→SiliconFlow）。
+    环境变量与 .env 都收，但**过滤占位符/异常值**（曾因 .env 里是 `***`、环境里是旧值而静默失败）。"""
+    cands = []
+    for name in ("QC_VL_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
+        v = os.environ.get(name, "")
+        if v:
+            cands.append(v)
     try:
         for line in Path("/root/.hermes/.env").read_text(encoding="utf-8", errors="ignore").splitlines():
-            if line.strip().startswith("DASHSCOPE_API_KEY"):
-                return line.split("=", 1)[1].strip().strip('"').strip("'")
+            for nm in ("QC_VL_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
+                if line.strip().startswith(nm + "="):
+                    cands.append(line.split("=", 1)[1].strip().strip('"').strip("'"))
     except Exception:
         pass
-    return os.environ.get("DASHSCOPE_API_KEY", "")
-
+    for c in cands:
+        c = (c or "").strip().strip('"').strip("'")
+        if c and c not in ("***", "<set>") and len(c) > 20 and "..." not in c:
+            return c
+    return ""
 
 KEY = api_key()
 
@@ -137,7 +148,7 @@ def ask_one(img: Path):
     b64 = base64.b64encode(img.read_bytes()).decode()
     payload = {"model": MODEL, "messages": [{"role": "user", "content": [
         {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}},
-        {"type": "text", "text": Q}]}], "max_tokens": 8, "temperature": 0}
+        {"type": "text", "text": Q}]}], "max_tokens": 8}
     pj = TMP / f"pl_{img.stem}.json"
     pj.write_text(json.dumps(payload), encoding="utf-8")
     r = subprocess.run(["curl", "-s", "-m", "120", "-X", "POST", API,
@@ -190,7 +201,7 @@ def sample_t(d, k, n):
 
 def main():
     if not KEY:
-        sys.exit("❌ 找不到 DASHSCOPE_API_KEY")
+        sys.exit("❌ 找不到 VL API key（QC_VL_KEY / SILICONFLOW_API_KEY / OPENAI_API_KEY）")
     cs = clips(ROOT)
     print(f"素材 {len(cs)} 段 | 目标 {TARGET} | 每片 {NFRAME} 帧独立投票 | 并发 {WORKERS} | 模型 {MODEL}", flush=True)
 
