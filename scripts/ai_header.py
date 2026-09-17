@@ -227,6 +227,14 @@ def splice(header, main, out, vo_wav=None):
 
 
 def main():
+    # ⛔ 2026-09-17 用户指示：AI 片头暂停（万相 wan2.2-t2v-plus 属百炼调用，除配音外全停）
+    #    恢复方法：删除 assets/ai_headers/_DISABLED
+    import os as _os, sys as _sys
+    _disabled = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "assets", "ai_headers", "_DISABLED")
+    if _os.path.exists(_disabled):
+        print("⛔ AI 片头已暂停（用户 2026-09-17 指示：百炼除配音外全部暂停调用）。"
+              "本片按无片头出片。恢复：删除 assets/ai_headers/_DISABLED", file=_sys.stderr)
+        _sys.exit(0)
     ap = argparse.ArgumentParser(description='bookmadebook AI 片头生成器')
     ap.add_argument('--book', help='书名（记录用）')
     ap.add_argument('--prompt', help='视频描述（中文）')
