@@ -135,11 +135,24 @@ grep -rn "评论区\|扣1\|扣 1\|激励\|点单\|互动" prompts/ scripts/ /roo
 
 **派 004 前最小自检**：grep 一次模板 + 派单脚本，确认没有互动要求；不放心就在派单里额外写明「不加互动设计」。
 
-**规则打架时不要自己拍。** 本会话里「禁互动（09-12）」与「算法五条（09-06）」两条记录互相矛盾 —— 正确做法是**列选项问用户**（用户秒选「彻底禁互动」），不是自己挑一条执行；挑错就是又白跑一轮。
+> **规则打架时不要自己拍。** 本会话里「禁互动（09-12）」与「算法五条（09-06）」两条记录互相矛盾 —— 正确做法是**列选项问用户**（用户秒选「彻底禁互动」），不是自己挑一条执行；挑错就是又白跑一轮。
+> 
+> **🔧 已工具化（2026-09-19）：`~/.hermes/scripts/rule_effect_audit.py`** —— 上面这套五处扫描 + 残留分类 + 落地证据 + 生效时点，不用再手工 grep：
+> ```bash
+> python3 ~/.hermes/scripts/rule_effect_audit.py --rule no-interaction     # 核「禁互动」
+> python3 ~/.hermes/scripts/rule_effect_audit.py --rule face-only-gate    # 核「只禁正脸」口径
+> python3 ~/.hermes/scripts/rule_effect_audit.py --pattern "你要查的词"    # 临时词
+> python3 ~/.hermes/scripts/rule_effect_audit.py --selftest                # 必跑：验证分类器真抓得到
+> python3 ~/.hermes/scripts/rule_effect_audit.py --rule X --strict         # 有漏网则 exit 1（可挂进流程）
+> ```
+> 设计要点（都是踩坑换来的）：① **命中要分类**——❌反例/禁项块内=正确，✅范例/硬性要求/自检项=漏网（**正向范例最容易漏，也最要命**）；② **`--selftest` 必须过**再采信「0 漏网」（否则就是"没跑却报干净"）；③ **裸词会误报**——「点单」在"用户点单书目"里合法，只有「评论区报书名/点单闭环/留言点单」才违规，别把宽词当违规词；④ **生效时点看 prompt 内容指纹**，不看 `jobs.json` mtime（scheduler 会频繁改写 mtime，旧判据天天误报）；⑤ 工具自身会被自己的 fixture 命中 → 扫描时跳过本文件。首次实测即抓出 3 处真漏网（`multi-agent-coordination` 里仍在教 004「体现点单闭环」「评论区报书名」）并改掉。
 
 ## 相关
 
 - bookmadebook（用户自有，只读）：精读音频/视频生产流水线
 - video-delivery-pipeline：视频交付压缩链路
 - `references/goods-list-pricing.md`：商品清单（小红书包第 3 件）的结构、合规要求、**实测价核对方法**与扫价噪声坑
-- **技能/模板同步（2026-09-06 实操）**：本 SKILL.md 与模板 `prompts/xiaohongshu_copywriting.txt` 是两份独立文件，改动须分别同步。本技能三端存放：007 WSL `~/.hermes/skills/social-media/xiaohongshu-viral-content/`、bookmadebook 仓库 `skills/xiaohongshu-viral-content/SKILL.md`（用户要求技能入库则放此路径）、008 Windows `C:\Users\dongj\.hermes\skills\social-media\xiaohongshu-viral-content\`。同步验证：三端 md5 一致 + 008 需重启 gateway 才加载新技能。**改模板后要让 004 重写对比**（派单注明「按新模板重写同书，不发布，附 10 项自检结果」，004 自检 ≠ 验收——007 必须读产物文件逐条核验 5 条硬性要求真落地，再新旧对比给用户看提升幅度，用户满意即定稿生效）。GitHub push 遇 TLS 断连（WSL 已知）时用 gh API 逐文件 PUT 并读回远程验证（本会话 commit cd6942a）。
+- **技能/模板同步（2026-09-06 实操）**：本 SKILL.md 与模板 `prompts/xiaohongshu_copywriting.txt` 是两份独立文件，改动须分别同步。本技能三端存放：007 WSL `~/.hermes/skills/social-media/xiaohongshu-viral-content/`、bookmadebook 仓库 `skills/xiaohongshu-viral-content/SKILL.md`（用户要求技能入库则放此路径）、008 Windows `C:\Users\dongj\.hermes\skills\social-media\xiaohongshu-viral-content\`。同步验证：三端 md5 一致 + 008 需重启 gateway 才加载新技能。**⚠️ 两个实测坑（2026-09-18，白查一轮换来）**：
+> (1) **技能文件可能在后台被自动扩写** —— 19:30 取 md5 `aeb836a8`（11,865B），19:33:47 文件被自动扩写为 `ad276b96`（15,165B，新增 §九第7条事实核验 + 本节 §十 + `references/goods-list-pricing.md`）。交接给 008 时两边数字对不上。**→ 报 md5 必须带取数时刻；同步/覆盖完成后再重取一次，以最后重取的值为准；发现不一致先 `stat` mtime 判定"文件变了"还是"读法不同"（CRLF/路径），别先怀疑对方造假。**
+> (2) **核 008 侧的 md5 不要采信自报** —— Windows 副本可从 `/mnt/c/Users/dongj/.hermes/skills/...` 直读 `md5sum` 实核（本次直读证明 008 报的值属实、且无 CRLF 漂移）。
+> (3) 008 侧 gateway 重启会被自保护拦（`Refusing to restart the gateway from inside the gateway process`）→ 需**用户在独立命令行窗口**跑 `D:\HermesWin2\.venv\Scripts\hermes.exe gateway restart`；技能文件落盘即对当轮会话生效，不重启不影响使用。WSL 侧同理，`sudo systemctl restart hermes-gateway` 只能由用户执行。**改模板后要让 004 重写对比**（派单注明「按新模板重写同书，不发布，附 10 项自检结果」，004 自检 ≠ 验收——007 必须读产物文件逐条核验 5 条硬性要求真落地，再新旧对比给用户看提升幅度，用户满意即定稿生效）。GitHub push 遇 TLS 断连（WSL 已知）时用 gh API 逐文件 PUT 并读回远程验证（本会话 commit cd6942a）。
