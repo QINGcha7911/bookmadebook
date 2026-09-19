@@ -72,16 +72,29 @@ def is_excluded(dirname: str, filename: str, keys) -> bool:
 
 
 def detail_score(img: Image.Image) -> float:
-    """画面信息量评分：边缘方差大 = 有细节；过亮/过暗（雾、空天、死黑）重罚。"""
+    """画面信息量评分。
+
+    2026-09-19 加"中心主体清晰度"项：只看全图边缘方差会被**焦外虚化**骗到
+    （实测怀表那版全是 bokeh，边缘方差照样高，但主体完全看不清）。
+    中心区（主体所在）权重 45%，全图 55%；过亮/过暗（雾、空天、死黑）重罚。
+    """
     g = img.convert("L").resize((240, 426))
     edges = g.filter(ImageFilter.FIND_EDGES)
     data = list(edges.getdata())
     mean = sum(data) / len(data)
     var = sum((v - mean) ** 2 for v in data) / len(data)
+    # 中心 55% 区域（主体位置）的清晰度
+    cw, ch = int(240 * 0.55), int(426 * 0.55)
+    cx, cy = (240 - cw) // 2, (426 - ch) // 2
+    c = edges.crop((cx, cy, cx + cw, cy + ch))
+    cdata = list(c.getdata())
+    cmean = sum(cdata) / len(cdata)
+    cvar = sum((v - cmean) ** 2 for v in cdata) / len(cdata)
+    score = var * 0.55 + cvar * 0.45
     lum = sum(g.getdata()) / len(g.getdata()) / 255.0
     if lum < 0.16 or lum > 0.90:          # 死黑 / 死白 / 大雾
-        var *= 0.25
-    return var
+        score *= 0.25
+    return score
 
 
 def _probe_dur(p) -> float:
