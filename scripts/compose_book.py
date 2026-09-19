@@ -250,10 +250,16 @@ def main():
     ap.add_argument("--allow-dead-exclude", action="store_true",
                     help="排除清单死条目过半时仍继续（默认拒绝——防脏素材入片，2026-09-14 事故护栏）")
     ap.add_argument("--allow-static", default=None)
+    ap.add_argument("--allow-source-mismatch", action="store_true",
+                    help="音源/稿源文件名不含书名时仍继续（默认拒绝——防「拿了别的书的 mp3/讲书稿」"
+                         "导致整片音画全错，2026-09-17《目送》dry-run 事故护栏）")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     for a in ("script", "scene_map", "audio", "output", "motion_cache"):
-        setattr(args, a, str(Path(getattr(args, a)).resolve()))
+        v = getattr(args, a)
+        if v is None:                     # 2026-09-16: 可选参数不传时原先会 NoneType 崩溃
+            continue
+        setattr(args, a, str(Path(v).resolve()))
 
     lines = Path(args.script).read_text(encoding="utf-8").splitlines()
     sm = json.load(open(args.scene_map, encoding="utf-8"))
@@ -270,6 +276,32 @@ def main():
     chapters = split_chapters_by_heading(lines, scene_map)
     n_ch = len(chapters)
     titles = [c[0] for c in chapters]
+    # ── 音源/稿源身份硬门禁（2026-09-17）────────────────────────────
+    # 事故：正式渲染的 --audio 被写成**别的书**的 mp3（同目录复制粘贴），
+    # 原日志只打时长（`音频: 615.8s`），两本书时长接近时肉眼无法分辨 →
+    # 整片音画全错、只能废弃。故：打印音源指纹（文件名+md5前8+mtime）并**校验文件名含书名**。
+    def _md5_8(path):
+        h = subprocess.run(["md5sum", path], capture_output=True, text=True).stdout.split()
+        return h[0][:8] if h else "?"
+
+    audio_p, script_p = Path(args.audio), Path(args.script)
+    audio_name, script_name = audio_p.name, script_p.name
+    print(f"🔊 音源: {audio_name}  md5:{_md5_8(args.audio)}  "
+          f"mtime:{__import__('datetime').datetime.fromtimestamp(audio_p.stat().st_mtime):%Y-%m-%d %H:%M}  "
+          f"路径: {args.audio}")
+    print(f"📝 稿源: {script_name}  mtime:{__import__('datetime').datetime.fromtimestamp(script_p.stat().st_mtime):%Y-%m-%d %H:%M}  "
+          f"路径: {args.script}")
+    if args.book:
+        bad = [("音源", audio_name), ("稿源", script_name)]
+        bad = [(k, n) for k, n in bad if args.book not in n]
+        if bad:
+            for k, n in bad:
+                print(f"❌ {k}文件名不含书名「{args.book}」：{n}")
+            print("   → 疑似拿了**别的书**的音源/讲书稿（同目录复制粘贴）。"
+                  "整片音画全错、只能废弃，故默认拒绝。")
+            print(f"   若确属有意命名，请加 --allow-source-mismatch 重跑。")
+            if not args.allow_source_mismatch:
+                sys.exit(5)
     print(f"📖 书名: {args.book} | 作者: {args.author} | 音频: {full_dur:.1f}s | 章节: {n_ch}")
     for k, (label, st, en) in enumerate(chapters):
         n_spoken = sum(len(re.findall(r"[\u4e00-\u9fff]", l)) for l in lines[st:en + 1]

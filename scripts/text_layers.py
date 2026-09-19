@@ -241,7 +241,10 @@ def render_quote(quote: str, quote_no: int = 0, total: int = 1,
     d = ImageDraw.Draw(img)
     font = get_font("bold", font_size)
     lines = wrap_by_px(quote, font, max_width=640)
-    lines = lines[:3]  # 最多 3 行
+    # 2026-09-17 修：原为 lines[:3]，会把第 4 行**静默丢弃** → 卡片以逗号结尾、语义不完整
+    # （《边城》金句「翠翠在风日里长养着…故眸子清明如水晶。」=38 字 → 4 行，末行被丢）。
+    # 放宽到 4 行；字号保持统一（禁为塞行而缩放字号），垂直居中公式已按 n 自适应。
+    lines = lines[:4]  # 最多 4 行
     line_h = int(font_size * 1.35)
     # 垂直居中公式：首行 y = 980 - (n-1)*L/2 - fontsize/2
     n = len(lines)

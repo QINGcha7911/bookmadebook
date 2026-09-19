@@ -123,6 +123,42 @@ def api_key():
 KEY = api_key()
 
 
+def _probe_ok(api: str, model: str, key: str) -> bool:
+    """1-token 探活：判断 API/key/model 是否可用（SiliconFlow 余额不足 → code 30001）。"""
+    if not key:
+        return False
+    fp = "/tmp/_qc_region_probe.json"
+    with open(fp, "w") as fh:
+        fh.write(json.dumps({"model": model, "max_tokens": 1,
+                             "messages": [{"role": "user", "content": "hi"}]}))
+    try:
+        r = subprocess.run(["curl", "-s", "-m", "30", api, "-H", f"Authorization: Bearer {key}",
+                            "-H", "Content-Type: application/json", "-d", f"@{fp}"],
+                           capture_output=True, text=True, timeout=45)
+        s = r.stdout or ""
+        d = json.loads(s[s.find("{"):s.rfind("}") + 1])
+        return bool(d.get("choices"))
+    except Exception:
+        return False
+
+
+# 2026-09-17: 主 VL 探活失败（SiliconFlow 余额不足）→ 自动回落 DashScope qwen3-vl-flash。
+if not _probe_ok(API, MODEL, KEY):
+    _ds = ""
+    try:
+        for _l in Path("/root/.hermes/.env").read_text(encoding="utf-8", errors="ignore").splitlines():
+            if _l.strip().startswith("DASHSCOPE_API_KEY="):
+                _ds = _l.split("=", 1)[1].strip().strip('"').strip("'")
+                break
+    except Exception:
+        pass
+    if _ds:
+        print(f"⚠️ 主 VL（{MODEL}）探活失败 → 回落 DashScope {os.environ.get('QC_VL_FALLBACK_MODEL', 'qwen3-vl-flash')}")
+        API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+        MODEL = os.environ.get("QC_VL_FALLBACK_MODEL", "qwen3-vl-flash")
+        KEY = _ds
+
+
 def clips(root: Path):
     return [p for p in sorted(root.rglob("*.mp4"))
             if not any(part.startswith("_excluded") for part in p.parts)]

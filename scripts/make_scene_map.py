@@ -70,6 +70,8 @@ def pick(shots, avail, keywords, slot_names):
         hit = [d for d in slot_names if d in sh]
         # 去掉被更长目录名包含的短名（food 是 food_table 的子串，不该被同时命中）
         hit = [d for d in hit if not any(d != e and d in e for e in hit)]
+        # 2026-09-16：行内点名的目录必须真的在 available 里且非空，否则本行作废走关键词兜底
+        hit = [d for d in hit if d in avail and avail.get(d)]
         if hit:
             for d in hit:                       # 行内已指明目录 → 直接采用，不再兜底
                 if d not in seen:
@@ -92,6 +94,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--keywords", help="自定义关键词表 JSON（会与默认表合并，同名覆盖）")
     ap.add_argument("--min-dirs", type=int, default=3)
+    ap.add_argument("--fallback", help="兜底目录（逗号分隔），每章不足 min-dirs 时按序补")
     ap.add_argument("--excluded-count", type=int, default=0)
     a = ap.parse_args()
 
@@ -106,9 +109,18 @@ def main():
     for title, shots in chapters:
         dirs = pick(shots, avail, kw, slot_names)
         if len(dirs) < a.min_dirs:                          # 兜底：补全最通用的目录
-            for d in ("night_street_empty", "street_lamp", "empty_bar_counter",
-                      "miso_soup_pot", "glass_table", "garden"):
-                if d in avail and d not in dirs:
+            for d in (a.fallback.split(",") if a.fallback else
+                      ["night_street_empty", "street_lamp", "empty_bar_counter",
+                       "miso_soup_pot", "glass_table", "garden"]):
+                d = d.strip()
+                if d in avail and avail.get(d) and d not in dirs:
+                    dirs.append(d)
+                if len(dirs) >= a.min_dirs:
+                    break
+        if len(dirs) < a.min_dirs:
+            # 2026-09-16：书名专属池的兜底——按可用段数从多到少补，保证每章都够 min_dirs
+            for d in sorted(avail, key=lambda x: -len(avail[x])):
+                if avail[d] and d not in dirs:
                     dirs.append(d)
                 if len(dirs) >= a.min_dirs:
                     break

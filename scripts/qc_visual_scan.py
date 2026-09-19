@@ -47,7 +47,7 @@ NFRAME = int(sys.argv[3]) if len(sys.argv) > 3 else 3
 WORKERS = int(os.environ.get("QC_WORKERS") or (sys.argv[4] if len(sys.argv) > 4 else 4))  # 2026-09-16：8→4，14 核机器上 8 路 VL+8 路 ffmpeg 会把 load 推到 135
 MODEL = os.environ.get("QC_VL_MODEL", "Qwen/Qwen3-VL-32B-Instruct")  # 2026-09-17 百炼停用→SiliconFlow
 API = os.environ.get("QC_VL_API", "https://api.siliconflow.cn/v1/chat/completions")  # 2026-09-17 百炼停用→SiliconFlow
-TMP = Path("/tmp/qc_visual"); TMP.mkdir(exist_ok=True)
+TMP = Path(f"/tmp/qc_vl_{TARGET}"); TMP.mkdir(exist_ok=True)   # 2026-09-17: 每轴独立临时目录（同轴并发时共用 /tmp/qc_visual 会互相覆盖抽帧，导致问的图与实际采样点不符）
 
 # yes = 有问题（可疑）
 QUESTIONS = {
@@ -132,6 +132,45 @@ def api_key():
     return ""
 
 KEY = api_key()
+
+
+def _probe_ok(api: str, model: str, key: str) -> bool:
+    """1-token 探活：API/key/model 是否可用（SiliconFlow 余额不足会返回 code 30001）。"""
+    if not key:
+        return False
+    fp = "/tmp/_qc_probe.json"
+    with open(fp, "w") as fh:
+        fh.write(json.dumps({"model": model, "max_tokens": 1,
+                             "messages": [{"role": "user", "content": "hi"}]}))
+    try:
+        r = subprocess.run(["curl", "-s", "-m", "30", api, "-H", f"Authorization: Bearer {key}",
+                            "-H", "Content-Type: application/json", "-d", f"@{fp}"],
+                           capture_output=True, text=True, timeout=45)
+        s = r.stdout or ""
+        d = json.loads(s[s.find("{"):s.rfind("}") + 1])
+        return bool(d.get("choices"))
+    except Exception:
+        return False
+
+
+# 2026-09-17: SiliconFlow 账号余额不足（code 30001）→ 自动回落 DashScope（qwen3-vl-flash）。
+# 不回落的话所有 VL 门禁会静默全返 err（verdict=unknown）＝门禁等于没跑。
+# 实测校准：与 SiliconFlow Qwen3-VL-32B 在《边城》16 段已知样本上 16/16 一致。
+if not _probe_ok(API, MODEL, KEY):
+    _ds = ""
+    try:
+        for _l in Path("/root/.hermes/.env").read_text(encoding="utf-8", errors="ignore").splitlines():
+            if _l.strip().startswith("DASHSCOPE_API_KEY="):
+                _ds = _l.split("=", 1)[1].strip().strip('"').strip("'")
+                break
+    except Exception:
+        pass
+    if _ds:
+        print(f"⚠️ 主 VL（{MODEL}）探活失败 → 回落 DashScope {os.environ.get('QC_VL_FALLBACK_MODEL', 'qwen3-vl-flash')}")
+        API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+        MODEL = os.environ.get("QC_VL_FALLBACK_MODEL", "qwen3-vl-flash")
+        KEY = _ds
+
 ARG1_P = Path(ARG1)
 LIST_MODE = ARG1_P.is_file()
 ROOT = Path(".") if LIST_MODE else ARG1_P           # 清单模式下产物落在 CWD

@@ -236,6 +236,29 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
             )
         report["stats"]["quotes"] = n_quotes
 
+    # 8. 尾部流程元信息（2026-09-15 加：004 交付的《秋园》讲书稿尾部混进 3 行流程话术
+    #    ——自检统计/"红线落实说明"/"文件已同步存云盘…等你落盘审稿"——TTS 会逐字朗读，
+    #    第一版音频因此多出 47.8 秒（649.3s vs 干净稿 601.5s）。交付稿只允许书的内容。
+    META_PATTERNS = (
+        r"已同步", r"云盘", r"落盘", r"自检", r"红线", r"字数[:：]", r"统计[:：]",
+        r"Coze", r"扣子", r"交付说明", r"存档", r"等你", r"已上传", r"文件大小",
+        r"审稿", r"本稿", r"版本[:：]\s*v?\d", r"元信息", r"字数约",
+    )
+    tail_lines = [l.strip() for l in text.split("\n") if l.strip()][-12:]
+    meta_hits = []
+    for ln in tail_lines:
+        for pat in META_PATTERNS:
+            if re.search(pat, ln, re.I):
+                meta_hits.append((pat, ln[:60]))
+                break
+    if meta_hits:
+        report["passed"] = False
+        report["errors"].append(
+            "尾部混入流程元信息（TTS 会逐字朗读，必须删掉）："
+            + "; ".join(f"[{p}] {s}" for p, s in meta_hits[:4])
+            + "。交付稿只保留书的内容（正文/【画面】/【情绪】/【金句】）。"
+        )
+
     return report
 
 
