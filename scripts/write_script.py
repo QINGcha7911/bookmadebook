@@ -114,7 +114,9 @@ def call_deepseek(cfg: dict, messages: list, timeout: int = 240) -> str:
         "messages": messages,
         "temperature": 0.7,
         "stream": False,
-        "max_tokens": 8192,
+        # deepseek-v4-flash 是思考型模型：reasoning 会先吃掉额度，
+        # 8192 时服务端会直接断连/返回空 content；16384 实测稳定
+        "max_tokens": 16384,
     }
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     req = urllib.request.Request(
