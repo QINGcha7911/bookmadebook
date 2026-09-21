@@ -975,6 +975,30 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         quote_times = _quote_times(quotes, script_text,
                                    audio_chapter_starts, audio_dur)
         has_cta = "cta" in png_map and audio_dur <= 90
+        # 2026-09-19（005 补丁回移）：末句升华金句先占片尾窗，否则被前序金句抢走尾巴后丢弃
+        # （《一个人的好天气》v1 就是末句「一个人，也会遇上好天气。」整张卡没渲染出来）
+        _RESERVED = [None]
+        if quotes and not has_cta:
+            _qi = len(quotes) - 1
+            _w = _clip_display_start(quote_times[_qi], audio_dur)
+            if audio_dur - _w <= 9.0:
+                _w = max(0.0, audio_dur - 9.0)
+            # 2026-09-21 修复（《朱元璋传》130.2s 事故根因）：
+            # 原式 `_w + max(2.4, audio_dur-_w-0.3)` 在末句远离片尾时会把占位窗一路撑到片尾
+            # （453.91 → 584.12s，盖住整个尾声并与尾声章节卡叠字）。
+            # 改为与下方 hold 逻辑同口径：仅当末句天然贴近片尾（≤18s）才允许「保持到结尾」，
+            # 否则占位窗 = 标准时长（长版 12s / 短版 6s）。
+            _hold_max = max(2.4, audio_dur - _w - 0.3) if audio_dur - _w <= 18 else (6.0 if audio_dur <= 90 else 12.0)
+            _e = min(audio_dur - 0.3, _w + _hold_max)
+            # 占位窗与已排章节卡做碰撞消解：重叠则放弃占位，交回 _place_text_window 找缝隙（防叠字）
+            _free = all(_e <= s + 1e-6 or _w >= t - 1e-6 for (s, t) in busy)
+            if _e - _w >= 2.4 and _free:
+                _RESERVED[0] = (_w, _e)
+                busy.append((_w, _e))
+                busy.sort()
+                print(f"  🧷 末句金句片尾预留 {_w:.2f} → {_e:.2f}s（占位时长 {_e-_w:.2f}s）")
+            elif _e - _w >= 2.4:
+                print(f"  ⚠️ 末句金句占位窗 {_w:.2f}→{_e:.2f}s 与章节卡重叠 → 放弃占位，改由缝隙排程处理")
         for qi, q in enumerate(quotes):
             qk = f"quote_{qi}"
             is_last = (qi == len(quotes) - 1)
@@ -991,9 +1015,18 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
                 hold = max(2.4, audio_dur - want - 0.3)
             else:
                 hold = quote_hold
-            placed = _place_text_window(want, hold, busy, audio_dur)
+            if _RESERVED[0] is not None and qi == len(quotes) - 1:
+                placed = _RESERVED[0]        # 末句已预留，直接落地
+            else:
+                placed = _place_text_window(want, hold, busy, audio_dur)
             if placed is None:
-                continue  # 无可放缝隙 → 该句不显示（宁可缺不叠字）
+                # 2026-09-19 第二机会：放宽允许提前量再试一次（仍不会叠字，只是卡比旁白略早）
+                _rt = float(__import__("os").environ.get("QY_EARLY_TOL", "3.0"))
+                placed = _place_text_window(want, hold, busy, audio_dur, early_tol=_rt)
+                if placed is not None:
+                    print(f"  🩹 金句卡{qi} 走第二机会（提前量放宽至 {_rt}s）→ {placed[0]:.2f}s")
+            if placed is None:
+                continue  # 仍无缝隙 → 该句不显示（宁可缺不叠字，但必须在交付说明里报实际张数）
             ts, te = placed
             if is_last and te >= audio_dur - 0.2 and not has_cta:
                 fade_out = ""  # 保持到结尾
