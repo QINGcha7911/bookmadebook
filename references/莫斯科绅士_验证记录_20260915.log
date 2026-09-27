@@ -1,0 +1,50 @@
+=== A. 语法（py 编译 / sh bash -n / json 解析）===
+  ✅ py 编译 23/23 全过
+  ✅ bash -n /root/fetch_moscow.sh
+  ✅ bash -n /root/gates_moscow.sh
+  ✅ bash -n /root/send_lark.sh
+  ✅ json 解析 book_莫斯科绅士_excluded.json
+  ✅ json 解析 book_莫斯科绅士_available.json
+  ✅ json 解析 book_莫斯科绅士_scene_map.json
+  ✅ json 解析 book_莫斯科绅士_qc_decisions.json
+
+=== B. 共用脚本 QUESTIONS 完整性 ===
+  ✅ qc_visual_scan 原键零丢失（6）
+  ✅ qc_region_scan 原键零丢失（3）
+  ✅ 两个脚本均新增 russia
+  ✅ visual.russia 仍是单目标二元问法
+  ✅ region.russia 仍是单目标二元问法
+
+=== C. 数据不变量 ===
+  ✅ 排除清单 217 条全短格式
+  ✅ 排除清单零死条目
+  ✅ available∩excluded=∅
+  ✅ 净可用 139 = 池 356 − 排除 217
+  ✅ available 无空目录
+  ✅ 「开场 《莫斯科绅士》——一间」目录 7 个全在 available
+  ✅ 「第一章 九岁女孩和一把钥匙」目录 12 个全在 available
+  ✅ 「第二章 屋顶上的蜂蜜」目录 16 个全在 available
+  ✅ 「第三章 一个女儿，一首诗的真」目录 12 个全在 available
+  ✅ 「第四章 一九五四，旋转门外」目录 13 个全在 available
+  ✅ 「尾声 四壁之间的世界」目录 11 个全在 available
+  ✅ scene_map 6 章 + excluded 条数一致
+
+=== D. 生成器幂等 ===
+  ✅ moscow_write_list.py exit 0
+  ✅ moscow_scene_map.py exit 0
+  ✅ 重跑后三产物逐字节等价（幂等）
+
+=== E. 收口校验 ===
+  ✅ qc_gate_audit exit 0
+
+=== F. 交付物 ===
+  ✅ 讲书稿 check_script_quality PASS（exit 1；exit 1=有建议项，非 FAIL）
+  ✅ 讲书稿 quality_gate 通过
+  ✅ assets/ai_headers/莫斯科绅士_5s.mp4 存在且 ≥1000000B
+  ✅ assets/ai_headers/莫斯科绅士_vo.wav 存在且 ≥50000B
+  ✅ references/莫斯科绅士_资料包.md 存在且 ≥10000B
+  ✅ references/莫斯科绅士_可用画面清单.md 存在且 ≥5000B
+  ✅ assets/scenes/book_莫斯科绅士_scene_map.json 存在且 ≥5000B
+
+===== 结果：全部通过（ad-hoc，非套件绿）=====
+tmpdir: /tmp/hermes-verify-s2b4nlwz
