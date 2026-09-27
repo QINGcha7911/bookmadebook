@@ -1,0 +1,1518 @@
+{
+ "chinese_farmhouse_courtyard/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_kitchen_stove/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_kitchen_stove/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_kitchen_stove/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_school_classroom/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_school_classroom/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_rural_school_classroom/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_rural_school_classroom/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_school_classroom/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_rural_school_classroom/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_school_classroom/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_school_classroom/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_rural_school_classroom/09.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_rural_village/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_rural_village/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_village_dirt_road/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "chinese_village_dirt_road/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "chinese_village_dirt_road/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "coal_mine_china/01.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_adobe_house_courtyard/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_adobe_house_courtyard/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_adobe_house_courtyard/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_adobe_house_courtyard/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_clay_stove_firewood/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_clay_stove_firewood/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_clay_stove_firewood/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_clay_stove_firewood/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_clay_stove_firewood/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/07.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_countryside_dirt_road/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_countryside_dirt_road/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_farmhouse_courtyard_wall/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_farmhouse_courtyard_wall/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_farmhouse_courtyard_wall/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_farmhouse_courtyard_wall/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_kitchen_firewood_stove/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_millstone_grain/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_millstone_grain/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_millstone_grain/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_millstone_grain/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_millstone_grain/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_millstone_grain/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_millstone_grain/07.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_mountain_village_distant/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_mountain_village_distant/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_book_pages/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_old_bookshelf/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/10.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_old_bookshelf/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/12.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_bookshelf/13.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_kitchen_utensils/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_kitchen_utensils/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_kitchen_utensils/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_old_street_alley_day/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_ox_cart_field/01.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_ox_cart_field/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_ox_cart_field/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_ox_cart_field/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_ox_cart_field/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_ox_cart_field/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_paper_window_lattice/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_paper_window_lattice/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_paper_window_lattice/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_paper_window_lattice/10.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_porcelain_teacup/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_porcelain_teacup/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_porcelain_teacup/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_porcelain_teacup/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_porcelain_teacup/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_porcelain_teacup/12.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_porcelain_teacup/13.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_pottery_jar_clay/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_market_vegetables/01.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_rural_market_vegetables/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_rural_market_vegetables/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_market_vegetables/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_market_vegetables/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_rural_village_houses/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_village_houses/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_village_houses/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_village_houses/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_rural_village_houses/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_straw_hay_stack/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tea_cup_rustic_table/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_terraced_farmland/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_terraced_farmland/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_terraced_farmland/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_terraced_farmland/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/04.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_tile_roof_grey/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_tile_roof_grey/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_cooking_smoke/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_cooking_smoke/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_cooking_smoke/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_cooking_smoke/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_cooking_smoke/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_dirt_path/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_dirt_path/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_village_dirt_path/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_dirt_path/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_dirt_path/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_chinese_village_dirt_path/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_dirt_path/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_evening_light/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_evening_light/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_evening_light/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_evening_light/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_village_snow_winter/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_wheat_field_golden/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_chinese_winter_bare_trees/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_clay_stove_firewood_fire/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_clay_stove_firewood_fire/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_clay_stove_firewood_fire/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_clay_stove_firewood_fire/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_clay_stove_firewood_fire/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_corn_field_green_summer/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_cotton_cloth_texture_old/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_crescent_moon_night_sky/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_dry_cracked_earth_soil/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_empty_old_room_wooden_china/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_kerosene_oil_lamp_dim/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/07.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_laundry_clothesline_old_house/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_laundry_clothesline_old_house/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_oil_lamp_flame_dark/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_house_interior_room/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_house_interior_room/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_old_chinese_house_interior_room/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_house_interior_room/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_town_street/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_water_well_village/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_water_well_village/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_old_chinese_water_well_village/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_water_well_village/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_wooden_door_courtyard/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_wooden_door_courtyard/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_chinese_wooden_door_courtyard/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_cloth_patching_sewing/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_cloth_patching_sewing/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_cloth_patching_sewing/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_cloth_patching_sewing/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_manuscript_paper_stack/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_wooden_desk_books/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_wooden_desk_books/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_old_wooden_desk_books/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_wooden_desk_books/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_wooden_desk_books/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_old_wooden_desk_books/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_poplar_trees_roadside/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_poplar_trees_roadside/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_on_window_glass/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rain_window_old_glass/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rice_grain_bowl_wooden/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rice_grain_bowl_wooden/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rice_grain_bowl_wooden/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rice_grain_bowl_wooden/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rice_grain_bowl_wooden/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_river_water_calm_evening/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_rural_mud_brick_house/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_sorghum_field_golden/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sorghum_field_golden/12.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/06.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_stone_bridge_chinese_village/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/03.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_sunset_clouds_dramatic/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整池体检命中真人正脸（硬门槛①）"
+ },
+ "inh_willow_tree_river_bank/07.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/08.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/09.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/10.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/11.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/13.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "inh_willow_tree_river_bank/14.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "loess_plateau_china/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（modern）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "loess_plateau_china/04.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "loess_plateau_china/05.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "wheat_field_harvest_china/01.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ },
+ "wheat_field_harvest_china/02.mp4": {
+  "verdict": "accept",
+  "why": "记录级（non_japan）：按 09-18 口径属非拦截项，记录不否决"
+ }
+}

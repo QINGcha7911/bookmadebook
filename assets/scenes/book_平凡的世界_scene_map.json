@@ -1,0 +1,687 @@
+{
+ "scene_root": "assets/scenes/book_平凡的世界",
+ "available": {
+  "chinese_farmhouse_courtyard": [],
+  "chinese_noodles_bowl": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "chinese_rural_kitchen_stove": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_rural_school_classroom": [
+   "01.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_rural_village": [
+   "01.mp4"
+  ],
+  "chinese_village_dirt_road": [
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "inh_chinese_adobe_house_courtyard": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_clay_stove_firewood": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "inh_chinese_countryside_dirt_road": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "inh_chinese_farmhouse_courtyard_wall": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "inh_chinese_kitchen_firewood_stove": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_chinese_millstone_grain": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_mountain_village_distant": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_chinese_old_book_pages": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_old_bookshelf": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "09.mp4",
+   "11.mp4",
+   "12.mp4",
+   "13.mp4"
+  ],
+  "inh_chinese_old_kitchen_utensils": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_old_street_alley_day": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "inh_chinese_ox_cart_field": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_paper_window_lattice": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "inh_chinese_porcelain_teacup": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4",
+   "13.mp4"
+  ],
+  "inh_chinese_pottery_jar_clay": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_chinese_rural_market_vegetables": [
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_rural_village_houses": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_steamer_basket_steam": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_straw_hay_stack": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_chinese_tea_cup_rustic_table": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "inh_chinese_terraced_farmland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_tile_roof_grey": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "inh_chinese_village_cooking_smoke": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_village_dirt_path": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_village_evening_light": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "inh_chinese_village_snow_winter": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_chinese_wheat_field_golden": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_chinese_winter_bare_trees": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_clay_stove_firewood_fire": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "inh_corn_field_green_summer": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "inh_cotton_cloth_texture_old": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_crescent_moon_night_sky": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_dry_cracked_earth_soil": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_empty_old_room_wooden_china": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_kerosene_oil_lamp_dim": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_laundry_clothesline_old_house": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_oil_lamp_flame_dark": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_old_chinese_house_interior_room": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "inh_old_chinese_town_street": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_old_chinese_water_well_village": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "inh_old_chinese_wooden_door_courtyard": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "inh_old_cloth_patching_sewing": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "inh_old_manuscript_paper_stack": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_old_wooden_desk_books": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "inh_poplar_trees_roadside": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_rain_on_window_glass": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_rain_window_old_glass": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_rice_grain_bowl_wooden": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "inh_river_water_calm_evening": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_rural_mud_brick_house": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "inh_sorghum_field_golden": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "inh_stone_bridge_chinese_village": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "inh_sunset_clouds_dramatic": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "inh_willow_tree_river_bank": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4",
+   "13.mp4",
+   "14.mp4"
+  ],
+  "loess_plateau_china": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "terraced_fields_china": [],
+  "wheat_field_harvest_china": []
+ },
+ "excluded": [
+  "chinese_rural_school_classroom/02.mp4",
+  "chinese_rural_school_classroom/03.mp4",
+  "chinese_rural_school_classroom/05.mp4",
+  "chinese_rural_school_classroom/08.mp4",
+  "chinese_rural_school_classroom/09.mp4",
+  "chinese_village_dirt_road/03.mp4",
+  "chinese_village_dirt_road/06.mp4",
+  "coal_mine_china/01.mp4",
+  "inh_chinese_countryside_dirt_road/07.mp4",
+  "inh_chinese_farmhouse_courtyard_wall/06.mp4",
+  "inh_chinese_millstone_grain/03.mp4",
+  "inh_chinese_millstone_grain/05.mp4",
+  "inh_chinese_millstone_grain/07.mp4",
+  "inh_chinese_old_bookshelf/08.mp4",
+  "inh_chinese_old_bookshelf/10.mp4",
+  "inh_chinese_ox_cart_field/01.mp4",
+  "inh_chinese_ox_cart_field/05.mp4",
+  "inh_chinese_paper_window_lattice/06.mp4",
+  "inh_chinese_paper_window_lattice/10.mp4",
+  "inh_chinese_porcelain_teacup/02.mp4",
+  "inh_chinese_rural_market_vegetables/01.mp4",
+  "inh_chinese_rural_market_vegetables/02.mp4",
+  "inh_chinese_rural_market_vegetables/05.mp4",
+  "inh_chinese_tile_roof_grey/04.mp4",
+  "inh_chinese_village_dirt_path/02.mp4",
+  "inh_chinese_village_dirt_path/05.mp4",
+  "inh_laundry_clothesline_old_house/07.mp4",
+  "inh_old_chinese_house_interior_room/02.mp4",
+  "inh_old_chinese_water_well_village/02.mp4",
+  "inh_old_wooden_desk_books/02.mp4",
+  "inh_old_wooden_desk_books/06.mp4",
+  "inh_sorghum_field_golden/03.mp4",
+  "inh_willow_tree_river_bank/06.mp4",
+  "chinese_rural_school_classroom/10.mp4",
+  "inh_chinese_pottery_jar_clay/03.mp4",
+  "chinese_noodles_bowl/03.mp4",
+  "chinese_farmhouse_courtyard/01.mp4",
+  "chinese_farmhouse_courtyard/02.mp4",
+  "inh_chinese_village_cooking_smoke/02.mp4",
+  "chinese_rural_kitchen_stove/02.mp4",
+  "chinese_village_dirt_road/01.mp4",
+  "chinese_rural_kitchen_stove/08.mp4",
+  "inh_chinese_adobe_house_courtyard/08.mp4",
+  "inh_chinese_countryside_dirt_road/09.mp4",
+  "chinese_rural_village/02.mp4",
+  "loess_plateau_china/05.mp4",
+  "terraced_fields_china/01.mp4",
+  "wheat_field_harvest_china/01.mp4",
+  "wheat_field_harvest_china/02.mp4",
+  "inh_chinese_straw_hay_stack/02.mp4"
+ ],
+ "scene_map": [
+  [
+   "开场",
+   [
+    "loess_plateau_china",
+    "inh_chinese_mountain_village_distant",
+    "inh_chinese_winter_bare_trees",
+    "chinese_rural_school_classroom",
+    "inh_chinese_steamer_basket_steam"
+   ]
+  ],
+  [
+   "第一章 两个黑高粱面馍",
+   [
+    "inh_chinese_steamer_basket_steam",
+    "chinese_noodles_bowl",
+    "inh_chinese_old_book_pages",
+    "inh_old_wooden_desk_books"
+   ]
+  ],
+  [
+   "第二章 十三岁的顶梁柱",
+   [
+    "inh_chinese_pottery_jar_clay",
+    "inh_chinese_straw_hay_stack",
+    "terraced_fields_china",
+    "inh_chinese_mountain_village_distant",
+    "inh_chinese_winter_bare_trees",
+    "chinese_village_dirt_road",
+    "inh_chinese_village_dirt_path",
+    "inh_chinese_village_evening_light",
+    "chinese_farmhouse_courtyard",
+    "inh_chinese_village_cooking_smoke",
+    "inh_chinese_clay_stove_firewood"
+   ]
+  ],
+  [
+   "第三章 生活要自己去争取",
+   [
+    "inh_chinese_village_cooking_smoke",
+    "inh_chinese_clay_stove_firewood",
+    "inh_chinese_pottery_jar_clay",
+    "inh_chinese_straw_hay_stack",
+    "inh_chinese_old_book_pages",
+    "inh_old_wooden_desk_books"
+   ]
+  ],
+  [
+   "第四章 一个记者，和一场洪水",
+   [
+    "inh_chinese_old_book_pages",
+    "inh_old_wooden_desk_books",
+    "inh_old_chinese_town_street",
+    "inh_chinese_village_dirt_path",
+    "inh_chinese_mountain_village_distant",
+    "inh_chinese_winter_bare_trees"
+   ]
+  ],
+  [
+   "第五章 他认下了自己的日子",
+   [
+    "inh_chinese_pottery_jar_clay",
+    "inh_chinese_straw_hay_stack",
+    "inh_chinese_village_snow_winter",
+    "inh_chinese_winter_bare_trees",
+    "inh_old_chinese_town_street",
+    "inh_chinese_village_dirt_path"
+   ]
+  ],
+  [
+   "尾声 平凡的人，平凡的日子",
+   [
+    "inh_chinese_village_cooking_smoke",
+    "inh_chinese_clay_stove_firewood",
+    "inh_chinese_steamer_basket_steam",
+    "inh_chinese_pottery_jar_clay",
+    "inh_chinese_straw_hay_stack",
+    "wheat_field_harvest_china",
+    "inh_chinese_wheat_field_golden",
+    "inh_corn_field_green_summer"
+   ]
+  ]
+ ]
+}

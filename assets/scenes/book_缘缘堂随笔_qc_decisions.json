@@ -1,0 +1,350 @@
+{
+ "chinese_street_morning_old": {
+  "verdict": "reject",
+  "why": "目视：全为现代城市道路/高楼/汽车，非江南老街，与目录名不符（整目录剔除，仅从可用池移除，非交付否决项）"
+ },
+ "winter_snow_courtyard_china": {
+  "verdict": "reject",
+  "why": "目视：雪原/现代高楼/欧式建筑，非中国院子，与目录名不符（整目录剔除，仅从可用池移除，非交付否决项）"
+ },
+ "chinese_old_bookshelf": {
+  "verdict": "accept",
+  "why": "含旧收音机等现代器物；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "empty_chinese_room_interior": {
+  "verdict": "accept",
+  "why": "含老式留声机等现代器物；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "pomegranate_tree_fruit": {
+  "verdict": "accept",
+  "why": "一组含欧式教堂屋顶；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "still_life_ink_wash_painting": {
+  "verdict": "accept",
+  "why": "含人体背部纹身画面（非正脸，记录级）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_wooden_window_lattice": {
+  "verdict": "accept",
+  "why": "含欧式拱窗；含小孩镜头（正脸段已由 face 轴隔离）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_white_wall_black_tile": {
+  "verdict": "accept",
+  "why": "含模特摆拍与地中海蓝白小镇（正脸段已由 face 轴隔离）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_old_corridor_courtyard": {
+  "verdict": "accept",
+  "why": "含疑似欧式/波斯风红砖拱廊；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_old_courtyard_house": {
+  "verdict": "accept",
+  "why": "含福建土楼航拍（构图现代）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "rain_on_window_glass": {
+  "verdict": "accept",
+  "why": "含手部入画（记录级，不拦）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_ink_brush_paper": {
+  "verdict": "accept",
+  "why": "含手部入画（记录级，不拦）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "chinese_clay_teapot": {
+  "verdict": "accept",
+  "why": "含手部/人物入画（记录级，不拦）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "bamboo_forest_chinese/03.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "bamboo_forest_chinese/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "bamboo_forest_chinese/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "bamboo_forest_chinese/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "cat_sunlight_window/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/09.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/11.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_bamboo_chair/14.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_clay_teapot/03.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_clay_teapot/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_clay_teapot/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_crab_dish/15.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_crab_dish/16.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_incense_burner/03.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_ink_brush_paper/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_moon_gate_wall/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_moon_gate_wall/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_moon_gate_wall/08.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_moon_gate_wall/17.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_moon_gate_wall/19.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_bookshelf/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_corridor_courtyard/09.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_corridor_courtyard/13.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_courtyard_house/03.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_courtyard_house/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_old_courtyard_house/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/08.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/09.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/11.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/13.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/14.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/15.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/16.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/17.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_paper_window_lantern/18.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_porcelain_teacup/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_rice_cake_steam/13.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_rice_cake_steam/14.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_rice_cake_steam/19.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_stone_bridge_canal/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_stone_bridge_canal/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_street_morning_old/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/11.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/12.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/14.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/15.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_tea_house_old/18.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_white_wall_black_tile/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_white_wall_black_tile/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_white_wall_black_tile/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_wooden_window_lattice/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_wooden_window_lattice/09.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_wooden_window_lattice/10.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_wooden_window_lattice/11.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "chinese_wooden_window_lattice/14.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "old_wooden_desk_books/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "old_wooden_desk_books/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "silkworm_mulberry_leaf/20.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "still_life_ink_wash_painting/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "still_life_ink_wash_painting/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ },
+ "still_life_ink_wash_painting/08.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（8 帧/段均匀采样）"
+ }
+}

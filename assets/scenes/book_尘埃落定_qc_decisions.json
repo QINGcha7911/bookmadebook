@@ -1,0 +1,163 @@
+{
+ "ancient_stone_tower": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "barley_grain_wooden_bowl": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 10 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "butter_tea_wooden_bowl": {
+  "verdict": "accept",
+  "why": "目录内 10 段中 3 段 VL 判 face（30%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "candle_lamp_dark_room": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 12 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "clouds_shadow_grassland": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "dust_wind_dry_earth": {
+  "verdict": "accept",
+  "why": "目录内 10 段中 1 段 VL 判 face（10%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "highland_barley_field_wind": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "horse_grazing_plateau": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 9 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "incense_smoke_prayer": {
+  "verdict": "accept",
+  "why": "目录内 8 段中 3 段 VL 判 face（38%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "mountain_lake_reflection": {
+  "verdict": "accept",
+  "why": "目录内 11 段中 1 段 VL 判 face（9%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "mountain_stream_valley": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 10 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "old_wooden_door_tibetan": {
+  "verdict": "accept",
+  "why": "目录内 11 段中 2 段 VL 判 face（18%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "prayer_flags_tibetan": {
+  "verdict": "accept",
+  "why": "目录内 10 段中 2 段 VL 判 face（20%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "red_poppy_field": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 10 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "sheep_flock_grassland": {
+  "verdict": "accept",
+  "why": "目录内 9 段中 2 段 VL 判 face（22%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "silver_ornament_closeup": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 7 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "snow_falling_mountain_village": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 12 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "snow_mountain_himalaya": {
+  "verdict": "accept",
+  "why": "目录内 12 段中 1 段 VL 判 face（8%，<50% 故保留整目录），命中段已按『face 一律隔离』进 excluded.json；目录级复核见 pre_render Haar 裁剪图"
+ },
+ "sunset_plateau_horizon": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "tibetan_plateau_grassland": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "tibetan_village_stone_house": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "yak_grazing_highland": {
+  "verdict": "accept",
+  "why": "pool_certify 整池体检 11 段零 face 命中；地域轴判 non_japan 属记录级（pool_certify 的 region 目标硬编码为 japan，对本书＝藏地/中国题材无判据意义），按 09-18 口径不拦截"
+ },
+ "snow_falling_mountain_village/01.mp4": {
+  "verdict": "accept",
+  "why": "VL 判 modern：按 2026-09-18 19:12 用户拍板口径，现代物件属记录级、不拦截交付"
+ },
+ "__axis_region__": {
+  "verdict": "accept",
+  "why": "pool_certify 地域轴对本书无判据意义：其 region 目标硬编码为 japan，藏地/中国题材会被整体判 non_japan（本池 212/228）。按 09-18 口径地域轴只记录不拦，记为下一轮抓素材的地域优选参考"
+ },
+ "__face_adjudication__": {
+  "verdict": "accept",
+  "why": "两道独立轴交叉，结论：无新增隔离项。① pool_certify VL 整池：覆盖 228/228 段、每段 8 帧、判定数 228、err 0 → 15 段 face，已一律隔离进 excluded.json。② pre_render Haar 4 级联高召回：228 段中 223 段命中（845 张裁剪图；另有 2077 张被每段 4 张的配额挡下未出图）。其中 14/15 段与 VL 的 face 命中落在同一段（两法互相印证）。对 30 张强信号裁剪图逐张回原分辨率亲看（禁拼图，分三轮覆盖 18 个不同目录）：30/30 全是误报 — 水花/罂粟花瓣/草叶纹理/烛焰/石墙石纹/羊只/牦牛腿/云层/雪面/麦芒/神像雕像/木门五金。无任何可辨真人脸。判定：Haar 在本池命中率 98%（近乎饱和）→ 该轴在本池鉴别力低，其『命中』不构成新增隔离依据；真人正脸硬门槛以 VL 的 15 段隔离为准。⚠️ 交生产班：因配额截断 2077 张未出图，严格说该轴『未完全清关』→ 渲染前 ⓪ 步必须对**入选片段**重跑 pre_render_face_check（建议 --max-crops-per-seg 提高到 0/不限）并逐张裁决，不得以『已过 Haar』为由跳过。"
+ },
+ "__records_only_improvement__": {
+  "verdict": "record",
+  "why": "以下按 2026-09-18 19:12 口径只记录、不拦截交付，供下一轮抓素材改进：",
+  "items": [
+   "ancient_stone_tower/09：画面是海边悬崖上的石砌塔楼（地中海/亚得里亚式）+ 现场钢筋塑料杂物 → 地域与题材不符，建议下轮换更贴题的藏地碉楼关键词（如 tibetan stone watchtower highland）",
+   "snow_falling_mountain_village：出现蓝色塑料桶/工业杂物 → 现代物，记录级",
+   "mountain_stream_valley/06：画面含钢桁架桥 + 远处极小人物（远景小人非可辨人脸）→ 记录级",
+   "candle_lamp_dark_room 多段近全黑（如 /12 整帧几无信息）→ 暗场素材多，成片观感偏闷，选材时优先挑有细节的段落",
+   "pool_certify 地域轴 212/228 判 non_japan：其 region 目标硬编码为 japan，对本书（藏地/中国）无判据意义，整轴作废不采纳"
+  ]
+ },
+ "__same_source_duplicates__": {
+  "verdict": "record",
+  "why": "全池 md5 比对：228 段中 216 个唯一 md5、10 组同源（12 个冗余文件，其中 1 组横跨 4 个目录）。compose_book 的全局唯一分配按内容去重（同源双胞胎自动识别），选材阶段应已消解；但生产班交付前必须确认 /tmp/qc_dups_unresolved.json **不存在**（存在即不得交付）。",
+  "groups": [
+   "barley_grain_wooden_bowl/03.mp4 == highland_barley_field_wind/01.mp4",
+   "barley_grain_wooden_bowl/04.mp4 == highland_barley_field_wind/11.mp4",
+   "clouds_shadow_grassland/03.mp4 == tibetan_plateau_grassland/04.mp4",
+   "horse_grazing_plateau/06.mp4 == tibetan_plateau_grassland/02.mp4",
+   "horse_grazing_plateau/08.mp4 == tibetan_plateau_grassland/06.mp4",
+   "mountain_lake_reflection/05.mp4 == prayer_flags_tibetan/07.mp4",
+   "old_wooden_door_tibetan/11.mp4 == prayer_flags_tibetan/08.mp4",
+   "snow_falling_mountain_village/02.mp4 == snow_falling_mountain_village/09.mp4",
+   "snow_mountain_himalaya/12.mp4 == tibetan_plateau_grassland/08.mp4 == tibetan_village_stone_house/01.mp4 == yak_grazing_highland/04.mp4",
+   "tibetan_plateau_grassland/01.mp4 == yak_grazing_highland/01.mp4"
+  ]
+ },
+ "__region_axis_not_run__": {
+  "verdict": "record",
+  "why": "地域轴（qc_region_scan）**未跑**，理由：该脚本目标只有 japan / china_classical / england 三选一，对本书（20 世纪上半叶康巴藏区）无匹配目标。跑错目标会产出系统性错误结论 —— 直接证据：pool_certify 的 region 目标硬编码为 japan，本池因此被整体判 non_japan 212/228，对本书毫无判据意义。按 09-18 口径地域轴本就只记录不拦，故此轴留待有 china_republic/藏区 目标时再跑。"
+ },
+ "__modern_axis_record__": {
+  "verdict": "record",
+  "why": "qc_visual_scan modern 轴：覆盖 228/228 段、每段 8 帧独立投票、判定数 228、未返回 0 → 可疑 0 段。按 2026-09-18 19:12 用户口径，现代物件属**记录级、不拦截交付**（硬门槛只有真人正脸与硬缺陷），故本轮**不写入 excluded.json**，仅作下一轮抓素材改进参考。人工抽样已印证：ancient_stone_tower 含海边悬崖石塔+钢筋塑料杂物、snow_falling_mountain_village 含蓝色塑料桶、mountain_stream_valley 含钢桁架桥。",
+  "suspects": [
+   "ancient_stone_tower/video/10.mp4",
+   "dust_wind_dry_earth/video/04.mp4",
+   "dust_wind_dry_earth/video/05.mp4",
+   "dust_wind_dry_earth/video/06.mp4",
+   "dust_wind_dry_earth/video/07.mp4",
+   "highland_barley_field_wind/video/08.mp4",
+   "horse_grazing_plateau/video/06.mp4",
+   "old_wooden_door_tibetan/video/10.mp4",
+   "prayer_flags_tibetan/video/10.mp4",
+   "sheep_flock_grassland/video/06.mp4",
+   "snow_falling_mountain_village/video/11.mp4",
+   "snow_mountain_himalaya/video/12.mp4",
+   "tibetan_plateau_grassland/video/02.mp4",
+   "tibetan_plateau_grassland/video/08.mp4",
+   "tibetan_plateau_grassland/video/09.mp4",
+   "tibetan_plateau_grassland/video/10.mp4",
+   "tibetan_village_stone_house/video/01.mp4",
+   "tibetan_village_stone_house/video/03.mp4",
+   "tibetan_village_stone_house/video/05.mp4",
+   "tibetan_village_stone_house/video/06.mp4",
+   "tibetan_village_stone_house/video/08.mp4",
+   "tibetan_village_stone_house/video/10.mp4",
+   "yak_grazing_highland/video/04.mp4",
+   "yak_grazing_highland/video/10.mp4"
+  ]
+ }
+}

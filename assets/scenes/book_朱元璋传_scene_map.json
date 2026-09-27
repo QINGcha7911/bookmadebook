@@ -1,0 +1,348 @@
+{
+ "script": "bookmadebook-output/讲书稿_朱元璋传.txt",
+ "scene_root": "assets/scenes/book_朱元璋传",
+ "available": {
+  "ancient_armor_china": [
+   "01.mp4",
+   "02.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "ancient_books_manuscript": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "ancient_city_wall_china": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "ancient_palace_chinese": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "ancient_wooden_door": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "bamboo_forest_mist": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "calligraphy_brush_ink": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "candle_flame_dark": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_ancient_village": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_lantern_night": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_old_town_street": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_temple_wood": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "dragon_carving_roof": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "forbidden_city_beijing": [
+   "01.mp4",
+   "02.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "horse_fog_silhouette": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4"
+  ],
+  "in_gufeng": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "in_guyuan": [
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4",
+   "10.mp4",
+   "12.mp4",
+   "13.mp4",
+   "14.mp4",
+   "15.mp4",
+   "16.mp4",
+   "17.mp4",
+   "18.mp4",
+   "20.mp4",
+   "21.mp4",
+   "22.mp4",
+   "501_01.mp4",
+   "503_03.mp4",
+   "504_04.mp4",
+   "505_05.mp4"
+  ],
+  "in_palace": [
+   "01_laketower.mp4",
+   "02_01.mp4",
+   "04_04.mp4",
+   "05_05.mp4",
+   "06_06.mp4",
+   "07_07.mp4",
+   "08_08.mp4"
+  ],
+  "in_temple": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "incense_smoke_temple": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "ink_wash_landscape": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4"
+  ],
+  "misty_mountains_dawn": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "old_courtyard_stone": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "rain_roof_tile": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "red_silk_texture": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "rice_terrace_china": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "stone_lion_statue": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "torch_fire_night": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "wheat_field_wind": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ]
+ },
+ "excluded": [
+  "ancient_armor_china/03.mp4",
+  "ancient_armor_china/04.mp4",
+  "ancient_armor_china/05.mp4",
+  "ancient_city_wall_china/02.mp4",
+  "ancient_palace_chinese/05.mp4",
+  "bamboo_forest_mist/05.mp4",
+  "chinese_ancient_village/04.mp4",
+  "chinese_ancient_village/05.mp4",
+  "chinese_lantern_night/02.mp4",
+  "chinese_lantern_night/05.mp4",
+  "chinese_old_town_street/06.mp4",
+  "chinese_temple_wood/03.mp4",
+  "forbidden_city_beijing/03.mp4",
+  "forbidden_city_beijing/04.mp4",
+  "horse_fog_silhouette/03.mp4",
+  "in_palace/03_02.mp4",
+  "incense_smoke_temple/03.mp4",
+  "ink_wash_landscape/06.mp4",
+  "ink_wash_landscape/08.mp4",
+  "stone_lion_statue/05.mp4",
+  "war_drum_chinese/01.mp4",
+  "war_drum_chinese/02.mp4",
+  "war_drum_chinese/03.mp4",
+  "war_drum_chinese/04.mp4",
+  "war_drum_chinese/05.mp4",
+  "war_drum_chinese/06.mp4"
+ ],
+ "excluded_count": 26,
+ "scene_map": [
+  [
+   "开场",
+   [
+    "chinese_ancient_village",
+    "wheat_field_wind",
+    "misty_mountains_dawn",
+    "ink_wash_landscape",
+    "ancient_armor_china",
+    "ancient_books_manuscript"
+   ]
+  ],
+  [
+   "第一章 庙里的饭，也吃不上了",
+   [
+    "in_temple",
+    "incense_smoke_temple",
+    "ancient_wooden_door",
+    "misty_mountains_dawn",
+    "candle_flame_dark"
+   ]
+  ],
+  [
+   "第二章 破了庙门，投了红巾",
+   [
+    "ancient_city_wall_china",
+    "torch_fire_night",
+    "red_silk_texture",
+    "chinese_lantern_night",
+    "ancient_armor_china",
+    "horse_fog_silhouette"
+   ]
+  ],
+  [
+   "第三章 缓一缓，再称王",
+   [
+    "ancient_city_wall_china",
+    "rice_terrace_china",
+    "wheat_field_wind",
+    "torch_fire_night",
+    "ancient_armor_china",
+    "horse_fog_silhouette",
+    "forbidden_city_beijing",
+    "dragon_carving_roof"
+   ]
+  ],
+  [
+   "第四章 他恨贪官，也让天下有饭吃",
+   [
+    "ancient_books_manuscript",
+    "calligraphy_brush_ink",
+    "rice_terrace_china",
+    "wheat_field_wind",
+    "chinese_old_town_street"
+   ]
+  ],
+  [
+   "第五章 恶犬在侧，刀向功臣",
+   [
+    "ancient_palace_chinese",
+    "dragon_carving_roof",
+    "stone_lion_statue",
+    "candle_flame_dark",
+    "rain_roof_tile",
+    "ancient_books_manuscript",
+    "calligraphy_brush_ink"
+   ]
+  ],
+  [
+   "尾声 紫金山下",
+   [
+    "misty_mountains_dawn",
+    "ink_wash_landscape",
+    "wheat_field_wind",
+    "in_guyuan",
+    "ancient_armor_china",
+    "ancient_books_manuscript"
+   ]
+  ]
+ ],
+ "note": "正脸轴（VL 整段均匀8帧+YOLO全命中点）命中即隔离；现代/地域轴按 2026-09-18 19:15 口径仅记录不拦截（见 book_朱元璋传_qc_decisions.json）；本案【画面】标注已带目录名，映射优先按目录名"
+}

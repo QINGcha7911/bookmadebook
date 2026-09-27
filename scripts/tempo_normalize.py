@@ -91,6 +91,8 @@ def main():
     ap.add_argument("--bitrate", default="128k", help="输出 mp3 码率（默认 128k）")
     ap.add_argument("--no-loudnorm", action="store_true",
                     help="仅 atempo 不做响度对齐（调试用，不建议交付）")
+    ap.add_argument("--force", action="store_true",
+                    help="强制允许 atempo 偏离 >3%（默认拒绝：应改稿而非压音频）")
     args = ap.parse_args()
 
     if not Path(args.input).exists():
@@ -110,6 +112,18 @@ def main():
         tempo = in_dur / target
 
     print(f"🎚️ 输入 {in_dur:.2f}s → 目标 {target:.2f}s (atempo={tempo:.4f})")
+
+    # 🚨 禁止 atempo 硬压补稿量（2026-09-25 立，治「长书听着赶」）
+    # 时长应由稿量决定（时长 = 口播字数 ÷ 4.4 字/秒），不是先定期长再压音频。
+    # ±3% 以内仅用于微调；超出说明稿量与目标时长不匹配 ⇒ 应当改稿，不是压音频。
+    _dev = abs(tempo - 1.0)
+    if _dev > 0.03 and not args.force:
+        raise SystemExit(
+            f"❌ 拒绝硬压：atempo={tempo:.4f}（偏离 {(_dev*100):.1f}% > 3% 上限）\n"
+            f"   输入 {in_dur:.1f}s → 目标 {target:.1f}s\n"
+            f"   正确做法：按书长定稿量 —— 查 `python3 scripts/duration_policy.py <书名>`\n"
+            f"   （时长 = 口播字数 ÷ 4.4 字/秒；6–16 分钟；超 16 分钟应拆集）\n"
+            f"   确需硬压（如修历史产物）请显式加 --force，并在验收里注明。")
 
     # atempo 之后必补 loudnorm（本脚本存在的唯一理由）
     af = build_atempo(tempo)

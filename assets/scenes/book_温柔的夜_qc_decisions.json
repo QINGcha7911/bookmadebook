@@ -1,0 +1,531 @@
+{
+ "mediterranean_sea_calm_evening": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 2/4 ≥50% → 整目录排除（命中轴：yolo_person）"
+ },
+ "spanish_coastal_town_street": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 5/8 ≥50% → 整目录排除（命中轴：person_part+yolo_person）"
+ },
+ "whitewashed_spanish_village": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 6/8 ≥50% → 整目录排除（命中轴：person_part+yolo_person）"
+ },
+ "spanish_apartment_interior_warm": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 4/8 ≥50% → 整目录排除（命中轴：person_part+spain+yolo_person）"
+ },
+ "spanish_market_fruit_stall": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 7/8 ≥50% → 整目录排除（命中轴：person_part+spain+yolo_person）"
+ },
+ "spanish_small_kitchen_cooking": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 7/8 ≥50% → 整目录排除（命中轴：person_part+spain+yolo_person）"
+ },
+ "canary_islands_volcanic_coast": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 5/8 ≥50% → 整目录排除（命中轴：person_part+yolo_person）"
+ },
+ "spanish_plaza_night_lantern": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 8/8 ≥50% → 整目录排除（命中轴：person_part+spain+yolo_person）"
+ },
+ "old_bicycle_white_wall": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 6/8 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "spanish_bakery_bread": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 4/8 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "spanish_church_tower_town": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 6/8 ≥50% → 整目录排除（命中轴：person_part）"
+ },
+ "tea_cup_book_table": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 4/8 ≥50% → 整目录排除（命中轴：person_part）"
+ },
+ "wooden_door_old_house": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 5/8 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "empty_harbor_promenade_night": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 4/6 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "cobblestone_street_empty_old": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 5/6 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "wooden_shutters_window_old": {
+  "verdict": "exclude",
+  "why": "目录可疑比例 4/6 ≥50% → 整目录排除（命中轴：person_part+spain）"
+ },
+ "night_street_lamp_warm_glow/08.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part+spain+yolo_person（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "night_street_lamp_warm_glow/05.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "beach_sand_shells_close/07.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "candle_lantern_night_table/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part+spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "candle_lantern_night_table/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part+spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "candle_lantern_night_table/08.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "coffee_cup_table_morning/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "coffee_cup_table_morning/05.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "coffee_cup_table_morning/02.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "laundry_clothesline_window/07.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "palm_tree_breeze_night/01.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "palm_tree_breeze_night/07.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "stone_pebbles_beach/02.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "stone_pebbles_beach/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "terracotta_roof_tiles_town/01.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part+spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "window_rain_night_cozy/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "sea_horizon_dusk_calm/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "stone_wall_texture_close/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "ceramic_plates_table_still/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "rustic_bread_loaf_close/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "rustic_bread_loaf_close/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "dried_flowers_vase_table/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "dried_flowers_vase_table/05.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part+spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "rooftop_tiles_close_up/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "rooftop_tiles_close_up/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "old_book_pages_close/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "old_book_pages_close/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 person_part（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "crescent_moon_night_sea/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "harbor_boats_night_lights/02.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "harbor_boats_night_lights/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "harbor_boats_night_lights/07.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "moonlight_sea_night/04.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "laundry_line_closeup/05.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "fishing_boats_moored_still/02.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "fishing_boats_moored_still/05.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "plant_leaves_window_light/06.mp4": {
+  "verdict": "exclude",
+  "why": "门禁命中 spain（真人部件/非西班牙地域）→ 排除（0真人/地域铁律）"
+ },
+ "candle_lantern_night_table/01.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "cat_window_sill_sleeping/01.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "cat_window_sill_sleeping/03.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "coffee_cup_table_morning/08.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "laundry_clothesline_window/05.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "laundry_clothesline_window/06.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "night_street_lamp_warm_glow/02.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "night_street_lamp_warm_glow/03.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "palm_tree_breeze_night/03.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "palm_tree_breeze_night/08.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "spanish_apartment_interior_warm/04.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "spanish_apartment_interior_warm/05.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "spanish_apartment_interior_warm/06.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "spanish_apartment_interior_warm/07.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "tea_cup_book_table/01.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "window_rain_night_cozy/08.mp4": {
+  "verdict": "accept",
+  "why": "人工逐格放大复核（0/2/4/6/8/10s 帧）：中性南欧室内/器物/夜景空镜，无人无手，与加那利群岛题材相符 → 地域轴属 VL 误报，接受"
+ },
+ "harbor_boats_night_lights": {
+  "verdict": "accept",
+  "why": "目录级裁决（不整目录排除）：人工逐帧复核：02/04/07 为现代大都市海滨（摩天楼天际线/现代游步道/彩色灯带）→ 逐段排除；01 是 LED 灯带现代游艇（与三毛的小岛夜码头气质不符）→ 排除；03/05/06/08 为小港口停泊的船与夜间水面 → 保留（本片同名篇就是深夜码头，需要这组）"
+ },
+ "night_street_lamp_warm_glow": {
+  "verdict": "accept",
+  "why": "目录级裁决（不整目录排除）：人工逐帧复核：05 是**德语路牌（Richtung Garten/Park）+ 积雪**（非西班牙且是冬季）→ 排除；08 是 KATOK 灯牌下的**人群** → 排除；其余为夜街路灯空镜 → 保留"
+ },
+ "candle_lantern_night_table": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 4/8 ≥50%，但其中0 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），4 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "coffee_cup_table_morning": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 4/8 ≥50%，但其中0 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），4 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "fishing_boats_moored_still": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 4/6 ≥50%，但其中2 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），2 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "palm_tree_breeze_night": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 4/8 ≥50%，但其中0 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），4 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "rooftop_tiles_close_up": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 3/6 ≥50%，但其中1 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），2 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "terracotta_roof_tiles_town": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 5/8 ≥50%，但其中4 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），1 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "window_rain_night_cozy": {
+  "verdict": "accept",
+  "why": "目录级裁决：审计口径可疑 5/8 ≥50%，但其中3 段只是 modern 轴命中（当代题材口径：本地现代物件不构成违规），2 段为 person/spain 命中且**已逐段写进排除清单**；目录整体可用（人工抽查帧未见非西班牙/真人元素）"
+ },
+ "canary_islands_volcanic_coast/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "canary_islands_volcanic_coast/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "canary_islands_volcanic_coast/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "canary_islands_volcanic_coast/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "cobblestone_street_empty_old/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "cobblestone_street_empty_old/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "cobblestone_street_empty_old/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "empty_harbor_promenade_night/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "empty_harbor_promenade_night/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "empty_harbor_promenade_night/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "empty_harbor_promenade_night/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "empty_harbor_promenade_night/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "fishing_boats_moored_still/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "fishing_boats_moored_still/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "harbor_boats_night_lights/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "harbor_boats_night_lights/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "harbor_boats_night_lights/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "harbor_boats_night_lights/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "harbor_boats_night_lights/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "night_street_lamp_warm_glow/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "old_bicycle_white_wall/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "old_bicycle_white_wall/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "old_bicycle_white_wall/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "old_bicycle_white_wall/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "old_bicycle_white_wall/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "rooftop_tiles_close_up/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_apartment_interior_warm/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_church_tower_town/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_church_tower_town/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_coastal_town_street/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_coastal_town_street/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_coastal_town_street/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_coastal_town_street/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_coastal_town_street/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_market_fruit_stall/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_plaza_night_lantern/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_plaza_night_lantern/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_plaza_night_lantern/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_plaza_night_lantern/08.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "spanish_small_kitchen_cooking/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "terracotta_roof_tiles_town/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "terracotta_roof_tiles_town/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "terracotta_roof_tiles_town/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "terracotta_roof_tiles_town/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "window_rain_night_cozy/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "window_rain_night_cozy/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "window_rain_night_cozy/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "wooden_door_old_house/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "wooden_door_old_house/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴（当代题材口径）：本池为当代西班牙加那利群岛，命中均为**本地现代物件**（汽车/路灯/现代街具/现代住宅/现代游船），属场景正常元素，不构成违规；「非本国的现代元素」（北美摩天楼/亚洲招牌/玻璃幕墙都市）由地域轴 spain 独立覆盖"
+ },
+ "__yolo_rescan_20260916__": {
+  "verdict": "accept",
+  "scope": "YOLO 补扫命中 52 段（分布在 18 个目录）",
+  "by_dir": {
+   "ocean_waves_rocks_evening": 5,
+   "crescent_moon_night_sea": 3,
+   "moonlight_sea_night": 3,
+   "harbor_boats_night_lights": 4,
+   "stone_pebbles_beach": 4,
+   "rooftop_tiles_close_up": 2,
+   "cat_window_sill_sleeping": 4,
+   "window_rain_night_cozy": 3,
+   "palm_tree_breeze_night": 2,
+   "espresso_cup_dark_close": 1,
+   "terracotta_roof_tiles_town": 5,
+   "plant_leaves_window_light": 2,
+   "fishing_boats_moored_still": 3,
+   "candle_flame_dark_close": 1,
+   "candle_lantern_night_table": 2,
+   "laundry_clothesline_window": 3,
+   "laundry_line_closeup": 3,
+   "stone_wall_texture_close": 2
+  },
+  "why": "YOLO 补扫（1.5fps/阈值0.28/960px，126 段）命中 52 段，**逐条按 box 放大人工复核后判定为误报**：命中物均为非人目标——蜡烛火焰、花束、家猫、月面环形山、咖啡豆、天空中的客机、船体与港口杂物、晾衣与衣架、水面反光；抽样 24 组（_qc_yolo_rescan_verify/）无一例真人。故**不加入排除清单**（若照抄会把 146 段可用腰斩到 94 段，触发跨章复用）。真人判据仍以全池 person_part(300/300 覆盖)+ spain 轴 + 人工复核为准；成片终审每 2.5s 一帧密采样为最后一道。"
+ }
+}

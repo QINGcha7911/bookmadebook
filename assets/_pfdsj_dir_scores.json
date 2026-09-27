@@ -1,0 +1,574 @@
+[
+ [
+  0.5,
+  2,
+  "chinese_farmhouse_courtyard",
+  {
+   "clean": 1,
+   "non_japan": 1
+  }
+ ],
+ [
+  1.0,
+  3,
+  "chinese_noodles_bowl",
+  {
+   "clean": 3
+  }
+ ],
+ [
+  0.62,
+  8,
+  "chinese_rural_kitchen_stove",
+  {
+   "clean": 5,
+   "non_japan": 3
+  }
+ ],
+ [
+  0.1,
+  5,
+  "chinese_rural_school_classroom",
+  {
+   "non_japan": 4,
+   "face": 5,
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  2,
+  "chinese_rural_village",
+  {
+   "modern": 2
+  }
+ ],
+ [
+  0.0,
+  7,
+  "chinese_village_dirt_road",
+  {
+   "non_japan": 7,
+   "face": 2
+  }
+ ],
+ [
+  0.5,
+  8,
+  "inh_chinese_adobe_house_courtyard",
+  {
+   "non_japan": 2,
+   "clean": 4,
+   "modern": 2
+  }
+ ],
+ [
+  0.55,
+  11,
+  "inh_chinese_clay_stove_firewood",
+  {
+   "clean": 6,
+   "non_japan": 5
+  }
+ ],
+ [
+  0.0,
+  8,
+  "inh_chinese_countryside_dirt_road",
+  {
+   "non_japan": 7,
+   "modern": 1,
+   "face": 1
+  }
+ ],
+ [
+  0.33,
+  5,
+  "inh_chinese_farmhouse_courtyard_wall",
+  {
+   "clean": 2,
+   "non_japan": 3,
+   "face": 1
+  }
+ ],
+ [
+  0.89,
+  9,
+  "inh_chinese_kitchen_firewood_stove",
+  {
+   "clean": 8,
+   "non_japan": 1
+  }
+ ],
+ [
+  0.0,
+  4,
+  "inh_chinese_millstone_grain",
+  {
+   "non_japan": 4,
+   "face": 3
+  }
+ ],
+ [
+  0.0,
+  8,
+  "inh_chinese_mountain_village_distant",
+  {
+   "non_japan": 6,
+   "modern": 2
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_chinese_old_book_pages",
+  {
+   "non_japan": 7
+  }
+ ],
+ [
+  0.08,
+  11,
+  "inh_chinese_old_bookshelf",
+  {
+   "non_japan": 10,
+   "clean": 1,
+   "face": 2
+  }
+ ],
+ [
+  0.5,
+  6,
+  "inh_chinese_old_kitchen_utensils",
+  {
+   "clean": 3,
+   "non_japan": 3
+  }
+ ],
+ [
+  0.0,
+  9,
+  "inh_chinese_old_street_alley_day",
+  {
+   "non_japan": 7,
+   "modern": 2
+  }
+ ],
+ [
+  0.14,
+  5,
+  "inh_chinese_ox_cart_field",
+  {
+   "face": 2,
+   "non_japan": 4,
+   "clean": 1
+  }
+ ],
+ [
+  0.6,
+  8,
+  "inh_chinese_paper_window_lattice",
+  {
+   "clean": 6,
+   "non_japan": 2,
+   "face": 2
+  }
+ ],
+ [
+  0.46,
+  12,
+  "inh_chinese_porcelain_teacup",
+  {
+   "non_japan": 6,
+   "face": 1,
+   "clean": 6
+  }
+ ],
+ [
+  0.12,
+  8,
+  "inh_chinese_pottery_jar_clay",
+  {
+   "clean": 1,
+   "non_japan": 7
+  }
+ ],
+ [
+  0.17,
+  3,
+  "inh_chinese_rural_market_vegetables",
+  {
+   "face": 3,
+   "non_japan": 1,
+   "modern": 1,
+   "clean": 1
+  }
+ ],
+ [
+  0.17,
+  6,
+  "inh_chinese_rural_village_houses",
+  {
+   "clean": 1,
+   "modern": 2,
+   "non_japan": 3
+  }
+ ],
+ [
+  1.0,
+  6,
+  "inh_chinese_steamer_basket_steam",
+  {
+   "clean": 6
+  }
+ ],
+ [
+  0.12,
+  8,
+  "inh_chinese_straw_hay_stack",
+  {
+   "non_japan": 7,
+   "clean": 1
+  }
+ ],
+ [
+  0.33,
+  9,
+  "inh_chinese_tea_cup_rustic_table",
+  {
+   "clean": 3,
+   "non_japan": 6
+  }
+ ],
+ [
+  0.43,
+  7,
+  "inh_chinese_terraced_farmland",
+  {
+   "clean": 3,
+   "modern": 4
+  }
+ ],
+ [
+  0.27,
+  10,
+  "inh_chinese_tile_roof_grey",
+  {
+   "modern": 6,
+   "clean": 3,
+   "face": 1,
+   "non_japan": 1
+  }
+ ],
+ [
+  0.17,
+  6,
+  "inh_chinese_village_cooking_smoke",
+  {
+   "non_japan": 4,
+   "modern": 1,
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  5,
+  "inh_chinese_village_dirt_path",
+  {
+   "non_japan": 4,
+   "face": 2,
+   "modern": 1
+  }
+ ],
+ [
+  0.0,
+  4,
+  "inh_chinese_village_evening_light",
+  {
+   "non_japan": 3,
+   "modern": 1
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_chinese_village_snow_winter",
+  {
+   "modern": 1,
+   "non_japan": 6
+  }
+ ],
+ [
+  0.0,
+  6,
+  "inh_chinese_wheat_field_golden",
+  {
+   "modern": 1,
+   "non_japan": 5
+  }
+ ],
+ [
+  0.0,
+  6,
+  "inh_chinese_winter_bare_trees",
+  {
+   "non_japan": 6
+  }
+ ],
+ [
+  0.55,
+  11,
+  "inh_clay_stove_firewood_fire",
+  {
+   "clean": 6,
+   "non_japan": 5
+  }
+ ],
+ [
+  0.0,
+  11,
+  "inh_corn_field_green_summer",
+  {
+   "non_japan": 11
+  }
+ ],
+ [
+  0.1,
+  10,
+  "inh_cotton_cloth_texture_old",
+  {
+   "non_japan": 9,
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_crescent_moon_night_sky",
+  {
+   "non_japan": 7
+  }
+ ],
+ [
+  0.0,
+  8,
+  "inh_dry_cracked_earth_soil",
+  {
+   "non_japan": 8
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_empty_old_room_wooden_china",
+  {
+   "non_japan": 7
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_kerosene_oil_lamp_dim",
+  {
+   "non_japan": 7
+  }
+ ],
+ [
+  0.2,
+  9,
+  "inh_laundry_clothesline_old_house",
+  {
+   "non_japan": 7,
+   "clean": 2,
+   "face": 1
+  }
+ ],
+ [
+  0.0,
+  10,
+  "inh_oil_lamp_flame_dark",
+  {
+   "non_japan": 10
+  }
+ ],
+ [
+  0.2,
+  4,
+  "inh_old_chinese_house_interior_room",
+  {
+   "non_japan": 3,
+   "face": 1,
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_old_chinese_town_street",
+  {
+   "modern": 5,
+   "non_japan": 2
+  }
+ ],
+ [
+  0.33,
+  5,
+  "inh_old_chinese_water_well_village",
+  {
+   "non_japan": 3,
+   "face": 1,
+   "clean": 2
+  }
+ ],
+ [
+  0.0,
+  3,
+  "inh_old_chinese_wooden_door_courtyard",
+  {
+   "non_japan": 3
+  }
+ ],
+ [
+  0.2,
+  5,
+  "inh_old_cloth_patching_sewing",
+  {
+   "non_japan": 4,
+   "clean": 1
+  }
+ ],
+ [
+  0.3,
+  10,
+  "inh_old_manuscript_paper_stack",
+  {
+   "non_japan": 7,
+   "clean": 3
+  }
+ ],
+ [
+  0.0,
+  4,
+  "inh_old_wooden_desk_books",
+  {
+   "non_japan": 4,
+   "face": 2
+  }
+ ],
+ [
+  0.0,
+  10,
+  "inh_poplar_trees_roadside",
+  {
+   "non_japan": 10
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_rain_on_window_glass",
+  {
+   "non_japan": 7
+  }
+ ],
+ [
+  0.0,
+  10,
+  "inh_rain_window_old_glass",
+  {
+   "non_japan": 10
+  }
+ ],
+ [
+  0.5,
+  10,
+  "inh_rice_grain_bowl_wooden",
+  {
+   "non_japan": 5,
+   "clean": 5
+  }
+ ],
+ [
+  0.0,
+  8,
+  "inh_river_water_calm_evening",
+  {
+   "non_japan": 7,
+   "modern": 1
+  }
+ ],
+ [
+  0.5,
+  2,
+  "inh_rural_mud_brick_house",
+  {
+   "non_japan": 1,
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  11,
+  "inh_sorghum_field_golden",
+  {
+   "non_japan": 11,
+   "face": 1
+  }
+ ],
+ [
+  0.0,
+  7,
+  "inh_stone_bridge_chinese_village",
+  {
+   "non_japan": 5,
+   "modern": 2
+  }
+ ],
+ [
+  0.12,
+  8,
+  "inh_sunset_clouds_dramatic",
+  {
+   "non_japan": 6,
+   "modern": 1,
+   "clean": 1
+  }
+ ],
+ [
+  0.14,
+  13,
+  "inh_willow_tree_river_bank",
+  {
+   "modern": 3,
+   "non_japan": 8,
+   "clean": 2,
+   "face": 1
+  }
+ ],
+ [
+  0.4,
+  5,
+  "loess_plateau_china",
+  {
+   "clean": 2,
+   "modern": 1,
+   "non_japan": 2
+  }
+ ],
+ [
+  1.0,
+  1,
+  "terraced_fields_china",
+  {
+   "clean": 1
+  }
+ ],
+ [
+  0.0,
+  2,
+  "wheat_field_harvest_china",
+  {
+   "non_japan": 2
+  }
+ ]
+]

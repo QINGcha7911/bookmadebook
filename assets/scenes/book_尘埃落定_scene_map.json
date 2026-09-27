@@ -1,0 +1,350 @@
+{
+ "script": "bookmadebook-output/讲书稿_尘埃落定.txt",
+ "scene_root": "assets/scenes/book_尘埃落定",
+ "available": {
+  "ancient_stone_tower": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "barley_grain_wooden_bowl": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "butter_tea_wooden_bowl": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "candle_lamp_dark_room": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "clouds_shadow_grassland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "dust_wind_dry_earth": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "10.mp4"
+  ],
+  "highland_barley_field_wind": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "horse_grazing_plateau": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "incense_smoke_prayer": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "mountain_lake_reflection": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "mountain_stream_valley": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "old_wooden_door_tibetan": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "prayer_flags_tibetan": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "red_poppy_field": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "sheep_flock_grassland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "09.mp4"
+  ],
+  "silver_ornament_closeup": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "snow_falling_mountain_village": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "snow_mountain_himalaya": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "sunset_plateau_horizon": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "tibetan_plateau_grassland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "tibetan_village_stone_house": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "yak_grazing_highland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ]
+ },
+ "scene_map": [
+  [
+   "开场",
+   [
+    "red_poppy_field",
+    "snow_mountain_himalaya",
+    "clouds_shadow_grassland",
+    "tibetan_plateau_grassland"
+   ]
+  ],
+  [
+   "第一章 一个公认的傻子",
+   [
+    "tibetan_village_stone_house",
+    "candle_lamp_dark_room",
+    "butter_tea_wooden_bowl",
+    "old_wooden_door_tibetan"
+   ]
+  ],
+  [
+   "第二章 开满罂粟的土地",
+   [
+    "red_poppy_field",
+    "horse_grazing_plateau",
+    "dust_wind_dry_earth"
+   ]
+  ],
+  [
+   "第三章 傻子想到了麦子",
+   [
+    "highland_barley_field_wind",
+    "barley_grain_wooden_bowl",
+    "yak_grazing_highland",
+    "mountain_stream_valley",
+    "tibetan_plateau_grassland",
+    "sheep_flock_grassland"
+   ]
+  ],
+  [
+   "第四章 把堡垒变成市场",
+   [
+    "silver_ornament_closeup",
+    "prayer_flags_tibetan",
+    "mountain_lake_reflection",
+    "barley_grain_wooden_bowl",
+    "butter_tea_wooden_bowl",
+    "highland_barley_field_wind"
+   ]
+  ],
+  [
+   "第五章 复仇与死亡",
+   [
+    "dust_wind_dry_earth",
+    "old_wooden_door_tibetan",
+    "incense_smoke_prayer",
+    "clouds_shadow_grassland"
+   ]
+  ],
+  [
+   "尾声 尘埃落定",
+   [
+    "snow_falling_mountain_village",
+    "sunset_plateau_horizon",
+    "snow_mountain_himalaya",
+    "yak_grazing_highland",
+    "tibetan_plateau_grassland"
+   ]
+  ]
+ ],
+ "excluded_count": 15,
+ "excluded": [
+  "butter_tea_wooden_bowl/08.mp4",
+  "butter_tea_wooden_bowl/09.mp4",
+  "butter_tea_wooden_bowl/10.mp4",
+  "dust_wind_dry_earth/09.mp4",
+  "incense_smoke_prayer/04.mp4",
+  "incense_smoke_prayer/05.mp4",
+  "incense_smoke_prayer/06.mp4",
+  "mountain_lake_reflection/05.mp4",
+  "old_wooden_door_tibetan/05.mp4",
+  "old_wooden_door_tibetan/07.mp4",
+  "prayer_flags_tibetan/04.mp4",
+  "prayer_flags_tibetan/07.mp4",
+  "sheep_flock_grassland/07.mp4",
+  "sheep_flock_grassland/08.mp4",
+  "snow_mountain_himalaya/09.mp4"
+ ]
+}

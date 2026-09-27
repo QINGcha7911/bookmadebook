@@ -1,0 +1,249 @@
+{
+  "script": "bookmadebook-output/讲书稿_平场之月_v3.txt",
+  "scene_root": "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/jp_daily",
+  "available": {
+    "japanese_residential_neighborhood_evening": [
+      "03.mp4",
+      "06.mp4"
+    ],
+    "japanese_small_town_street": [
+      "03.mp4"
+    ],
+    "c2_alley_night": [
+      "02.mp4",
+      "05.mp4"
+    ],
+    "c_jp_hospital": [
+      "01.mp4"
+    ],
+    "c3_hallway": [
+      "01.mp4",
+      "04.mp4"
+    ],
+    "c3_clinic": [
+      "03.mp4"
+    ],
+    "izakaya_japan_night": [
+      "01.mp4",
+      "04.mp4"
+    ],
+    "c2_lantern": [
+      "04.mp4"
+    ],
+    "yakitori_grill_japanese": [
+      "03.mp4"
+    ],
+    "b_yakitori_skewers_close_up": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "06.mp4"
+    ],
+    "sake_cup_japanese_pouring": [
+      "02.mp4"
+    ],
+    "b_sake_cup_close_up": [
+      "04.mp4",
+      "07.mp4"
+    ],
+    "japanese_rice_bowl_miso_soup": [
+      "04.mp4"
+    ],
+    "b_miso_soup_steam_close_up": [
+      "02.mp4",
+      "03.mp4",
+      "08.mp4"
+    ],
+    "b_rice_bowl_chopsticks_close_up": [
+      "04.mp4"
+    ],
+    "japanese_home_cooking_meal": [
+      "03.mp4",
+      "05.mp4"
+    ],
+    "japanese_rainy_window": [
+      "03.mp4",
+      "08.mp4"
+    ],
+    "c_rain_glass": [
+      "01.mp4",
+      "05.mp4"
+    ],
+    "b_rain_window_night": [
+      "06.mp4"
+    ],
+    "c2_shoji_light": [
+      "01.mp4",
+      "04.mp4"
+    ],
+    "c_moon_sky": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "crescent_moon_night_sky": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "b_crescent_moon_clouds": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "07.mp4",
+      "08.mp4"
+    ],
+    "c2_temple_corridor": [
+      "01.mp4",
+      "02.mp4"
+    ],
+    "c2_garden": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "c_jp_garden": [
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "japanese_park_autumn_path": [
+      "02.mp4",
+      "03.mp4"
+    ],
+    "c2_shrine": [
+      "01.mp4",
+      "03.mp4"
+    ],
+    "japanese_train_station_platform": [
+      "05.mp4",
+      "07.mp4"
+    ],
+    "b_train_window_rain_view": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "b_street_lamp_night_close_up": [
+      "02.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "hospital_waiting_room_chairs": [
+      "07.mp4"
+    ],
+    "c3_hospital_light": [
+      "05.mp4"
+    ]
+  },
+  "scene_map": [
+    [
+      "Ch1 开场：小城街道傍晚",
+      [
+        "japanese_small_town_street",
+        "japanese_residential_neighborhood_evening",
+        "c2_alley_night",
+        "b_street_lamp_night_close_up"
+      ]
+    ],
+    [
+      "Ch2 重逢：医院走廊 / 小卖部",
+      [
+        "c_jp_hospital",
+        "c3_hallway",
+        "c3_clinic",
+        "hospital_waiting_room_chairs",
+        "c3_hospital_light"
+      ]
+    ],
+    [
+      "Ch3 靠近：居酒屋 / 清酒 / 日式房间",
+      [
+        "izakaya_japan_night",
+        "c2_lantern",
+        "yakitori_grill_japanese",
+        "b_yakitori_skewers_close_up",
+        "sake_cup_japanese_pouring",
+        "b_sake_cup_close_up",
+        "c2_shoji_light"
+      ]
+    ],
+    [
+      "Ch4 日常：小厨房做饭 / 两副碗筷",
+      [
+        "japanese_rice_bowl_miso_soup",
+        "b_miso_soup_steam_close_up",
+        "b_rice_bowl_chopsticks_close_up",
+        "japanese_home_cooking_meal"
+      ]
+    ],
+    [
+      "Ch5 变故：雨天窗 / 医院",
+      [
+        "japanese_rainy_window",
+        "c_rain_glass",
+        "b_rain_window_night",
+        "c3_hallway",
+        "c_jp_hospital"
+      ]
+    ],
+    [
+      "Ch6 探病：病房 / 夜空月牙",
+      [
+        "c2_shoji_light",
+        "c3_hallway",
+        "c_moon_sky",
+        "crescent_moon_night_sky",
+        "b_crescent_moon_clouds"
+      ]
+    ],
+    [
+      "Ch7 同居：厨房 / 客厅 / 买菜",
+      [
+        "c2_temple_corridor",
+        "c2_shoji_light",
+        "c2_garden",
+        "japanese_rice_bowl_miso_soup",
+        "c3_hallway"
+      ]
+    ],
+    [
+      "Ch8 过年：日式房间 / 年菜",
+      [
+        "c2_shoji_light",
+        "c_jp_garden",
+        "c2_garden",
+        "japanese_park_autumn_path",
+        "japanese_home_cooking_meal"
+      ]
+    ],
+    [
+      "Ch9 告白：电车站台 / 便利店",
+      [
+        "japanese_train_station_platform",
+        "b_train_window_rain_view"
+      ]
+    ],
+    [
+      "Ch10 结尾：街道 / 月牙",
+      [
+        "japanese_residential_neighborhood_evening",
+        "c2_alley_night",
+        "crescent_moon_night_sky",
+        "c_moon_sky",
+        "b_street_lamp_night_close_up"
+      ]
+    ]
+  ],
+  "curated_by": "005 v7：v6 基础上再剔除 4 段 YOLO 漏检的含手/远景行人素材（007 抽帧复检 + 人工逐段目检，2026-09-12）"
+}

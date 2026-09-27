@@ -1,0 +1,577 @@
+{
+ "script": "bookmadebook-output/讲书稿_莫斯科绅士.txt",
+ "scene_root": "assets/scenes/book_莫斯科绅士",
+ "available": {
+  "antique_brass_room_key": [
+   "02.mp4",
+   "05.mp4"
+  ],
+  "antique_pocket_watch": [
+   "01.mp4"
+  ],
+  "antique_spectacles_book": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "brass_candlestick_old": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "brass_door_knocker_old": [
+   "03.mp4"
+  ],
+  "candle_flame_dark_still": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chess_board_pieces_still": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "cobblestone_street_snow": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4"
+  ],
+  "crystal_chandelier_hall": [
+   "02.mp4",
+   "06.mp4"
+  ],
+  "crystal_glassware_dark": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "cut_flowers_table_dark": [
+   "01.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "european_old_town_snow": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "flowers_vase_old_room": [
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "framed_painting_wall": [
+   "02.mp4"
+  ],
+  "frost_pattern_window": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "frost_snow_on_window": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4"
+  ],
+  "grand_hotel_lobby_marble": [
+   "07.mp4"
+  ],
+  "hotel_linen_towels": [
+   "03.mp4"
+  ],
+  "hotel_room_window_curtain": [
+   "02.mp4"
+  ],
+  "library_ladder_books": [
+   "04.mp4",
+   "06.mp4"
+  ],
+  "luxury_hotel_corridor_old": [
+   "03.mp4"
+  ],
+  "marble_staircase_railing": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "old_armchair_room": [
+   "02.mp4"
+  ],
+  "old_bar_counter_bottles": [
+   "04.mp4"
+  ],
+  "old_clock_face": [
+   "02.mp4",
+   "03.mp4",
+   "05.mp4"
+  ],
+  "old_hallway_doors_light": [
+   "02.mp4",
+   "03.mp4"
+  ],
+  "old_letters_paper": [
+   "04.mp4"
+  ],
+  "old_library_bookshelves": [
+   "05.mp4"
+  ],
+  "old_piano_keys": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "old_wooden_chest_trunk": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "old_wooden_desk_still": [
+   "02.mp4"
+  ],
+  "old_wooden_door_brass": [
+   "02.mp4",
+   "04.mp4"
+  ],
+  "old_wooden_staircase": [
+   "01.mp4",
+   "04.mp4"
+  ],
+  "oriental_carpet_old_room": [
+   "04.mp4",
+   "05.mp4"
+  ],
+  "porcelain_teacup_old": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "rain_on_window_glass": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "red_velvet_curtain": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "restaurant_table_candlelight": [
+   "01.mp4"
+  ],
+  "russian_tea_glass_holder": [
+   "02.mp4",
+   "04.mp4"
+  ],
+  "samovar_tea_russian": [
+   "01.mp4"
+  ],
+  "silver_cutlery_table_setting": [
+   "04.mp4"
+  ],
+  "silver_teapot_old": [
+   "04.mp4"
+  ],
+  "snow_falling_window": [
+   "01.mp4",
+   "07.mp4"
+  ],
+  "snow_rooftop_chimney": [
+   "01.mp4"
+  ],
+  "snowy_city_street_night": [
+   "06.mp4"
+  ],
+  "snowy_park_lamp_winter": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "theatre_red_velvet_seats": [
+   "04.mp4"
+  ],
+  "vintage_gramophone_music": [
+   "04.mp4"
+  ],
+  "vintage_hotel_room_bed": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "vintage_perfume_bottles": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "vintage_radio_old": [
+   "01.mp4",
+   "06.mp4"
+  ],
+  "vintage_wine_glass_dark": [
+   "04.mp4",
+   "05.mp4"
+  ],
+  "warm_lamp_dark_room": [
+   "05.mp4"
+  ],
+  "wax_candles_table_dark": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "winter_forest_snow": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ]
+ },
+ "excluded": [
+  "antique_brass_room_key/01.mp4",
+  "antique_brass_room_key/03.mp4",
+  "antique_brass_room_key/04.mp4",
+  "antique_pocket_watch/02.mp4",
+  "antique_spectacles_book/03.mp4",
+  "balcony_railing_snow/01.mp4",
+  "balcony_railing_snow/02.mp4",
+  "brass_candlestick_old/06.mp4",
+  "brass_door_knocker_old/01.mp4",
+  "brass_door_knocker_old/02.mp4",
+  "chess_board_pieces_still/03.mp4",
+  "cobblestone_street_snow/03.mp4",
+  "copper_pots_old_kitchen/01.mp4",
+  "copper_pots_old_kitchen/02.mp4",
+  "copper_pots_old_kitchen/03.mp4",
+  "copper_pots_old_kitchen/04.mp4",
+  "copper_pots_old_kitchen/05.mp4",
+  "copper_pots_old_kitchen/06.mp4",
+  "crystal_chandelier_hall/01.mp4",
+  "crystal_chandelier_hall/03.mp4",
+  "crystal_chandelier_hall/04.mp4",
+  "crystal_chandelier_hall/05.mp4",
+  "cut_flowers_table_dark/02.mp4",
+  "cut_flowers_table_dark/04.mp4",
+  "cut_flowers_table_dark/07.mp4",
+  "empty_ballroom_parquet/01.mp4",
+  "empty_ballroom_parquet/02.mp4",
+  "empty_ballroom_parquet/03.mp4",
+  "empty_ballroom_parquet/04.mp4",
+  "empty_ballroom_parquet/05.mp4",
+  "european_old_town_snow/03.mp4",
+  "flowers_vase_old_room/01.mp4",
+  "flowers_vase_old_room/02.mp4",
+  "flowers_vase_old_room/03.mp4",
+  "framed_painting_wall/01.mp4",
+  "framed_painting_wall/03.mp4",
+  "framed_painting_wall/04.mp4",
+  "frost_snow_on_window/04.mp4",
+  "grand_hotel_lobby_marble/01.mp4",
+  "grand_hotel_lobby_marble/02.mp4",
+  "grand_hotel_lobby_marble/03.mp4",
+  "grand_hotel_lobby_marble/04.mp4",
+  "grand_hotel_lobby_marble/05.mp4",
+  "grand_hotel_lobby_marble/06.mp4",
+  "hotel_linen_towels/01.mp4",
+  "hotel_linen_towels/02.mp4",
+  "hotel_reception_desk_old/01.mp4",
+  "hotel_reception_desk_old/02.mp4",
+  "hotel_reception_desk_old/03.mp4",
+  "hotel_reception_desk_old/04.mp4",
+  "hotel_reception_desk_old/05.mp4",
+  "hotel_reception_desk_old/06.mp4",
+  "hotel_reception_desk_old/07.mp4",
+  "hotel_reception_desk_old/08.mp4",
+  "hotel_room_window_curtain/01.mp4",
+  "library_ladder_books/01.mp4",
+  "library_ladder_books/02.mp4",
+  "library_ladder_books/03.mp4",
+  "library_ladder_books/05.mp4",
+  "luxury_hotel_corridor_old/01.mp4",
+  "luxury_hotel_corridor_old/02.mp4",
+  "luxury_hotel_corridor_old/04.mp4",
+  "luxury_hotel_corridor_old/05.mp4",
+  "luxury_hotel_corridor_old/06.mp4",
+  "marble_staircase_railing/02.mp4",
+  "marble_staircase_railing/05.mp4",
+  "old_armchair_room/01.mp4",
+  "old_armchair_room/03.mp4",
+  "old_armchair_room/04.mp4",
+  "old_armchair_room/05.mp4",
+  "old_armchair_room/06.mp4",
+  "old_bar_counter_bottles/01.mp4",
+  "old_bar_counter_bottles/02.mp4",
+  "old_bar_counter_bottles/03.mp4",
+  "old_bar_counter_bottles/05.mp4",
+  "old_bar_counter_bottles/06.mp4",
+  "old_clock_face/01.mp4",
+  "old_clock_face/04.mp4",
+  "old_clock_face/06.mp4",
+  "old_clock_face/07.mp4",
+  "old_hallway_doors_light/01.mp4",
+  "old_letters_paper/01.mp4",
+  "old_letters_paper/02.mp4",
+  "old_letters_paper/03.mp4",
+  "old_letters_paper/05.mp4",
+  "old_library_bookshelves/01.mp4",
+  "old_library_bookshelves/02.mp4",
+  "old_library_bookshelves/03.mp4",
+  "old_library_bookshelves/04.mp4",
+  "old_library_bookshelves/06.mp4",
+  "old_library_bookshelves/07.mp4",
+  "old_piano_keys/01.mp4",
+  "old_piano_keys/07.mp4",
+  "old_piano_keys/08.mp4",
+  "old_wooden_chest_trunk/04.mp4",
+  "old_wooden_desk_still/01.mp4",
+  "old_wooden_desk_still/03.mp4",
+  "old_wooden_desk_still/04.mp4",
+  "old_wooden_desk_still/05.mp4",
+  "old_wooden_desk_still/06.mp4",
+  "old_wooden_desk_still/07.mp4",
+  "old_wooden_door_brass/01.mp4",
+  "old_wooden_door_brass/03.mp4",
+  "old_wooden_door_brass/05.mp4",
+  "old_wooden_staircase/02.mp4",
+  "old_wooden_staircase/03.mp4",
+  "old_wooden_staircase/05.mp4",
+  "old_wooden_staircase/06.mp4",
+  "old_wooden_staircase/07.mp4",
+  "oriental_carpet_old_room/01.mp4",
+  "oriental_carpet_old_room/02.mp4",
+  "oriental_carpet_old_room/03.mp4",
+  "oriental_carpet_old_room/06.mp4",
+  "oriental_carpet_old_room/07.mp4",
+  "oriental_carpet_old_room/08.mp4",
+  "rain_on_window_glass/01.mp4",
+  "rain_on_window_glass/07.mp4",
+  "red_velvet_curtain/03.mp4",
+  "red_velvet_curtain/04.mp4",
+  "red_velvet_curtain/05.mp4",
+  "red_velvet_curtain/06.mp4",
+  "restaurant_table_candlelight/02.mp4",
+  "restaurant_table_candlelight/03.mp4",
+  "russian_orthodox_church_dome/01.mp4",
+  "russian_orthodox_church_dome/02.mp4",
+  "russian_orthodox_church_dome/03.mp4",
+  "russian_orthodox_church_dome/04.mp4",
+  "russian_tea_glass_holder/01.mp4",
+  "russian_tea_glass_holder/03.mp4",
+  "russian_tea_glass_holder/05.mp4",
+  "russian_tea_glass_holder/06.mp4",
+  "russian_tea_glass_holder/07.mp4",
+  "samovar_tea_russian/02.mp4",
+  "samovar_tea_russian/03.mp4",
+  "silver_cutlery_table_setting/01.mp4",
+  "silver_cutlery_table_setting/02.mp4",
+  "silver_cutlery_table_setting/03.mp4",
+  "silver_teapot_old/01.mp4",
+  "silver_teapot_old/02.mp4",
+  "silver_teapot_old/03.mp4",
+  "silver_teapot_old/05.mp4",
+  "silver_teapot_old/06.mp4",
+  "snow_covered_rooftops/01.mp4",
+  "snow_covered_rooftops/02.mp4",
+  "snow_falling_window/02.mp4",
+  "snow_falling_window/03.mp4",
+  "snow_falling_window/04.mp4",
+  "snow_falling_window/05.mp4",
+  "snow_falling_window/06.mp4",
+  "snow_street_night_lamp/01.mp4",
+  "snow_street_night_lamp/02.mp4",
+  "snow_street_night_lamp/03.mp4",
+  "snow_street_night_lamp/04.mp4",
+  "snow_street_night_lamp/05.mp4",
+  "snowy_city_street_night/01.mp4",
+  "snowy_city_street_night/02.mp4",
+  "snowy_city_street_night/03.mp4",
+  "snowy_city_street_night/04.mp4",
+  "snowy_city_street_night/05.mp4",
+  "snowy_city_street_night/07.mp4",
+  "snowy_park_lamp_winter/02.mp4",
+  "theatre_red_velvet_seats/01.mp4",
+  "theatre_red_velvet_seats/02.mp4",
+  "theatre_red_velvet_seats/03.mp4",
+  "theatre_red_velvet_seats/05.mp4",
+  "theatre_red_velvet_seats/06.mp4",
+  "theatre_red_velvet_seats/07.mp4",
+  "vintage_gramophone_music/01.mp4",
+  "vintage_gramophone_music/02.mp4",
+  "vintage_gramophone_music/03.mp4",
+  "vintage_hat_coat_rack/01.mp4",
+  "vintage_hat_coat_rack/02.mp4",
+  "vintage_hat_coat_rack/03.mp4",
+  "vintage_hat_coat_rack/04.mp4",
+  "vintage_hat_coat_rack/05.mp4",
+  "vintage_hat_coat_rack/06.mp4",
+  "vintage_hat_coat_rack/07.mp4",
+  "vintage_hotel_room_bed/03.mp4",
+  "vintage_hotel_room_bed/04.mp4",
+  "vintage_hotel_room_bed/05.mp4",
+  "vintage_leather_suitcase/01.mp4",
+  "vintage_newspaper_old/01.mp4",
+  "vintage_newspaper_old/02.mp4",
+  "vintage_newspaper_old/03.mp4",
+  "vintage_newspaper_old/04.mp4",
+  "vintage_newspaper_old/05.mp4",
+  "vintage_newspaper_old/06.mp4",
+  "vintage_radio_old/02.mp4",
+  "vintage_radio_old/03.mp4",
+  "vintage_radio_old/04.mp4",
+  "vintage_radio_old/05.mp4",
+  "vintage_radio_old/07.mp4",
+  "vintage_telephone_old/01.mp4",
+  "vintage_telephone_old/02.mp4",
+  "vintage_telephone_old/03.mp4",
+  "vintage_telephone_old/04.mp4",
+  "vintage_telephone_old/05.mp4",
+  "vintage_wine_glass_dark/01.mp4",
+  "vintage_wine_glass_dark/02.mp4",
+  "vintage_wine_glass_dark/03.mp4",
+  "vintage_wine_glass_dark/06.mp4",
+  "warm_lamp_dark_room/01.mp4",
+  "warm_lamp_dark_room/02.mp4",
+  "warm_lamp_dark_room/03.mp4",
+  "warm_lamp_dark_room/04.mp4",
+  "warm_lamp_dark_room/06.mp4",
+  "warm_lamp_dark_room/07.mp4",
+  "wine_cellar_bottles_dark/01.mp4",
+  "wine_cellar_bottles_dark/02.mp4",
+  "wine_cellar_bottles_dark/03.mp4",
+  "wine_cellar_bottles_dark/04.mp4",
+  "wine_cellar_bottles_dark/05.mp4",
+  "winter_forest_snow/06.mp4",
+  "wooden_parquet_floor/01.mp4",
+  "wooden_parquet_floor/02.mp4",
+  "wooden_parquet_floor/03.mp4",
+  "wooden_parquet_floor/04.mp4"
+ ],
+ "scene_map": [
+  [
+   "开场 《莫斯科绅士》——一间九平方米的世界",
+   [
+    "grand_hotel_lobby_marble",
+    "warm_lamp_dark_room",
+    "vintage_hotel_room_bed",
+    "crystal_chandelier_hall",
+    "brass_door_knocker_old",
+    "old_wooden_door_brass",
+    "vintage_wine_glass_dark"
+   ]
+  ],
+  [
+   "第一章 九岁女孩和一把钥匙",
+   [
+    "antique_brass_room_key",
+    "old_wooden_desk_still",
+    "crystal_chandelier_hall",
+    "vintage_hotel_room_bed",
+    "hotel_room_window_curtain",
+    "frost_snow_on_window",
+    "frost_pattern_window",
+    "snow_falling_window",
+    "antique_spectacles_book",
+    "old_library_bookshelves",
+    "marble_staircase_railing",
+    "old_wooden_staircase"
+   ]
+  ],
+  [
+   "第二章 屋顶上的蜂蜜",
+   [
+    "hotel_room_window_curtain",
+    "old_wooden_desk_still",
+    "restaurant_table_candlelight",
+    "frost_snow_on_window",
+    "frost_pattern_window",
+    "vintage_wine_glass_dark",
+    "snow_falling_window",
+    "wax_candles_table_dark",
+    "candle_flame_dark_still",
+    "antique_spectacles_book",
+    "old_library_bookshelves",
+    "brass_candlestick_old",
+    "crystal_glassware_dark",
+    "porcelain_teacup_old",
+    "samovar_tea_russian",
+    "silver_teapot_old"
+   ]
+  ],
+  [
+   "第三章 一个女儿，一首诗的真相",
+   [
+    "hotel_room_window_curtain",
+    "old_piano_keys",
+    "antique_spectacles_book",
+    "marble_staircase_railing",
+    "vintage_hotel_room_bed",
+    "grand_hotel_lobby_marble",
+    "old_wooden_staircase",
+    "frost_snow_on_window",
+    "frost_pattern_window",
+    "snow_falling_window",
+    "flowers_vase_old_room",
+    "rain_on_window_glass"
+   ]
+  ],
+  [
+   "第四章 一九五四，旋转门外",
+   [
+    "old_wooden_door_brass",
+    "red_velvet_curtain",
+    "old_library_bookshelves",
+    "brass_door_knocker_old",
+    "library_ladder_books",
+    "antique_brass_room_key",
+    "antique_spectacles_book",
+    "old_piano_keys",
+    "grand_hotel_lobby_marble",
+    "vintage_gramophone_music",
+    "antique_pocket_watch",
+    "old_clock_face",
+    "old_hallway_doors_light"
+   ]
+  ],
+  [
+   "尾声 四壁之间的世界",
+   [
+    "old_bar_counter_bottles",
+    "warm_lamp_dark_room",
+    "grand_hotel_lobby_marble",
+    "brass_door_knocker_old",
+    "old_wooden_door_brass",
+    "vintage_wine_glass_dark",
+    "wax_candles_table_dark",
+    "candle_flame_dark_still",
+    "vintage_hotel_room_bed",
+    "hotel_room_window_curtain",
+    "frost_snow_on_window"
+   ]
+  ]
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "reason": "pool_certify VL 整池体检：verdict=face 一律隔离（硬门槛①真人正脸）。non_japan/modern 仅记录不拦（地域轴记录级，pool_certify 的 region 目标硬编码为 japan，对本书无意义）",
+ "excluded": [
+  "butter_tea_wooden_bowl/08.mp4",
+  "butter_tea_wooden_bowl/09.mp4",
+  "butter_tea_wooden_bowl/10.mp4",
+  "dust_wind_dry_earth/09.mp4",
+  "incense_smoke_prayer/04.mp4",
+  "incense_smoke_prayer/05.mp4",
+  "incense_smoke_prayer/06.mp4",
+  "mountain_lake_reflection/05.mp4",
+  "old_wooden_door_tibetan/05.mp4",
+  "old_wooden_door_tibetan/07.mp4",
+  "prayer_flags_tibetan/04.mp4",
+  "prayer_flags_tibetan/07.mp4",
+  "sheep_flock_grassland/07.mp4",
+  "sheep_flock_grassland/08.mp4",
+  "snow_mountain_himalaya/09.mp4"
+ ],
+ "record_only": {
+  "modern": [
+   "snow_falling_mountain_village/01.mp4"
+  ]
+ },
+ "gate": "pool_certify.pool_certify(assets/scenes/book_尘埃落定, 5)",
+ "coverage": "228/228",
+ "date": "2026-09-24"
+}

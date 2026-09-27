@@ -1,0 +1,298 @@
+{
+ "desk_lamp_night_reading": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 2/9 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "library_bookshelf_rows": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 4/7 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "porcelain_teapot_chinese": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 2/8 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "study_desk_window_light": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 4/7 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "walking_stick_wooden": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 5/9 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "wheelchair_empty": {
+  "verdict": "exclude",
+  "why": "整目录排除：正脸 4/9 ≥50%，按目录级铁律（目录名不可信）不做逐段取用"
+ },
+ "ancient_library_shelf": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=3、modern=0（共 6 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "autumn_leaves_falling": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "autumn_maple_ground": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=6、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "bamboo_shadow_wall": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "beijing_hutong_wall": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "books_stack_closeup": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=5、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "candle_flame_dark": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=10、modern=0（共 10 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_calligraphy_ink": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=5、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_courtyard_quiet": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=6、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_garden_pond": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=3、modern=0（共 5 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_library_interior": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=6、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_old_alley_morning": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chinese_old_bookstore": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=5、modern=1（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "chopsticks_bowl_table": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=5、modern=0（共 10 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "crescent_moon_sky": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "empty_armchair_warm": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "fountain_pen_writing": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "handwritten_notebook": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "hospital_corridor_empty": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "hospital_room_empty": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=1（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "hospital_window_curtain": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=1（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "hourglass_sand_time": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "incense_smoke_dark": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 10 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "ink_stone_brush": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=5、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "iv_drip_bottle": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=6、modern=1（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "medicine_pills_table": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "moonlight_window_night": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "morning_light_bedroom": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=6、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_book_pages_flip": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_clock_ticking": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_letter_paper": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_library_reading_room": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=3、modern=0（共 5 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_quilt_bedding": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "old_record_player": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "paper_lantern_night": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=4、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "park_bench_autumn": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "rain_on_window_glass": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "rain_tree_window": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "reading_glasses_book": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 10 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "snow_windowsill": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "sunset_through_window": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "tea_cup_steam": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=4、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "temple_park_old_tree": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "tree_branches_sky": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=8、modern=0（共 8 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "wheat_field_wind": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=9、modern=0（共 9 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "wooden_table_window_light": {
+  "verdict": "accept",
+  "why": "记录级，不拦截：VL 判 non_japan=7、modern=0（共 7 段）。本书为中国当代题材，日本轴无意义（09-19 实测 VL 地域 4 帧错 2 帧）；现代物件按 09-18 口径只记台账不作交付否决。正脸段已单独进排除清单。"
+ },
+ "ancient_library_shelf/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "ancient_library_shelf/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "beijing_hutong_wall/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "books_stack_closeup/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "books_stack_closeup/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chinese_calligraphy_ink/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chinese_courtyard_quiet/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chinese_old_bookstore/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chinese_old_bookstore/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chinese_old_bookstore/09.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "chopsticks_bowl_table/10.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "hospital_corridor_empty/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "iv_drip_bottle/04.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "iv_drip_bottle/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "medicine_pills_table/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "morning_light_bedroom/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "old_library_reading_room/02.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "old_library_reading_room/03.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "paper_lantern_night/01.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "paper_lantern_night/08.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "reading_glasses_book/05.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ },
+ "temple_park_old_tree/06.mp4": {
+  "verdict": "exclude",
+  "why": "VL 整段 8 帧体检判真人正脸 → 硬门槛，一律隔离（09-19 口径，不翻案）"
+ }
+}

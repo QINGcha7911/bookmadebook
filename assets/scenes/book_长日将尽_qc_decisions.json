@@ -1,0 +1,502 @@
+{
+ "english_breakfast_table": {
+  "verdict": "exclude",
+  "why": "整目录真人：儿童/女性用餐、多只手入镜"
+ },
+ "english_book_pages": {
+  "verdict": "exclude",
+  "why": "整目录有手：翻书页的手/手指"
+ },
+ "english_formal_dining": {
+  "verdict": "exclude",
+  "why": "整目录真人：白手套服务生手臂、西装男子"
+ },
+ "english_hallway_umbrella": {
+  "verdict": "exclude",
+  "why": "整目录真人：多位女性/儿童、楼梯人影"
+ },
+ "english_harbour_boats": {
+  "verdict": "exclude",
+  "why": "现代游艇码头/地中海渔港，非英国且现代（塑料浮桥、玻璃钢船体）"
+ },
+ "english_manor_staircase": {
+  "verdict": "exclude",
+  "why": "整目录真人：红衫男子、楼梯上人群"
+ },
+ "english_railway_station": {
+  "verdict": "exclude",
+  "why": "现代列车与电气化铁路，1956 年题材年代错配"
+ },
+ "english_servants_kitchen": {
+  "verdict": "exclude",
+  "why": "整目录真人：女性/儿童/涂鸦墙人群"
+ },
+ "english_silver_tray": {
+  "verdict": "exclude",
+  "why": "整目录真人：白手套的手端托盘、侍者男子"
+ },
+ "english_writing_desk": {
+  "verdict": "exclude",
+  "why": "整目录真人：写字的手/女性/打字机旁男子"
+ },
+ "old_english_library": {
+  "verdict": "exclude",
+  "why": "整目录现代图书馆：玻璃幕墙、平板/笔记本、熙攘人群"
+ },
+ "english_seaside_pier": {
+  "verdict": "exclude",
+  "why": "7/7 段 6-8 帧 VL 全票命中人物（远景游人），无法排除干净"
+ },
+ "silver_dining_table": {
+  "verdict": "exclude",
+  "why": "整目录真人 + 圣诞/光明节装饰摆拍"
+ },
+ "vintage_car_country_road": {
+  "verdict": "exclude",
+  "why": "整目录现代汽车：SUV/面包车/现代轿车/方向盘上的手"
+ },
+ "vintage_leather_suitcase": {
+  "verdict": "exclude",
+  "why": "整目录真人模特拎行李箱（时尚摆拍）"
+ },
+ "english_autumn_country_road": {
+  "verdict": "exclude",
+  "why": "整目录空中航拍的现代公路：多车道柏油路、白色标线与行驶车辆"
+ },
+ "old_english_kitchen": {
+  "verdict": "exclude",
+  "why": "整目录现代厨房：白色橱柜/燃气灶/商超货架/开抽屉的手（搜索词返回当代厨房）"
+ },
+ "english_fireplace_mantel/02.mp4": {
+  "verdict": "exclude",
+  "why": "炉前真人腿部/身体入镜"
+ },
+ "english_fireplace_mantel/04.mp4": {
+  "verdict": "exclude",
+  "why": "圣诞树与袜子装饰（与本书无关）"
+ },
+ "english_fireplace_mantel/07.mp4": {
+  "verdict": "exclude",
+  "why": "现代杂志/食物摆拍"
+ },
+ "english_tea_service/02.mp4": {
+  "verdict": "exclude",
+  "why": "现代商品照感：粉色霓虹背景+玻璃茶壶"
+ },
+ "english_tea_service/03.mp4": {
+  "verdict": "exclude",
+  "why": "手端茶杯（6/8 帧命中）"
+ },
+ "english_tea_service/04.mp4": {
+  "verdict": "exclude",
+  "why": "手倒茶入镜（7/7 帧命中）"
+ },
+ "english_tea_service/06.mp4": {
+  "verdict": "exclude",
+  "why": "商品照感+手（product_shot 6/6）"
+ },
+ "english_candle_dinner/03.mp4": {
+  "verdict": "exclude",
+  "why": "桌面杂乱+手部入镜"
+ },
+ "english_manor_window/01.mp4": {
+  "verdict": "exclude",
+  "why": "真人芭蕾舞者（双手举起）"
+ },
+ "english_sheer_curtain/06.mp4": {
+  "verdict": "exclude",
+  "why": "帘后人体剪影（7/7 帧命中）"
+ },
+ "english_stately_home_hall/03.mp4": {
+  "verdict": "exclude",
+  "why": "现代图书馆中庭（玻璃+扶梯+人群）"
+ },
+ "english_stately_home_hall/05.mp4": {
+  "verdict": "exclude",
+  "why": "宫殿大厅内成排真人游客"
+ },
+ "english_stately_home_hall/06.mp4": {
+  "verdict": "exclude",
+  "why": "大厅内真人游客"
+ },
+ "english_autumn_park/05.mp4": {
+  "verdict": "exclude",
+  "why": "现代玻璃幕墙建筑前红叶"
+ },
+ "english_country_house_manor/02.mp4": {
+  "verdict": "exclude",
+  "why": "航拍宅邸含停放车辆（modern 2/6）"
+ },
+ "english_country_house_manor/03.mp4": {
+  "verdict": "exclude",
+  "why": "乡道镜头内有现代汽车"
+ },
+ "english_country_lane/03.mp4": {
+  "verdict": "exclude",
+  "why": "航拍公路+行驶车辆"
+ },
+ "english_country_lane/04.mp4": {
+  "verdict": "exclude",
+  "why": "公路+车辆"
+ },
+ "english_country_lane/05.mp4": {
+  "verdict": "exclude",
+  "why": "公路+车辆"
+ },
+ "english_country_lane/06.mp4": {
+  "verdict": "exclude",
+  "why": "航拍公路+标线"
+ },
+ "english_country_lane/07.mp4": {
+  "verdict": "exclude",
+  "why": "公路+标线+车辆"
+ },
+ "english_hedgerow_field/04.mp4": {
+  "verdict": "exclude",
+  "why": "树篱间公路+车辆"
+ },
+ "english_stone_cottage/05.mp4": {
+  "verdict": "exclude",
+  "why": "航拍村落街景含车辆"
+ },
+ "english_stone_cottage/06.mp4": {
+  "verdict": "exclude",
+  "why": "航拍村落含车辆"
+ },
+ "english_village_church/01.mp4": {
+  "verdict": "exclude",
+  "why": "航拍街景含车辆"
+ },
+ "english_village_church/02.mp4": {
+  "verdict": "exclude",
+  "why": "航拍村落公路"
+ },
+ "english_village_church/03.mp4": {
+  "verdict": "exclude",
+  "why": "航拍村落+车辆"
+ },
+ "english_village_church/06.mp4": {
+  "verdict": "exclude",
+  "why": "航拍村落+车辆"
+ },
+ "english_village_church/08.mp4": {
+  "verdict": "exclude",
+  "why": "航拍街景+车辆"
+ },
+ "rain_window_glass/04.mp4": {
+  "verdict": "exclude",
+  "why": "雨滴玻璃（region 判中性可疑，保守排除）"
+ },
+ "english_fountain_garden/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 12 处"
+ },
+ "english_fountain_garden/06.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 30 处"
+ },
+ "english_garden_path/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 12 处"
+ },
+ "english_hedgerow_field/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 3 处"
+ },
+ "english_stone_cottage/01.mp4": {
+  "verdict": "accept",
+  "why": "石砌农舍与野草，无现代元素"
+ },
+ "english_stone_cottage/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_stone_cottage/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 8 处"
+ },
+ "english_country_lane/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 5 处"
+ },
+ "english_country_lane/02.mp4": {
+  "verdict": "accept",
+  "why": "砾石乡间小路与树篱，无车辆"
+ },
+ "english_country_lane/08.mp4": {
+  "verdict": "accept",
+  "why": "林荫乡间路，无车辆"
+ },
+ "english_autumn_park/01.mp4": {
+  "verdict": "accept",
+  "why": "晨雾林间小径，无人"
+ },
+ "english_autumn_park/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 3 处"
+ },
+ "english_autumn_park/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_autumn_park/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 2 处"
+ },
+ "english_autumn_park/06.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 21 处"
+ },
+ "english_autumn_park/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_autumn_park/08.mp4": {
+  "verdict": "accept",
+  "why": "树叶缝隙天光，无人"
+ },
+ "english_morning_mist": {
+  "verdict": "accept",
+  "why": "整目录晨雾田野，无人无现代物件"
+ },
+ "english_countryside_hills": {
+  "verdict": "accept",
+  "why": "整目录乡野丘陵与树篱，无人无现代物件"
+ },
+ "english_garden_flowers": {
+  "verdict": "accept",
+  "why": "整目录花园花丛，无人"
+ },
+ "english_roses_garden": {
+  "verdict": "accept",
+  "why": "整目录玫瑰园，无人"
+ },
+ "english_wooden_door_old": {
+  "verdict": "accept",
+  "why": "整目录老木门，无人"
+ },
+ "english_stone_wall_moss": {
+  "verdict": "accept",
+  "why": "整目录苔石墙，无人"
+ },
+ "english_lake_reflection": {
+  "verdict": "accept",
+  "why": "整目录湖面倒影，无人"
+ },
+ "english_country_house_manor/01.mp4": {
+  "verdict": "accept",
+  "why": "都铎式砖砌门楼，无人无车辆"
+ },
+ "english_country_house_manor/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_country_house_manor/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_country_house_manor/06.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 8 处"
+ },
+ "english_sheer_curtain/01.mp4": {
+  "verdict": "accept",
+  "why": "白纱帘与窗光，无人"
+ },
+ "english_sheer_curtain/02.mp4": {
+  "verdict": "accept",
+  "why": "白纱帘与窗光，无人"
+ },
+ "english_sheer_curtain/03.mp4": {
+  "verdict": "accept",
+  "why": "暖光窗帘，无人"
+ },
+ "english_sheer_curtain/04.mp4": {
+  "verdict": "accept",
+  "why": "纱帘光斑，无人"
+ },
+ "english_sheer_curtain/05.mp4": {
+  "verdict": "accept",
+  "why": "纱帘与窗外绿意，无人"
+ },
+ "english_sheer_curtain/07.mp4": {
+  "verdict": "accept",
+  "why": "亚麻窗帘特写，无人"
+ },
+ "english_manor_window/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 6 处"
+ },
+ "english_manor_window/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 15 处"
+ },
+ "english_manor_window/04.mp4": {
+  "verdict": "accept",
+  "why": "窗与暖灯，无人"
+ },
+ "english_manor_window/05.mp4": {
+  "verdict": "accept",
+  "why": "窗光斜照白墙，无人"
+ },
+ "english_stone_cottage": {
+  "verdict": "accept",
+  "why": "逐段复核后整目录可留：01 石砌农舍 / 03 林间溪流石岸 / 04 苔石墙 均为干净英式乡村镜头，region 轴把它们误判为「非英国」；被 modern 轴判可疑的 05/06（航拍村落含车辆）已单段排除；02（草坡绵羊）/07（绿野垄沟）门禁零命中"
+ },
+ "english_garden_path/03.mp4": {
+  "verdict": "exclude",
+  "why": "门禁判可疑且未通过目视确认（保守排除）"
+ },
+ "english_stately_home_hall/01.mp4": {
+  "verdict": "exclude",
+  "why": "门禁判可疑且未通过目视确认（保守排除）"
+ },
+ "english_candle_dinner/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 18 处"
+ },
+ "english_candle_dinner/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 4 处"
+ },
+ "english_countryside_hills/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 11 处"
+ },
+ "english_countryside_hills/08.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 5 处"
+ },
+ "english_fireplace_mantel/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 8 处"
+ },
+ "english_fountain_garden/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_fountain_garden/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 15 处"
+ },
+ "english_fountain_garden/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_garden_flowers/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 4 处"
+ },
+ "english_garden_flowers/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 4 处"
+ },
+ "english_garden_flowers/06.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 64 处"
+ },
+ "english_garden_flowers/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 12 处"
+ },
+ "english_garden_path/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_garden_path/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_hedgerow_field/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 5 处"
+ },
+ "english_hedgerow_field/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_lake_reflection/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 2 处"
+ },
+ "english_morning_mist/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_morning_mist/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 2 处"
+ },
+ "english_morning_mist/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_roses_garden/01.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 4 处"
+ },
+ "english_roses_garden/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 8 处"
+ },
+ "english_roses_garden/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 5 处"
+ },
+ "english_roses_garden/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_roses_garden/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 5 处"
+ },
+ "english_stately_home_hall/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 17 处"
+ },
+ "english_stately_home_hall/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 11 处"
+ },
+ "english_stone_wall_moss/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "english_stone_wall_moss/08.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 15 处"
+ },
+ "english_village_church/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 16 处"
+ },
+ "english_village_church/05.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 23 处"
+ },
+ "english_village_church/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 3 处"
+ },
+ "english_wooden_door_old/02.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 14 处"
+ },
+ "english_wooden_door_old/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 9 处"
+ },
+ "english_wooden_door_old/04.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 1 处"
+ },
+ "golden_wheat_field/07.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 13 处"
+ },
+ "rain_window_glass/03.mp4": {
+  "verdict": "exclude",
+  "why": "YOLO 逐帧人体扫描（1.5fps, th=0.28, 960px）命中 2 处"
+ }
+}

@@ -1,0 +1,500 @@
+{
+ "scene_root": "assets/scenes/book_活着",
+ "available": {
+  "candle_light_dark_room": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "chinese_ancestral_hall_old": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "chinese_clay_tile_roof_detail": [
+   "01.mp4"
+  ],
+  "chinese_farm_tools_hoe": [
+   "01.mp4"
+  ],
+  "chinese_farmhouse_courtyard_wall": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_grave_hill_countryside": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_herbal_medicine_bowl": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_iron_wok_kitchen": [
+   "01.mp4"
+  ],
+  "chinese_mountain_village_distant": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_old_kitchen_utensils": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_old_paper_ledger": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "chinese_old_wooden_window_interior": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_ox_cart_field": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_pond_water_countryside": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_pottery_jar_clay": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_rain_field_window": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_rice_paddy_field": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_rural_village_houses": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_steamer_basket_steam": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_straw_hay_stack": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_terraced_farmland": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_village_cooking_smoke": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_village_dirt_path": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_village_evening_light": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_village_snow_winter": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_wheat_field_golden": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_winter_bare_trees": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "crescent_moon_night_sky": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "dry_cracked_earth_soil": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "earthy_stove_firewood": [
+   "01.mp4"
+  ],
+  "kerosene_oil_lamp_dim": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "old_chinese_house_interior_room": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "old_chinese_town_street": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "old_chinese_water_well_village": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "old_chinese_wooden_door_courtyard": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "old_cloth_patching_sewing": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "old_photograph_vintage_album": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "old_steam_train_china": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "red_cloth_textile_folded": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "rural_mud_brick_house": [
+   "01.mp4",
+   "02.mp4"
+  ],
+  "small_wooden_boat_river_china": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "stone_bridge_chinese_village": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "stone_water_well_bucket_rope": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "water_buffalo_field": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ]
+ },
+ "excluded_count": 40,
+ "excluded": [
+  "bamboo_basket_carrying_pole/01.mp4",
+  "battlefield_smoke_ruins/01.mp4",
+  "battlefield_smoke_ruins/02.mp4",
+  "battlefield_smoke_ruins/03.mp4",
+  "battlefield_smoke_ruins/04.mp4",
+  "battlefield_smoke_ruins/05.mp4",
+  "battlefield_smoke_ruins/06.mp4",
+  "battlefield_smoke_ruins/07.mp4",
+  "battlefield_smoke_ruins/08.mp4",
+  "candle_light_dark_room/07.mp4",
+  "chinese_ancestral_hall_old/05.mp4",
+  "chinese_farmhouse_courtyard_wall/06.mp4",
+  "chinese_old_paper_ledger/05.mp4",
+  "chinese_ox_cart_field/01.mp4",
+  "chinese_ox_cart_field/05.mp4",
+  "chinese_rice_harvest_grain/01.mp4",
+  "chinese_rice_harvest_grain/02.mp4",
+  "chinese_rice_harvest_grain/03.mp4",
+  "chinese_rice_harvest_grain/04.mp4",
+  "chinese_rice_harvest_grain/05.mp4",
+  "chinese_rice_harvest_grain/06.mp4",
+  "chinese_rice_harvest_grain/07.mp4",
+  "chinese_rice_harvest_grain/08.mp4",
+  "chinese_rural_market_vegetables/01.mp4",
+  "chinese_rural_market_vegetables/02.mp4",
+  "chinese_rural_market_vegetables/03.mp4",
+  "chinese_rural_market_vegetables/04.mp4",
+  "chinese_rural_market_vegetables/05.mp4",
+  "chinese_rural_market_vegetables/06.mp4",
+  "chinese_village_dirt_path/02.mp4",
+  "chinese_village_dirt_path/05.mp4",
+  "old_chinese_house_interior_room/02.mp4",
+  "old_chinese_water_well_village/02.mp4",
+  "old_photograph_vintage_album/02.mp4",
+  "old_photograph_vintage_album/05.mp4",
+  "old_steam_train_china/04.mp4",
+  "old_steam_train_china/07.mp4",
+  "small_wooden_boat_river_china/02.mp4",
+  "water_buffalo_field/02.mp4",
+  "bamboo_basket_carrying_pole/02.mp4"
+ ],
+ "scene_map": [
+  [
+   "开场",
+   [
+    "chinese_rice_paddy_field",
+    "chinese_village_dirt_path",
+    "water_buffalo_field",
+    "chinese_terraced_farmland",
+    "chinese_rural_village_houses",
+    "chinese_farm_tools_hoe",
+    "red_cloth_textile_folded",
+    "chinese_old_paper_ledger",
+    "crescent_moon_night_sky",
+    "bamboo_basket_carrying_pole",
+    "candle_light_dark_room",
+    "chinese_straw_hay_stack"
+   ]
+  ],
+  [
+   "第一章 输光家产",
+   [
+    "old_chinese_wooden_door_courtyard",
+    "kerosene_oil_lamp_dim",
+    "earthy_stove_firewood",
+    "rural_mud_brick_house",
+    "chinese_terraced_farmland",
+    "chinese_rural_village_houses",
+    "candle_light_dark_room",
+    "chinese_farm_tools_hoe",
+    "chinese_village_dirt_path",
+    "crescent_moon_night_sky",
+    "chinese_rice_paddy_field",
+    "bamboo_basket_carrying_pole"
+   ]
+  ],
+  [
+   "第二章 战场、回家、哑掉的女儿",
+   [
+    "old_steam_train_china",
+    "chinese_village_dirt_path",
+    "chinese_village_snow_winter",
+    "candle_light_dark_room",
+    "chinese_iron_wok_kitchen",
+    "old_chinese_house_interior_room",
+    "earthy_stove_firewood",
+    "chinese_grave_hill_countryside",
+    "chinese_rural_village_houses",
+    "chinese_old_kitchen_utensils",
+    "bamboo_basket_carrying_pole",
+    "chinese_herbal_medicine_bowl"
+   ]
+  ],
+  [
+   "第三章 有庆",
+   [
+    "chinese_rice_paddy_field",
+    "chinese_farm_tools_hoe",
+    "crescent_moon_night_sky",
+    "chinese_village_dirt_path",
+    "chinese_grave_hill_countryside",
+    "chinese_herbal_medicine_bowl",
+    "old_chinese_wooden_door_courtyard",
+    "chinese_rural_village_houses",
+    "chinese_old_wooden_window_interior",
+    "chinese_village_evening_light",
+    "old_chinese_town_street",
+    "chinese_mountain_village_distant"
+   ]
+  ],
+  [
+   "第四章 凤霞与二喜",
+   [
+    "old_chinese_wooden_door_courtyard",
+    "chinese_steamer_basket_steam",
+    "old_cloth_patching_sewing",
+    "chinese_village_cooking_smoke",
+    "chinese_rural_village_houses",
+    "rural_mud_brick_house",
+    "old_chinese_house_interior_room",
+    "red_cloth_textile_folded",
+    "bamboo_basket_carrying_pole",
+    "old_chinese_town_street",
+    "chinese_clay_tile_roof_detail",
+    "chinese_mountain_village_distant"
+   ]
+  ],
+  [
+   "第五章 一个接一个地离开",
+   [
+    "chinese_grave_hill_countryside",
+    "chinese_village_snow_winter",
+    "chinese_rice_paddy_field",
+    "old_chinese_house_interior_room",
+    "crescent_moon_night_sky",
+    "chinese_rural_village_houses",
+    "chinese_village_dirt_path",
+    "chinese_terraced_farmland",
+    "chinese_farm_tools_hoe",
+    "chinese_farmhouse_courtyard_wall",
+    "red_cloth_textile_folded",
+    "chinese_steamer_basket_steam"
+   ]
+  ],
+  [
+   "尾声 老牛也叫福贵",
+   [
+    "chinese_rice_paddy_field",
+    "chinese_village_dirt_path",
+    "crescent_moon_night_sky",
+    "chinese_wheat_field_golden",
+    "bamboo_basket_carrying_pole",
+    "water_buffalo_field",
+    "chinese_village_snow_winter",
+    "old_chinese_water_well_village",
+    "chinese_terraced_farmland",
+    "chinese_rural_village_houses",
+    "chinese_old_paper_ledger",
+    "old_photograph_vintage_album"
+   ]
+  ]
+ ],
+ "script": "bookmadebook-output/讲书稿_活着.txt"
+}

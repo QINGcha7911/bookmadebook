@@ -1,0 +1,1002 @@
+{
+ "blood_sample_tube_close/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "blood_sample_tube_close/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "blood_sample_tube_close/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "blood_sample_tube_close/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "blood_sample_tube_close/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "blood_sample_tube_close/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "blood_sample_tube_close/07.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "blood_sample_tube_close/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "candle_flame_dark/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_bicycle_old_street/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_bicycle_old_street/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_bicycle_old_street/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_bicycle_old_street/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_bicycle_old_street/05.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_clay_roof_tiles/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_clay_roof_tiles/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_clay_roof_tiles/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_clay_stove_firewood/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_clay_stove_firewood/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_clay_stove_firewood/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_countryside_dirt_road/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_countryside_dirt_road/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_countryside_dirt_road/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_countryside_dirt_road/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_countryside_dirt_road/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_countryside_dirt_road/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_countryside_dirt_road/07.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_countryside_dirt_road/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_dish_plate_table/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_dish_plate_table/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_dish_plate_table/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/03.mp4": {
+  "verdict": "exclude",
+  "why": "时长 <8s（低于选镜下限）"
+ },
+ "chinese_enamel_mug_old/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_enamel_mug_old/07.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_enamel_mug_old/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_ferry_river_crossing/07.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_ferry_river_crossing/08.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_home_kitchen_old/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_home_kitchen_old/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_home_kitchen_old/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_home_kitchen_old/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_home_kitchen_old/07.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_hospital_corridor_old/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_hospital_corridor_old/07.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_incense_burner/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/04.mp4": {
+  "verdict": "exclude",
+  "why": "时长 <8s（低于选镜下限）"
+ },
+ "chinese_incense_burner/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_incense_burner/08.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_noodle_bowl_steam/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_house_courtyard/01.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_old_house_courtyard/03.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_old_house_courtyard/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_house_courtyard/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_house_courtyard/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_shop_counter/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_shop_counter/02.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_shop_counter/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_shop_counter/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_old_shop_counter/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_shop_counter/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_shop_counter/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_town_alley_day/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_town_alley_day/02.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_old_town_alley_day/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_town_alley_day/04.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_old_town_alley_day/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_old_town_alley_day/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_paper_window_lattice/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_paper_window_lattice/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_paper_window_lattice/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_paper_window_lattice/04.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_rain_street_wet/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rain_street_wet/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rain_street_wet/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rain_street_wet/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rain_street_wet/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rain_street_wet/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rice_paddy_field/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rice_paddy_field/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rice_paddy_field/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rice_paddy_field/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rice_paddy_field/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_river_boat_wooden/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_river_boat_wooden/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_river_boat_wooden/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_river_boat_wooden/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_river_boat_wooden/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rural_house_old/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rural_house_old/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_rural_house_old/04.mp4": {
+  "verdict": "exclude",
+  "why": "同源重复：与 chinese_old_house_courtyard/04.mp4 md5 相同（Pexels 同 clip 落多目录），保留一份防片内同镜复用"
+ },
+ "chinese_rural_house_old/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_silk_factory_loom/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_silk_factory_loom/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_silk_factory_loom/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_silk_factory_loom/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_silk_factory_loom/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_silk_factory_loom/07.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_small_eatery_night/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_small_eatery_night/02.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_small_eatery_night/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_small_eatery_night/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_small_eatery_night/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_small_eatery_night/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_stone_bridge_water/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_stone_bridge_water/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_stone_bridge_water/04.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_stone_bridge_water/05.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_stone_bridge_water/06.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_teacup_rustic_table/02.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "chinese_teacup_rustic_table/03.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：日本元素 → 非中国江南小城"
+ },
+ "chinese_teacup_rustic_table/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_temple_wooden_hall/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_temple_wooden_hall/04.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_vegetable_market_day/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_vegetable_market_day/02.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_vegetable_market_day/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_vegetable_market_day/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_vegetable_market_day/05.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：东南亚/南亚/中东元素 → 非中国"
+ },
+ "chinese_water_town_street/01.mp4": {
+  "verdict": "exclude",
+  "why": "同源重复：与 chinese_old_house_courtyard/04.mp4 md5 相同（Pexels 同 clip 落多目录），保留一份防片内同镜复用"
+ },
+ "chinese_water_town_street/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_water_town_street/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_water_town_street/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_water_town_street/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_water_town_street/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wok_cooking_fire/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_wok_cooking_fire/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wooden_table_meal/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wooden_table_meal/02.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wooden_table_meal/03.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wooden_table_meal/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_wooden_table_meal/05.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_yellow_wine_cup/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_yellow_wine_cup/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_yellow_wine_cup/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_yellow_wine_cup/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "chinese_yellow_wine_cup/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "crescent_moon_night_sky/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "empty_room_morning_light/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/05.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "empty_room_morning_light/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "empty_room_morning_light/08.mp4": {
+  "verdict": "exclude",
+  "why": "内容不符（可识别异物）：欧式/地中海建筑 → 非中国"
+ },
+ "hospital_iv_drip_close/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_iv_drip_close/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_iv_drip_close/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_iv_drip_close/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_iv_drip_close/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_iv_drip_close/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_iv_drip_close/07.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_ward_bed_empty/01.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_ward_bed_empty/02.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_ward_bed_empty/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_ward_bed_empty/04.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_ward_bed_empty/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_ward_bed_empty/06.mp4": {
+  "verdict": "exclude",
+  "why": "pool_certify VL 判真人正脸（硬门槛①·整段均匀 8 帧）"
+ },
+ "hospital_ward_bed_empty/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "hospital_ward_bed_empty/08.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "rain_window_glass_drops/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "silk_fabric_texture_hand/07.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "sunset_clouds_dramatic/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "sunset_clouds_dramatic/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "sunset_clouds_dramatic/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "sunset_clouds_dramatic/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "sunset_clouds_dramatic/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/01.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/02.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/03.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/04.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/05.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "winter_bare_trees_snow/06.mp4": {
+  "verdict": "accept",
+  "why": "09-18/09-24 用户拍板口径：地域轴／现代物件轴为记录轴，不拦截；无可识别异物、无真人正脸，硬门槛不触发"
+ },
+ "chinese_dish_plate_table/02.mp4": {
+  "verdict": "exclude",
+  "why": "同源重复：与 chinese_wooden_table_meal/06.mp4 md5 相同（Pexels 同 clip 落多目录），保留一份防片内同镜复用"
+ },
+ "chinese_rural_house_old/01.mp4": {
+  "verdict": "exclude",
+  "why": "同源重复：与 chinese_old_house_courtyard/02.mp4 md5 相同（Pexels 同 clip 落多目录），保留一份防片内同镜复用"
+ },
+ "blood_sample_tube_close": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "candle_flame_dark": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_bicycle_old_street": {
+  "verdict": "accept",
+  "why": "整目录命中 5/5（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_clay_roof_tiles": {
+  "verdict": "accept",
+  "why": "整目录命中 3/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_countryside_dirt_road": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_dish_plate_table": {
+  "verdict": "accept",
+  "why": "整目录命中 3/4（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_enamel_mug_old": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_ferry_river_crossing": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_hospital_corridor_old": {
+  "verdict": "accept",
+  "why": "整目录命中 7/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_incense_burner": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_old_house_courtyard": {
+  "verdict": "accept",
+  "why": "整目录命中 5/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_old_shop_counter": {
+  "verdict": "accept",
+  "why": "整目录命中 7/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_old_town_alley_day": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_paper_window_lattice": {
+  "verdict": "accept",
+  "why": "整目录命中 4/4（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_rain_street_wet": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_rice_paddy_field": {
+  "verdict": "accept",
+  "why": "整目录命中 5/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_river_boat_wooden": {
+  "verdict": "accept",
+  "why": "整目录命中 5/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_rural_house_old": {
+  "verdict": "accept",
+  "why": "整目录命中 4/5（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_silk_factory_loom": {
+  "verdict": "accept",
+  "why": "整目录命中 6/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_small_eatery_night": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_stone_bridge_water": {
+  "verdict": "accept",
+  "why": "整目录命中 5/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_temple_wooden_hall": {
+  "verdict": "accept",
+  "why": "整目录命中 2/4（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_water_town_street": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "chinese_yellow_wine_cup": {
+  "verdict": "accept",
+  "why": "整目录命中 5/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "crescent_moon_night_sky": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "empty_room_morning_light": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "hospital_iv_drip_close": {
+  "verdict": "accept",
+  "why": "整目录命中 7/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "hospital_ward_bed_empty": {
+  "verdict": "accept",
+  "why": "整目录命中 8/8（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "rain_window_glass_drops": {
+  "verdict": "accept",
+  "why": "整目录命中 7/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "silk_fabric_texture_hand": {
+  "verdict": "accept",
+  "why": "整目录命中 7/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "sunset_clouds_dramatic": {
+  "verdict": "accept",
+  "why": "整目录命中 5/7（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ },
+ "winter_bare_trees_snow": {
+  "verdict": "accept",
+  "why": "整目录命中 6/6（≥50%）：命中轴为记录轴（地域／现代），已逐段 VL 8 帧复核，无可识别异物、无真人正脸 → 按 09-18 口径记录不拦截"
+ }
+}

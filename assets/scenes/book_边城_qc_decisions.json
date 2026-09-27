@@ -1,0 +1,342 @@
+{
+ "rain_on_river_water/03.mp4": {
+  "verdict": "exclude",
+  "why": "沥青路面+黄色车道标线（现代公路）"
+ },
+ "rain_on_river_water/04.mp4": {
+  "verdict": "exclude",
+  "why": "玻璃窗上一只真人手指"
+ },
+ "bamboo_forest_green/03.mp4": {
+  "verdict": "exclude",
+  "why": "竹林里两个人影"
+ },
+ "bamboo_forest_green/06.mp4": {
+  "verdict": "exclude",
+  "why": "真人特写（两个演员）"
+ },
+ "bamboo_forest_green/07.mp4": {
+  "verdict": "exclude",
+  "why": "现代砖砌步道+行人"
+ },
+ "bamboo_forest_green/08.mp4": {
+  "verdict": "exclude",
+  "why": "现代步道+行人"
+ },
+ "chinese_stone_steps_river/01.mp4": {
+  "verdict": "exclude",
+  "why": "现代城市天际线（超高层）"
+ },
+ "chinese_stone_steps_river/02.mp4": {
+  "verdict": "exclude",
+  "why": "石栏边两个真人+现代旗帜"
+ },
+ "chinese_stone_steps_river/03.mp4": {
+  "verdict": "exclude",
+  "why": "石阶上黄色现代雨靴（商品照感）"
+ },
+ "chinese_stone_steps_river/04.mp4": {
+  "verdict": "exclude",
+  "why": "现代城市+木质栈道+人群"
+ },
+ "chinese_stone_steps_river/05.mp4": {
+  "verdict": "exclude",
+  "why": "现代高层建筑背景"
+ },
+ "chinese_ancient_riverside_town/02.mp4": {
+  "verdict": "exclude",
+  "why": "古镇俯瞰+彩色现代地摊与行人"
+ },
+ "chinese_ancient_riverside_town/07.mp4": {
+  "verdict": "exclude",
+  "why": "现代彩钢瓦彩色屋顶村落"
+ },
+ "chinese_ancient_riverside_town/08.mp4": {
+  "verdict": "exclude",
+  "why": "水车场景里有现代观景塔"
+ },
+ "chinese_old_town_stone_lane/01.mp4": {
+  "verdict": "exclude",
+  "why": "古镇俯瞰+现代地摊与行人"
+ },
+ "chinese_old_town_stone_lane/04.mp4": {
+  "verdict": "exclude",
+  "why": "花草前景+红色踏板电动车与人"
+ },
+ "chinese_old_town_stone_lane/05.mp4": {
+  "verdict": "exclude",
+  "why": "长城（与《边城》无关的北方地景）"
+ },
+ "chinese_old_town_stone_lane/06.mp4": {
+  "verdict": "exclude",
+  "why": "石巷里两个黑衣服人影"
+ },
+ "chinese_old_town_stone_lane/08.mp4": {
+  "verdict": "exclude",
+  "why": "石巷里牵马的人"
+ },
+ "chinese_river_morning_mist/02.mp4": {
+  "verdict": "exclude",
+  "why": "现代城市高楼+红绿灯+汽车+蓝色路牌"
+ },
+ "chinese_river_morning_mist/08.mp4": {
+  "verdict": "exclude",
+  "why": "岸边蓝色塑料篷布船屋"
+ },
+ "calm_river_reflection/02.mp4": {
+  "verdict": "exclude",
+  "why": "对岸欧式建筑与城镇天际线"
+ },
+ "moon_night_river_reflection/01.mp4": {
+  "verdict": "exclude",
+  "why": "现代城市夜景（高楼+灯光倒影）"
+ },
+ "moon_night_river_reflection/04.mp4": {
+  "verdict": "exclude",
+  "why": "黄昏里的欧洲城镇剪影（尖顶建筑+岸灯）"
+ },
+ "willow_tree_river_bank/03.mp4": {
+  "verdict": "exclude",
+  "why": "欧式公园红栏杆+现代草坪"
+ },
+ "willow_tree_river_bank/06.mp4": {
+  "verdict": "exclude",
+  "why": "河面赛艇队（多名真人）"
+ },
+ "willow_tree_river_bank/07.mp4": {
+  "verdict": "exclude",
+  "why": "远处现代城市天际线"
+ },
+ "chinese_tiled_roof_eaves/04.mp4": {
+  "verdict": "exclude",
+  "why": "红瓦屋顶航拍+现代绿茵场与人影"
+ },
+ "chinese_tiled_roof_eaves/06.mp4": {
+  "verdict": "exclude",
+  "why": "现代商业古镇街+人群"
+ },
+ "chinese_tiled_roof_eaves/07.mp4": {
+  "verdict": "exclude",
+  "why": "屋顶航拍里的现代地摊与行人"
+ },
+ "chinese_tiled_roof_eaves/08.mp4": {
+  "verdict": "exclude",
+  "why": "红瓦屋顶+现代绿茵地"
+ },
+ "clay_stove_firewood_fire/03.mp4": {
+  "verdict": "exclude",
+  "why": "真人手拿勺子舀饭（乙档实锤同类）"
+ },
+ "clay_stove_firewood_fire/06.mp4": {
+  "verdict": "exclude",
+  "why": "现代金属炉具+白瓷壶（年代错配）"
+ },
+ "clay_stove_firewood_fire/08.mp4": {
+  "verdict": "exclude",
+  "why": "现代铁皮炉具"
+ },
+ "oil_lamp_flame_old/08.mp4": {
+  "verdict": "exclude",
+  "why": "河灯+现代钢架桥与人"
+ },
+ "chinese_water_wheel/01.mp4": {
+  "verdict": "exclude",
+  "why": "水车旁现代观景塔"
+ },
+ "chinese_water_wheel/02.mp4": {
+  "verdict": "exclude",
+  "why": "水车+现代景区花坛与水泥驳岸"
+ },
+ "chinese_water_wheel/05.mp4": {
+  "verdict": "exclude",
+  "why": "水车背景现代楼房与公路"
+ },
+ "mountain_stream_rocks/01.mp4": {
+  "verdict": "exclude",
+  "why": "瀑布前撑旗的游客（真人）"
+ },
+ "mountain_stream_rocks/07.mp4": {
+  "verdict": "exclude",
+  "why": "雪地+成排冷杉（北欧冬季观感，与湘西不符）"
+ },
+ "orange_tree_orchard/03.mp4": {
+  "verdict": "exclude",
+  "why": "真人女子出镜"
+ },
+ "orange_tree_orchard/07.mp4": {
+  "verdict": "exclude",
+  "why": "真人手摘橘子特写"
+ },
+ "orange_tree_orchard/08.mp4": {
+  "verdict": "exclude",
+  "why": "果树后为欧式橙顶小屋"
+ },
+ "bamboo_woven_basket/02.mp4": {
+  "verdict": "exclude",
+  "why": "竹篮堆旁蓝色塑料布/现代货架"
+ },
+ "bamboo_woven_basket/04.mp4": {
+  "verdict": "exclude",
+  "why": "现代民宿家居（白床单枕头+现代编织篮）"
+ },
+ "stone_water_mill_old/02.mp4": {
+  "verdict": "exclude",
+  "why": "水车旁现代花坛与红色汽车"
+ },
+ "stone_water_mill_old/04.mp4": {
+  "verdict": "exclude",
+  "why": "真人男子操作水车+现代水泥墙"
+ },
+ "chinese_river_morning_mist/09.mp4": {
+  "verdict": "exclude",
+  "why": "晨雾山谷水面漂浮彩色杂物（现代风筝/漂浮物）"
+ },
+ "calm_river_reflection/10.mp4": {
+  "verdict": "exclude",
+  "why": "对岸红砖建筑（欧式）与湖面倒影"
+ },
+ "calm_river_reflection/11.mp4": {
+  "verdict": "exclude",
+  "why": "湖面+现代白色建筑与公路桥"
+ },
+ "rain_on_river_water/10.mp4": {
+  "verdict": "exclude",
+  "why": "水洼倒影里红色车辆/建筑（现代物件倒影）"
+ },
+ "river_reeds_wind/09.mp4": {
+  "verdict": "exclude",
+  "why": "芦苇后现代蓝色场馆结构"
+ },
+ "moon_night_river_reflection/13.mp4": {
+  "verdict": "exclude",
+  "why": "一只真人手托着月亮（手部特写）"
+ },
+ "willow_tree_river_bank/09.mp4": {
+  "verdict": "exclude",
+  "why": "欧式石砌驳岸+桥梁"
+ },
+ "willow_tree_river_bank/11.mp4": {
+  "verdict": "exclude",
+  "why": "远处现代桥梁"
+ },
+ "willow_tree_river_bank/12.mp4": {
+  "verdict": "exclude",
+  "why": "现代公园（石砌矮墙+草坪+步道）"
+ },
+ "willow_tree_river_bank/13.mp4": {
+  "verdict": "exclude",
+  "why": "现代城市天际线与野鸭（岸线）"
+ },
+ "willow_tree_river_bank/14.mp4": {
+  "verdict": "exclude",
+  "why": "柳树后现代白色建筑"
+ },
+ "orange_tree_orchard/10.mp4": {
+  "verdict": "exclude",
+  "why": "真人（白裙女子在果园）"
+ },
+ "orange_tree_orchard/11.mp4": {
+  "verdict": "exclude",
+  "why": "真人手切橙子（商品照）"
+ },
+ "orange_tree_orchard/12.mp4": {
+  "verdict": "exclude",
+  "why": "果实特写里出现现代白色建筑"
+ },
+ "bamboo_forest_green": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉真人特写/人影与现代步道 4 段，余为竹林空镜"
+ },
+ "bamboo_raft_water": {
+  "verdict": "exclude",
+  "why": "整目录为东南亚漂流竹筏，竹筏上均有撑筏人/游客"
+ },
+ "bamboo_woven_basket": {
+  "verdict": "accept",
+  "why": "混合目录：可疑 6/12 段已全部排除，剩余 6 段经逐格目视确认可用（备稿班 2026-09-17）"
+ },
+ "calm_river_reflection": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉欧式建筑对岸 1 段，余为水面/倒影特写（中性题材）"
+ },
+ "chinese_ancient_riverside_town": {
+  "verdict": "accept",
+  "why": "逐格看过：仅含现代地摊/彩钢瓦/观景塔的 3 段被排，余为水乡河道/土楼/石雕/航拍水乡（均无人物）"
+ },
+ "chinese_karst_mountain_mist": {
+  "verdict": "exclude",
+  "why": "整目录实为越南北部喀斯特（含越南国旗、摩托车山路、红顶度假村），非中国"
+ },
+ "chinese_oil_paper_umbrella": {
+  "verdict": "exclude",
+  "why": "逐格看过：全部为现代真人出镜（室内拍年俗/美食 vlog，桌上手机、现代家居服），非老器物"
+ },
+ "chinese_old_town_stone_lane": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉行人/电动车/长城/牵马人 5 段，余为水乡河道、石雕、土楼（均无人物）"
+ },
+ "chinese_rice_paddy_field": {
+  "verdict": "accept",
+  "why": "混合目录：可疑 7/14 段已全部排除，剩余 7 段经逐格目视确认可用（备稿班 2026-09-17）"
+ },
+ "chinese_river_morning_mist": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉现代城市高楼与塑料篷布 2 段，余为河上晨雾空镜"
+ },
+ "chinese_rural_wooden_house": {
+  "verdict": "exclude",
+  "why": "8 段里 6 段为人群/现代彩钢瓦别墅/电动车；土楼+水乡两段与其它目录重复"
+ },
+ "chinese_stilt_house_river": {
+  "verdict": "exclude",
+  "why": "逐格见现代观景塔/钢桥/蓝色彩钢瓦/北欧红木屋，仅 1 段中性木廊"
+ },
+ "chinese_stone_steps_river": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉现代城市天际线/景观栈道/人群/现代雨靴 5 段，余为河岸卵石与航拍河面"
+ },
+ "chinese_tiled_roof_eaves": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉现代绿茵场/商业街人群 4 段，余为灰瓦檐、飞檐特写、亭桥夜景、墨滴入水"
+ },
+ "chinese_water_wheel": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉现代观景塔/景区花坛/现代楼房 3 段，余为老木水车与水乡河道"
+ },
+ "chinese_white_pagoda": {
+  "verdict": "exclude",
+  "why": "整目录为东南亚/泰缅式塔（金顶彩绘），非中国湘西；含 1 段人群"
+ },
+ "clay_stove_firewood_fire": {
+  "verdict": "accept",
+  "why": "乙档逐段筛：排掉真人手舀饭（03）与现代金属炉具（06/08），余 7 段土灶柴火"
+ },
+ "moon_night_river_reflection": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉现代城市夜景与欧式城镇剪影 2 段，余为月与水面对月倒影"
+ },
+ "oil_lamp_flame_old": {
+  "verdict": "accept",
+  "why": "油灯火苗/铜器被 VL 误判为手（_global_bad_sources 乙档已注明该类高频误报），已逐格目视确认无手"
+ },
+ "old_wooden_boat_moored": {
+  "verdict": "exclude",
+  "why": "整目录为欧洲港口/地中海现代游艇（船名 OASIS 等外文），地域不符"
+ },
+ "rain_on_river_water": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉沥青马路标线与真人手指 2 段，余为水面雨点与伞面雨滴"
+ },
+ "stone_water_mill_old": {
+  "verdict": "accept",
+  "why": "混合目录：可疑 5/10 段已全部排除，剩余 5 段经逐格目视确认可用（备稿班 2026-09-17）"
+ },
+ "willow_tree_river_bank": {
+  "verdict": "accept",
+  "why": "逐格看过：排掉欧式公园/赛艇队/城市天际线 3 段，余为溪流与垂柳空镜"
+ },
+ "wooden_window_lattice_old": {
+  "verdict": "exclude",
+  "why": "逐格看过：整目录为北欧（挪威/瑞典）彩色木屋与石砌门廊，含现代空调外机/塑钢窗/窗内真人；两条 VL 轴均零命中——机器漏报，人眼抓到"
+ }
+}

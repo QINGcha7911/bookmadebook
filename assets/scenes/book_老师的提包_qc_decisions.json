@@ -82,5 +82,31 @@
  "old_leather_bag_closeup": {
   "verdict": "accept",
   "why": "定向补扫目录，旧皮包特写静物"
+ },
+ "jp_noren_curtain/01": {
+  "verdict": "accept",
+  "axis": "japan",
+  "reason": "逐格复核：白色暖帘上有日文书法+背后绿植，日式暖帘无疑；无真人无现代物件"
+ },
+ "jp_noren_curtain/06": {
+  "verdict": "accept",
+  "axis": "japan",
+  "reason": "逐格复核：深色木格栅/障子格，日式室内，无真人无现代物件"
+ },
+ "jp_rain_window/03": {
+  "verdict": "accept",
+  "axis": "japan",
+  "reason": "逐格复核：雨打玻璃+前景绿植，构图干净，无车无人，符合雨夜氛围"
+ },
+ "jp_rain_window/07": {
+  "verdict": "accept",
+  "axis": "japan",
+  "reason": "逐格复核：雨珠玻璃+白墙+绿植，无车无人"
+ },
+ "_dir_verdicts": {
+  "jp_lantern": "整目录排除（4/4）：漂浮河灯+现代城市天际线、街面带汽车，非日式居酒屋氛围",
+  "jp_lantern_alt": "整目录排除（3/3）：同上重复素材",
+  "jp_noren_curtain": "部分可用：01/06 日式暖帘/木格可用；03 为欧式白窗帘→排除",
+  "jp_rain_window": "整目录存疑（6/8 命中）：车内视角/汽车尾灯/现代街道车流→排除；仅 03、07 纯净雨窗可用"
  }
 }

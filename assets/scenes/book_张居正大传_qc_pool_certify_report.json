@@ -1,0 +1,1102 @@
+{
+ "ancient_armor_statue/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ancient_armor_statue/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ancient_armor_statue/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ancient_armor_statue/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "ancient_document_scroll/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ancient_wall_ruins_mist/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wooden_door/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ancient_wooden_door/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wooden_door/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "bamboo_forest_mist/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "bamboo_forest_mist/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "calligraphy_brush_ink/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "calligraphy_brush_ink/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "calligraphy_brush_ink/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "candle_flame_dark/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/video/08.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_academy_school/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_academy_school/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_academy_school/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_armor_helmet/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_armor_helmet/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_armor_helmet/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_armor_helmet/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_armor_helmet/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_armor_helmet/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_armor_helmet/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_courtyard_garden/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_courtyard_garden/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_courtyard_garden/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_courtyard_garden/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_garden_pond/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_garden_pond/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_garden_pond/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_imperial_palace_hall/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_ink_stone_paper/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_ink_stone_paper/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_lantern_night/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_lantern_night/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_lantern_night/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_market_street_old/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_market_street_old/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_market_street_old/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_market_street_old/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_palace_gate_red/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_palace_gate_red/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_palace_gate_red/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_palace_gate_red/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_palace_gate_red/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_palace_gate_red/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_porcelain_tea/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_porcelain_tea/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_roof_eaves_tiles/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_roof_eaves_tiles/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_scholar_study/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_scroll_unroll/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_scroll_unroll/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_scroll_unroll/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_seal_stamp_red/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_seal_stamp_red/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_stone_arch_bridge/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_tea_pour_still/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_tea_pour_still/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_temple_incense/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_temple_incense/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_temple_incense/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_incense/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_night_mood/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_night_mood/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_temple_night_mood/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_throne_room/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_throne_room/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_throne_room/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_throne_room/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_throne_room/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_throne_room/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_wooden_chest/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_wooden_chest/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_wooden_chest/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "chinese_wooden_chest/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "chinese_wooden_chest/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "dragon_carving_roof/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "dragon_carving_roof/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "dragon_carving_roof/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "dragon_carving_roof/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "forbidden_city_architecture/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "forbidden_city_architecture/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "forbidden_city_architecture/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "forbidden_city_architecture/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "forbidden_city_architecture/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "forbidden_city_architecture/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "great_wall_china/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "great_wall_china/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/video/08.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "horse_fog_silhouette/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ink_wash_landscape/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "ink_wash_landscape/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "ink_wash_landscape/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "ink_wash_landscape/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "ink_wash_landscape/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ink_wash_landscape/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "ink_wash_landscape/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_pine_tree_chinese/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_pine_tree_chinese/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_pine_tree_chinese/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "old_town_street_rain/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "old_town_street_rain/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "palace_corridor_columns/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "rain_roof_tile/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "rain_roof_tile/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "rain_roof_tile/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "red_lantern_hanging/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "red_silk_texture/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/video/08.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "stone_lion_statue/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "dup",
+  "why": "同源重复：该 md5 与其它目录下的素材完全相同（Pexels 热门素材跨搜索词命中），全池只保留一份，其余剔除，避免同一镜头在片内反复出现"
+ },
+ "stone_lion_statue/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "face",
+  "why": "VL 整段均匀 8 帧判『真人正脸』→ 硬门槛①，一律隔离"
+ },
+ "stone_lion_statue/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "modern",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/01.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/02.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/03.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/04.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/05.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/06.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/video/07.mp4": {
+  "verdict": "suspect",
+  "axis": "non_japan",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ }
+}

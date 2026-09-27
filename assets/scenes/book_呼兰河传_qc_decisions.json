@@ -1,0 +1,62 @@
+{
+ "chinese_village_alley_stone": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 8/8 可疑；目视拼图=欧洲石屋/阿尔卑斯山村/教堂尖顶，非中国东北"
+ },
+ "old_stone_well_village": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 11/11 可疑；目视=欧洲石砌建筑/石拱门/英式教堂，非中国古井"
+ },
+ "poplar_trees_roadside": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 9/10 + 现代轴 8/10；目视=现代公路白色车道线/红色大巴"
+ },
+ "chinese_old_town_street": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 6/7；目视=欧式石巷，另掺现代家庭室内"
+ },
+ "chinese_paper_cut_craft": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 9/11 + 人物轴 10/11；目视=现代家庭室内真人做手工"
+ },
+ "old_wooden_door_chinese": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 7/9；目视=欧式/地中海木门石屋"
+ },
+ "backyard_vegetable_garden": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 6/8 + 人物轴 8/8；目视=西方人园艺真人（正脸+手）"
+ },
+ "chinese_countryside_dirt_road": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 6/9；目视=热带椰林土路/现代车/真人背影"
+ },
+ "chinese_rural_winter_landscape": {
+  "verdict": "exclude",
+  "why": "整目录：区域轴 6/9；目视混入现代住宅楼与欧式雪村"
+ },
+ "chinese_millstone_grain": {
+  "verdict": "exclude",
+  "why": "整目录：人物轴 7/7 可疑，无干净段"
+ },
+ "chinese_tile_roof_grey": {
+  "verdict": "exclude",
+  "why": "整目录：目视=江南白墙黑瓦水乡/现代住宅/白色轿车，题材年代不符"
+ },
+ "northeast_china_village_winter": {
+  "verdict": "exclude",
+  "why": "整目录：目视=俄式/欧式公寓与阿尔卑斯雪村+现代车辆，非中国东北"
+ },
+ "crescent_moon_night_branches/01.mp4": {
+  "verdict": "accept",
+  "why": "YOLO 报人体→按命中时刻(6.0/8.0/9.3s)取帧放大：仅月牙与云，误报"
+ },
+ "dragonfly_grass_summer/07.mp4": {
+  "verdict": "accept",
+  "why": "YOLO 报人体→命中时刻取帧放大：仅草叶与花，无人"
+ },
+ "corn_field_green_summer/08.mp4": {
+  "verdict": "accept",
+  "why": "YOLO 报人体→命中时刻取帧放大：仅玉米地与火烧云，无人"
+ }
+}

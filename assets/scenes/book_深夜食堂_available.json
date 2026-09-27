@@ -1,0 +1,299 @@
+{
+ "alley_night": [
+  "01.mp4",
+  "02.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "food": [
+  "01.mp4",
+  "06.mp4"
+ ],
+ "food_table": [
+  "04.mp4",
+  "06.mp4"
+ ],
+ "garden": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4"
+ ],
+ "glass_table": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4",
+  "07.mp4"
+ ],
+ "home_meal": [
+  "03.mp4",
+  "05.mp4",
+  "06.mp4",
+  "07.mp4"
+ ],
+ "izakaya_alt": [
+  "01.mp4",
+  "02.mp4"
+ ],
+ "izakaya_night": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4"
+ ],
+ "kitchen_cooking": [
+  "05.mp4"
+ ],
+ "lantern": [
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "lantern_alt": [
+  "03.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "miso_soup": [
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "08.mp4"
+ ],
+ "night_street": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4"
+ ],
+ "night_street_empty": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4",
+  "07.mp4"
+ ],
+ "old_house": [
+  "04.mp4"
+ ],
+ "rain_glass": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4"
+ ],
+ "rain_window": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4",
+  "07.mp4",
+  "08.mp4"
+ ],
+ "ramen": [
+  "03.mp4",
+  "04.mp4"
+ ],
+ "sake_cup": [
+  "04.mp4"
+ ],
+ "sake_pour": [
+  "02.mp4"
+ ],
+ "shoji_light": [
+  "01.mp4",
+  "03.mp4",
+  "04.mp4"
+ ],
+ "shoji_room": [
+  "01.mp4"
+ ],
+ "station_platform": [
+  "04.mp4",
+  "05.mp4"
+ ],
+ "street_lamp": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4"
+ ],
+ "sushi": [
+  "01.mp4",
+  "02.mp4"
+ ],
+ "table_wood": [
+  "01.mp4",
+  "06.mp4"
+ ],
+ "tea_cup": [
+  "06.mp4"
+ ],
+ "tempura": [
+  "01.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "train_window": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4",
+  "06.mp4",
+  "07.mp4"
+ ],
+ "two_bowls": [
+  "01.mp4",
+  "04.mp4"
+ ],
+ "udon": [
+  "02.mp4",
+  "03.mp4"
+ ],
+ "yakitori_grill": [
+  "03.mp4"
+ ],
+ "yakitori_skewers": [
+  "01.mp4",
+  "02.mp4",
+  "06.mp4"
+ ],
+ "izakaya_interior_night": [
+  "05.mp4"
+ ],
+ "noren_curtain": [
+  "01.mp4",
+  "03.mp4",
+  "06.mp4"
+ ],
+ "red_lantern": [
+  "02.mp4"
+ ],
+ "small_diner_japan": [
+  "02.mp4"
+ ],
+ "tamagoyaki": [
+  "01.mp4",
+  "02.mp4"
+ ],
+ "sausage_pan": [
+  "01.mp4",
+  "03.mp4"
+ ],
+ "miso_soup_pot": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "beer_glass_night": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "05.mp4",
+  "06.mp4"
+ ],
+ "sake_bottle_japan": [
+  "01.mp4",
+  "02.mp4",
+  "04.mp4",
+  "05.mp4"
+ ],
+ "shinjuku_alley_night": [
+  "03.mp4",
+  "04.mp4"
+ ],
+ "tokyo_night_street": [
+  "01.mp4"
+ ],
+ "konbini_night": [
+  "02.mp4",
+  "03.mp4"
+ ],
+ "last_train_platform": [
+  "02.mp4",
+  "04.mp4"
+ ],
+ "kitchen_night_steam": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4"
+ ],
+ "table_setting_meal": [
+  "03.mp4",
+  "04.mp4"
+ ],
+ "grilled_fish_japan": [
+  "02.mp4"
+ ],
+ "small_side_dishes": [
+  "01.mp4",
+  "03.mp4"
+ ],
+ "rice_bowl_still": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4"
+ ],
+ "rice_wooden_table": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "04.mp4"
+ ],
+ "rice_steam_bowl": [
+  "03.mp4"
+ ],
+ "ochazuke_bowl_still": [
+  "05.mp4",
+  "06.mp4"
+ ],
+ "teapot_cup_still": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4",
+  "05.mp4"
+ ],
+ "empty_izakaya_counter": [
+  "03.mp4"
+ ],
+ "empty_bar_counter": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4"
+ ],
+ "shoji_window_light_b": [
+  "01.mp4",
+  "03.mp4",
+  "04.mp4"
+ ],
+ "konbini_shelf": [
+  "01.mp4",
+  "02.mp4",
+  "03.mp4"
+ ],
+ "fish_grill_still": [
+  "01.mp4"
+ ],
+ "miso_bowl_top": [
+  "01.mp4",
+  "02.mp4"
+ ]
+}

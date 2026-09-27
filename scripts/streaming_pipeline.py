@@ -6,7 +6,7 @@ v3 新增：
 2. 批量模式：多本书排队生成
 3. 接入 cache_manager 三级缓存
 """
-import asyncio, subprocess, json, os, sys, time, hashlib, re, uuid
+import asyncio, subprocess, json, os, sys, time, hashlib, re, uuid, tempfile
 from pathlib import Path
 from typing import List, Optional
 
@@ -127,6 +127,53 @@ def resolve_voice(voice: str, text: str) -> str:
         if ct == ctype:
             return v
     return "zh-CN-XiaoxiaoNeural"
+
+
+def _split_with_pause_table(text: str, book_title: str = ""):
+    """停顿调度（LISTEN_PAUSE_TABLE=1 时启用，2026-09-25）
+    默认关闭 ⇒ 走原来的 smart_split_text（零行为变化，可随时回退）。
+    返回 (segments, pauses)；pauses[i] = 第 i 段之前应插入的静音秒数。
+    """
+    try:
+        try:
+            from scripts.pause_table import plan_pauses, pilot_enabled
+        except ImportError:
+            sys.path.insert(0, str(Path(__file__).parent))
+            from pause_table import plan_pauses, pilot_enabled
+    except Exception as e:
+        print(f"⚠️ 停顿调度模块不可用（{e}），回退默认分段")
+        return smart_split_text(text), []
+    if not pilot_enabled(book_title):
+        return smart_split_text(text), []
+    try:
+        plan = plan_pauses(text)
+        if not plan:
+            return smart_split_text(text), []
+        return [p["text"] for p in plan], [p.get("pause_before", 0.0) for p in plan]
+    except Exception as e:
+        print(f"⚠️ 停顿调度不可用（{e}），回退默认分段")
+        return smart_split_text(text), []
+
+
+def _trim_seg_silence(src: str, out: str) -> str:
+    """剪掉音频段头尾静音（停顿调度的前置步骤）
+    只有先去掉 TTS 自带的不确定静音，插入的分级停顿才能让占比可预测。
+    失败时返回原路径（不阻塞生产）。
+    """
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-y", "-v", "error", "-i", src, "-af",
+             "silenceremove=start_periods=1:start_silence=0.02:start_threshold=-45dB,"
+             "areverse,"
+             "silenceremove=start_periods=1:start_silence=0.02:start_threshold=-45dB,"
+             "areverse",
+             "-c:a", "libmp3lame", "-q:a", "4", out],
+            capture_output=True, text=True, timeout=300)
+        if r.returncode == 0 and Path(out).exists() and Path(out).stat().st_size > 1000:
+            return out
+    except Exception:
+        pass
+    return src
 
 
 def clean_markdown_for_tts(text: str) -> str:
@@ -532,13 +579,37 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     print(f"⚠️ 复制到输出路径失败（{e}），返回缓存路径")
             return str(l3_hit), get_audio_duration(l3_hit)
 
+        pilot_trim = False
         if ted_blocks:
             # TED 模式：用导演层块（含停顿/情绪/BGM标记）
+            # 停顿调度（LISTEN_PAUSE_TABLE=1）：把每个导演层块按小句再切细，
+            # 停顿改由预算分配（保留块级 rate/volume/金句/BGM 属性）
+            try:
+                try:
+                    from scripts.pause_table import expand_ted_blocks, pilot_enabled as _pe
+                except ImportError:
+                    sys.path.insert(0, str(Path(__file__).parent))
+                    from pause_table import expand_ted_blocks, pilot_enabled as _pe
+            except Exception as _e:
+                _pe = lambda *a, **k: False
+                print(f"⚠️ 停顿调度模块不可用（{_e}）")
+            if _pe(book_title):
+                try:
+                    _before = len(ted_blocks)
+                    ted_blocks = expand_ted_blocks(ted_blocks)
+                    pilot_trim = True
+                    print(f"⏱️ 停顿调度：导演层块 {_before} → {len(ted_blocks)} 个"
+                          f"（目标停顿占比 13%，并剪除段头尾静音）")
+                except Exception as e:
+                    print(f"⚠️ 导演层停顿调度失败（{e}），保持原块")
             segments = [b.text for b in ted_blocks]
+            seg_pauses = []
             print(f"🎬 导演层分段完成：{len(segments)} 个表演块")
         else:
-            segments = smart_split_text(full_text)
-            print(f"📚 分段完成：{len(segments)} 段")
+            segments, seg_pauses = _split_with_pause_table(full_text, book_title)
+            print(f"📚 分段完成：{len(segments)} 段"
+                  + (f"（停顿调度：{len(seg_pauses)} 个停顿点，目标占比 13%）"
+                     if seg_pauses else ""))
 
         # 并发上限=2：edge-tts 子进程并发≥3 会被微软服务限流（hang/0字节），
         # 2 并发实测稳定；失败段走串行重试兜底
@@ -664,10 +735,37 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
         segment_offsets = []
         total_duration = 0
         for i, rec in enumerate(seg_records):
-            seg_files.append(rec["path"])
-            durations.append(rec["duration"])
+            # 停顿调度（LISTEN_PAUSE_TABLE/试点名单）：块前插入分级静音
+            # 必须放在本段之前（子块的 pause_before 即分配到的停顿）
+            if ted_blocks and i < len(ted_blocks):
+                _pb = round(float(getattr(ted_blocks[i], "pause_before", 0.0) or 0.0), 3)
+                if _pb > 0:
+                    _sil = CACHE_DIR / f"silence_pt_{_pb}_{run_token}.mp3"
+                    if not _sil.exists():
+                        subprocess.run(
+                            ["ffmpeg", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                             "-t", str(_pb), "-q:a", "9", str(_sil)],
+                            capture_output=True)
+                    if _sil.exists():
+                        seg_files.append(str(_sil))
+                        durations.append(_pb)
+                        total_duration += _pb
+            seg_path = rec["path"]
+            seg_dur = rec["duration"]
+            # 停顿调度：先剪头尾静音（让插入的停顿成为唯一静音来源，占比才可预测）
+            if ted_blocks and pilot_trim:
+                _t = os.path.join(tempfile.gettempdir(), f"pt_trim_{i}_{run_token}.mp3")
+                _tp = _trim_seg_silence(seg_path, _t)
+                if _tp != seg_path:
+                    seg_path = _tp
+                    try:
+                        seg_dur = get_audio_duration(Path(_tp))
+                    except Exception:
+                        pass
+            seg_files.append(seg_path)
+            durations.append(seg_dur)
             segment_offsets.append(total_duration)  # 本段真实起始位置
-            total_duration += rec["duration"]
+            total_duration += seg_dur
             if rec["pending"] and detect_truncation(rec["duration"], len(segments[i])):
                 print(f"  ⚠️ 第{i+1}段可能被截断（{rec['duration']:.0f}s），建议缩短该段")
             # TED 模式：块后插入停顿（静音）——与 L2 是否命中无关，停顿是导演层编排
@@ -685,6 +783,21 @@ async def pipeline(book_title: str, full_text: str, voice: str = "auto",
                     durations.append(pause)
                     total_duration += pause
                     print(f"  ⏸️ 插入停顿 {pause}s")
+            # 停顿调度（LISTEN_PAUSE_TABLE=1）：块间插入分级静音（逗<句<段<章）
+            if not ted_blocks and seg_pauses and i + 1 < len(seg_pauses):
+                pause = round(float(seg_pauses[i + 1]), 3)
+                if pause > 0:
+                    silence = CACHE_DIR / f"silence_pt_{pause}_{run_token}.mp3"
+                    if not silence.exists():
+                        subprocess.run(
+                            ["ffmpeg", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                             "-t", str(pause), "-q:a", "9", str(silence)],
+                            capture_output=True
+                        )
+                    if silence.exists():
+                        seg_files.append(str(silence))
+                        durations.append(pause)
+                        total_duration += pause
 
         print(f"🔗 拼接 {len(seg_files)} 段...")
         final_path = CACHE_DIR / f"{script_hash[:10]}_{run_token}.mp3"

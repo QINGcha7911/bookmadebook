@@ -29,17 +29,28 @@ qc_region_scan.py — 素材池「地域」机器门禁（第三道，2026-09-13
   ④ 本工具只做「判可疑」，**不做最终裁决**：可疑项必须逐格放大人工确认（VL 也会误判）。
 """
 import os
-import sys, json, os, base64, subprocess, hashlib
+import sys, json, os, base64, subprocess, hashlib, time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw, ImageFont
 
-ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
+ARG1_P = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
+LIST_MODE = ARG1_P.is_file()          # 2026-09-22 补：清单模式（与 qc_visual_scan.py 对齐）
+ROOT = Path(".") if LIST_MODE else ARG1_P   # 清单模式下产物落 CWD，别污染素材池
 TARGET = (sys.argv[2] if len(sys.argv) > 2 else "japan").lower()
 NFRAME = int(sys.argv[3]) if len(sys.argv) > 3 else 3
 WORKERS = int(os.environ.get("QC_WORKERS") or (sys.argv[4] if len(sys.argv) > 4 else 4))  # 2026-09-16：8→4，同上
-MODEL = os.environ.get("QC_VL_MODEL", "Qwen/Qwen3-VL-32B-Instruct")  # 2026-09-17 百炼停用→SiliconFlow
-API = os.environ.get("QC_VL_API", "https://api.siliconflow.cn/v1/chat/completions")  # 2026-09-17 百炼停用→SiliconFlow
+# ── 2026-09-22 降费改造（007）：与 qc_visual_scan.py 同一套设计 ──────────────
+#   召回层 qwen3-vl-flash（560px 帧 ≈ ¥0.00011/次）→ 判「可疑」的段再用 qwen-vl-max 复判（≈¥0.00106/次）
+#   阳性对照：2026-09-22 person_part 轴 51 帧逐帧一致（含曾漏检正脸段），本轴沿用同一召回模型；
+#   地域轴判据更细 ⇒ **确认层必须保留**（终态由 max 定，判据线不降级）。
+MODEL = os.environ.get("QC_VL_MODEL", "qwen3-vl-flash")  # 召回层（2026-09-22 起默认 flash）
+CONFIRM_MODEL = os.environ.get("QC_VL_CONFIRM_MODEL", "qwen-vl-max")  # 确认层；"off" 禁用
+NO_CACHE = bool(os.environ.get("QC_NO_CACHE"))
+CACHE = {}
+hits = {"n": 0}
+calls = {"recall": 0, "confirm": 0}
+API = os.environ.get("QC_VL_API", "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions")
 TMP = Path("/tmp/qc_region"); TMP.mkdir(exist_ok=True)
 
 QUESTIONS = {
@@ -97,19 +108,20 @@ QUESTIONS = {
                            "只回一个词：yes 或 no。"),
 }
 Q = QUESTIONS.get(TARGET, QUESTIONS["japan"])
+QVER = hashlib.md5(Q.encode("utf-8")).hexdigest()[:8]   # 提示词版本：改问法即自动失效缓存
 
 
 def api_key():
     """取 VL API key（2026-09-17 百炼停用→SiliconFlow）。
     环境变量与 .env 都收，但**过滤占位符/异常值**（曾因 .env 里是 `***`、环境里是旧值而静默失败）。"""
     cands = []
-    for name in ("QC_VL_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
+    for name in ("QC_VL_KEY", "DASHSCOPE_API_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
         v = os.environ.get(name, "")
         if v:
             cands.append(v)
     try:
         for line in Path("/root/.hermes/.env").read_text(encoding="utf-8", errors="ignore").splitlines():
-            for nm in ("QC_VL_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
+            for nm in ("QC_VL_KEY", "DASHSCOPE_API_KEY", "SILICONFLOW_API_KEY", "OPENAI_API_KEY"):
                 if line.strip().startswith(nm + "="):
                     cands.append(line.split("=", 1)[1].strip().strip('"').strip("'"))
     except Exception:
@@ -144,22 +156,50 @@ def _probe_ok(api: str, model: str, key: str) -> bool:
 
 # 2026-09-17: 主 VL 探活失败（SiliconFlow 余额不足）→ 自动回落 DashScope qwen3-vl-flash。
 if not _probe_ok(API, MODEL, KEY):
-    _ds = ""
+    # 2026-09-19：主备对调后，备路 = SiliconFlow（需时再启；余额恢复即自动可用）
+    _alt, _altsrc = "", ""
     try:
         for _l in Path("/root/.hermes/.env").read_text(encoding="utf-8", errors="ignore").splitlines():
-            if _l.strip().startswith("DASHSCOPE_API_KEY="):
-                _ds = _l.split("=", 1)[1].strip().strip('"').strip("'")
+            if _l.strip().startswith("SILICONFLOW_API_KEY="):
+                _alt = _l.split("=", 1)[1].strip().strip('"').strip("'")
                 break
     except Exception:
         pass
-    if _ds:
-        print(f"⚠️ 主 VL（{MODEL}）探活失败 → 回落 DashScope {os.environ.get('QC_VL_FALLBACK_MODEL', 'qwen3-vl-flash')}")
-        API = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
-        MODEL = os.environ.get("QC_VL_FALLBACK_MODEL", "qwen3-vl-flash")
-        KEY = _ds
+    if _alt:
+        print(f"⚠️ 主 VL（{MODEL}）探活失败 → 回落 SiliconFlow {os.environ.get('QC_VL_FALLBACK_MODEL', 'Qwen/Qwen3-VL-32B-Instruct')}")
+        API = "https://api.siliconflow.cn/v1/chat/completions"
+        MODEL = os.environ.get("QC_VL_FALLBACK_MODEL", "Qwen/Qwen3-VL-32B-Instruct")
+        KEY = _alt
+
+
+# 判定缓存路径：清单模式与全池分开（两边的键空间不同，混用会互相失效）。
+# ROOT 在清单模式 = CWD（产物落 CWD），全池模式 = 素材根 ⇒ 载入与回写必须都用 _CF 这一个变量。
+_CF = ROOT / ("_qc_region_picks_vlmcache.json" if LIST_MODE else "_qc_region_vlmcache.json")
 
 
 def clips(root: Path):
+    """2026-09-22：新增清单模式（005 提的差异）。
+    清单文件 = JSON 数组或纯文本，每行 `<场景>/<文件>`/`<场景>/video/<文件>`/绝对路径
+    ⇒ 用于「只核成片实际用到的那几十段」，比全池扫更快更省（与 qc_visual_scan.py 同语义）。
+    相对路径解析顺序：QC_POOL_ROOT（默认 scenes 根）→ 场景根/video/ → 相对 CWD。"""
+    if LIST_MODE:
+        if ARG1_P.suffix.lower() in (".mp4", ".mov", ".mkv", ".webm"):
+            return [ARG1_P]
+        t = ARG1_P.read_text(encoding="utf-8", errors="ignore").strip()
+        items = json.loads(t) if t.startswith("[") else [x.strip() for x in t.splitlines() if x.strip()]
+        pool = Path(os.environ.get("QC_POOL_ROOT", "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes"))
+        out = []
+        for it in items:
+            p = Path(it); cands = []
+            if not p.is_absolute():
+                cands = [pool / it, p]
+                if len(p.parts) == 2:
+                    sc, f = p.parts
+                    cands = [pool / sc / "video" / f, pool / sc / f] + cands
+                p = next((c for c in cands if c.exists()), cands[0])
+            if p.exists():
+                out.append(p)
+        return out
     return [p for p in sorted(root.rglob("*.mp4"))
             if not any(part.startswith("_excluded") for part in p.parts)]
 
@@ -179,22 +219,29 @@ def grab(p, t, out):
     return out.exists() and out.stat().st_size > 0
 
 
-def ask_one(img: Path):
-    """单帧独立调用（多帧必须独立问，合并问会互相污染）"""
+def ask_one(img: Path, model: str = ""):
+    """单帧独立调用（多帧必须独立问，合并问会互相污染）。
+    2026-09-22：支持 model 覆盖（召回/确认两层）+ err 重试 2 次（防瞬时失败静默降 n）。"""
     b64 = base64.b64encode(img.read_bytes()).decode()
-    payload = {"model": MODEL, "messages": [{"role": "user", "content": [
+    payload = {"model": model or MODEL, "messages": [{"role": "user", "content": [
         {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}},
         {"type": "text", "text": Q}]}], "max_tokens": 8}
-    pj = TMP / f"pl_{img.stem}.json"
+    pj = TMP / f"pl_{(model or MODEL).replace('/', '_')}_{img.stem}.json"
     pj.write_text(json.dumps(payload), encoding="utf-8")
-    r = subprocess.run(["curl", "-s", "-m", "120", "-X", "POST", API,
-                        "-H", f"Authorization: Bearer {KEY}", "-H", "Content-Type: application/json",
-                        "-d", f"@{pj}"], capture_output=True, text=True, timeout=180)
-    try:
-        t = json.loads(r.stdout)["choices"][0]["message"]["content"].strip().lower()
-        return "yes" if t.startswith("yes") else ("no" if t.startswith("no") else "err")
-    except Exception:
-        return "err"
+    for _try in range(3):
+        r = subprocess.run(["curl", "-s", "-m", "120", "-X", "POST", API,
+                            "-H", f"Authorization: Bearer {KEY}", "-H", "Content-Type: application/json",
+                            "-d", f"@{pj}"], capture_output=True, text=True, timeout=180)
+        try:
+            t = json.loads(r.stdout)["choices"][0]["message"]["content"].strip().lower()
+            if t.startswith("yes"):
+                return "yes"
+            if t.startswith("no"):
+                return "no"
+        except Exception:
+            pass
+        time.sleep(1.2 * (_try + 1))
+    return "err"
 
 
 def sheet(pairs, path):
@@ -239,7 +286,14 @@ def main():
     if not KEY:
         sys.exit("❌ 找不到 VL API key（QC_VL_KEY / SILICONFLOW_API_KEY / OPENAI_API_KEY）")
     cs = clips(ROOT)
-    print(f"素材 {len(cs)} 段 | 目标 {TARGET} | 每片 {NFRAME} 帧独立投票 | 并发 {WORKERS} | 模型 {MODEL}", flush=True)
+    if not cs:
+        # 2026-09-22 补（005 报：喂清单时打「0 段」后 Python 直接崩 NotADirectoryError）
+        print("❌ 待检素材 0 段 —— 对象不存在/路径写错/清单为空。")
+        print(f"   入参: {ARG1_P}（{'文件(清单)' if LIST_MODE else '目录'}）")
+        print("   ⚠️ 0 段 ≠ 干净！这是「静默假通过」，绝不许当成通过。")
+        sys.exit(3)
+    print(f"{'清单 ' + str(ARG1_P) if LIST_MODE else '全池 ' + str(ARG1_P)} | 素材 {len(cs)} 段 | 目标 {TARGET} | "
+          f"每片 {NFRAME} 帧独立投票 | 并发 {WORKERS}", flush=True)
 
     prep = []
     for c in cs:
@@ -255,20 +309,67 @@ def main():
         if fs:
             prep.append((c, fs))
     print(f"抽帧完成 {len(prep)} 段（{sum(len(f) for _, f in prep)} 次 VL 调用）", flush=True)
+    # 2026-09-26 补（007：查「0 段仍跑完并写空产物、退码 0」同类 bug）：
+    #   入参非空但抽帧全失败（时长探测失败/解码失败/文件不可读）时，旧行为会写出空 report 并退 0
+    #   ⇒ 下游把「没跑」当「全干净」。这是静默假通过，必须非 0 退出、不写 report。
+    if not prep:
+        print(f"❌ 抽帧后待检 0 段 —— 入参 {len(cs)} 段全部无法抽帧（时长/解码/权限失败）。")
+        print(f"   入参: {ARG1_P}（{'文件(清单)' if LIST_MODE else '目录'}）")
+        print("   ⚠️ 0 段 ≠ 干净！这是「静默假通过」，绝不许当成通过。未写任何 report。")
+        sys.exit(4)
+    # 2026-09-22：载入判定缓存（漏了这步会把上一轮缓存覆盖丢失 —— 自查发现并补上）
+    global CACHE
+    if not NO_CACHE and _CF.exists():
+        try:
+            CACHE = json.loads(_CF.read_text(encoding="utf-8"))
+        except Exception:
+            CACHE = {}
+    print(f"   模型：召回 {MODEL}" + (f" → 可疑项确认 {CONFIRM_MODEL}" if CONFIRM_MODEL.lower() != "off" else "（❌ 确认层已禁用）")
+          + f" | 缓存 {len(CACHE)} 条{'（已禁用 QC_NO_CACHE）' if NO_CACHE else ''}", flush=True)
 
     def one(item):
         c, fs = item
+        rel = str(c.relative_to(ROOT)) if str(c).startswith(str(ROOT)) else str(c)   # 清单模式=绝对路径，护栏必加
+        # 2026-09-22 缓存：键 = 相对路径|字节数|mtime|提示词版本|召回模型|目标轴（任一变化即失效）
+        k = None
+        try:
+            st = c.stat()
+            # 2026-09-26：确认层模型也入键（口径任一变化即失效）—— 与 qc_visual_scan.py 对齐，
+            #   防「换确认模型后旧缓存继续命中」导致改档不生效。
+            k = (f"{rel}|{st.st_size}|{int(st.st_mtime)}|{QVER}|{MODEL}|{CONFIRM_MODEL}"
+                 f"|{TARGET}|n{NFRAME}")   # 帧数必须入键（3 帧的结论不能拿来回答 6 帧的请求）
+        except Exception:
+            k = None
+        if k and not NO_CACHE and k in CACHE:
+            e = CACHE[k]; hits["n"] += 1
+            return rel, {"verdict": e["verdict"], "votes": e["votes"], "yes": e["yes"], "n": e["n"],
+                         "model": e.get("model", MODEL), "cached": True,
+                         "confirm_votes": e.get("confirm_votes"),
+                         "confirm_yes": e.get("confirm_yes"), "confirm_n": e.get("confirm_n")}
         votes = [ask_one(f) for f in fs]
+        calls["recall"] += len(fs)
         yes = sum(1 for v in votes if v == "yes")
         n = len([v for v in votes if v in ("yes", "no")])
-        rel = str(c.relative_to(ROOT))
         if n == 0:
             v = "unknown"
         elif yes * 2 > n:            # 多数票
             v = "suspect"
         else:
             v = "ok"
-        return rel, {"verdict": v, "votes": votes, "yes": yes, "n": n}
+        out = {"verdict": v, "votes": votes, "yes": yes, "n": n, "model": MODEL, "cached": False}
+        # 确认层：可疑项用 CONFIRM_MODEL 复判（终态判据线等同原 qwen-vl-max 方案）
+        if v == "suspect" and CONFIRM_MODEL and CONFIRM_MODEL.lower() != "off":
+            calls["confirm"] += len(fs)
+            cv = [ask_one(f, CONFIRM_MODEL) for f in fs]
+            cy = sum(1 for x in cv if x == "yes")
+            cn = len([x for x in cv if x in ("yes", "no")])
+            out["confirm_votes"], out["confirm_yes"], out["confirm_n"] = cv, cy, cn
+            if cn:
+                out["verdict"] = "suspect" if cy * 2 > cn else "ok"
+        if k and not NO_CACHE:
+            CACHE[k] = {kk: out.get(kk) for kk in
+                        ("verdict", "votes", "yes", "n", "model", "confirm_votes", "confirm_yes", "confirm_n")}
+        return rel, out
 
     res, done = {}, 0
     with ThreadPoolExecutor(max_workers=WORKERS) as ex:
@@ -278,16 +379,31 @@ def main():
             if done % 25 == 0 or done == len(prep):
                 print(f"  {done}/{len(prep)}", flush=True)
 
-    json.dump(res, open(ROOT / "_qc_region_report.json", "w", encoding="utf-8"),
+    _rep = ROOT / ("_qc_region_picks_report.json" if LIST_MODE else "_qc_region_report.json")   # 清单模式另起名，防覆盖全池报告
+    json.dump(res, open(_rep, "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
-    sd = ROOT / "_qc_region_sheets"; sd.mkdir(exist_ok=True)
+    # 2026-09-26 补（同一「静默假通过」家族）：全部片段都拿不到 VL 结论（n==0 ⇒ unknown，
+    #   典型是 API/模型不可用）时旧行为仍退 0。先落盘留证，再非 0 退出。
+    if res and all(v["verdict"] == "unknown" for v in res.values()):
+        print("❌ 全部片段 VL 未返回有效答案（n=0 ⇒ unknown）—— API/key/模型不可用，门禁等于没跑。")
+        print(f"   报告已落盘留证：{_rep}，但不得当作通过。")
+        sys.exit(5)
+    if not NO_CACHE:
+        try:
+            _CF.write_text(json.dumps(CACHE, ensure_ascii=False), encoding="utf-8")
+        except Exception as _e:
+            print(f"   ⚠️ 缓存写入失败（不影响判定）：{_e}")
+    sd = ROOT / ("_qc_region_picks_sheets" if LIST_MODE else "_qc_region_sheets"); sd.mkdir(exist_ok=True)
     for i in range(0, len(prep), 12):
         sheet(prep[i:i + 12], sd / f"sheet_{i//12:03d}.jpg")
 
     sus = [k for k, v in res.items() if v["verdict"] == "suspect"]
     unk = [k for k, v in res.items() if v["verdict"] == "unknown"]
-    print(f"\n✅ {ROOT/'_qc_region_report.json'}")
+    print(f"\n✅ {_rep}")
     print(f"   可疑(判为非目标地域) {len(sus)} 段 | 通过 {len(res)-len(sus)-len(unk)} 段 | 未返回 {len(unk)} 段")
+    _cr, _cc = calls["recall"], calls["confirm"]
+    print(f"💰 调用：召回 {_cr} 次（{MODEL}）+ 确认 {_cc} 次（{CONFIRM_MODEL}）| 缓存命中 {hits['n']} 段"
+          f" | 本轴实付约 ¥{_cr*0.00011 + _cc*0.00106:.2f}（若全走 qwen-vl-max 需 ¥{(_cr+_cc)*0.00106:.2f}）")
     for k in sorted(sus, key=lambda x: -res[x]["yes"]):
         print(f"   ⚠️ {res[k]['yes']}/{res[k]['n']}票  {k}")
     print(f"\n拼图留档: {sd}（可疑项必须逐格放大人工确认，VL 也会误判）")

@@ -93,7 +93,11 @@ def find_duplicate_paragraphs(text: str, threshold: float = 0.95) -> list:
     """检测重复段落：n-gram 相似度超过阈值的段落对。
     2026-08-17 阈值 0.75→0.85：短标记行（【停顿】/【情绪】/【金句】）特征稀疏会被误判，放宽到 0.85 只拦真重复。"""
     clean = strip_markdown(text)
-    paras = [p.strip() for p in clean.split("\n") if len(p.strip()) > 20]
+    # 2026-09-20 修复：整行标注（如「【画面：<目录名> —— 描述】」）是元信息、不是正文段落。
+    # 004 在同一篇里写两条完全相同的画面标注行时，相似度=1.0 会被误判为"注水"，fail-closed 卡死合成。
+    # 修法：比对前先剔掉「整行就是一对【】」的行（正文里的【金句】xxx 不受影响，仍参与检测）。
+    _lines = [p.strip() for p in clean.split("\n") if len(p.strip()) > 20]
+    paras = [p for p in _lines if not re.fullmatch(r"【[^】]{0,300}】", p)]
     results = []
     for i in range(len(paras)):
         for j in range(i + 1, len(paras)):
@@ -243,6 +247,9 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
         r"已同步", r"云盘", r"落盘", r"自检", r"红线", r"字数[:：]", r"统计[:：]",
         r"Coze", r"扣子", r"交付说明", r"存档", r"等你", r"已上传", r"文件大小",
         r"审稿", r"本稿", r"版本[:：]\s*v?\d", r"元信息", r"字数约",
+        # 2026-09-19 补：004 交付回执混入末行「…已完成。 云端自留底已存：`bookmadebook-output/…txt`」
+        # 原模式集只有「云盘」无「云端」，且不认路径 → 漏检。以下四类补齐。
+        r"云端", r"自留底", r"回执", r"(?:bookmadebook-output|\.txt\b|\.md\b|\.docx\b)",
     )
     tail_lines = [l.strip() for l in text.split("\n") if l.strip()][-12:]
     meta_hits = []

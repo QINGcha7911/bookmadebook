@@ -1,0 +1,1004 @@
+[
+ {
+  "clip": "alley_night/03.mp4",
+  "max_score": 0.907,
+  "处数": 48,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "alley_night/04.mp4",
+  "max_score": 0.807,
+  "处数": 8,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "bar_counter_wooden/01.mp4",
+  "max_score": 0.915,
+  "处数": 29,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "bar_counter_wooden/02.mp4",
+  "max_score": 0.917,
+  "处数": 33,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "bar_counter_wooden/03.mp4",
+  "max_score": 0.958,
+  "处数": 38,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "bar_counter_wooden/04.mp4",
+  "max_score": 0.931,
+  "处数": 41,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "bar_counter_wooden/05.mp4",
+  "max_score": 0.877,
+  "处数": 7,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_bar_counter/01.mp4",
+  "max_score": 0.917,
+  "处数": 33,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "empty_bar_counter/03.mp4",
+  "max_score": 0.915,
+  "处数": 29,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "empty_bar_counter/04.mp4",
+  "max_score": 0.897,
+  "处数": 45,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_bar_counter/05.mp4",
+  "max_score": 0.931,
+  "处数": 41,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_izakaya_counter/01.mp4",
+  "max_score": 0.9,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_izakaya_counter/02.mp4",
+  "max_score": 0.755,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_tatami_room_b/01.mp4",
+  "max_score": 0.934,
+  "处数": 45,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_tatami_room_b/02.mp4",
+  "max_score": 0.937,
+  "处数": 52,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_tatami_room_b/03.mp4",
+  "max_score": 0.938,
+  "处数": 29,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "empty_tatami_room_b/04.mp4",
+  "max_score": 0.92,
+  "处数": 34,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "food/03.mp4",
+  "max_score": 0.76,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "food/04.mp4",
+  "max_score": 0.774,
+  "处数": 3,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "food/05.mp4",
+  "max_score": 0.628,
+  "处数": 6,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "food_table/01.mp4",
+  "max_score": 0.965,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "garden/03.mp4",
+  "max_score": 0.801,
+  "处数": 9,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "glass_table/06.mp4",
+  "max_score": 0.829,
+  "处数": 7,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "grilled_fish_japan/02.mp4",
+  "max_score": 0.823,
+  "处数": 13,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "home_meal/01.mp4",
+  "max_score": 0.957,
+  "处数": 23,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "home_meal/02.mp4",
+  "max_score": 0.913,
+  "处数": 46,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "home_meal/04.mp4",
+  "max_score": 0.782,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_alt/01.mp4",
+  "max_score": 0.753,
+  "处数": 9,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "izakaya_alt/03.mp4",
+  "max_score": 0.939,
+  "处数": 47,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_alt/04.mp4",
+  "max_score": 0.742,
+  "处数": 2,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_alt/05.mp4",
+  "max_score": 0.938,
+  "处数": 145,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_interior_night/01.mp4",
+  "max_score": 0.975,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_interior_night/02.mp4",
+  "max_score": 0.895,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_interior_night/03.mp4",
+  "max_score": 0.9,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_interior_night/04.mp4",
+  "max_score": 0.939,
+  "处数": 47,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_interior_night/05.mp4",
+  "max_score": 0.919,
+  "处数": 50,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "izakaya_interior_night/06.mp4",
+  "max_score": 0.947,
+  "处数": 41,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "izakaya_night/02.mp4",
+  "max_score": 0.807,
+  "处数": 8,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "izakaya_night/03.mp4",
+  "max_score": 0.895,
+  "处数": 18,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "kitchen/01.mp4",
+  "max_score": 0.776,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen/04.mp4",
+  "max_score": 0.782,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen/05.mp4",
+  "max_score": 0.76,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen/06.mp4",
+  "max_score": 0.939,
+  "处数": 47,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_cooking/01.mp4",
+  "max_score": 0.782,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_cooking/02.mp4",
+  "max_score": 0.637,
+  "处数": 9,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_cooking/03.mp4",
+  "max_score": 0.957,
+  "处数": 23,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_cooking/04.mp4",
+  "max_score": 0.936,
+  "处数": 32,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_cooking/06.mp4",
+  "max_score": 0.883,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_night_steam/03.mp4",
+  "max_score": 0.607,
+  "处数": 2,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "kitchen_night_steam/05.mp4",
+  "max_score": 0.942,
+  "处数": 11,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "konbini_night/01.mp4",
+  "max_score": 0.958,
+  "处数": 6,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "konbini_night/02.mp4",
+  "max_score": 0.918,
+  "处数": 17,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "konbini_night/03.mp4",
+  "max_score": 0.807,
+  "处数": 8,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "konbini_shelf/01.mp4",
+  "max_score": 0.958,
+  "处数": 6,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "konbini_shelf/02.mp4",
+  "max_score": 0.97,
+  "处数": 20,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "konbini_shelf/03.mp4",
+  "max_score": 0.846,
+  "处数": 18,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "konbini_shelf/05.mp4",
+  "max_score": 0.862,
+  "处数": 21,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern/01.mp4",
+  "max_score": 0.93,
+  "处数": 10,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern/04.mp4",
+  "max_score": 0.781,
+  "处数": 47,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern/05.mp4",
+  "max_score": 0.655,
+  "处数": 1,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern/06.mp4",
+  "max_score": 0.879,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern_alt/01.mp4",
+  "max_score": 0.93,
+  "处数": 10,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern_alt/02.mp4",
+  "max_score": 0.879,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "lantern_alt/04.mp4",
+  "max_score": 0.781,
+  "处数": 47,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "lantern_alt/05.mp4",
+  "max_score": 0.655,
+  "处数": 1,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "last_train_platform/01.mp4",
+  "max_score": 0.917,
+  "处数": 31,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "last_train_platform/02.mp4",
+  "max_score": 0.765,
+  "处数": 16,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "last_train_platform/03.mp4",
+  "max_score": 0.948,
+  "处数": 36,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "last_train_platform/04.mp4",
+  "max_score": 0.714,
+  "处数": 9,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "miso_soup/01.mp4",
+  "max_score": 0.761,
+  "处数": 9,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "miso_soup/05.mp4",
+  "max_score": 0.641,
+  "处数": 6,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "miso_soup/07.mp4",
+  "max_score": 0.886,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "night_street/02.mp4",
+  "max_score": 0.895,
+  "处数": 18,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street/03.mp4",
+  "max_score": 0.84,
+  "处数": 13,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street/04.mp4",
+  "max_score": 0.975,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "night_street/05.mp4",
+  "max_score": 0.805,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "night_street/06.mp4",
+  "max_score": 0.93,
+  "处数": 10,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "night_street_empty/01.mp4",
+  "max_score": 0.895,
+  "处数": 18,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street_empty/02.mp4",
+  "max_score": 0.807,
+  "处数": 8,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street_empty/03.mp4",
+  "max_score": 0.87,
+  "处数": 7,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street_empty/06.mp4",
+  "max_score": 0.899,
+  "处数": 8,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street_empty/07.mp4",
+  "max_score": 0.838,
+  "处数": 39,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "night_street_empty/08.mp4",
+  "max_score": 0.841,
+  "处数": 14,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "noren_curtain/04.mp4",
+  "max_score": 0.947,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "noren_curtain/05.mp4",
+  "max_score": 0.928,
+  "处数": 7,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ochazuke/02.mp4",
+  "max_score": 0.619,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ochazuke/05.mp4",
+  "max_score": 0.942,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ochazuke_bowl_still/01.mp4",
+  "max_score": 0.619,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ochazuke_bowl_still/05.mp4",
+  "max_score": 0.742,
+  "处数": 2,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "old_house/01.mp4",
+  "max_score": 0.938,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "old_house/02.mp4",
+  "max_score": 0.934,
+  "处数": 45,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "old_house/03.mp4",
+  "max_score": 0.912,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "old_house/05.mp4",
+  "max_score": 0.952,
+  "处数": 31,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "old_house/06.mp4",
+  "max_score": 0.958,
+  "处数": 25,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "rain_window/04.mp4",
+  "max_score": 0.791,
+  "处数": 35,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "rain_window/05.mp4",
+  "max_score": 0.724,
+  "处数": 1,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "red_lantern/01.mp4",
+  "max_score": 0.879,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "red_lantern/03.mp4",
+  "max_score": 0.967,
+  "处数": 25,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "red_lantern/04.mp4",
+  "max_score": 0.951,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "rice_bowl_steam/02.mp4",
+  "max_score": 0.619,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "rice_miso/01.mp4",
+  "max_score": 0.942,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "rice_miso/02.mp4",
+  "max_score": 0.742,
+  "处数": 2,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/01.mp4",
+  "max_score": 0.912,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/02.mp4",
+  "max_score": 0.934,
+  "处数": 45,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/03.mp4",
+  "max_score": 0.958,
+  "处数": 25,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/04.mp4",
+  "max_score": 0.952,
+  "处数": 31,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/05.mp4",
+  "max_score": 0.938,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "ryokan/06.mp4",
+  "max_score": 0.857,
+  "处数": 39,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_bottle_japan/06.mp4",
+  "max_score": 0.711,
+  "处数": 4,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_cup/01.mp4",
+  "max_score": 0.646,
+  "处数": 11,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_cup/06.mp4",
+  "max_score": 0.8,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_pour/04.mp4",
+  "max_score": 0.8,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_pour/05.mp4",
+  "max_score": 0.953,
+  "处数": 22,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_pour/07.mp4",
+  "max_score": 0.96,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "sake_pour/08.mp4",
+  "max_score": 0.971,
+  "处数": 27,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shinjuku_alley_night/01.mp4",
+  "max_score": 0.954,
+  "处数": 25,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shinjuku_alley_night/02.mp4",
+  "max_score": 0.942,
+  "处数": 13,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shinjuku_alley_night/03.mp4",
+  "max_score": 0.84,
+  "处数": 13,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "shinjuku_alley_night/04.mp4",
+  "max_score": 0.726,
+  "处数": 25,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "shoji_light/02.mp4",
+  "max_score": 0.92,
+  "处数": 34,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shoji_light/03.mp4",
+  "max_score": 0.831,
+  "处数": 15,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "shoji_light/05.mp4",
+  "max_score": 0.928,
+  "处数": 7,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shoji_room/02.mp4",
+  "max_score": 0.92,
+  "处数": 34,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shoji_room/04.mp4",
+  "max_score": 0.831,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shoji_room/05.mp4",
+  "max_score": 0.928,
+  "处数": 7,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "shoji_window_light_b/02.mp4",
+  "max_score": 0.627,
+  "处数": 3,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "small_diner_japan/01.mp4",
+  "max_score": 0.9,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "small_diner_japan/02.mp4",
+  "max_score": 0.917,
+  "处数": 15,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "small_diner_japan/03.mp4",
+  "max_score": 0.958,
+  "处数": 19,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "small_diner_japan/05.mp4",
+  "max_score": 0.939,
+  "处数": 47,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "station_platform/01.mp4",
+  "max_score": 0.915,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "station_platform/02.mp4",
+  "max_score": 0.914,
+  "处数": 46,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "station_platform/03.mp4",
+  "max_score": 0.7,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "station_platform/04.mp4",
+  "max_score": 0.916,
+  "处数": 27,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "station_platform/06.mp4",
+  "max_score": 0.948,
+  "处数": 23,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "street_lamp/01.mp4",
+  "max_score": 0.842,
+  "处数": 10,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "street_lamp/05.mp4",
+  "max_score": 0.831,
+  "处数": 20,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "street_lamp/06.mp4",
+  "max_score": 0.837,
+  "处数": 3,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "sushi/04.mp4",
+  "max_score": 0.76,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "table_setting_meal/05.mp4",
+  "max_score": 0.942,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "table_wood/03.mp4",
+  "max_score": 0.938,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "table_wood/04.mp4",
+  "max_score": 0.868,
+  "处数": 21,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "table_wood/05.mp4",
+  "max_score": 0.915,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_floor/01.mp4",
+  "max_score": 0.955,
+  "处数": 22,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_floor/02.mp4",
+  "max_score": 0.785,
+  "处数": 6,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_floor/03.mp4",
+  "max_score": 0.946,
+  "处数": 24,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/01.mp4",
+  "max_score": 0.912,
+  "处数": 30,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/02.mp4",
+  "max_score": 0.933,
+  "处数": 58,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/03.mp4",
+  "max_score": 0.938,
+  "处数": 29,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/04.mp4",
+  "max_score": 0.934,
+  "处数": 45,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/05.mp4",
+  "max_score": 0.937,
+  "处数": 52,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tatami_room/06.mp4",
+  "max_score": 0.878,
+  "处数": 36,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tea/01.mp4",
+  "max_score": 0.938,
+  "处数": 29,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tea/03.mp4",
+  "max_score": 0.925,
+  "处数": 20,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tea/06.mp4",
+  "max_score": 0.946,
+  "处数": 19,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tea_cup/02.mp4",
+  "max_score": 0.8,
+  "处数": 12,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "teapot_cup_still/04.mp4",
+  "max_score": 0.903,
+  "处数": 21,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tempura/02.mp4",
+  "max_score": 0.942,
+  "处数": 18,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "tokyo_night_street/01.mp4",
+  "max_score": 0.84,
+  "处数": 13,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "tokyo_night_street/02.mp4",
+  "max_score": 0.975,
+  "处数": 17,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "train_window/03.mp4",
+  "max_score": 0.813,
+  "处数": 20,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "train_window/05.mp4",
+  "max_score": 0.602,
+  "处数": 24,
+  "在旧排除清单": true
+ },
+ {
+  "clip": "two_bowls/03.mp4",
+  "max_score": 0.858,
+  "处数": 7,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "two_bowls/05.mp4",
+  "max_score": 0.943,
+  "处数": 35,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "yakitori_grill/01.mp4",
+  "max_score": 0.961,
+  "处数": 15,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "yakitori_grill/02.mp4",
+  "max_score": 0.947,
+  "处数": 24,
+  "在旧排除清单": false
+ },
+ {
+  "clip": "yakitori_skewers/05.mp4",
+  "max_score": 0.734,
+  "处数": 9,
+  "在旧排除清单": false
+ }
+]

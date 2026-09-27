@@ -1,0 +1,130 @@
+{
+ "chinese_rural_market_vegetables": {
+  "verdict": "reject",
+  "why": "VL 正脸轴 3/6=50%（集市里的人物为主）→ 整目录排除"
+ },
+ "chinese_rice_harvest_grain": {
+  "verdict": "reject",
+  "why": "VL 正脸轴 4/8=50%（收割的人脸为主）→ 整目录排除"
+ },
+ "battlefield_smoke_ruins": {
+  "verdict": "reject",
+  "why": "VL 正脸轴 4/8=50%（士兵人脸为主）→ 整目录排除"
+ },
+ "bamboo_basket_carrying_pole": {
+  "verdict": "accept",
+  "why": "VL 正脸轴 1/2（样本过小，作为道具目录保留；正脸段已隔离）；按 2026-09-18 口径记录，不拦截交付"
+ },
+ "bamboo_basket_carrying_pole/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "battlefield_smoke_ruins/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "battlefield_smoke_ruins/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "battlefield_smoke_ruins/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "battlefield_smoke_ruins/08.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "candle_light_dark_room/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_ancestral_hall_old/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_farmhouse_courtyard_wall/06.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_old_paper_ledger/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_ox_cart_field/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_ox_cart_field/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rice_harvest_grain/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rice_harvest_grain/03.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rice_harvest_grain/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rice_harvest_grain/08.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rural_market_vegetables/01.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rural_market_vegetables/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_rural_market_vegetables/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_village_dirt_path/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "chinese_village_dirt_path/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_chinese_house_interior_room/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_chinese_water_well_village/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_photograph_vintage_album/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_photograph_vintage_album/05.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_steam_train_china/04.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "old_steam_train_china/07.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "small_wooden_boat_river_china/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ },
+ "water_buffalo_field/02.mp4": {
+  "verdict": "reject",
+  "why": "VL 正脸轴命中（整段均匀 8 帧）"
+ }
+}

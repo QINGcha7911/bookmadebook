@@ -116,12 +116,48 @@ def test_listen_parse():
           and "睡前" in r4["scene"], f"got {r4}")
 
 
+
+def test_playlist_crosscheck():
+    """[6] 排除清单交叉校验（compose_book.crosscheck_playlists）
+
+    2026-09-21 深夜 007 裁决 ②：操作侧 _excluded.json 与备稿班 scene_map.json 两份清单
+    不能各自手工维护 → compose 前交叉校验，不一致必须报警。本测试用纯内存数据覆盖
+    A 自相矛盾 / B 保护缺口 / C 快照落后 / 归一化 / count 字段 五条路径。"""
+    print("\n[6] 排除清单交叉校验（compose 前）")
+    from compose_book import crosscheck_playlists
+    avail = {"dirA": ["01.mp4", "02.mp4"], "dirB": ["01.mp4"]}
+
+    r = crosscheck_playlists(avail, ["dirB/03.mp4"], 1, ["dirB/03.mp4"])
+    check("干净清单：A/B 两类均为空（快照与操作侧一致、且不碰 available）",
+          r["contradict"] == [] and r["unprotected"] == [] and r["stale_snapshot"] == [],
+          f"got {r}")
+
+    r = crosscheck_playlists(avail, ["dirA/02.mp4"], 1, ["dirA/02.mp4", "dirB/01.mp4"])
+    check("A 自相矛盾（同时在 available 与快照 excluded）命中", r["contradict"] == ["dirA/02.mp4"], f"got {r}")
+
+    r = crosscheck_playlists(avail, ["dirA/02.mp4"], 1, ["dirB/01.mp4"])
+    check("B 保护缺口（快照排了、--exclude 没排）命中", r["unprotected"] == ["dirA/02.mp4"], f"got {r}")
+
+    r = crosscheck_playlists(avail, ["dirA/02.mp4"], 1, [])
+    check("B 在不传 --exclude 时判为不适用（另有专用告警）", r["unprotected"] == [], f"got {r}")
+
+    r = crosscheck_playlists(avail, [], 0, ["dirB/01.mp4"])
+    check("C 快照落后（已排除、快照仍列 available）命中", r["stale_snapshot"] == ["dirB/01.mp4"], f"got {r}")
+
+    r = crosscheck_playlists(avail, ["dirA/video/02.mp4"], 1, ["dirA/02.mp4"])
+    check("归一化：<目录>/video/<文件> 与 <目录>/<文件> 视为同一段", r["contradict"] == ["dirA/02.mp4"], f"got {r}")
+
+    r = crosscheck_playlists(avail, ["dirA/02.mp4"], 9, ["dirA/02.mp4"])
+    check("excluded_count 字段不一致被报出", r["count_mismatch"] is True, f"got {r}")
+
+
 if __name__ == "__main__":
     test_ted_director()
     test_cache_keys()
     test_quality_gate()
     test_speed_cache_compat()
     test_listen_parse()
+    test_playlist_crosscheck()
     print(f"\n{'='*40}")
     print(f"结果: {PASS} 通过 / {FAIL} 失败")
     sys.exit(1 if FAIL else 0)

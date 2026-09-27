@@ -1,0 +1,7 @@
+{
+ "broken": [
+  "yak_grazing_highland/02.mp4"
+ ],
+ "reason": "ffmpeg 全解码 Invalid NAL unit size（文件损坏/不完整）",
+ "found_by": "005 2026-09-24 23:5x 全池 228 段 ffmpeg -v error -i f -f null -"
+}

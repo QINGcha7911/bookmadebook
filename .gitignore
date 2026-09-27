@@ -49,3 +49,17 @@ assets/scenes/forest/video/18.mp4
 assets/scenes/rain/video/03.mp4
 models/
 _qc_*
+
+# ===== 007 追加：大件不入库（2026-09-27）=====
+# 常驻素材池 63G —— 生产机本地复用，不入 git
+assets/scenes/pool_common_china/
+# 其他大体积素材/中间目录
+assets/scenes/_pfdsj_cert/
+assets/scenes/jp_daily/
+assets/scenes/_inbox_20260925/
+assets/scenes/_dups_egn/
+webapp-output/
+# 备份文件一律不入库
+*.bak
+*.bak_*
+*.bak-*

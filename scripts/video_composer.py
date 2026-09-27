@@ -754,7 +754,8 @@ def _place_text_window(want: float, hold: float, busy: list, dur: float,
 def make_filter(plan, audio_dur: float, quotes: list[str],
                 book_title: str, author: str = "", script_text: str = "",
                 audio: str = "", items=None, pure_video=False,
-                no_cta=False):
+                no_cta=False, t_off: float = 0.0, global_dur: float | None = None,
+                chapter_times_abs=None, is_final_chunk: bool = True):
     """构建 ffmpeg filter_complex：Ken Burns + xfade + 金句文字
     plan: ScenePlan（支持可变时长分段 + 多场景）
     audio: 有 CHAP 时用于对齐章节/金句时间
@@ -768,6 +769,13 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     -loop 1 -t audio_dur 输入，实测每层全程 overlay ~0.13s/输出秒，
     10min 片仅文字层就吃掉 ~20min（22min 合成里的大头）；
     时窗层改短输入后几乎免费（窗口外无帧 → overlay 透传）。"""
+    # ── 分块渲染支持（2026-09-26 OOM 根治·005）────────────────────────
+    # t_off = 本批输出在整片时间轴上的起点（秒）；audio_dur = 本批时长；
+    # global_dur = 整片总时长。默认 t_off=0/global_dur=None ⇒ 行为与旧版**完全一致**
+    # （用于单批=整片的老路径）。分块时章节卡/金句卡按「绝对时间 → 本批本地时间」
+    # 裁剪，进度条按 (t+t_off)/global_dur 走，书名片头只在本批（第 1 批）出现。
+    _T0 = float(t_off or 0.0)
+    _GDUR = float(global_dur) if global_dur else (_T0 + audio_dur)
     # 收集每层 PNG 显示窗口 [start,end]（None=全程）——key=层名，末尾按输入序对齐
     # 默认 (0,0)=层已生成但 filter 未引用（幽灵层如长片 CTA/首章卡），给极短输入即止
     win_by_name: dict = {}
@@ -913,7 +921,10 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     if chapters:
         # 段数=章节数（标记驱动）时直接用 plan 段起点——与 xfade 黑场边界严格对齐
         plan_segs = getattr(plan, "segments", [])
-        if len(plan_segs) == len(chapters):
+        if chapter_times_abs:
+            # 分块渲染：整片绝对章节起点由调用方传入（子计划段数≠章节数，本地推算无意义）
+            chapter_times = [float(x) for x in chapter_times_abs]
+        elif len(plan_segs) == len(chapters):
             chapter_times = [seg.start for seg in plan_segs]
         else:
             # 段数≠章节数（TTS 子段化/长片）时禁止拿音频 CHAP 起点当章节起点：
@@ -928,12 +939,14 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
             ck = f"card_{ci}"
             if ck not in png_map:
                 continue
-            st = chapter_times[ci]
+            st = chapter_times[ci] - _T0      # 本批渲染内的本地时间（分块安全）
+            if st < -0.05 or st > audio_dur - 1.2:
+                continue                      # 该章节卡不在本批时间窗内 → 跳过
             et_limit = audio_dur - 0.5
             if "cta" in png_map and audio_dur <= 90 and not no_cta:
                 et_limit = min(et_limit, audio_dur - 4.0 - 0.3)  # CTA 前收
             if ci < len(chapters) - 1:
-                et = min(st + 3.2, chapter_times[ci + 1] - 0.5, et_limit)
+                et = min(st + 3.2, chapter_times[ci + 1] - _T0 - 0.5, et_limit)
             else:
                 et = min(st + 3.2, et_limit)
             if et - st < 1.2:
@@ -946,13 +959,17 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
         bk_fade_out = min(bk_fade_out, card_wins[0][1] - 0.3 - 0.8 - 0.2)
     bk_fade_out = max(0.6, bk_fade_out)
     bk_idx = png_map["book"]
-    win_by_name["book"] = (0.0, min(audio_dur, bk_fade_out + 0.8 + 0.2))
-    text_parts.append(f"[{png_base+bk_idx}:v]format=rgba,"
-                      f"fade=t=in:st=0:d=0.3:alpha=1,"
-                      f"fade=t=out:st={bk_fade_out:.2f}:d=0.8:alpha=1[bk]")
-    text_parts.append(f"[{prev_v}][bk]overlay=0:0[o_book]")
-    prev_v = "o_book"
-    busy.append((0.0, bk_fade_out + 0.8))
+    if _T0 > 0.05:
+        # 分块渲染：书名片头只属于第 1 批（本地 0s）；其余批次置幽灵层（输入 0.5s 即止）
+        win_by_name["book"] = (0.0, 0.0)
+    else:
+        win_by_name["book"] = (0.0, min(audio_dur, bk_fade_out + 0.8 + 0.2))
+        text_parts.append(f"[{png_base+bk_idx}:v]format=rgba,"
+                          f"fade=t=in:st=0:d=0.3:alpha=1,"
+                          f"fade=t=out:st={bk_fade_out:.2f}:d=0.8:alpha=1[bk]")
+        text_parts.append(f"[{prev_v}][bk]overlay=0:0[o_book]")
+        prev_v = "o_book"
+        busy.append((0.0, bk_fade_out + 0.8))
     # 生成章节卡 overlay（窗口已先占位）
     for ci, cin, cout in card_wins:
         c_idx = png_map[f"card_{ci}"]
@@ -971,14 +988,16 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     # ③ 金句：按稿中位置映射 CHAP 时间轴，但只放进 busy 的空闲缝隙
     # （不能取前N个CHAP——数量不一致会全堆开头；2026-09-02 增加缝隙排程防叠字）
     if quotes:
-        fallback_quote_times = _fallback_quote_times(quotes, audio_dur)
+        fallback_quote_times = _fallback_quote_times(quotes, _GDUR)
+        # 分块渲染：金句时间轴一律按**整片**时长(_GDUR)计算 ⇒ 得到整片绝对时间，
+        # 再由 _qloc = 绝对时间 − _T0 落到本批本地时间（_GDUR==audio_dur 时为旧行为）
         quote_times = _quote_times(quotes, script_text,
-                                   audio_chapter_starts, audio_dur)
+                                   audio_chapter_starts, _GDUR)
         has_cta = "cta" in png_map and audio_dur <= 90
         # 2026-09-19（005 补丁回移）：末句升华金句先占片尾窗，否则被前序金句抢走尾巴后丢弃
         # （《一个人的好天气》v1 就是末句「一个人，也会遇上好天气。」整张卡没渲染出来）
         _RESERVED = [None]
-        if quotes and not has_cta:
+        if quotes and not has_cta and is_final_chunk:
             _qi = len(quotes) - 1
             _w = _clip_display_start(quote_times[_qi], audio_dur)
             if audio_dur - _w <= 9.0:
@@ -1001,10 +1020,13 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
                 print(f"  ⚠️ 末句金句占位窗 {_w:.2f}→{_e:.2f}s 与章节卡重叠 → 放弃占位，改由缝隙排程处理")
         for qi, q in enumerate(quotes):
             qk = f"quote_{qi}"
-            is_last = (qi == len(quotes) - 1)
+            _qloc = (quote_times[qi] if qi < len(quote_times) else 0.0) - _T0
+            if _qloc < -0.3 or _qloc > audio_dur + 0.3:
+                continue                      # 分块渲染：该金句不在本批时间窗内
+            is_last = (qi == len(quotes) - 1) and is_final_chunk
             # 短版（≤90s）金句显示 6s（3-4 句字卡不重叠）；长版 12s
             quote_hold = 6.0 if audio_dur <= 90 else 12.0
-            want = _clip_display_start(quote_times[qi], audio_dur)
+            want = _clip_display_start(_qloc, audio_dur)
             # 末句升华金句：线性映射按全长(含片尾 AI 声明 ~6.8s)会把稿末
             # 内容整体后移最多 ~7s，若落在最后 9s 内则拉回声明起点前，
             # 让字卡盖住旁白尾句并保持到结尾（2026-09-07 芒果街修复）
@@ -1032,12 +1054,30 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
                 fade_out = ""  # 保持到结尾
             else:
                 fade_out = f",fade=t=out:st={te-0.8:.2f}:d=0.8:alpha=1"
-            q_idx = png_map[qk]
-            win_by_name[qk] = (max(0.0, ts - 0.2), min(audio_dur, te + 0.2))
-            text_parts.append(f"[{png_base+q_idx}:v]format=rgba,"
-                              f"fade=t=in:st={ts+0.5:.2f}:d=0.8:alpha=1{fade_out}[q{qi}]")
-            text_parts.append(f"[{prev_v}][q{qi}]overlay=0:0[p{qi}]")
-            prev_v = f"p{qi}"
+            # 2026-09-21（根治 · 005）：超长金句已由 text_layers 拆成
+            # quote_i / quote_i_b / quote_i_c … 多张（不再静默丢字）。
+            # 这里把**已排好的同一窗口均分**给各张卡、顺序播放；
+            # 单张时（n_parts == 1）生成的 filter 字符串与旧版**逐字节一致**。
+            part_names = [qk] + [f"{qk}_{c}" for c in "bcdefghij" if f"{qk}_{c}" in png_map]
+            n_parts = len(part_names)
+            _span = te - ts
+            for pi, pname in enumerate(part_names):
+                p_ts = ts + _span * pi / n_parts
+                p_te = ts + _span * (pi + 1) / n_parts
+                if pi < n_parts - 1:
+                    p_fout = (f",fade=t=out:st={max(p_ts + 0.5, p_te - 0.8):.2f}:d=0.8:alpha=1")
+                else:
+                    p_fout = fade_out
+                p_idx = png_map[pname]
+                if n_parts == 1:
+                    lbl, out_lbl = f"q{qi}", f"p{qi}"
+                else:
+                    lbl, out_lbl = f"q{qi}_{pi}", f"p{qi}_{pi}"
+                win_by_name[pname] = (max(0.0, p_ts - 0.2), min(audio_dur, p_te + 0.2))
+                text_parts.append(f"[{png_base+p_idx}:v]format=rgba,"
+                                  f"fade=t=in:st={p_ts+0.5:.2f}:d=0.8:alpha=1{p_fout}[{lbl}]")
+                text_parts.append(f"[{prev_v}][{lbl}]overlay=0:0[{out_lbl}]")
+                prev_v = out_lbl
             # 出处：仅最后一句（与金句同窗，属同一组文字）
             if is_last and "attribution" in png_map:
                 a_idx = png_map["attribution"]
@@ -1061,9 +1101,11 @@ def make_filter(plan, audio_dur: float, quotes: list[str],
     text_parts.append(f"[{prev_v}][pt]overlay=120:1530[t_pt]")
     prev_v = "t_pt"
     pf_idx = png_map["progress_fill"]
+    _prog = (f"min((t+{_T0:.3f})/{_GDUR:.3f}\\,1)" if _T0 > 0.001
+             else f"min(t/{audio_dur}\\,1)")
     text_parts.append(f"[{png_base+pf_idx}:v]format=rgba,"
                       f"crop=1080:15:0:1523,"
-                      f"crop=w=max(2\\,iw*min(t/{audio_dur}\\,1)):h=15[pf]")
+                      f"crop=w=max(2\\,iw*{_prog}):h=15[pf]")
     text_parts.append(f"[{prev_v}][pf]overlay=0:1523[t_pf]")
     prev_v = "t_pf"
 

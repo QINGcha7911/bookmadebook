@@ -1,0 +1,283 @@
+{
+  "script": "bookmadebook-output/讲书稿_一个人的好天气.txt",
+  "scene_root": "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/book_一个人的好天气",
+  "available": {
+    "cherry_blossom_japan": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4"
+    ],
+    "japanese_autumn_maple": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "japanese_bento": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "japanese_cafe_interior": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "japanese_cat_house": [
+      "02.mp4"
+    ],
+    "japanese_convenience_store": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4"
+    ],
+    "japanese_futon_morning": [
+      "01.mp4",
+      "04.mp4",
+      "05.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "japanese_kitchen_home": [
+      "01.mp4",
+      "02.mp4",
+      "04.mp4",
+      "06.mp4"
+    ],
+    "japanese_laundry_line": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "07.mp4",
+      "09.mp4"
+    ],
+    "japanese_old_house_exterior": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "japanese_residential_street": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4"
+    ],
+    "japanese_restaurant_counter": [
+      "01.mp4",
+      "04.mp4",
+      "06.mp4"
+    ],
+    "japanese_small_garden": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "japanese_summer_foliage": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "07.mp4"
+    ],
+    "japanese_tea_cup": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "japanese_train_station": [
+      "01.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "japanese_umbrella_close": [
+      "04.mp4",
+      "07.mp4"
+    ],
+    "japanese_veranda_engawa": [
+      "01.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "japanese_winter_snow_street": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "moon_night_sky_japan": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "rain_window_japan": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "shoji_sliding_door": [
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "07.mp4"
+    ],
+    "tatami_room_japan": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "train_window_japan": [
+      "01.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ]
+  },
+  "chapters": [
+    {
+      "chapter": "开场",
+      "scenes": [
+        "japanese_old_house_exterior",
+        "japanese_residential_street"
+      ]
+    },
+    {
+      "chapter": "第一章 春",
+      "scenes": [
+        "tatami_room_japan",
+        "japanese_train_station",
+        "shoji_sliding_door",
+        "japanese_small_garden",
+        "cherry_blossom_japan",
+        "japanese_futon_morning",
+        "japanese_veranda_engawa",
+        "japanese_laundry_line"
+      ]
+    },
+    {
+      "chapter": "第二章 夏",
+      "scenes": [
+        "japanese_train_station",
+        "train_window_japan",
+        "japanese_cat_house",
+        "japanese_tea_cup",
+        "japanese_veranda_engawa",
+        "japanese_convenience_store",
+        "japanese_summer_foliage",
+        "japanese_cafe_interior",
+        "japanese_restaurant_counter",
+        "japanese_bento",
+        "japanese_kitchen_home",
+        "rain_window_japan",
+        "japanese_umbrella_close"
+      ]
+    },
+    {
+      "chapter": "第三章 秋",
+      "scenes": [
+        "japanese_autumn_maple",
+        "japanese_restaurant_counter",
+        "shoji_sliding_door",
+        "japanese_small_garden",
+        "japanese_veranda_engawa",
+        "japanese_tea_cup"
+      ]
+    },
+    {
+      "chapter": "第四章 冬",
+      "scenes": [
+        "japanese_winter_snow_street",
+        "japanese_futon_morning",
+        "japanese_train_station",
+        "japanese_old_house_exterior",
+        "train_window_japan",
+        "japanese_kitchen_home"
+      ]
+    },
+    {
+      "chapter": "尾声 好天气",
+      "scenes": [
+        "moon_night_sky_japan",
+        "japanese_small_garden",
+        "japanese_veranda_engawa"
+      ]
+    }
+  ],
+  "gate": {
+    "excluded_face": [
+      "japanese_autumn_maple/video/04.mp4",
+      "japanese_bento/video/05.mp4",
+      "japanese_convenience_store/video/04.mp4",
+      "japanese_futon_morning/video/06.mp4",
+      "japanese_restaurant_counter/video/02.mp4",
+      "japanese_umbrella_close/video/02.mp4",
+      "japanese_veranda_engawa/video/02.mp4",
+      "japanese_veranda_engawa/video/04.mp4",
+      "shoji_sliding_door/video/01.mp4",
+      "shoji_sliding_door/video/05.mp4",
+      "shoji_sliding_door/video/06.mp4"
+    ],
+    "n_available": 141,
+    "n_used_scenes": 24,
+    "missing_scenes": []
+  }
+}

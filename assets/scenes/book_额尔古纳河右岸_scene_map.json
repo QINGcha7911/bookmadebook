@@ -1,0 +1,532 @@
+{
+ "script": "bookmadebook-output/讲书稿_额尔古纳河右岸.txt",
+ "scene_root": "assets/scenes/book_额尔古纳河右岸",
+ "available": {
+  "aurora_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "berries_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "birch_forest_autumn": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "birch_trees_snow": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "boreal_forest_fog": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "campfire_closeup": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "campfire_forest_night": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "chimney_smoke_winter": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "conifer_forest_winter": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "deer_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "dried_fish": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "elk_moose": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4",
+   "11.mp4"
+  ],
+  "falling_snow_forest": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "fireplace_hearth": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "forest_floor_moss": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "09.mp4"
+  ],
+  "forest_lake": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "forest_path_leaves": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "forest_river_canoe": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "forest_sunrise_mist": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "frozen_river": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "lake_sunrise_calm": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "log_cabin_smoke": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "moon_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "moonlight_river": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "morning_fog_lake": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "mushroom_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "mushrooms_basket": [
+   "03.mp4",
+   "06.mp4",
+   "08.mp4",
+   "09.mp4",
+   "11.mp4"
+  ],
+  "nomad_tent": [
+   "01.mp4",
+   "03.mp4",
+   "05.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "pine_forest_mist": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4"
+  ],
+  "reindeer_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "reindeer_snow": [
+   "04.mp4"
+  ],
+  "river_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "river_stones_flow": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "snow_mountain_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "snow_pine_branches": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4"
+  ],
+  "snowfall_road_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4",
+   "11.mp4",
+   "12.mp4"
+  ],
+  "snowy_forest_path": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "starry_night_forest": [
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "taiga_autumn": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "taiga_snow": [
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "wind_trees": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "winter_campfire_snow": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "09.mp4"
+  ],
+  "wooden_bucket": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4",
+   "09.mp4",
+   "10.mp4"
+  ],
+  "wooden_cabin_forest": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ]
+ },
+ "scene_map": [
+  [
+   "开场",
+   [
+    "taiga_snow",
+    "reindeer_snow",
+    "forest_path_leaves"
+   ]
+  ],
+  [
+   "第一章 跟着驯鹿走的人",
+   [
+    "reindeer_forest",
+    "birch_forest_autumn",
+    "forest_floor_moss",
+    "nomad_tent",
+    "starry_night_forest"
+   ]
+  ],
+  [
+   "第二章 日子是暖",
+   [
+    "campfire_forest_night",
+    "wooden_bucket",
+    "berries_forest",
+    "forest_river_canoe",
+    "dried_fish",
+    "mushroom_forest",
+    "wooden_cabin_forest",
+    "moon_forest"
+   ]
+  ],
+  [
+   "第三章 林子里的死",
+   [
+    "taiga_autumn",
+    "deer_forest",
+    "falling_snow_forest",
+    "conifer_forest_winter",
+    "frozen_river",
+    "snow_pine_branches"
+   ]
+  ],
+  [
+   "第四章 山下的砖房",
+   [
+    "conifer_forest_winter",
+    "snowy_forest_path",
+    "snow_mountain_forest"
+   ]
+  ],
+  [
+   "尾声 半个月亮",
+   [
+    "aurora_forest",
+    "morning_fog_lake",
+    "forest_sunrise_mist"
+   ]
+  ]
+ ],
+ "excluded_count": 22,
+ "excluded": [
+  "berries_forest/08.mp4",
+  "berries_forest/09.mp4",
+  "birch_forest_autumn/02.mp4",
+  "campfire_forest_night/05.mp4",
+  "campfire_forest_night/07.mp4",
+  "mushrooms_basket/05.mp4",
+  "nomad_tent/02.mp4",
+  "nomad_tent/04.mp4",
+  "nomad_tent/06.mp4",
+  "nomad_tent/07.mp4",
+  "reindeer_snow/06.mp4",
+  "reindeer_snow/07.mp4",
+  "wooden_bucket/08.mp4",
+  "berries_forest/05.mp4",
+  "conifer_forest_winter/01.mp4",
+  "dried_fish/05.mp4",
+  "forest_floor_moss/08.mp4",
+  "mushrooms_basket/04.mp4",
+  "reindeer_forest/05.mp4",
+  "taiga_autumn/08.mp4",
+  "winter_campfire_snow/08.mp4",
+  "wooden_bucket/06.mp4"
+ ]
+}

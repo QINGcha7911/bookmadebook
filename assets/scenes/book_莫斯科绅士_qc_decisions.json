@@ -1,0 +1,58 @@
+{
+ "hotel_reception_desk_old": {
+  "verdict": "exclude",
+  "why": "整目录排除。人眼逐格放大确认（sheet_008 cell8-12 / sheet_009 cell1-3）：现代酒店前台、戴口罩真人、英文「RECEPTION」发光字、现代行李与时装 —— 地域+现代+真人三轴全中"
+ },
+ "luxury_hotel_corridor_old": {
+  "verdict": "exclude",
+  "why": "整目录排除。人眼确认（sheet_010 cell1,3,10）：现代酒店走廊、灰地毯+暗藏灯带、穿西装/时装真人、带 logo 的现代购物袋"
+ },
+ "empty_ballroom_parquet": {
+  "verdict": "exclude",
+  "why": "整目录排除。人眼确认（复核拼图 cell3 + sheet_005 cell2-4）：舞会现场真人起舞、现代 LED 屏「Ballerina」；命中段第二次 8 帧 VL 复验仍 8/8 票"
+ },
+ "wine_cellar_bottles_dark": {
+  "verdict": "exclude",
+  "why": "整目录排除。人眼确认（sheet_028 cell6-10）：现代酒窖/酒吧，侍者与客人为真人，现代酒瓶与玻璃隔断"
+ },
+ "vintage_telephone_old": {
+  "verdict": "exclude",
+  "why": "整目录排除。region 4/5 + person_part 5/5，画面为现代办公室/住宅电话场景（含真人）"
+ },
+ "vintage_newspaper_old": {
+  "verdict": "exclude",
+  "why": "整目录排除。person_part 6/6 + region 5/6：均为「真人手持报纸」取景"
+ },
+ "vintage_hat_coat_rack": {
+  "verdict": "exclude",
+  "why": "整目录排除。person_part 7/7：现代衣帽架场景含真人"
+ },
+ "old_library_bookshelves": {
+  "verdict": "exclude",
+  "why": "整目录排除。人眼确认（sheet_013 cell3,4,5,8,9）：图书馆场景多为真人（抱书女子、读者、戴眼镜男子），modern 2/7 亦命中"
+ },
+ "snow_street_night_lamp": {
+  "verdict": "exclude",
+  "why": "整目录排除。modern 5/5：雪夜街景含现代汽车、现代路灯杆与路面标线（人眼 sheet_021 cell10 确认成排汽车）"
+ },
+ "snowy_city_street_night": {
+  "verdict": "exclude",
+  "why": "整目录排除。modern 6/7：现代公寓楼亮窗、空调外机、监控探头、架空电线（sheet_021 cell2-6）"
+ },
+ "grand_hotel_lobby_marble": {
+  "verdict": "exclude",
+  "why": "目录级排除（保留 07 一段）。人眼复核拼图 cell6-11：古典大堂画面中确有真人（楼梯上拍照者）；疑似误伤的 01/02 经第二次 8 帧 VL 复验仍 5/8、7/8 票 → 判非误伤，维持排除"
+ },
+ "copper_pots_old_kitchen": {
+  "verdict": "exclude",
+  "why": "整目录排除。region 5/6 + person_part 3/6：老厨房多为真人操作取景"
+ },
+ "old_bar_counter_bottles": {
+  "verdict": "exclude",
+  "why": "整目录排除。person_part 4/6 + region 3/6：吧台场景含真人手与调酒动作"
+ },
+ "_review_note": {
+  "verdict": "accept",
+  "why": "误伤复核（口径铁律第3条）：从被判排段中抽 12 段取帧目视，对其中 4 段（empty_ballroom_parquet/04,05、grand_hotel_lobby_marble/01,02）单独重跑 8 帧 person_part VL —— 结果仍为 8/8、8/8、7/8、5/8 票命中，确认非误伤。故本轮不回收任何被判排素材，净可用率偏低（39%）的原因是搜索词本身命中的就是「带人的实景镜头」，按口径第4条应『补抓素材』而非放宽口径"
+ }
+}

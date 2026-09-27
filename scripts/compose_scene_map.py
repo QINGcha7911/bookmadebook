@@ -35,7 +35,7 @@ import text_layers                     # noqa: E402
 
 os.chdir(_ORIG_CWD)                    # 恢复工作目录（相对路径参数按调用方 cwd 解析）
 
-SHOT_LEN = 7.0          # 目标单镜头时长（调度要求 ~7s）
+SHOT_LEN = float(__import__("os").environ.get("QY_SHOT_LEN", "7.0"))          # 目标单镜头时长（调度要求 ~7s）
 MIN_MOTION = 2.0        # 0.5s 帧差下限：低于此判为静止镜头，弃用（白名单池经 2.0 校准，各章均无重复）
 CHAPTER_MARKER = re.compile(r"^\s*【画面[:：]")   # 章节起点标记（成组出现）
 MARKER_LINE = re.compile(r"^\s*【[^】]+】\s*$")
@@ -259,7 +259,7 @@ def pick_items(root: Path, chapters: list, times: list, lines: list,
             # 「全书不重复」是偏好而非硬约束：只有当本池**未用过的素材仍够填满本章**
             # 时才跳过已用素材，否则尾部章节会被前面章节抽干（曾出现 Ch10 只出 1 镜、
             # fit_shot_durations 把 59s 全塞给单镜）。素材不够时必须放开复用。
-            fresh_left = sum(1 for d in order for _m, f in pools[d]
+            fresh_left = sum(1 for d in order for _m, f in pools[d][cursor[d]:]
                              if str(f) not in used_global)
             skip_used = (n_shots - assigned) <= fresh_left
             while cursor[best] < len(pools[best]):

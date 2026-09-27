@@ -1,0 +1,337 @@
+{
+  "script": "bookmadebook-output/讲书稿_平场之月_v3.txt",
+  "scene_root": "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/jp_daily",
+  "available": {
+    "c2_shrine": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4"
+    ],
+    "c2_temple_corridor": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4"
+    ],
+    "c2_garden": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "c2_shoji_light": [
+      "01.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "c2_window_light": [
+      "01.mp4",
+      "05.mp4"
+    ],
+    "c2_lantern": [
+      "01.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "c2_tatami_floor": [
+      "02.mp4"
+    ],
+    "c2_alley_night": [
+      "01.mp4",
+      "02.mp4",
+      "05.mp4"
+    ],
+    "c2_tempura": [
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "c2_udon": [
+      "02.mp4"
+    ],
+    "c2_ramen": [
+      "05.mp4"
+    ],
+    "c_jp_food": [
+      "01.mp4",
+      "06.mp4"
+    ],
+    "c_jp_garden": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "c_jp_shoji_room": [
+      "01.mp4"
+    ],
+    "c_jp_station": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "06.mp4"
+    ],
+    "c_jp_street_night": [
+      "02.mp4",
+      "05.mp4"
+    ],
+    "c_rain_glass": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4"
+    ],
+    "c_moon_sky": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "c3_hospital_bright": [
+      "05.mp4",
+      "06.mp4"
+    ],
+    "c3_hospital_light": [
+      "03.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "c3_clinic": [
+      "06.mp4"
+    ],
+    "b_crescent_moon_clouds": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4"
+    ],
+    "b_miso_soup_steam_close_up": [
+      "02.mp4",
+      "03.mp4",
+      "08.mp4"
+    ],
+    "b_rain_window_night": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "b_rice_bowl_chopsticks_close_up": [
+      "04.mp4"
+    ],
+    "b_sake_cup_close_up": [
+      "02.mp4"
+    ],
+    "b_train_window_rain_view": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "b_yakitori_skewers_close_up": [
+      "01.mp4",
+      "02.mp4"
+    ],
+    "crescent_moon_night_sky": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "hospital_corridor_empty": [
+      "02.mp4",
+      "04.mp4"
+    ],
+    "izakaya_japan_night": [
+      "02.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "japanese_convenience_store_night": [
+      "03.mp4"
+    ],
+    "japanese_home_cooking_meal": [
+      "04.mp4"
+    ],
+    "japanese_park_autumn_path": [
+      "02.mp4",
+      "03.mp4",
+      "06.mp4"
+    ],
+    "japanese_rainy_window": [
+      "01.mp4",
+      "03.mp4",
+      "08.mp4"
+    ],
+    "japanese_residential_neighborhood_evening": [
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "japanese_rice_bowl_miso_soup": [
+      "02.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "japanese_small_kitchen_cooking": [
+      "01.mp4",
+      "02.mp4",
+      "05.mp4"
+    ],
+    "japanese_small_town_street": [
+      "01.mp4",
+      "03.mp4",
+      "06.mp4"
+    ],
+    "japanese_train_station_platform": [
+      "03.mp4",
+      "05.mp4",
+      "07.mp4"
+    ],
+    "printing_press_machine_factory": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "07.mp4"
+    ],
+    "sake_cup_japanese_pouring": [
+      "02.mp4"
+    ],
+    "yakitori_grill_japanese": [
+      "03.mp4"
+    ]
+  },
+  "scene_map": [
+    [
+      "Ch1 开场：小城街道傍晚",
+      [
+        "japanese_small_town_street",
+        "japanese_residential_neighborhood_evening",
+        "c2_alley_night",
+        "c_jp_street_night"
+      ]
+    ],
+    [
+      "Ch2 重逢：医院走廊 / 小卖部",
+      [
+        "c3_hospital_light",
+        "c3_hospital_bright",
+        "hospital_corridor_empty",
+        "japanese_convenience_store_night"
+      ]
+    ],
+    [
+      "Ch3 靠近：居酒屋 / 清酒 / 日式房间",
+      [
+        "izakaya_japan_night",
+        "c2_lantern",
+        "yakitori_grill_japanese",
+        "b_yakitori_skewers_close_up",
+        "sake_cup_japanese_pouring",
+        "c_jp_shoji_room",
+        "c2_shoji_light"
+      ]
+    ],
+    [
+      "Ch4 日常：小厨房做饭 / 两副碗筷",
+      [
+        "c2_ramen",
+        "c2_udon",
+        "c2_tempura",
+        "c_jp_food",
+        "japanese_rice_bowl_miso_soup",
+        "b_miso_soup_steam_close_up",
+        "b_rice_bowl_chopsticks_close_up",
+        "japanese_small_kitchen_cooking"
+      ]
+    ],
+    [
+      "Ch5 变故：雨天窗 / 医院",
+      [
+        "japanese_rainy_window",
+        "c_rain_glass",
+        "b_rain_window_night",
+        "c3_hospital_light",
+        "c3_hospital_bright",
+        "hospital_corridor_empty"
+      ]
+    ],
+    [
+      "Ch6 探病：病房 / 夜空月牙",
+      [
+        "c_jp_shoji_room",
+        "c2_shoji_light",
+        "c2_tatami_floor",
+        "c3_hospital_light",
+        "crescent_moon_night_sky",
+        "c_moon_sky"
+      ]
+    ],
+    [
+      "Ch7 同居：厨房 / 客厅 / 买菜",
+      [
+        "japanese_small_kitchen_cooking",
+        "c2_temple_corridor",
+        "c_jp_shoji_room",
+        "c2_shoji_light",
+        "c2_tatami_floor",
+        "c2_garden",
+        "japanese_rice_bowl_miso_soup",
+        "c2_udon"
+      ]
+    ],
+    [
+      "Ch8 过年：日式房间 / 年菜",
+      [
+        "c_jp_shoji_room",
+        "c2_tatami_floor",
+        "c2_shoji_light",
+        "c_jp_garden",
+        "c2_garden",
+        "japanese_park_autumn_path",
+        "c2_tempura",
+        "c2_ramen"
+      ]
+    ],
+    [
+      "Ch9 告白：电车站台 / 便利店",
+      [
+        "japanese_train_station_platform",
+        "c_jp_station",
+        "japanese_convenience_store_night",
+        "b_train_window_rain_view",
+        "printing_press_machine_factory"
+      ]
+    ],
+    [
+      "Ch10 结尾：街道 / 月牙",
+      [
+        "japanese_residential_neighborhood_evening",
+        "c2_alley_night",
+        "c_jp_street_night",
+        "crescent_moon_night_sky",
+        "c_moon_sky"
+      ]
+    ]
+  ],
+  "excluded_count": 48
+}

@@ -1,0 +1,415 @@
+{
+  "script": "bookmadebook-output/讲书稿_北上.txt",
+  "scene_root": "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/book_北上",
+  "available": {
+    "beijing_hutong": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "boat_silhouette_fog": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "canal_barge_cargo": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "canal_lock_gate": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "canal_morning_mist": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "canal_rain_surface": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "canal_river_china": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "canal_stone_bridge": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "canal_sunset_golden": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4"
+    ],
+    "canal_wharf_pier": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4"
+    ],
+    "canal_winter_snow": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "chinese_ancient_roof": [
+      "01.mp4",
+      "03.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "chinese_brick_wall_lane": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "chinese_old_book": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "05.mp4",
+      "06.mp4"
+    ],
+    "chinese_village_rural": [
+      "02.mp4",
+      "05.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "great_wall_mountains": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "hangzhou_west_lake": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "night_river_lantern": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "north_china_field": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "reeds_riverbank": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "09.mp4",
+      "10.mp4"
+    ],
+    "suzhou_garden": [
+      "02.mp4",
+      "03.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4"
+    ],
+    "water_town_china": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "08.mp4",
+      "09.mp4"
+    ],
+    "willow_river_china": [
+      "01.mp4",
+      "02.mp4",
+      "03.mp4",
+      "04.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4",
+      "10.mp4"
+    ],
+    "wooden_boat_river": [
+      "02.mp4",
+      "05.mp4",
+      "06.mp4",
+      "07.mp4",
+      "08.mp4"
+    ]
+  },
+  "excluded": [
+    "beijing_hutong/video/06.mp4",
+    "canal_lock_gate/05.mp4",
+    "canal_wharf_pier/09.mp4",
+    "chinese_ancient_roof/02.mp4",
+    "chinese_ancient_roof/04.mp4",
+    "chinese_old_book/video/04.mp4",
+    "chinese_village_rural/01.mp4",
+    "chinese_village_rural/03.mp4",
+    "chinese_village_rural/06.mp4",
+    "chinese_village_rural/video/01.mp4",
+    "chinese_village_rural/video/04.mp4",
+    "night_river_lantern/05.mp4",
+    "night_river_lantern/08.mp4",
+    "suzhou_garden/01.mp4",
+    "suzhou_garden/04.mp4",
+    "water_town_china/video/06.mp4",
+    "water_town_china/video/07.mp4",
+    "willow_river_china/video/09.mp4",
+    "wooden_boat_river/video/01.mp4",
+    "wooden_boat_river/video/03.mp4",
+    "wooden_boat_river/video/04.mp4"
+  ],
+  "chapters": [
+    {
+      "chapter": "开场",
+      "scenes": [
+        "chinese_brick_wall_lane",
+        "chinese_ancient_roof"
+      ]
+    },
+    {
+      "chapter": "第一章 一个意大利人的北上",
+      "scenes": [
+        "canal_river_china",
+        "hangzhou_west_lake",
+        "water_town_china",
+        "canal_stone_bridge",
+        "suzhou_garden",
+        "canal_lock_gate",
+        "wooden_boat_river",
+        "reeds_riverbank",
+        "willow_river_china"
+      ]
+    },
+    {
+      "chapter": "第二章 他走了算遗物，现在算礼物",
+      "scenes": [
+        "boat_silhouette_fog",
+        "canal_wharf_pier",
+        "chinese_old_book",
+        "canal_sunset_golden",
+        "canal_rain_surface"
+      ]
+    },
+    {
+      "chapter": "第三章 沉默者说",
+      "scenes": [
+        "chinese_village_rural",
+        "wooden_boat_river",
+        "reeds_riverbank",
+        "willow_river_china",
+        "night_river_lantern"
+      ]
+    },
+    {
+      "chapter": "第四章 一百年后，谁还在找这条河",
+      "scenes": [
+        "canal_morning_mist",
+        "canal_river_china",
+        "canal_barge_cargo",
+        "canal_wharf_pier",
+        "chinese_brick_wall_lane",
+        "chinese_old_book"
+      ]
+    },
+    {
+      "chapter": "第五章 一封信",
+      "scenes": [
+        "chinese_old_book",
+        "canal_river_china",
+        "canal_sunset_golden",
+        "night_river_lantern"
+      ]
+    },
+    {
+      "chapter": "尾声 大水汤汤",
+      "scenes": [
+        "canal_morning_mist",
+        "boat_silhouette_fog",
+        "canal_river_china"
+      ]
+    }
+  ],
+  "scene_map": [
+    [
+      "开场",
+      [
+        "chinese_brick_wall_lane",
+        "chinese_ancient_roof"
+      ]
+    ],
+    [
+      "第一章 一个意大利人的北上",
+      [
+        "canal_river_china",
+        "hangzhou_west_lake",
+        "water_town_china",
+        "canal_stone_bridge",
+        "suzhou_garden",
+        "canal_lock_gate",
+        "wooden_boat_river",
+        "reeds_riverbank",
+        "willow_river_china"
+      ]
+    ],
+    [
+      "第二章 他走了算遗物，现在算礼物",
+      [
+        "boat_silhouette_fog",
+        "canal_wharf_pier",
+        "chinese_old_book",
+        "canal_sunset_golden",
+        "canal_rain_surface"
+      ]
+    ],
+    [
+      "第三章 沉默者说",
+      [
+        "chinese_village_rural",
+        "wooden_boat_river",
+        "reeds_riverbank",
+        "willow_river_china",
+        "night_river_lantern"
+      ]
+    ],
+    [
+      "第四章 一百年后，谁还在找这条河",
+      [
+        "canal_morning_mist",
+        "canal_river_china",
+        "canal_barge_cargo",
+        "canal_wharf_pier",
+        "chinese_brick_wall_lane",
+        "chinese_old_book"
+      ]
+    ],
+    [
+      "第五章 一封信",
+      [
+        "chinese_old_book",
+        "canal_river_china",
+        "canal_sunset_golden",
+        "night_river_lantern"
+      ]
+    ],
+    [
+      "尾声 大水汤汤",
+      [
+        "canal_morning_mist",
+        "boat_silhouette_fog",
+        "canal_river_china"
+      ]
+    ]
+  ],
+  "gate": {
+    "n_available": 189,
+    "n_excluded": 21,
+    "n_used_scenes": 20,
+    "missing_scenes": [],
+    "source": "_qc_pool_certify.json（整池 VL 体检：整段均匀 8 帧 + 全部 YOLO 命中点）"
+  }
+}

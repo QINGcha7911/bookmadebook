@@ -234,19 +234,64 @@ def render_chapter_cards(chapters: list, bg_paths: list = None) -> dict:
     return out
 
 
-def render_quote(quote: str, quote_no: int = 0, total: int = 1,
-                 font_size: int = 64) -> Image.Image:
-    """③ 金句层：白字黑描边+阴影，语义断行 ≤3 行，块中心 y≈980"""
+# 金句卡竖向安全区（2026-09-21 根治时显式化）：
+#   块中心 y≈980；上不许高于 QUOTE_Y_TOP_MIN（否则块高得离谱、观感差），
+#   下不许低于 QUOTE_Y_BOTTOM_MAX（= 出处行「—— 书名」所在的 y=1180，防压字；
+#   进度条在 y=1530，留足余量）。字号统一、不缩放 —— 超出行数上限就**拆卡**而不是丢字。
+QUOTE_Y_CENTER = 980
+QUOTE_Y_TOP_MIN = 700
+QUOTE_Y_BOTTOM_MAX = 1180
+
+
+def _quote_line_layout(font_size: int, is_last: bool = False):
+    """金句卡竖向排版：返回 (行距, 单卡最多可容纳行数)。
+    在安全区 [QUOTE_Y_TOP_MIN, QUOTE_Y_BOTTOM_MAX] 内自适应；放不下的行数由
+    split_quote_lines() 拆成多张卡，**永不丢字**。"""
+    line_h = int(font_size * 1.35)
+    max_lines = 1
+    for n in range(1, 65):
+        y0 = QUOTE_Y_CENTER - (n - 1) * line_h // 2 - font_size // 2
+        if y0 < QUOTE_Y_TOP_MIN:
+            break
+        if y0 + (n - 1) * line_h + font_size > QUOTE_Y_BOTTOM_MAX:
+            break
+        max_lines = n
+    return line_h, max_lines
+
+
+def split_quote_lines(quote: str, font_size: int = 64, quote_no: int = 0,
+                      total: int = 1) -> list:
+    """语义断行 → 若超过单卡可容纳行数，则**切成多张卡**（每张 ≤ 可容纳行数）。
+
+    2026-09-21 根治（005）：原实现是 `lines[:N]` 硬截断，会**静默丢弃尾行** ——
+    同一 bug 已复发两次：09-17 前是 `lines[:3]`（《边城》38 字句需 4 行），
+    09-17 改成 `lines[:4]`，本片《额尔古纳河右岸》40 字句需 **5 行** 又被丢。
+    现在改为**不丢任何字**：超出就拆卡，由调用方按 quote_i / quote_i_b / … 顺序播放。
+    字号保持统一（禁为塞行而缩放字号）。
+    返回 [[行...], [行...], ...]；正常情况只有 1 张。
+    """
+    font = get_font("bold", font_size)
+    lines = wrap_by_px(quote, font, max_width=640)
+    _, max_lines = _quote_line_layout(font_size, quote_no == total - 1)
+    n_parts = (len(lines) + max_lines - 1) // max_lines
+    if n_parts <= 1:
+        return [lines]
+    base, extra = divmod(len(lines), n_parts)   # 均分：7 行 / 上限 4 → 4+3
+    parts, i = [], 0
+    for k in range(n_parts):
+        take = base + (1 if k < extra else 0)
+        parts.append(lines[i:i + take])
+        i += take
+    return parts
+
+
+def render_quote_lines(lines: list, font_size: int = 64) -> Image.Image:
+    """把给定行块画成金句层：白字黑描边+阴影，块中心 y≈980。
+    垂直居中公式：首行 y = 980 - (n-1)*L/2 - fontsize/2"""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     font = get_font("bold", font_size)
-    lines = wrap_by_px(quote, font, max_width=640)
-    # 2026-09-17 修：原为 lines[:3]，会把第 4 行**静默丢弃** → 卡片以逗号结尾、语义不完整
-    # （《边城》金句「翠翠在风日里长养着…故眸子清明如水晶。」=38 字 → 4 行，末行被丢）。
-    # 放宽到 4 行；字号保持统一（禁为塞行而缩放字号），垂直居中公式已按 n 自适应。
-    lines = lines[:4]  # 最多 4 行
     line_h = int(font_size * 1.35)
-    # 垂直居中公式：首行 y = 980 - (n-1)*L/2 - fontsize/2
     n = len(lines)
     y = 980 - (n - 1) * line_h // 2 - font_size // 2
     for line in lines:
@@ -258,6 +303,14 @@ def render_quote(quote: str, quote_no: int = 0, total: int = 1,
                stroke_width=4, stroke_fill=(0, 0, 0, 190))
         y += line_h
     return img
+
+
+def render_quote(quote: str, quote_no: int = 0, total: int = 1,
+                 font_size: int = 64) -> Image.Image:
+    """③ 金句层（单张）：白字黑描边+阴影，语义断行，块中心 y≈980。
+    超长句请用 render_all()（会拆成多张卡）；本函数只画第一张，绝不丢字就交给调用方。"""
+    parts = split_quote_lines(quote, font_size, quote_no, total)
+    return render_quote_lines(parts[0], font_size)
 
 
 def render_attribution(text: str, font_size: int = 40) -> Image.Image:
@@ -355,12 +408,23 @@ def render_all(book_title: str, quotes: list, chapters: list,
             render_chapter_tag(ch).save(p)
             layers[f"chapter_{i}"] = p
 
-    # ③ 金句层（每句一个）
+    # ③ 金句层（每句一个；超长句自动拆成多张卡 quote_i / quote_i_b / quote_i_c …）
+    # 2026-09-21 根治（005）：不再静默丢尾行；拆出的多张卡由 video_composer 在
+    # 同一已排窗口内**均分时段顺序播放**（单张时行为与像素与旧版完全一致）。
     for i, q in enumerate(quotes):
         p = tmpdir / f"quote_{i}.png"
         fs = 64 if len(q) <= 24 else 56
-        render_quote(q, i, len(quotes), font_size=fs).save(p)
+        parts = split_quote_lines(q, fs, i, len(quotes))
+        render_quote_lines(parts[0], fs).save(p)
         layers[f"quote_{i}"] = p
+        for k, extra in enumerate(parts[1:]):
+            sfx = "bcdefghij"[k]
+            sp = tmpdir / f"quote_{i}_{sfx}.png"
+            render_quote_lines(extra, fs).save(sp)
+            layers[f"quote_{i}_{sfx}"] = sp
+        if len(parts) > 1:
+            print(f"  🧩 金句卡{i+1} 超长 → 拆成 {len(parts)} 张卡顺序播放"
+                  f"（行数 {[len(x) for x in parts]}）✓ 不丢字")
 
     # ④ 出处（—— 书名）
     if book_title:

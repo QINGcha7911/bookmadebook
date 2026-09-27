@@ -1,0 +1,746 @@
+{
+ "ancient_armor_statue/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "ancient_document_scroll/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_ledger_book/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wall_ruins_mist/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wooden_door/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_wooden_door/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "bamboo_forest_mist/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "bronze_incense_burner/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "candle_flame_dark/08.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_academy_school/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_ancient_village/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_garden_pond/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_garden_pond/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_imperial_palace_hall/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_lantern_night/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_lantern_night/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_lantern_night/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_market_street_old/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_palace_gate_red/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_palace_gate_red/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_porcelain_tea/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_porcelain_tea/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_roof_eaves_tiles/03.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_scholar_study/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_seal_stamp_red/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_stone_arch_bridge/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_incense/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_incense/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_night_mood/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_temple_night_mood/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/02.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_terrace_field/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_throne_room/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_throne_room/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/01.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_white_wall_courtyard/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "chinese_window_lattice/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "chinese_wooden_chest/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "dragon_carving_roof/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "forbidden_city_architecture/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "forbidden_city_architecture/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "forbidden_city_architecture/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "great_wall_china/08.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "horse_fog_silhouette/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ink_wash_landscape/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ink_wash_landscape/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "misty_mountain_china/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_pine_tree_chinese/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_pine_tree_chinese/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "old_town_street_rain/05.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "old_town_street_rain/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "old_town_street_rain/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "palace_corridor_columns/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "rain_roof_tile/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "rain_roof_tile/04.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "rain_roof_tile/06.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "red_silk_texture/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "red_silk_texture/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "snow_mountain_china/08.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "stone_lion_statue/07.mp4": {
+  "verdict": "accept",
+  "why": "现代物件轴记录（09-18 口径：现代物件不作为拦截项 → 记录，不拦截）"
+ },
+ "wheat_field_wind/01.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/02.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/03.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/04.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/05.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/06.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "wheat_field_wind/07.mp4": {
+  "verdict": "accept",
+  "why": "地域轴记录（VL 地域判据实测噪声大：无地域标识的画面也会被判『非本国』；09-18 口径 → 记录，不拦截）"
+ },
+ "ancient_armor_statue": {
+  "verdict": "accept",
+  "why": "4/8 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "ancient_ledger_book": {
+  "verdict": "accept",
+  "why": "6/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "ancient_wall_ruins_mist": {
+  "verdict": "accept",
+  "why": "7/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 6 段可用 → 整目录保留"
+ },
+ "bamboo_forest_mist": {
+  "verdict": "accept",
+  "why": "5/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "bronze_incense_burner": {
+  "verdict": "accept",
+  "why": "6/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "candle_flame_dark": {
+  "verdict": "accept",
+  "why": "8/8 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 8 段可用 → 整目录保留"
+ },
+ "chinese_academy_school": {
+  "verdict": "accept",
+  "why": "3/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "chinese_ancient_village": {
+  "verdict": "accept",
+  "why": "5/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "chinese_armor_helmet": {
+  "verdict": "exclude",
+  "why": "整目录剔除：7/7 段命中（含同源冗余副本与正脸）——剔完无可用段落；这些素材的 md5 已在其它目录保留一份，不影响总量"
+ },
+ "chinese_courtyard_garden": {
+  "verdict": "accept",
+  "why": "4/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "chinese_garden_pond": {
+  "verdict": "accept",
+  "why": "3/3 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 2 段可用 → 整目录保留"
+ },
+ "chinese_imperial_palace_hall": {
+  "verdict": "accept",
+  "why": "5/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "chinese_lantern_night": {
+  "verdict": "accept",
+  "why": "3/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "chinese_market_street_old": {
+  "verdict": "accept",
+  "why": "4/4 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 1 段可用 → 整目录保留"
+ },
+ "chinese_palace_gate_red": {
+  "verdict": "accept",
+  "why": "6/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 2 段可用 → 整目录保留"
+ },
+ "chinese_roof_eaves_tiles": {
+  "verdict": "accept",
+  "why": "2/3 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 2 段可用 → 整目录保留"
+ },
+ "chinese_scholar_study": {
+  "verdict": "accept",
+  "why": "4/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "chinese_scroll_unroll": {
+  "verdict": "accept",
+  "why": "3/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 2 段可用 → 整目录保留"
+ },
+ "chinese_seal_stamp_red": {
+  "verdict": "accept",
+  "why": "6/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "chinese_stone_arch_bridge": {
+  "verdict": "accept",
+  "why": "6/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 7 段可用 → 整目录保留"
+ },
+ "chinese_temple_incense": {
+  "verdict": "accept",
+  "why": "4/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "chinese_temple_night_mood": {
+  "verdict": "accept",
+  "why": "3/4 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "chinese_terrace_field": {
+  "verdict": "accept",
+  "why": "5/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 6 段可用 → 整目录保留"
+ },
+ "chinese_throne_room": {
+  "verdict": "accept",
+  "why": "6/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 2 段可用 → 整目录保留"
+ },
+ "chinese_white_wall_courtyard": {
+  "verdict": "accept",
+  "why": "5/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 7 段可用 → 整目录保留"
+ },
+ "chinese_window_lattice": {
+  "verdict": "accept",
+  "why": "3/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "chinese_wooden_chest": {
+  "verdict": "accept",
+  "why": "5/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "dragon_carving_roof": {
+  "verdict": "accept",
+  "why": "4/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "forbidden_city_architecture": {
+  "verdict": "accept",
+  "why": "6/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "great_wall_china": {
+  "verdict": "accept",
+  "why": "6/8 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 5 段可用 → 整目录保留"
+ },
+ "horse_fog_silhouette": {
+  "verdict": "accept",
+  "why": "5/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "ink_wash_landscape": {
+  "verdict": "accept",
+  "why": "7/8 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "misty_mountain_china": {
+  "verdict": "accept",
+  "why": "5/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 6 段可用 → 整目录保留"
+ },
+ "old_pine_tree_chinese": {
+  "verdict": "accept",
+  "why": "3/4 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 3 段可用 → 整目录保留"
+ },
+ "old_town_street_rain": {
+  "verdict": "accept",
+  "why": "7/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 7 段可用 → 整目录保留"
+ },
+ "palace_corridor_columns": {
+  "verdict": "accept",
+  "why": "4/5 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "rain_roof_tile": {
+  "verdict": "accept",
+  "why": "3/6 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 6 段可用 → 整目录保留"
+ },
+ "red_silk_texture": {
+  "verdict": "accept",
+  "why": "7/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 7 段可用 → 整目录保留"
+ },
+ "snow_mountain_china": {
+  "verdict": "accept",
+  "why": "7/8 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 8 段可用 → 整目录保留"
+ },
+ "stone_lion_statue": {
+  "verdict": "accept",
+  "why": "7/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 4 段可用 → 整目录保留"
+ },
+ "wheat_field_wind": {
+  "verdict": "accept",
+  "why": "7/7 段命中记录轴（正脸已隔离／地域与现代为 09-18 口径的记录项，不拦截；同源冗余副本已剔）。剔后仍有 7 段可用 → 整目录保留"
+ }
+}

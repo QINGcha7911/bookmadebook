@@ -1,6 +1,7 @@
 # bookmadebook 每日选题池
 # 列: 书名 | 主题 | 声音 | 视频场景 | 状态(待用/已用) | 使用日期
 # 声音: husky_tender=散文温柔(qwen-tts-vd-husky_tender-voice-20260821220323362-ebb0) / hist_deep_male=历史厚重(qwen-tts-vd-hist_deep_male-voice-20260821204552033-d7bc) / design_kid=儿童
+# ⛔ 禁作者（2026-09-17 用户指示）：龙应台全部作品已暂停，禁止再排入选题池或周书单
 # 场景: 见 video_composer --theme 选项
 人类群星闪耀时 | 历史传记 | 云健 | starry | 已用 | 2026-08-17
 李鸿章传 | 历史传记 | 云健 | palace | 已用 | 2026-08-17

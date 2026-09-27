@@ -1,0 +1,423 @@
+{
+ "script": "/mnt/d/AI软件/GitHub/bookmadebook/bookmadebook-output/讲书稿_许三观卖血记.txt",
+ "scene_root": "assets/scenes/book_许三观卖血记",
+ "available": {
+  "blood_sample_tube_close": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "candle_flame_dark": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_bicycle_old_street": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_clay_roof_tiles": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_clay_stove_firewood": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "07.mp4"
+  ],
+  "chinese_countryside_dirt_road": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "08.mp4"
+  ],
+  "chinese_dish_plate_table": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_enamel_mug_old": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "chinese_ferry_river_crossing": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_home_kitchen_old": [
+   "02.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "chinese_hospital_corridor_old": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_incense_burner": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_noodle_bowl_steam": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_old_house_courtyard": [
+   "02.mp4",
+   "04.mp4"
+  ],
+  "chinese_old_shop_counter": [
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_old_town_alley_day": [
+   "01.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_paper_window_lattice": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "chinese_rain_street_wet": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_rice_paddy_field": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_river_boat_wooden": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_rural_house_old": [
+   "02.mp4",
+   "03.mp4"
+  ],
+  "chinese_silk_factory_loom": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "chinese_small_eatery_night": [
+   "01.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_stone_bridge_water": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "chinese_teacup_rustic_table": [
+   "01.mp4",
+   "04.mp4"
+  ],
+  "chinese_temple_wooden_hall": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "chinese_water_town_street": [
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "chinese_wok_cooking_fire": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4"
+  ],
+  "chinese_wooden_table_meal": [
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "chinese_yellow_wine_cup": [
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "07.mp4"
+  ],
+  "crescent_moon_night_sky": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "empty_room_morning_light": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "hospital_iv_drip_close": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "hospital_ward_bed_empty": [
+   "03.mp4",
+   "05.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "rain_window_glass_drops": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "silk_fabric_texture_hand": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "sunset_clouds_dramatic": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "winter_bare_trees_snow": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ]
+ },
+ "scene_map": [
+  [
+   "开场",
+   [
+    "chinese_water_town_street",
+    "chinese_stone_bridge_water",
+    "chinese_old_town_alley_day",
+    "chinese_river_boat_wooden",
+    "chinese_clay_roof_tiles",
+    "sunset_clouds_dramatic"
+   ]
+  ],
+  [
+   "第一章 第一次卖血",
+   [
+    "blood_sample_tube_close",
+    "chinese_small_eatery_night",
+    "chinese_dish_plate_table",
+    "chinese_yellow_wine_cup",
+    "chinese_wok_cooking_fire",
+    "chinese_noodle_bowl_steam"
+   ]
+  ],
+  [
+   "第二章 一乐不是他的儿子",
+   [
+    "chinese_silk_factory_loom",
+    "chinese_old_house_courtyard",
+    "chinese_water_town_street",
+    "silk_fabric_texture_hand",
+    "chinese_rural_house_old",
+    "chinese_paper_window_lattice",
+    "chinese_temple_wooden_hall",
+    "chinese_incense_burner"
+   ]
+  ],
+  [
+   "第三章 一碗面条",
+   [
+    "chinese_clay_stove_firewood",
+    "chinese_wooden_table_meal",
+    "chinese_water_town_street",
+    "chinese_home_kitchen_old",
+    "chinese_rice_paddy_field",
+    "empty_room_morning_light",
+    "chinese_enamel_mug_old"
+   ]
+  ],
+  [
+   "第四章 一路卖血去上海",
+   [
+    "chinese_ferry_river_crossing",
+    "hospital_iv_drip_close",
+    "hospital_ward_bed_empty",
+    "chinese_hospital_corridor_old",
+    "winter_bare_trees_snow",
+    "chinese_countryside_dirt_road"
+   ]
+  ],
+  [
+   "第五章 他的血没人要了",
+   [
+    "chinese_old_shop_counter",
+    "rain_window_glass_drops",
+    "chinese_water_town_street",
+    "chinese_old_town_alley_day",
+    "candle_flame_dark",
+    "chinese_rain_street_wet"
+   ]
+  ],
+  [
+   "尾声 三盘炒猪肝",
+   [
+    "chinese_small_eatery_night",
+    "chinese_yellow_wine_cup",
+    "chinese_water_town_street",
+    "chinese_stone_bridge_water",
+    "chinese_dish_plate_table",
+    "chinese_bicycle_old_street",
+    "chinese_teacup_rustic_table"
+   ]
+  ]
+ ],
+ "excluded_count": 75,
+ "excluded": [
+  "blood_sample_tube_close/03.mp4",
+  "blood_sample_tube_close/07.mp4",
+  "chinese_bicycle_old_street/05.mp4",
+  "chinese_clay_roof_tiles/05.mp4",
+  "chinese_clay_roof_tiles/06.mp4",
+  "chinese_clay_stove_firewood/06.mp4",
+  "chinese_countryside_dirt_road/03.mp4",
+  "chinese_countryside_dirt_road/06.mp4",
+  "chinese_countryside_dirt_road/07.mp4",
+  "chinese_dish_plate_table/02.mp4",
+  "chinese_enamel_mug_old/03.mp4",
+  "chinese_enamel_mug_old/07.mp4",
+  "chinese_ferry_river_crossing/07.mp4",
+  "chinese_ferry_river_crossing/08.mp4",
+  "chinese_home_kitchen_old/01.mp4",
+  "chinese_home_kitchen_old/03.mp4",
+  "chinese_home_kitchen_old/04.mp4",
+  "chinese_home_kitchen_old/05.mp4",
+  "chinese_home_kitchen_old/07.mp4",
+  "chinese_hospital_corridor_old/07.mp4",
+  "chinese_incense_burner/04.mp4",
+  "chinese_incense_burner/08.mp4",
+  "chinese_old_house_courtyard/01.mp4",
+  "chinese_old_house_courtyard/03.mp4",
+  "chinese_old_house_courtyard/05.mp4",
+  "chinese_old_house_courtyard/06.mp4",
+  "chinese_old_shop_counter/01.mp4",
+  "chinese_old_shop_counter/02.mp4",
+  "chinese_old_shop_counter/03.mp4",
+  "chinese_old_shop_counter/04.mp4",
+  "chinese_old_town_alley_day/02.mp4",
+  "chinese_old_town_alley_day/04.mp4",
+  "chinese_paper_window_lattice/04.mp4",
+  "chinese_river_boat_wooden/01.mp4",
+  "chinese_rural_house_old/01.mp4",
+  "chinese_rural_house_old/04.mp4",
+  "chinese_rural_house_old/05.mp4",
+  "chinese_silk_factory_loom/04.mp4",
+  "chinese_silk_factory_loom/07.mp4",
+  "chinese_small_eatery_night/02.mp4",
+  "chinese_small_eatery_night/03.mp4",
+  "chinese_small_eatery_night/06.mp4",
+  "chinese_stone_bridge_water/04.mp4",
+  "chinese_stone_bridge_water/05.mp4",
+  "chinese_stone_bridge_water/06.mp4",
+  "chinese_teacup_rustic_table/02.mp4",
+  "chinese_teacup_rustic_table/03.mp4",
+  "chinese_teacup_rustic_table/05.mp4",
+  "chinese_temple_wooden_hall/04.mp4",
+  "chinese_vegetable_market_day/01.mp4",
+  "chinese_vegetable_market_day/02.mp4",
+  "chinese_vegetable_market_day/03.mp4",
+  "chinese_vegetable_market_day/04.mp4",
+  "chinese_vegetable_market_day/05.mp4",
+  "chinese_water_town_street/01.mp4",
+  "chinese_water_town_street/03.mp4",
+  "chinese_water_town_street/06.mp4",
+  "chinese_wok_cooking_fire/05.mp4",
+  "chinese_wooden_table_meal/01.mp4",
+  "chinese_wooden_table_meal/02.mp4",
+  "chinese_wooden_table_meal/03.mp4",
+  "chinese_wooden_table_meal/04.mp4",
+  "chinese_wooden_table_meal/05.mp4",
+  "chinese_yellow_wine_cup/01.mp4",
+  "chinese_yellow_wine_cup/04.mp4",
+  "chinese_yellow_wine_cup/06.mp4",
+  "empty_room_morning_light/01.mp4",
+  "empty_room_morning_light/05.mp4",
+  "empty_room_morning_light/08.mp4",
+  "hospital_iv_drip_close/04.mp4",
+  "hospital_iv_drip_close/07.mp4",
+  "hospital_ward_bed_empty/01.mp4",
+  "hospital_ward_bed_empty/02.mp4",
+  "hospital_ward_bed_empty/04.mp4",
+  "hospital_ward_bed_empty/06.mp4"
+ ]
+}

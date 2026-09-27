@@ -106,21 +106,45 @@ def main():
 
     chapters = parse_script(a.script)
     scene_map, warn = [], []
-    for title, shots in chapters:
+    # 预扫：每个目录被哪些章「显式标注」过（2026-09-25 加）
+    # 兜底填充不得抢占**别的章**标注的目录，否则后续章节自己标注的目录会被顶掉；
+    # 同时兜底本身也跨章不重复，避免同一个「烛火」被 6 个章共用（同款镜头反复出现）。
+    annotated_by = {}
+    for i, (t, shots) in enumerate(chapters):
+        for s in shots:
+            m = re.search(r"【画面[:：]\s*([A-Za-z0-9_]+)", s)
+            if m:
+                annotated_by.setdefault(m.group(1), set()).add(i)
+    _pad_used = set()
+
+    def _fillable(d, i, dirs):
+        return (d in avail and avail.get(d) and d not in dirs
+                and d not in _pad_used and not (annotated_by.get(d, set()) - {i}))
+
+    for i, (title, shots) in enumerate(chapters):
         dirs = pick(shots, avail, kw, slot_names)
         if len(dirs) < a.min_dirs:                          # 兜底：补全最通用的目录
             for d in (a.fallback.split(",") if a.fallback else
                       ["night_street_empty", "street_lamp", "empty_bar_counter",
                        "miso_soup_pot", "glass_table", "garden"]):
                 d = d.strip()
-                if d in avail and avail.get(d) and d not in dirs:
+                if _fillable(d, i, dirs):
                     dirs.append(d)
+                    _pad_used.add(d)
                 if len(dirs) >= a.min_dirs:
                     break
         if len(dirs) < a.min_dirs:
             # 2026-09-16：书名专属池的兜底——按可用段数从多到少补，保证每章都够 min_dirs
             for d in sorted(avail, key=lambda x: -len(avail[x])):
-                if avail[d] and d not in dirs:
+                if _fillable(d, i, dirs):
+                    dirs.append(d)
+                    _pad_used.add(d)
+                if len(dirs) >= a.min_dirs:
+                    break
+        # 最后放行：实在没有「干净」目录可用时，允许复用未被标注的目录（只求凑够 min_dirs）
+        if len(dirs) < a.min_dirs:
+            for d in sorted(avail, key=lambda x: -len(avail[x])):
+                if d in avail and avail.get(d) and d not in dirs and not (annotated_by.get(d, set()) - {i}):
                     dirs.append(d)
                 if len(dirs) >= a.min_dirs:
                     break
@@ -129,9 +153,19 @@ def main():
         scene_map.append([title, dirs])
 
     # 跨章节去重：同一素材目录尽量只出现在一个章节，避免同款画面在片子里重复出现
+    # ⚠️ 2026-09-25 修（《张居正大传》实测）：**本章【画面】明确标注的目录不得被去重掉**。
+    #    旧逻辑是「先来先占」，前面的章节（尤其没有标注的 `#` 书名章）靠兜底填充把目录占住，
+    #    后面章节**自己标注的**目录反被剔除 → 画面与文稿脱节
+    #    （本片：第三章标注的 ancient_document_scroll 被书名章兜底吃掉）。
+    #    修法：本章标注的目录一律保留；只有兜底/关键词补进来的目录参与跨章去重。
     _used = set()
     for i, (title, dirs) in enumerate(scene_map):
-        keep = [d for d in dirs if d not in _used]
+        own = set()
+        for s in chapters[i][1]:
+            m = re.search(r"【画面[:：]\s*([A-Za-z0-9_]+)", s)
+            if m:
+                own.add(m.group(1))
+        keep = [d for d in dirs if d in own or d not in _used]
         if len(keep) >= a.min_dirs:
             scene_map[i] = [title, keep]
             _used.update(keep)

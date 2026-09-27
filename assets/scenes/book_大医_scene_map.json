@@ -1,0 +1,419 @@
+{
+ "script": "bookmadebook-output/讲书稿_大医.txt",
+ "book": "大医",
+ "author": "马伯庸",
+ "scene_root": "/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/book_大医",
+ "available": {
+  "apothecary_drawers": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "calligraphy_ink": [
+   "01.mp4",
+   "03.mp4"
+  ],
+  "candle_flame": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "chinese_garden_pond": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4"
+  ],
+  "chinese_lantern_night": [
+   "01.mp4"
+  ],
+  "chinese_roof_tile": [
+   "01.mp4",
+   "04.mp4"
+  ],
+  "courtyard_chinese": [
+   "01.mp4",
+   "03.mp4"
+  ],
+  "incense_smoke": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "ink_bamboo": [
+   "05.mp4"
+  ],
+  "ink_wash_landscape": [
+   "01.mp4",
+   "08.mp4"
+  ],
+  "medical_manuscript": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "misty_mountains": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4"
+  ],
+  "misty_river_dawn": [
+   "01.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "mortar_pestle": [
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "oil_lamp": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "old_alley_china": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "old_brick_wall": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "06.mp4"
+  ],
+  "old_station": [
+   "02.mp4",
+   "06.mp4"
+  ],
+  "old_wooden_door": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "old_wooden_shelf": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "rain_roof_tile": [
+   "01.mp4",
+   "02.mp4",
+   "05.mp4"
+  ],
+  "rain_window_old": [
+   "01.mp4",
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "river_boat_mist": [
+   "03.mp4",
+   "04.mp4",
+   "05.mp4"
+  ],
+  "snow_landscape": [
+   "02.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4",
+   "07.mp4",
+   "08.mp4"
+  ],
+  "steam_train": [
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "06.mp4",
+   "08.mp4"
+  ],
+  "surgical_tools": [
+   "01.mp4"
+  ],
+  "tcm_herbs": [
+   "03.mp4",
+   "04.mp4"
+  ],
+  "temple_wood": [
+   "01.mp4"
+  ],
+  "vintage_instruments": [
+   "02.mp4",
+   "03.mp4",
+   "06.mp4"
+  ],
+  "vintage_telegraph": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4"
+  ],
+  "winter_village_china": [
+   "01.mp4",
+   "02.mp4",
+   "03.mp4",
+   "04.mp4",
+   "05.mp4",
+   "06.mp4"
+  ],
+  "wooden_boat_close": [
+   "01.mp4",
+   "03.mp4",
+   "04.mp4"
+  ]
+ },
+ "excluded": [
+  "abacus_wood/video/01.mp4",
+  "abacus_wood/video/02.mp4",
+  "abacus_wood/video/03.mp4",
+  "abacus_wood/video/04.mp4",
+  "abacus_wood/video/05.mp4",
+  "abacus_wood/video/06.mp4",
+  "apothecary_drawers/video/03.mp4",
+  "calligraphy_ink/video/02.mp4",
+  "calligraphy_ink/video/04.mp4",
+  "calligraphy_ink/video/05.mp4",
+  "calligraphy_ink/video/06.mp4",
+  "chinese_garden_pond/video/02.mp4",
+  "chinese_lantern_night/video/02.mp4",
+  "chinese_lantern_night/video/03.mp4",
+  "chinese_lantern_night/video/04.mp4",
+  "chinese_lantern_night/video/05.mp4",
+  "chinese_medicine_shop/video/01.mp4",
+  "chinese_medicine_shop/video/02.mp4",
+  "chinese_medicine_shop/video/03.mp4",
+  "chinese_medicine_shop/video/04.mp4",
+  "chinese_medicine_shop/video/05.mp4",
+  "chinese_medicine_shop/video/06.mp4",
+  "chinese_medicine_shop/video/07.mp4",
+  "chinese_roof_tile/video/02.mp4",
+  "chinese_roof_tile/video/03.mp4",
+  "chinese_roof_tile/video/05.mp4",
+  "courtyard_chinese/video/02.mp4",
+  "courtyard_chinese/video/04.mp4",
+  "courtyard_chinese/video/05.mp4",
+  "courtyard_chinese/video/06.mp4",
+  "herb_tea_pot/video/01.mp4",
+  "herb_tea_pot/video/02.mp4",
+  "herb_tea_pot/video/03.mp4",
+  "herb_tea_pot/video/04.mp4",
+  "herb_tea_pot/video/05.mp4",
+  "herb_tea_pot/video/06.mp4",
+  "herb_tea_pot/video/07.mp4",
+  "ink_bamboo/video/01.mp4",
+  "ink_bamboo/video/02.mp4",
+  "ink_bamboo/video/03.mp4",
+  "ink_bamboo/video/04.mp4",
+  "ink_bamboo/video/06.mp4",
+  "ink_bamboo/video/07.mp4",
+  "ink_wash_landscape/video/02.mp4",
+  "ink_wash_landscape/video/03.mp4",
+  "ink_wash_landscape/video/04.mp4",
+  "ink_wash_landscape/video/05.mp4",
+  "ink_wash_landscape/video/06.mp4",
+  "ink_wash_landscape/video/07.mp4",
+  "medical_kit_vintage/video/01.mp4",
+  "medical_kit_vintage/video/02.mp4",
+  "medical_kit_vintage/video/03.mp4",
+  "medical_kit_vintage/video/04.mp4",
+  "medical_kit_vintage/video/05.mp4",
+  "medical_kit_vintage/video/06.mp4",
+  "medical_manuscript/video/04.mp4",
+  "misty_mountains/video/08.mp4",
+  "misty_river_dawn/video/02.mp4",
+  "misty_river_dawn/video/03.mp4",
+  "misty_river_dawn/video/04.mp4",
+  "mortar_pestle/video/01.mp4",
+  "mortar_pestle/video/02.mp4",
+  "mortar_pestle/video/04.mp4",
+  "mortar_pestle/video/07.mp4",
+  "oil_lamp/video/01.mp4",
+  "old_alley_china/video/03.mp4",
+  "old_alley_china/video/06.mp4",
+  "old_brick_wall/video/04.mp4",
+  "old_brick_wall/video/05.mp4",
+  "old_microscope/video/01.mp4",
+  "old_microscope/video/02.mp4",
+  "old_microscope/video/03.mp4",
+  "old_microscope/video/04.mp4",
+  "old_microscope/video/05.mp4",
+  "old_microscope/video/06.mp4",
+  "old_newspaper/video/01.mp4",
+  "old_newspaper/video/02.mp4",
+  "old_newspaper/video/03.mp4",
+  "old_newspaper/video/04.mp4",
+  "old_newspaper/video/05.mp4",
+  "old_station/video/01.mp4",
+  "old_station/video/03.mp4",
+  "old_station/video/04.mp4",
+  "old_station/video/05.mp4",
+  "old_station/video/07.mp4",
+  "old_wooden_door/video/04.mp4",
+  "paper_documents/video/01.mp4",
+  "paper_documents/video/02.mp4",
+  "paper_documents/video/03.mp4",
+  "paper_documents/video/04.mp4",
+  "rain_roof_tile/video/03.mp4",
+  "rain_roof_tile/video/04.mp4",
+  "rain_window_old/video/03.mp4",
+  "river_boat_mist/video/01.mp4",
+  "river_boat_mist/video/02.mp4",
+  "river_boat_mist/video/06.mp4",
+  "river_boat_mist/video/07.mp4",
+  "snow_landscape/video/01.mp4",
+  "snow_landscape/video/03.mp4",
+  "steam_train/video/01.mp4",
+  "steam_train/video/05.mp4",
+  "steam_train/video/07.mp4",
+  "surgical_tools/video/02.mp4",
+  "surgical_tools/video/03.mp4",
+  "surgical_tools/video/04.mp4",
+  "tcm_herbs/video/01.mp4",
+  "tcm_herbs/video/02.mp4",
+  "tcm_herbs/video/05.mp4",
+  "temple_wood/video/02.mp4",
+  "temple_wood/video/03.mp4",
+  "temple_wood/video/04.mp4",
+  "temple_wood/video/05.mp4",
+  "vintage_instruments/video/01.mp4",
+  "vintage_instruments/video/04.mp4",
+  "vintage_instruments/video/05.mp4",
+  "vintage_instruments/video/07.mp4",
+  "vintage_lab_glass/video/01.mp4",
+  "vintage_lab_glass/video/02.mp4",
+  "vintage_lab_glass/video/03.mp4",
+  "vintage_lab_glass/video/04.mp4",
+  "vintage_lab_glass/video/05.mp4",
+  "vintage_lab_glass/video/06.mp4",
+  "vintage_lab_glass/video/07.mp4",
+  "vintage_telegraph/video/04.mp4",
+  "vintage_telegraph/video/05.mp4",
+  "vintage_telegraph/video/06.mp4",
+  "vintage_telegraph/video/07.mp4",
+  "wooden_boat_close/video/02.mp4"
+ ],
+ "scene_map": [
+  [
+   "大医：学医有什么用，能不能救中国",
+   [
+    "surgical_tools",
+    "vintage_instruments",
+    "medical_manuscript",
+    "apothecary_drawers",
+    "old_wooden_shelf",
+    "candle_flame"
+   ]
+  ],
+  [
+   "第一章 一把烟枪",
+   [
+    "snow_landscape",
+    "winter_village_china",
+    "steam_train",
+    "old_station",
+    "vintage_telegraph",
+    "old_wooden_door",
+    "temple_wood",
+    "chinese_roof_tile",
+    "surgical_tools",
+    "medical_manuscript"
+   ]
+  ],
+  [
+   "第二章 六天",
+   [
+    "tcm_herbs",
+    "mortar_pestle",
+    "apothecary_drawers",
+    "medical_manuscript",
+    "incense_smoke",
+    "misty_mountains",
+    "rain_window_old",
+    "river_boat_mist",
+    "misty_river_dawn"
+   ]
+  ],
+  [
+   "第三章 一双没洗的手",
+   [
+    "oil_lamp",
+    "candle_flame",
+    "old_wooden_door",
+    "courtyard_chinese",
+    "old_wooden_shelf",
+    "old_brick_wall",
+    "rain_roof_tile",
+    "incense_smoke"
+   ]
+  ],
+  [
+   "第四章 苍生大医",
+   [
+    "calligraphy_ink",
+    "ink_wash_landscape",
+    "ink_bamboo",
+    "medical_manuscript",
+    "old_wooden_shelf",
+    "temple_wood",
+    "chinese_garden_pond",
+    "misty_mountains",
+    "candle_flame",
+    "vintage_telegraph"
+   ]
+  ],
+  [
+   "第五章 川口的腌菜缸",
+   [
+    "misty_mountains",
+    "old_alley_china",
+    "winter_village_china",
+    "snow_landscape",
+    "old_wooden_door",
+    "old_brick_wall",
+    "chinese_roof_tile",
+    "temple_wood"
+   ]
+  ],
+  [
+   "尾声 白渡桥的日出",
+   [
+    "misty_river_dawn",
+    "river_boat_mist",
+    "wooden_boat_close",
+    "ink_wash_landscape",
+    "misty_mountains",
+    "chinese_garden_pond",
+    "snow_landscape",
+    "winter_village_china"
+   ]
+  ]
+ ]
+}
