@@ -351,7 +351,8 @@ def main():
     ap.add_argument("--book", default="")
     ap.add_argument("--author", default="")
     ap.add_argument("--until-chapter", type=int, default=0, help="只出到第 N 章（样片）")
-    ap.add_argument("--motion-cache", default="/tmp/audit005/jp_motion.json")
+    ap.add_argument("--motion-cache",
+                    default="/mnt/d/AI软件/GitHub/bookmadebook/assets/scenes/pool_common_china/_motion_cache.json")
     ap.add_argument("--exclude", default=None, help="人工复核排除清单 JSON（元素为 目录/文件名）")
     ap.add_argument("--allow-static", default=None,
                     help="放行的干净静止镜头 JSON（元素为 目录/文件名，须人工复核无真人）")
