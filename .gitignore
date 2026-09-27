@@ -63,3 +63,12 @@ webapp-output/
 *.bak
 *.bak_*
 *.bak-*
+
+# ===== 007 追加2：保护性忽略（2026-09-27）=====
+# 005 桥接运行数据（飞书附件证据，非源码）
+.cc-connect/
+# 大体量素材（>500MB，公共仓库不适配）
+assets/scenes/suzhou_*/
+# 二次备份与杂项
+*.bak2*
+book_lengths.tsv
