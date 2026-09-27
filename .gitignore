@@ -72,3 +72,9 @@ assets/scenes/suzhou_*/
 # 二次备份与杂项
 *.bak2*
 book_lengths.tsv
+
+# ===== 007 追加3：按书素材大目录（2026-09-27）=====
+# 合计 80G —— 生产机本地资产，公共仓库不承载
+# 注意：带尾斜杠只忽略「目录」，不影响 assets/scenes/book_XXX_excluded.json 这类同名文件
+assets/scenes/book_*/
+assets/scenes/book_*.log
