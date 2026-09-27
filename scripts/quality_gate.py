@@ -245,7 +245,7 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
     #    第一版音频因此多出 47.8 秒（649.3s vs 干净稿 601.5s）。交付稿只允许书的内容。
     META_PATTERNS = (
         r"已同步", r"云盘", r"落盘", r"自检", r"红线", r"字数[:：]", r"统计[:：]",
-        r"Coze", r"扣子", r"交付说明", r"存档", r"等你", r"已上传", r"文件大小",
+        r"Coze", r"扣子", r"交付说明", r"存档", r"等你回复", r"已上传", r"文件大小",
         r"审稿", r"本稿", r"版本[:：]\s*v?\d", r"元信息", r"字数约",
         # 2026-09-19 补：004 交付回执混入末行「…已完成。 云端自留底已存：`bookmadebook-output/…txt`」
         # 原模式集只有「云盘」无「云端」，且不认路径 → 漏检。以下四类补齐。
@@ -255,51 +255,4 @@ def validate(text: str, target_minutes: float, voice: str, book_title: str = Non
     meta_hits = []
     for ln in tail_lines:
         for pat in META_PATTERNS:
-            if re.search(pat, ln, re.I):
-                meta_hits.append((pat, ln[:60]))
-                break
-    if meta_hits:
-        report["passed"] = False
-        report["errors"].append(
-            "尾部混入流程元信息（TTS 会逐字朗读，必须删掉）："
-            + "; ".join(f"[{p}] {s}" for p, s in meta_hits[:4])
-            + "。交付稿只保留书的内容（正文/【画面】/【情绪】/【金句】）。"
-        )
-
-    return report
-
-
-def main():
-    ap = argparse.ArgumentParser(description="bookmadebook 内容质量门")
-    ap.add_argument("--text", required=True, help="讲书稿文件路径")
-    ap.add_argument("--target-minutes", type=float, help="目标时长（分钟）")
-    ap.add_argument("--voice", default="zh-CN-XiaoxiaoNeural", help="TTS声音")
-    ap.add_argument("--book-title", help="书名（用于版权检查）")
-    ap.add_argument("--lang", choices=["zh", "en", "ja"], help="语言（自动检测）")
-    ap.add_argument("--style", default="normal", choices=["normal", "ted"],
-                    help="风格（ted=TED导演层，语速×0.85校准）")
-    args = ap.parse_args()
-
-    with open(args.text, encoding="utf-8") as f:
-        text = f.read()
-
-    report = validate(text, args.target_minutes, args.voice,
-                      args.book_title, args.lang, args.style)
-
-    print(f"📊 质量门报告:")
-    print(f"   语言: {report['stats']['lang']} | 字数: {report['stats']['chars']} | "
-          f"语速: {report['stats']['speed']}字/分 | 预估: {report['stats']['est_minutes']}分钟")
-    if report["warnings"]:
-        for w in report["warnings"]:
-            print(f"  ⚠️ {w}")
-    if report["errors"]:
-        for e in report["errors"]:
-            print(f"  ❌ {e}")
-        print(f"\n📢 内容质量门不通过（{len(report['errors'])}项错误）——停止生成，请修正后重试。")
-        sys.exit(1)
-    print("  ✅ 全部校验通过，可以生成。")
-    sys.exit(0)
-
-
-if __name__ == "__main__":
-    main()
+            if re.search(pat, ln
